@@ -1,0 +1,63 @@
+// Mobile : width < 740px
+@media only screen and (max-width: 739px) {
+    .wrapper-icon {
+        position: fixed;
+        top: 48px;
+        display: flex;
+        width: 200px;
+        max-width: 400px;
+        min-height: 1000px;
+        padding: 0 5px;
+        flex: 0 0 60px;
+        border-right: 1px solid rgba(22, 24, 35, 0.12);
+        box-shadow: 0px 2px 8px rgb(0 0 0 / 6%);
+        background: #fff;
+        transform: translateX(-100%);
+        opacity: 0;
+        transition: transform linear 0.3s, opacity linear 0.3s;
+    }
+
+    .menu-icon {
+        padding: 5px 0px 5px 3px;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        background-color: white;
+    }
+    .sidebar-menu {
+        background-color: red;
+    }
+    .sidebar-menu:checked ~ .wrapper-icon {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+
+    .icon-size {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .icon-close {
+        position: absolute;
+        right: 3px;
+    }
+
+    //menu icon
+}
+//Tablet: width >= 740 and width <1024
+
+//Pc: width >= 1024px
+@media only screen and (min-width: 740px) {
+    .menu-mobile-input {
+        display: none;
+    }
+    .icon-close {
+        display: none;
+    }
+    .wrapper {
+        width: 356px;
+        min-height: 1000px;
+        padding: 20px 0px 26px 8px;
+    }
+}

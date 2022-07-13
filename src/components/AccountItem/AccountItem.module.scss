@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.info {
+    flex: 1;
+    margin-left: 12px;
+}
+@media only screen and (max-width: 740px) {
+    .name {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+}
+@media only screen and (min-width: 740px) {
+    .name {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+}

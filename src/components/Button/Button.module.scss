@@ -1,0 +1,207 @@
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        font-family: 'ProximaNova', sans-serif;
+        padding: 6px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: var(--white);
+        border: 1px solid transparent;
+        user-select: none;
+
+        + .wrapper {
+            margin-left: 8px;
+        }
+
+        &.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    }
+
+    .icon + .title,
+    .title + .icon {
+        margin-left: 8px;
+    }
+
+    .icon {
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+    }
+
+    //Button types
+    .rounded {
+        line-height: 30px;
+        border-radius: 999px;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(22, 24, 35, 0.12);
+
+        &:hover {
+            border-color: rgba(22, 24, 35, 0.2);
+            background-color: rgba(22, 24, 35, 0.03);
+        }
+    }
+    .outline {
+        color: var(--primary);
+        border-color: currentColor;
+
+        &:hover {
+            border-color: currentColor;
+            background-color: rgba(154, 44, 85, 0.06);
+        }
+    }
+
+    .primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        span {
+            color: var(--white);
+        }
+
+        &:hover {
+            border-color: var(--primary);
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+        }
+    }
+
+    .text {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    // Button sizes
+    .small {
+        min-width: 88px;
+        padding: 4px 16px;
+    }
+
+    .large {
+        padding: 6px 85px;
+        min-width: 140px;
+    }
+
+    //button submit login and sign up
+    .form_submit {
+        outline: none;
+        background-color: #1ac7b6;
+        position: relative;
+        display: flex;
+        z-index: 1;
+    }
+
+    //button header login
+
+    .login-btn {
+        font-size: 1rem;
+        min-width: 40px;
+        padding: 6px 0px 6px 0px;
+    }
+}
+
+@media only screen and (min-width: 740px) {
+    .wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        font-family: 'ProximaNova', sans-serif;
+        padding: 6px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: var(--white);
+        border: 1px solid transparent;
+        user-select: none;
+
+        + .wrapper {
+            margin-left: 8px;
+        }
+
+        &.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    }
+
+    .icon + .title,
+    .title + .icon {
+        margin-left: 8px;
+    }
+
+    .icon {
+        display: inline-block;
+        width: 20px;
+        text-align: center;
+    }
+
+    //Button types
+    .rounded {
+        line-height: 30px;
+        border-radius: 999px;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(22, 24, 35, 0.12);
+
+        &:hover {
+            border-color: rgba(22, 24, 35, 0.2);
+            background-color: rgba(22, 24, 35, 0.03);
+        }
+    }
+    .outline {
+        color: var(--primary);
+        border-color: currentColor;
+
+        &:hover {
+            border-color: currentColor;
+            background-color: rgba(154, 44, 85, 0.06);
+        }
+    }
+
+    .primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        span {
+            color: var(--white);
+        }
+
+        &:hover {
+            border-color: var(--primary);
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+        }
+    }
+
+    .text {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    // Button sizes
+    .small {
+        min-width: 88px;
+        padding: 4px 16px;
+    }
+
+    .large {
+        padding: 6px 85px;
+        min-width: 140px;
+    }
+
+    //button submit login and sign up
+    .form_submit {
+        outline: none;
+        background-color: #1ac7b6;
+        position: relative;
+        display: flex;
+        z-index: 1;
+    }
+}
