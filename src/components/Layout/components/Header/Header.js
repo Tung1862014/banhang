@@ -15,9 +15,9 @@ import { useState, useEffect } from 'react';
 import Login from './Login';
 import SignUp from './SignUp';
 import { useCallback } from 'react';
-import SetCookie from './Hook/SetCookies';
-import GetCookie from './Hook/GetCookies';
-import RemoveCookie from './Hook/RemoveCookies';
+import SetCookie from '~/components/Hook/SetCookies';
+import GetCookie from '~/components/Hook/GetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
 
 const cx = classNames.bind(styles);
 
@@ -49,36 +49,38 @@ function Header() {
     const [loginResult, setLoginResult] = useState([]);
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        fetch('http://localhost:5000/auth/login/success', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Credentials': true,
-            },
-        })
-            .then((response) => {
-                if (response.status === 200) return response.json();
-                throw new Error('authentication has been failed!');
-            })
-            .then((resObject) => {
-                RemoveCookie('logout');
-                SetCookie('logout', JSON.stringify(resObject.user));
-                setUser(resObject.user);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
+    // useEffect(() => {
+    //     const getUser = () => {
+    //         axios
+    //             .get(`${process.env.REACT_APP_URL_NODEJS}/auth/login/success`, {
+    //                 method: 'GET',
+    //                 credentials: 'include',
+    //                 headers: {
+    //                     Accept: 'application/json',
+    //                     'Content-Type': 'application/json',
+    //                     'Access-Control-Allow-Credentials': true,
+    //                 },
+    //             })
+    //             .then((response) => {
+    //                 if (response.status === 200) return response.json();
+    //                 throw new Error('authentication has been failed!');
+    //             })
+    //             .then((resObject) => {
+    //                 setUser(resObject.user);
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //             });
+    //     };
+    //     getUser();
+    // }, []);
 
     const userMenu = [
         ...MENU_ITEMS,
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
-            href: 'http://localhost:3000/',
+            href: process.env.REACT_APP_URL,
             separate: true,
             onclick: () => RemoveCookie('usrin'),
         },
@@ -89,7 +91,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
-            href: 'http://localhost:3000/',
+            href: process.env.REACT_APP_URL,
             separate: true,
             logoutuse: true,
         },
@@ -114,24 +116,24 @@ function Header() {
         // SetCookie('pass', loginResult));
     }, [loginResult]);
 
-    //console.log('cookie: ' + JSON.parse(GetCookie('usrin')).tennd);
+    //console.log('cookie: ' + JSON.parse(GetCookie('usrin')).fullName);
 
-    function handleSubmitLogin(pass, email) {
+    function handleSubmitLogin(pass, user) {
         axios
-            .post(`http://localhost:5000/staff/login`, { password: pass, email: email })
+            .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, { password: pass, userName: user })
             .then((res) => {
                 // handle success
-                if (res.data.resultEmail.length > 0 && res.data.resultPassword.length > 0) {
+                if (res.data.result && res.data.result.password === pass) {
                     RemoveCookie('usrin');
-                    SetCookie('usrin', JSON.stringify(res.data.resultEmail[0]));
+                    SetCookie('usrin', JSON.stringify(res.data.result));
                     alert('Đăng nhập thành công');
                     setLoginResult([...loginResult, res.data]);
-                } else if (res.data.resultEmail.length === 0) {
+                } else if (res.data.result === undefined) {
                     alert('Tài khoản không tồn tại');
-                } else if (res.data.resultPassword.length === 0) {
+                } else if (res.data.password !== pass) {
                     alert('Mật khẩu không đúng');
                 }
-                console.log(res.data.resultEmail[0]);
+                console.log(process.env);
             })
             .catch(() => {
                 // handle error
@@ -139,16 +141,20 @@ function Header() {
             });
     }
 
-    function handleSubmitRegister(tennd, email, password) {
+    function handleSubmitRegister(fullName, userName, email, password, address, birthday, phone) {
         axios
-            .post(`http://localhost:5000/staff/insert`, {
-                tennd,
+            .post(`${process.env.REACT_APP_URL_NODEJS}/customer/signup`, {
+                fullName,
+                userName,
                 email,
                 password,
+                address,
+                birthday,
+                phone,
             })
             .then((res) => {
                 console.log(res.data);
-                alert('Đăng nhập thành công');
+                alert('Đăng ký thành công');
                 setSingUpAvtice((prev) => !prev);
                 setLoginAvtice((prev) => prev);
             })
@@ -163,7 +169,7 @@ function Header() {
                     <div className={cx('logo')}>
                         <iframe
                             className={cx('video-logo')}
-                            src="https://www.youtube.com/embed/knW7-x7Y7RE?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
+                            src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
                             title="YouTube video player"
                             frameBorder="0"
                             autoPlay={true}
@@ -200,7 +206,7 @@ function Header() {
                                         <Image
                                             className={cx('user-avatar')}
                                             src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7097454878913953798~c5_100x100.jpeg?x-expires=1652684400&x-signature=ziMbzQAeuYOeHCqDH4X%2FWYbvr7I%3D"
-                                            alt={JSON.parse(GetCookie('usrin')).tennd}
+                                            alt={JSON.parse(GetCookie('usrin')).fullname}
                                             fallback="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/ea0854578085ab26effc2c7b8cefa270~c5_100x100.jpeg?x-expires=1652616000&x-signature=VLKoVcGNZpXSs6RZfWAFzzHsM2c%3D"
                                         />
                                     </div>

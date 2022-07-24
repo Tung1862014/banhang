@@ -1,7 +1,7 @@
 import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Menu.module.scss';
-import RemoveCookie from '~/components/Layout/components/Header/Hook/RemoveCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
 
 const cx = classNames.bind(styles);
 

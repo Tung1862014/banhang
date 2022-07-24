@@ -9,10 +9,14 @@ import { useEffect, useRef } from 'react';
 const cx = classNames.bind(styles);
 
 function SignUp({ onClickSignUp, onClick, onRegister }) {
+    const [fullName, setFullName] = useState('');
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [address, setAddress] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [phone, setPhone] = useState('');
     const [checkEmail, setCheckEmail] = useState(false);
     const [blur, setBlur] = useState(false);
     const [checkPassword, setCheckPassword] = useState(false);
@@ -67,7 +71,22 @@ function SignUp({ onClickSignUp, onClick, onRegister }) {
                         id="fullname"
                         name="fullname"
                         type="text"
-                        placeholder="VD: Sơn Đặng"
+                        placeholder="VD: Thanh Tùng"
+                        className={cx('form_control')}
+                        onChange={(e) => setFullName(e.target.value)}
+                    />
+                    <span className={cx('form_message')}></span>
+                </div>
+
+                <div className={cx('form_group')}>
+                    <label htmlFor="userName" className={cx('form_label')}>
+                        Tên đăng nhập <font color=" red"> *</font>
+                    </label>
+                    <input
+                        id="userName"
+                        name="userName"
+                        type="text"
+                        placeholder="VD: ThanhTung"
                         className={cx('form_control')}
                         onChange={(e) => setUserName(e.target.value)}
                     />
@@ -125,12 +144,57 @@ function SignUp({ onClickSignUp, onClick, onRegister }) {
                         <span className={cx('form_message')}>Mật khẩu không khớp</span>
                     )}
                 </div>
+                <div className={cx('form_group')}>
+                    <label htmlFor="address" className={cx('form_label')}>
+                        Địa chỉ <font color=" red"> *</font>
+                    </label>
+                    <input
+                        id="address"
+                        name="address"
+                        type="text"
+                        placeholder="VD: 14/02/2000"
+                        className={cx('form_control')}
+                        onChange={(e) => setAddress(e.target.value)}
+                    />
+                    <span className={cx('form_message')}></span>
+                </div>
+                <div className={cx('form_group')}>
+                    <label htmlFor="birthday" className={cx('form_label')}>
+                        Ngày sinh <font color=" red"> *</font>
+                    </label>
+                    <input
+                        id="birthday"
+                        name="birthday"
+                        type="date"
+                        placeholder="VD: 14/02/2000"
+                        className={cx('form_control')}
+                        onChange={(e) => setBirthday(e.target.value)}
+                    />
+                    <span className={cx('form_message')}></span>
+                </div>
+
+                <div className={cx('form_group')}>
+                    <label htmlFor="birthday" className={cx('form_label')}>
+                        Số điện thoại <font color=" red"> *</font>
+                    </label>
+                    <input
+                        id="birthday"
+                        name="birthday"
+                        type="text"
+                        placeholder="VD: 0918814027"
+                        className={cx('form_control')}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <span className={cx('form_message')}></span>
+                </div>
 
                 <Button
                     className={cx('form_submit')}
                     to=""
                     onClick={() => {
-                        checkEmail && checkPassword && onRegister(userName, userEmail, userPassword);
+                        checkEmail &&
+                            checkPassword &&
+                            onRegister(fullName, userName, userEmail, userPassword, address, birthday, phone);
                     }}
                 >
                     {'Đăng ký'}

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { CloseIcon } from '~/components/Icons';
-import { useState, useEffect, memo } from 'react';
+import { useState, memo } from 'react';
 import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,10 +10,9 @@ import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 const cx = classNames.bind(styles);
 
 function Login({ onClickLogin, onClick, onResult }) {
-    const [emailValue, setEmailValue] = useState('');
+    const [userName, setUserName] = useState('');
     const [passValue, setPassValue] = useState('');
-    const [blur, setBlur] = useState(false);
-    const [checkEmail, setCheckEmail] = useState(false);
+    //const [checkEmail, setCheckEmail] = useState(false);
     // const [submitLogin, setSubmitLogin] = useState(false);
 
     // const resultLogin = useMemo(() => {
@@ -25,26 +24,26 @@ function Login({ onClickLogin, onClick, onResult }) {
     //     return result;
     // }, [loginResult]);
 
-    const userE = useDebounce(emailValue, 500);
+    //const userE = useDebounce(userName, 500);
 
-    useEffect(() => {
-        const regexExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    // useEffect(() => {
+    //     const regexExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
 
-        if (regexExp.test(userE)) {
-            setCheckEmail((prev) => !prev);
-            console.log('Check mail su');
-        } else {
-            setCheckEmail(false);
-            console.log('Check mail false');
-            // console.log('focus' + inputRef.current.focus());
-        } // true
-    }, [userE]);
+    //     if (regexExp.test(userE)) {
+    //         setCheckEmail((prev) => !prev);
+    //         console.log('Check mail su');
+    //     } else {
+    //         setCheckEmail(false);
+    //         console.log('Check mail false');
+    //         // console.log('focus' + inputRef.current.focus());
+    //     } // true
+    // }, [userE]);
 
-    const email = useDebounce(emailValue, 500);
+    const user = useDebounce(userName, 500);
     const pass = useDebounce(passValue, 500);
 
-    const handleEmail = (e) => {
-        setEmailValue(e.target.value);
+    const handleUserName = (e) => {
+        setUserName(e.target.value);
     };
 
     const handlePassword = (e) => {
@@ -52,15 +51,15 @@ function Login({ onClickLogin, onClick, onResult }) {
     };
 
     const google = () => {
-        window.open('http://localhost:5000/auth/google', '_self');
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/google`, '_self');
     };
 
     // const github = () => {
-    //     window.open('http://localhost:5000/auth/github', '_self');
+    //     window.open('${process.env.REACT_APP_URL_NODEJS}/auth/github', '_self');
     // };
 
     const facebook = () => {
-        window.open('http://localhost:5000/auth/facebook', '_self');
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/facebook`, '_self');
     };
 
     return (
@@ -75,22 +74,19 @@ function Login({ onClickLogin, onClick, onResult }) {
                     <div className={cx('spacer')}></div>
 
                     <div className={cx('form_group')}>
-                        <label htmlFor="email" className={cx('form_label')}>
-                            Email<font color=" red"> *</font>
+                        <label htmlFor="userName" className={cx('form_label')}>
+                            Tên đăng nhập<font color=" red"> *</font>
                         </label>
                         <input
-                            id="email"
-                            name="email"
+                            id="userName"
+                            name="userName"
                             type="text"
-                            placeholder="VD: email@domain.com"
-                            className={cx('form_control-mail')}
-                            onChange={(e) => handleEmail(e)}
-                            onBlur={() => setBlur((prev) => !prev)}
-                            onFocus={() => setBlur(false)}
+                            placeholder="VD: ThanhTung"
+                            className={cx('form_control')}
+                            onChange={(e) => handleUserName(e)}
                         />
-                        {userE !== '' && !checkEmail && blur && (
-                            <span className={cx('form_message')}>Email không hợp lệ</span>
-                        )}
+
+                        <span className={cx('form_message')}></span>
                     </div>
 
                     <div className={cx('form_group')}>
@@ -117,7 +113,7 @@ function Login({ onClickLogin, onClick, onResult }) {
                         Facebook
                     </div>
 
-                    <Button className={cx('form_submit')} to="" onClick={() => checkEmail && onResult(pass, email)}>
+                    <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user)}>
                         {'Đăng nhập'}
                     </Button>
                     <div className={cx('sign-header')}>
