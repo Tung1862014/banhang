@@ -10,7 +10,7 @@ import Login from '~/pages/Login';
 import config from '~/config';
 
 const publicRoutes = [
-    { path: config.routes.home, component: Home },
+    { path: '/', component: Home },
     { path: '/search', component: Home },
     { path: config.routes.sanpham, component: SanPham },
     { path: config.routes.phukien, component: PhuKien },
