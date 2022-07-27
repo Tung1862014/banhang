@@ -15,7 +15,7 @@ function Detail() {
 
     useEffect(() => {
         axios
-            .get(`https://api-store-backend-nodejs.herokuapp.com/product/detail?q=${GetCookie('detail')}`)
+            .get(`${process.env.REACT_APP_URL_NODEJS}/product/detail?q=${GetCookie('detail')}`)
             .then((res) => {
                 setDetailValue(res.data);
                 console.log(res);
@@ -29,28 +29,28 @@ function Detail() {
                 <div className={cx('img-product')}>
                     <img
                         className={cx('img-product-detail')}
-                        src={`https://api-store-backend-nodejs.herokuapp.com/images/${detailValue.image}`}
+                        src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
                         alt="#"
                     />
                     <div className={cx('menu-list-img')}>
                         <div className={cx('list-img')}>
                             <img
                                 className={cx('list-img-product-detail')}
-                                src={`https://api-store-backend-nodejs.herokuapp.com/images/${detailValue.image}`}
+                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
                                 alt="#"
                             />
                         </div>
                         <div className={cx('list-img')}>
                             <img
                                 className={cx('list-img-product-detail')}
-                                src={`https://api-store-backend-nodejs.herokuapp.com/images/${detailValue.image}`}
+                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
                                 alt="#"
                             />
                         </div>
                         <div className={cx('list-img')}>
                             <img
                                 className={cx('list-img-product-detail')}
-                                src={`https://api-store-backend-nodejs.herokuapp.com/images/${detailValue.image}`}
+                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
                                 alt="#"
                             />
                         </div>

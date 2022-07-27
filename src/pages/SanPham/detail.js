@@ -17,16 +17,16 @@ function Detail({ currentItems }) {
             {currentItems.map((image) => {
                 return (
                     <div key={image.idsp} className={cx('card')}>
-                        <Link to={`@${image.idsp}`} onClick={() => handleDetail(image.idSP)}>
+                        <Link to={`@${image.idSP}`} onClick={() => handleDetail(image.idSP)}>
                             <img
                                 className={cx('card-img')}
-                                src={`https://api-store-backend-nodejs.herokuapp.com/images/${image.image}`}
+                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${image.image}`}
                                 alt={image.nameProduct}
                             />
                         </Link>
                         <div className={cx('card-body')}>
-                            <h5 className={cx('card-title')}>{image.detail}</h5>
-                            <p className={cx('card-text')}>{image.nameProduct}</p>
+                            <h5 className={cx('card-title')}>{image.nameProduct}</h5>
+                            <p className={cx('card-text')}>{image.detail}</p>
                         </div>
                         {/* <div key={image.id}>
                     <img className={cx('images-url')} src={image.url} alt={image.title} />

@@ -2,7 +2,7 @@ import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Menu.module.scss';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
-
+import SetCookie from '~/components/Hook/SetCookies';
 const cx = classNames.bind(styles);
 
 function MenuItem({ data, onClick }) {
@@ -11,6 +11,7 @@ function MenuItem({ data, onClick }) {
     });
     const logout = () => {
         RemoveCookie('logout');
+        SetCookie('err', JSON.stringify('loi'));
         window.open('http://localhost:5000/auth/logout', '_self');
     };
     return (

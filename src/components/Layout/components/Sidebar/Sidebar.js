@@ -38,14 +38,14 @@ function Sidebar() {
                     </label>
                     <Menu>
                         <MenuItem
-                            title="For You"
+                            title="Trang Chủ"
                             to={config.routes.home}
                             icon={<HomeIcon className={cx('icon-size')} />}
                             activeIcon={<HomeActiveIcon className={cx('icon-size')} />}
                             onClick={() => handleClickClose()}
                         />
                         <MenuItem
-                            title="Following"
+                            title="Sản Phẩm"
                             to={config.routes.sanpham}
                             icon={<UserGroupIcon className={cx('icon-size')} />}
                             activeIcon={<UserGroupActiveIcon className={cx('icon-size')} />}
@@ -53,7 +53,7 @@ function Sidebar() {
                             onClick={() => handleClickClose()}
                         />
                         <MenuItem
-                            title="Live"
+                            title="Phụ kiện"
                             to={config.routes.phukien}
                             icon={<LiveIcon className={cx('icon-size')} />}
                             activeIcon={<LiveActiveIcon className={cx('icon-size')} />}

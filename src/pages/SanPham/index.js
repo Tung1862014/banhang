@@ -6,7 +6,7 @@ function SanPham() {
     const [images, setImages] = useState([]);
     useEffect(() => {
         axios
-            .get(`https://api-store-backend-nodejs.herokuapp.com/product`)
+            .get(`${process.env.REACT_APP_URL_NODEJS}/product`)
             .then((res) => setImages(res.data))
             .catch((err) => {
                 console.log(err);

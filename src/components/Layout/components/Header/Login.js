@@ -4,14 +4,20 @@ import { CloseIcon } from '~/components/Icons';
 import { useState, memo } from 'react';
 import { useDebounce } from '~/hooks';
 import Button from '~/components/Button';
+// import jwt_decode from 'jwt-decode';
+// import SetCookie from '~/components/Hook/SetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
+import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function Login({ onClickLogin, onClick, onResult }) {
     const [userName, setUserName] = useState('');
     const [passValue, setPassValue] = useState('');
+    //const userObjectCookie = GetCookie('userGoogle') || {};
+
+    //const [userGoogle, setUserGoogle] = useState(userObjectCookie);
     //const [checkEmail, setCheckEmail] = useState(false);
     // const [submitLogin, setSubmitLogin] = useState(false);
 
@@ -51,16 +57,38 @@ function Login({ onClickLogin, onClick, onResult }) {
     };
 
     const google = () => {
+        RemoveCookie('err');
         window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/google`, '_self');
     };
+    // function handleCallbackResponse(response) {
+    //     //console.log('Encoded JWT ID tooken: ' + response.credential);
+    //     var userObject = jwt_decode(response.credential);
+    //     console.log('User: ' + JSON.stringify(userObject));
+    //     RemoveCookie('userGoogle');
+    //     SetCookie('userGoogle', JSON.stringify(userObject));
+    // }
+    // function handleSignOut(event) {
+    //     RemoveCookie('userGoogle');
+    //     document.getElementById('signInDiv').hidden = false;
+    // }
+
+    // useEffect(() => {
+    //     /* global google*/
+    //     google.accounts.id.initialize({
+    //         client_id: '1083951703528-t5nld4p5cacvla6lq0l3ko1gsprsg0hg.apps.googleusercontent.com',
+    //         callback: handleCallbackResponse,
+    //     });
+    //     google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outliine', size: 'big' });
+    //     google.accounts.id.prompt();
+    // }, []);
 
     // const github = () => {
     //     window.open('${process.env.REACT_APP_URL_NODEJS}/auth/github', '_self');
     // };
 
-    const facebook = () => {
-        window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/facebook`, '_self');
-    };
+    // const facebook = () => {
+    //     window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/facebook`, '_self');
+    // };
 
     return (
         <>
@@ -85,7 +113,6 @@ function Login({ onClickLogin, onClick, onResult }) {
                             className={cx('form_control')}
                             onChange={(e) => handleUserName(e)}
                         />
-
                         <span className={cx('form_message')}></span>
                     </div>
 
@@ -104,13 +131,9 @@ function Login({ onClickLogin, onClick, onResult }) {
                         <span className={cx('form_message')}></span>
                     </div>
 
-                    <div className={cx('login_button-google')} onClick={google}>
+                    <div id="signInDiv" className={cx('login_button-google')} onClick={google}>
                         <FontAwesomeIcon className={cx('icon')} icon={faGooglePlus} />
                         Tiếp tục với Google
-                    </div>
-                    <div className={cx('login_button-facebook')} onClick={facebook}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faFacebook} />
-                        Facebook
                     </div>
 
                     <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user)}>

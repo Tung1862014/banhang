@@ -47,33 +47,29 @@ function Header() {
     const [loginAvtice, setLoginAvtice] = useState(false);
     const [signUpAvtice, setSingUpAvtice] = useState(false);
     const [loginResult, setLoginResult] = useState([]);
-    const [user, setUser] = useState(null);
+    const [userGoogle, setUserGoogle] = useState(null);
 
-    // useEffect(() => {
-    //     const getUser = () => {
-    //         axios
-    //             .get(`${process.env.REACT_APP_URL_NODEJS}/auth/login/success`, {
-    //                 method: 'GET',
-    //                 credentials: 'include',
-    //                 headers: {
-    //                     Accept: 'application/json',
-    //                     'Content-Type': 'application/json',
-    //                     'Access-Control-Allow-Credentials': true,
-    //                 },
-    //             })
-    //             .then((response) => {
-    //                 if (response.status === 200) return response.json();
-    //                 throw new Error('authentication has been failed!');
-    //             })
-    //             .then((resObject) => {
-    //                 setUser(resObject.user);
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     };
-    //     getUser();
-    // }, []);
+    //console.log('Google: ' + GetCookie('logout'));
+    const getUser = async () => {
+        try {
+            const url = `http://localhost:5000/auth/login/success`;
+            const { data } = await axios.get(url, { withCredentials: true });
+            RemoveCookie('logout');
+            SetCookie('logout', JSON.stringify(data.user));
+            setUserGoogle(data.user);
+        } catch (err) {
+            console.log(err);
+            RemoveCookie('err');
+            SetCookie('err', JSON.stringify(err));
+        }
+    };
+    useEffect(() => {
+        if (GetCookie('err')) {
+            RemoveCookie('logout');
+        } else {
+            getUser();
+        }
+    }, []);
 
     const userMenu = [
         ...MENU_ITEMS,
@@ -116,7 +112,7 @@ function Header() {
         // SetCookie('pass', loginResult));
     }, [loginResult]);
 
-    //console.log('cookie: ' + JSON.parse(GetCookie('usrin')).fullName);
+    //console.log('cookie: ' + JSON.parse(GetCookie('usergoogle')).photos[0].value);
 
     function handleSubmitLogin(pass, user) {
         axios
@@ -162,6 +158,7 @@ function Header() {
                 console.log('loi insert');
             });
     }
+
     return (
         <>
             <header className={cx('wrapper')}>
@@ -192,7 +189,7 @@ function Header() {
                                 <InboxIcon className={cx('inbox-icon')} />
                             </button>
                         </Tippy>
-                        {GetCookie('usrin') !== undefined || user ? (
+                        {GetCookie('usrin') !== undefined || GetCookie('logout') ? (
                             <></>
                         ) : (
                             <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
@@ -213,7 +210,7 @@ function Header() {
                                 )}
                             </Menu>
                         )}
-                        {GetCookie('logout') && (
+                        {GetCookie('logout') && userGoogle && (
                             <Menu items={GetCookie('logout') ? userMenuLogout : MENU_ITEMS}>
                                 <div>
                                     <Image

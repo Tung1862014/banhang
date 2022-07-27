@@ -11,7 +11,7 @@ function Image(props) {
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    const itemsPerPage = 6;
+    const itemsPerPage = 3;
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -32,7 +32,7 @@ function Image(props) {
                 breakLabel="..."
                 nextLabel="Trang kế >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
+                pageRangeDisplayed={1}
                 pageCount={pageCount}
                 previousLabel="< Trang trước"
                 renderOnZeroPageCount={null}

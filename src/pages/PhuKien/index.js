@@ -16,10 +16,8 @@
 
 //import { useReactMediaRecorder as useRecording } from 'react-media-recorder';
 
-import MessengerCustomerChat from 'react-messenger-customer-chat';
-
 const PhuKien = () => {
-    return <MessengerCustomerChat pageId="489402087935358" appId="367297488288509" />;
+    return <h1>phu kien</h1>;
 };
 
 export default PhuKien;

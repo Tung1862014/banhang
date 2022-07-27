@@ -20,6 +20,12 @@
 // ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 // //ChartJS.register(BarElement, CategoryScale, LinearScale, Legend, Title, Tooltip);
 
+import { useState } from 'react';
+import jwt_decode from 'jwt-decode';
+import SetCookie from '~/components/Hook/SetCookies';
+import GetCookie from '~/components/Hook/GetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
+
 // function Home() {
 //     const [chartData, setChartData] = useState({
 //         datasets: [],
@@ -123,7 +129,52 @@
 // export default Home;
 
 function Home() {
-    return <h1>Home</h1>;
+    const userObjectCookie = GetCookie('userGoogle') || {};
+
+    const [user, setUser] = useState(userObjectCookie);
+
+    function handleCallbackResponse(response) {
+        //console.log('Encoded JWT ID tooken: ' + response.credential);
+        var userObject = jwt_decode(response.credential);
+        console.log('User: ' + JSON.stringify(userObject));
+        RemoveCookie('userGoogle');
+        SetCookie('userGoogle', JSON.stringify(userObject));
+        setUser(userObject);
+        document.getElementById('signInDiv').hidden = true;
+    }
+    function handleSignOut(event) {
+        RemoveCookie('userGoogle');
+        document.getElementById('signInDiv').hidden = false;
+    }
+
+    function handleSignInGoogle() {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: '1083951703528-t5nld4p5cacvla6lq0l3ko1gsprsg0hg.apps.googleusercontent.com',
+            callback: handleCallbackResponse,
+        });
+        google.accounts.id.renderButton(document.getElementById('signInDiv'), { theme: 'outliine', size: 'large' });
+        google.accounts.id.prompt();
+    }
+
+    //console.log(JSON.parse(GetCookie('userGoogle')).picture);
+
+    return (
+        <div>
+            <div id="signInDiv" onClick={() => handleSignInGoogle()}>
+                Dang nhap
+            </div>
+            <a href="http://localhost:3000/" onClick={(e) => handleSignOut(e)}>
+                Sign Out
+            </a>
+            {user !== undefined && GetCookie('userGoogle') && (
+                <div>
+                    <img src={JSON.parse(GetCookie('userGoogle')).picture} alt="#"></img>
+                    <h3>{JSON.parse(GetCookie('userGoogle')).name}</h3>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Home;
