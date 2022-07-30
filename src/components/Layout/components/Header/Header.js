@@ -107,7 +107,9 @@ function Header() {
     }, []);
 
     useEffect(() => {
-        setLoginAvtice((prev) => !prev);
+        if (loginResult.length > 0) {
+            setLoginAvtice((prev) => !prev);
+        }
 
         // SetCookie('pass', loginResult));
     }, [loginResult]);
@@ -137,22 +139,37 @@ function Header() {
             });
     }
 
-    function handleSubmitRegister(fullName, userName, email, password, address, birthday, phone) {
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/customer/signup`, {
-                fullName,
-                userName,
-                email,
-                password,
-                address,
-                birthday,
-                phone,
-            })
+    function handleSubmitRegister(fullName, userName, email, password, image, address, birthday, phone) {
+        //event.preventDefault();
+        const formData = new FormData();
+        console.log(image);
+        for (let i = 0; i < image.length; i++) {
+            formData.append('image', image[i]);
+        }
+        formData.append('fullName', fullName);
+        formData.append('userName', userName);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('address', address);
+        formData.append('birthday', birthday);
+        formData.append('phone', phone);
+        axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_URL_NODEJS}/customer/signup`,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then((res) => {
                 console.log(res.data);
-                alert('Đăng ký thành công');
-                setSingUpAvtice((prev) => !prev);
-                setLoginAvtice((prev) => prev);
+                if (res.data.userName === false) {
+                    alert('Tên đăng nhập đã tồn tại!');
+                } else {
+                    alert('Đăng ký thành công');
+                    setSingUpAvtice((prev) => !prev);
+                    setLoginAvtice((prev) => prev);
+                }
             })
             .catch(() => {
                 console.log('loi insert');
@@ -202,9 +219,12 @@ function Header() {
                                     <div>
                                         <Image
                                             className={cx('user-avatar')}
-                                            src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7097454878913953798~c5_100x100.jpeg?x-expires=1652684400&x-signature=ziMbzQAeuYOeHCqDH4X%2FWYbvr7I%3D"
-                                            alt={JSON.parse(GetCookie('usrin')).fullname}
-                                            fallback="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/ea0854578085ab26effc2c7b8cefa270~c5_100x100.jpeg?x-expires=1652616000&x-signature=VLKoVcGNZpXSs6RZfWAFzzHsM2c%3D"
+                                            src={
+                                                JSON.parse(GetCookie('usrin')).image ||
+                                                process.env.REACT_APP_URL_IMAGE_AVATAR
+                                            }
+                                            alt=""
+                                            fallback={process.env.REACT_APP_URL_IMAGE_AVATAR}
                                         />
                                     </div>
                                 )}

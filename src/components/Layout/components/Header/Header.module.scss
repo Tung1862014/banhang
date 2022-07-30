@@ -117,6 +117,19 @@
         box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
         overflow-y: auto;
     }
+    .form-sign-up {
+        max-width: 400px;
+        width: 360px;
+        max-height: 100%;
+        padding: 32px 24px;
+        text-align: center;
+        background: #fff;
+        border-radius: 2px;
+        margin: 24px;
+        align-self: center;
+        box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+        overflow-y: auto;
+    }
 
     .btn-icon-close {
         border-radius: 50%;
@@ -157,8 +170,19 @@
 
     .form_group {
         display: flex;
-        margin-bottom: 16px;
+        margin-bottom: 7px;
         flex-direction: column;
+    }
+    .form_group-control {
+        display: flex;
+        margin-bottom: 7px;
+        flex-direction: column;
+    }
+
+    .form_group-control-image {
+        width: 260px;
+        display: flex;
+        margin: 7px;
     }
 
     .form_label,
@@ -256,6 +280,41 @@
         width: 26px;
         height: 26px;
         padding-right: 10px;
+    }
+
+    //btn image
+    .img-preview {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        border: 2px dashed #333;
+        position: relative;
+        left: 20px;
+    }
+
+    [type='file'] {
+        height: 0;
+        overflow: hidden;
+        width: 0;
+    }
+
+    .form_label-image {
+        background: #f15d22;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        outline: none;
+        padding: 8px 15px;
+        position: relative;
+        transition: all 0.3s;
+        //vertical-align: middle;
+
+        &:hover {
+            background-color: darken(#f15d22, 10%);
+        }
     }
 }
 
@@ -357,6 +416,19 @@
         box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
         overflow-y: auto;
     }
+    .form-sign-up {
+        max-width: 900px;
+        width: 600px;
+        max-height: 100%;
+        padding: 32px 24px;
+        text-align: center;
+        background: #fff;
+        border-radius: 2px;
+        margin: 24px;
+        align-self: center;
+        box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+        overflow-y: auto;
+    }
 
     .btn-icon-close {
         border-radius: 50%;
@@ -395,10 +467,29 @@
         font-weight: 300;
     }
 
+    .form_group-sign-up {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+    }
+
     .form_group {
         display: flex;
-        margin-bottom: 16px;
+        margin: 8px;
         flex-direction: column;
+    }
+
+    .form_group-control {
+        width: 260px;
+        display: flex;
+        margin: 8px;
+        flex-direction: column;
+    }
+
+    .form_group-control-image {
+        width: 260px;
+        display: flex;
+        margin: 8px;
     }
 
     .form_label,
@@ -504,5 +595,70 @@
         width: 26px;
         height: 26px;
         padding-right: 10px;
+    }
+
+    //btn image
+    .img-preview {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        border: 2px dashed #333;
+        position: relative;
+        left: 20px;
+    }
+
+    [type='file'] {
+        height: 0;
+        overflow: hidden;
+        width: 0;
+    }
+
+    .form_label-image {
+        background: #f15d22;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Rubik', sans-serif;
+        font-size: inherit;
+        font-weight: 500;
+        outline: none;
+        padding: 15px 19px;
+        position: relative;
+        transition: all 0.3s;
+        vertical-align: middle;
+
+        &:hover {
+            background-color: darken(#f15d22, 10%);
+        }
+
+        .form_label-image {
+            background-color: #99c793;
+            border-radius: 50px;
+            overflow: hidden;
+
+            &::before {
+                color: #fff;
+                content: '\f382';
+                font-family: 'Font Awesome 5 Pro';
+                font-size: 100%;
+                height: 100%;
+                right: 130%;
+                line-height: 3.3;
+                position: absolute;
+                top: 0px;
+                transition: all 0.3s;
+            }
+
+            &:hover {
+                background-color: darken(#99c793, 30%);
+
+                &::before {
+                    right: 75%;
+                }
+            }
+        }
     }
 }

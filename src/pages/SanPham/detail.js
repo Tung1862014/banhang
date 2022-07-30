@@ -16,7 +16,7 @@ function Detail({ currentItems }) {
         <div className={cx('images')}>
             {currentItems.map((image) => {
                 return (
-                    <div key={image.idsp} className={cx('card')}>
+                    <div key={image.idSP} className={cx('card')}>
                         <Link to={`@${image.idSP}`} onClick={() => handleDetail(image.idSP)}>
                             <img
                                 className={cx('card-img')}

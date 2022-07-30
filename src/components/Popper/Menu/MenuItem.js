@@ -12,7 +12,7 @@ function MenuItem({ data, onClick }) {
     const logout = () => {
         RemoveCookie('logout');
         SetCookie('err', JSON.stringify('loi'));
-        window.open('http://localhost:5000/auth/logout', '_self');
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/logout`, '_self');
     };
     return (
         <>
