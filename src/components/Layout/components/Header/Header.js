@@ -12,8 +12,8 @@ import { faEarthAsia, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { CartIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
-import Login from './Login';
-import SignUp from './SignUp';
+import Login from './SignInAndSignUp/Login';
+import SignUp from './SignInAndSignUp';
 import { useCallback } from 'react';
 import SetCookie from '~/components/Hook/SetCookies';
 import GetCookie from '~/components/Hook/GetCookies';
@@ -48,6 +48,7 @@ function Header() {
     const [signUpAvtice, setSingUpAvtice] = useState(false);
     const [loginResult, setLoginResult] = useState([]);
     const [userGoogle, setUserGoogle] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     //console.log('Google: ' + GetCookie('logout'));
     const getUser = async () => {
@@ -73,6 +74,13 @@ function Header() {
 
     const userMenu = [
         ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faSignOut} />,
+            title: 'Setting',
+            href: `${process.env.REACT_APP_URL}/user/setting`,
+            separate: true,
+            setting: true,
+        },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
@@ -117,6 +125,7 @@ function Header() {
     //console.log('cookie: ' + JSON.parse(GetCookie('usergoogle')).photos[0].value);
 
     function handleSubmitLogin(pass, user) {
+        setLoading(true);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, { password: pass, userName: user })
             .then((res) => {
@@ -124,12 +133,15 @@ function Header() {
                 if (res.data.result && res.data.result.password === pass) {
                     RemoveCookie('usrin');
                     SetCookie('usrin', JSON.stringify(res.data.result));
-                    alert('Đăng nhập thành công');
+                    //alert('Đăng nhập thành công');
                     setLoginResult([...loginResult, res.data]);
+                    setLoading(false);
                 } else if (res.data.result === undefined) {
-                    alert('Tài khoản không tồn tại');
+                    //alert('Tài khoản không tồn tại');
+                    setLoading(false);
                 } else if (res.data.password !== pass) {
-                    alert('Mật khẩu không đúng');
+                    //alert('Mật khẩu không đúng');
+                    setLoading(false);
                 }
                 console.log(process.env);
             })
@@ -251,7 +263,12 @@ function Header() {
             </header>
             {loginAvtice === true && GetCookie('usrin') == null && (
                 <>
-                    <Login onClickLogin={handleCloseLogin} onClick={handleClose} onResult={handleSubmitLogin} />
+                    <Login
+                        onClickLogin={handleCloseLogin}
+                        onClick={handleClose}
+                        onResult={handleSubmitLogin}
+                        Loading={loading}
+                    />
                 </>
             )}
             {signUpAvtice === true && GetCookie('usrin') == null && (

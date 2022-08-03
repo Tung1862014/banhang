@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Slider from 'react-slick';
 import classNames from 'classnames/bind';
 import styles from './detail.module.scss';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import GetCookie from '~/components/Hook/GetCookies';
 import Button from '~/components/Button';
@@ -23,6 +26,18 @@ function Detail() {
             .catch((err) => console.log('Loii:' + err));
     }, []);
 
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
+
+    const handleShowImage = () => {
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`, '_blank');
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('intro')}>
@@ -31,28 +46,34 @@ function Detail() {
                         className={cx('img-product-detail')}
                         src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
                         alt="#"
+                        onClick={handleShowImage}
                     />
-                    <div className={cx('menu-list-img')}>
-                        <div className={cx('list-img')}>
-                            <img
-                                className={cx('list-img-product-detail')}
-                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-                                alt="#"
-                            />
-                        </div>
-                        <div className={cx('list-img')}>
-                            <img
-                                className={cx('list-img-product-detail')}
-                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-                                alt="#"
-                            />
-                        </div>
-                        <div className={cx('list-img')}>
-                            <img
-                                className={cx('list-img-product-detail')}
-                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-                                alt="#"
-                            />
+                    <div className={cx('menu-list')}>
+                        <div className={cx('menu-list-img')}>
+                            <Slider {...settings}>
+                                <div className={cx('list-img')}>
+                                    <div className={cx('list-img-group')}>
+                                        <img
+                                            className={cx('list-img-product-detail')}
+                                            src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
+                                            alt="#"
+                                        />
+                                        <img
+                                            className={cx('list-img-product-detail')}
+                                            src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
+                                            alt="#"
+                                        />
+                                        <img
+                                            className={cx('list-img-product-detail')}
+                                            src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
+                                            alt="#"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3>2</h3>
+                                </div>
+                            </Slider>
                         </div>
                     </div>
                 </div>

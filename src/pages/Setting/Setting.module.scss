@@ -1,0 +1,89 @@
+@media only screen and (max-width: 739px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        display: flex;
+        width: var(--default-layout-width);
+        max-width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        top: 15px;
+        padding: 15px;
+    }
+    .heading {
+        position: relative;
+        margin-bottom: 30px;
+        font-family: 'ProximaNova', sans-serif;
+        font-weight: 700;
+        font-size: 2.6rem;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .form_group-sign-up {
+        flex: 1;
+    }
+    .form_group-sign-up {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+    }
+
+    //btn submit update
+    .btn-submit-update {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: 20px;
+    }
+}
+
+@media only screen and (min-width: 740px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        display: flex;
+        width: var(--default-layout-width);
+        max-width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        top: 20px;
+        padding: 15px;
+    }
+    .heading {
+        position: relative;
+        margin-bottom: 30px;
+        font-family: 'ProximaNova', sans-serif;
+        font-weight: 700;
+        font-size: 2.6rem;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .form_group-sign-up {
+        flex: 1;
+    }
+    .form_group-sign-up {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+    }
+
+    //btn submit update
+    .btn-submit-update {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: 20px;
+    }
+}

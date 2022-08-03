@@ -1,10 +1,12 @@
 import classNames from 'classnames/bind';
-import styles from './Header.module.scss';
+import styles from './SignInAndSignUp.module.scss';
 import { BackIcon, CloseIcon } from '~/components/Icons';
 import Button from '~/components/Button';
 import { useState } from 'react';
 import { useDebounce } from '~/hooks';
 import { useEffect, useRef } from 'react';
+import Menu from './Menu';
+import MenuItem from './Menu/MenuItem';
 
 const cx = classNames.bind(styles);
 
@@ -95,150 +97,148 @@ function SignUp({ onClickSignUp, onClick, onRegister }) {
 
                 <div className={cx('spacer')}></div>
                 <div className={cx('form_group-sign-up')}>
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="fullname" className={cx('form_label')}>
-                            Tên đầy đủ <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="fullname"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Tên đầy đủ"
                             name="fullname"
                             type="text"
                             placeholder="VD: Thanh Tùng"
-                            className={cx('form_control')}
                             onChange={(e) => setFullName(e.target.value)}
                         />
-                        <span className={cx('form_message')}></span>
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="userName" className={cx('form_label')}>
-                            Tên đăng nhập <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="userName"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Tên đăng nhập"
                             name="userName"
                             type="text"
                             placeholder="VD: ThanhTung"
-                            className={cx('form_control')}
                             onChange={(e) => setUserName(e.target.value)}
                         />
-                        <span className={cx('form_message')}></span>
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="password" className={cx('form_label')}>
-                            Mật khẩu<font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="password"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Mật khẩu"
                             name="password"
                             type="password"
-                            placeholder="Nhập mật khẩu"
-                            className={cx('form_control')}
+                            placeholder="VD 1234567"
                             onChange={(e) => handlePassword(e)}
+                            test1={userPass !== ''}
+                            test2={!testPassword}
+                            titleError="Mật khẩu phải lớn hơn 6 ký tự"
                         />
-                        {userPass !== '' && !testPassword && (
-                            <span className={cx('form_message')}>Mật khẩu phải lớn hơn 6 ký tự</span>
-                        )}
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="password_confirmation" className={cx('form_label')}>
-                            Nhập lại mật khẩu<font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="password_confirmation"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Nhập lại mật khẩu"
                             name="password_confirmation"
-                            placeholder="Nhập lại mật khẩu"
                             type="password"
-                            className={cx('form_control')}
+                            placeholder="Nhập lại mật khẩu"
                             onChange={(e) => setRepeatPassword(e.target.value)}
+                            test1={repeatPass !== ''}
+                            test2={!checkPassword}
+                            titleError="Mật khẩu không khớp"
                         />
-                        {repeatPass !== '' && !checkPassword && (
-                            <span className={cx('form_message')}>Mật khẩu không khớp</span>
-                        )}
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="email" className={cx('form_label')}>
-                            Email<font color=" red"> *</font>
-                        </label>
-                        <input
-                            ref={inputRef}
-                            id="email"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            inputRef={inputRef}
+                            title="Email"
                             name="email"
                             type="text"
                             placeholder="VD: email@domain.com"
-                            className={cx('form_control')}
                             onChange={(e) => setUserEmail(e.target.value)}
                             onBlur={() => setBlur((prev) => !prev)}
                             onFocus={() => setBlur(false)}
+                            test1={userE !== ''}
+                            test2={!checkEmail}
+                            test3={blur}
+                            titleError="Email không hợp lệ"
                         />
-                        {userE !== '' && !checkEmail && blur && (
-                            <span className={cx('form_message')}>Email không hợp lệ</span>
-                        )}
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="address" className={cx('form_label')}>
-                            Địa chỉ <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="address"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Địa chỉ"
                             name="address"
                             type="text"
                             placeholder="VD: Cần Thơ"
-                            className={cx('form_control')}
                             onChange={(e) => setAddress(e.target.value)}
                         />
-                        <span className={cx('form_message')}></span>
-                    </div>
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="birthday" className={cx('form_label')}>
-                            Ngày sinh <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="birthday"
+                    </Menu>
+
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Ngày sinh"
                             name="birthday"
                             type="date"
                             placeholder="VD: 14/02/2000"
-                            className={cx('form_control')}
                             onChange={(e) => setBirthday(e.target.value)}
                         />
-                        <span className={cx('form_message')}></span>
-                    </div>
+                    </Menu>
 
-                    <div className={cx('form_group-control')}>
-                        <label htmlFor="phone" className={cx('form_label')}>
-                            Số điện thoại <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="phone"
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control"
+                            className2="form_label"
+                            className3="form_control"
+                            className4="form_message"
+                            title="Số điện thoại"
                             name="phone"
                             type="text"
                             placeholder="VD: 0918814027"
-                            className={cx('form_control')}
                             onChange={(e) => setPhone(e.target.value)}
                         />
-                        <span className={cx('form_message')}></span>
-                    </div>
-                    <div className={cx('form_group-control-image')}>
-                        <label htmlFor="choose-file" className={cx('form_label-image')}>
-                            Chọn ảnh đại diện <font color=" red"> *</font>
-                        </label>
-                        <input
-                            id="choose-file"
+                    </Menu>
+
+                    <Menu>
+                        <MenuItem
+                            className1="form_group-control-image"
+                            className2="form_label-image"
+                            className3="form_control"
+                            className4="form_message"
+                            className5="img-preview"
+                            title="Chọn ảnh đại diện"
                             name="choose-file"
                             type="file"
+                            check={false}
                             accept="image/*"
-                            className={cx('form_control')}
                             hidden
-                            onChange={(e) => ChooseImg(e)}
                             multiple
+                            onChange={(e) => ChooseImg(e)}
                         />
-                        <div id="img-preview" className={cx('img-preview')}></div>
-                        <span className={cx('form_message')}></span>
-                    </div>
+                    </Menu>
                 </div>
 
                 <Button

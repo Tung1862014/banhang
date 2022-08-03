@@ -4,12 +4,31 @@
     align-items: center;
 }
 
-.container {
-    display: flex;
-    width: var(--default-layout-width);
-    max-width: 100%;
-}
-
 .content {
     flex: 1;
+}
+@media only screen and (max-width: 740px) {
+    .container1 {
+        display: none;
+        width: var(--default-layout-width);
+        max-width: 100%;
+    }
+    .container {
+        display: flex;
+        width: var(--default-layout-width);
+        max-width: 100%;
+    }
+}
+
+@media only screen and (min-width: 740px) {
+    .container1 {
+        display: flex;
+        width: var(--default-layout-width);
+        max-width: 100%;
+    }
+    .container {
+        display: none;
+        width: var(--default-layout-width);
+        max-width: 100%;
+    }
 }
