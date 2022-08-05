@@ -18,6 +18,10 @@ import { useCallback } from 'react';
 import SetCookie from '~/components/Hook/SetCookies';
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewSignIn } from '~/actions/SignIn';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
 
@@ -51,10 +55,16 @@ function Header() {
     const [loading, setLoading] = useState(false);
 
     //console.log('Google: ' + GetCookie('logout'));
+
+    const siginList = useSelector((state) => state.signin.list);
+    const dispatchSignIn = useDispatch();
+    console.log('signin: ', siginList);
+
     const getUser = async () => {
         try {
-            const url = `http://localhost:5000/auth/login/success`;
+            const url = `${process.env.REACT_APP_URL_NODEJS}/auth/login/success`;
             const { data } = await axios.get(url, { withCredentials: true });
+            console.log('gmail: ' + JSON.stringify(data.user));
             RemoveCookie('logout');
             SetCookie('logout', JSON.stringify(data.user));
             setUserGoogle(data.user);
@@ -136,23 +146,43 @@ function Header() {
                     //alert('Đăng nhập thành công');
                     setLoginResult([...loginResult, res.data]);
                     setLoading(false);
+                    const action = addNewSignIn(res.data.result);
+                    dispatchSignIn(action);
+                    toast.success('Success Notification !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
                 } else if (res.data.result === undefined) {
                     //alert('Tài khoản không tồn tại');
+                    //const lastname = `${cx('toast-message')}`;
                     setLoading(false);
+                    toast.error('Tài khoản không tồn tại', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-toastify-message')}`,
+                    });
                 } else if (res.data.password !== pass) {
                     //alert('Mật khẩu không đúng');
                     setLoading(false);
+                    toast.error('Mật khẩu không đúng', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-message')}`,
+                    });
                 }
                 console.log(process.env);
             })
             .catch(() => {
                 // handle error
                 console.log('loiiiii');
+                setLoading(false);
+                toast.error('ERROR', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    className: `${cx('toast-message')}`,
+                });
             });
     }
 
     function handleSubmitRegister(fullName, userName, email, password, image, address, birthday, phone) {
         //event.preventDefault();
+        setLoading(true);
         const formData = new FormData();
         console.log(image);
         for (let i = 0; i < image.length; i++) {
@@ -176,14 +206,25 @@ function Header() {
             .then((res) => {
                 console.log(res.data);
                 if (res.data.userName === false) {
-                    alert('Tên đăng nhập đã tồn tại!');
+                    //alert('Tên đăng nhập đã tồn tại!');
+                    toast.error('Tên đăng nhập đã tồn tại!', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-message')}`,
+                    });
+                    setLoading(false);
                 } else {
-                    alert('Đăng ký thành công');
+                    //alert('Đăng ký thành công');
+                    toast.success('Đăng ký thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-message')}`,
+                    });
+                    setLoading(false);
                     setSingUpAvtice((prev) => !prev);
                     setLoginAvtice((prev) => prev);
                 }
             })
             .catch(() => {
+                setLoading(false);
                 console.log('loi insert');
             });
     }
@@ -232,7 +273,8 @@ function Header() {
                                         <Image
                                             className={cx('user-avatar')}
                                             src={
-                                                JSON.parse(GetCookie('usrin')).image ||
+                                                process.env.REACT_APP_URL_NODEJS_IMAGE +
+                                                    JSON.parse(GetCookie('usrin')).image ||
                                                 process.env.REACT_APP_URL_IMAGE_AVATAR
                                             }
                                             alt=""
@@ -269,13 +311,20 @@ function Header() {
                         onResult={handleSubmitLogin}
                         Loading={loading}
                     />
+                    <ToastContainer />
                 </>
             )}
             {signUpAvtice === true && GetCookie('usrin') == null && (
                 <>
-                    <SignUp onClickSignUp={handleCloseSignUp} onClick={handleClose} onRegister={handleSubmitRegister} />
+                    <SignUp
+                        onClickSignUp={handleCloseSignUp}
+                        onClick={handleClose}
+                        onRegister={handleSubmitRegister}
+                        Loading={loading}
+                    />
                 </>
             )}
+            <ToastContainer />
         </>
     );
 }

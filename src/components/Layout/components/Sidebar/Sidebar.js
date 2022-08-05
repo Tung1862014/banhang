@@ -20,9 +20,9 @@ const cx = classNames.bind(styles);
 
 function Sidebar() {
     //const [menuIcon, setMenuIcon] = useState(false);
-    const handleClickClose = () => {
-        console.log(document.querySelector('#sidebar-menu').interHTML);
-    };
+    // const handleClickClose = () => {
+    //     console.log(document.querySelector('#sidebar-menu').interHTML);
+    // };
     return (
         <aside className={cx('wrapper')}>
             <nav className={cx('menu-icon')}>
@@ -42,7 +42,7 @@ function Sidebar() {
                             to={config.routes.home}
                             icon={<HomeIcon className={cx('icon-size')} />}
                             activeIcon={<HomeActiveIcon className={cx('icon-size')} />}
-                            onClick={() => handleClickClose()}
+                            //onClick={() => handleClickClose()}
                         />
                         <MenuItem
                             title="Sản Phẩm"
@@ -50,7 +50,7 @@ function Sidebar() {
                             icon={<UserGroupIcon className={cx('icon-size')} />}
                             activeIcon={<UserGroupActiveIcon className={cx('icon-size')} />}
                             // onClick={() => setClickMenu(false)}
-                            onClick={() => handleClickClose()}
+                            //onClick={() => handleClickClose()}
                         />
                         <MenuItem
                             title="Phụ kiện"

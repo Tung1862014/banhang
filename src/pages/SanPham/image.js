@@ -11,7 +11,7 @@ function Image(props) {
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    const itemsPerPage = 3;
+    const itemsPerPage = 4;
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -26,7 +26,7 @@ function Image(props) {
     };
 
     return (
-        <>
+        <div className={cx('wapper')}>
             <Detail currentItems={currentItems} />
             <ReactPaginate
                 breakLabel="..."
@@ -42,7 +42,7 @@ function Image(props) {
                 nextLinkClassName={cx('page-num')}
                 activeLinkClassName={cx('active')}
             />
-        </>
+        </div>
     );
 }
 
