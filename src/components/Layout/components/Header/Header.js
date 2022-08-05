@@ -87,14 +87,14 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Setting',
-            href: `${process.env.REACT_APP_URL}/user/setting`,
+            href: `${process.env.REACT_APP_URL_FRONTEND}/user/setting`,
             separate: true,
             setting: true,
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
-            href: process.env.REACT_APP_URL,
+            href: process.env.REACT_APP_URL_FRONTEND,
             separate: true,
             onclick: () => RemoveCookie('usrin'),
         },

@@ -151,7 +151,10 @@ function Setting() {
                     toast.success('Update Successfully ', {
                         position: toast.POSITION.TOP_RIGHT,
                     });
-                    setTimeout(() => window.open(`${process.env.REACT_APP_URL}/user/setting`, '_self', 1), 5000);
+                    setTimeout(
+                        () => window.open(`${process.env.REACT_APP_URL_FRONTEND}/user/setting`, '_self', 1),
+                        5000,
+                    );
                 } else {
                     setLoading(false);
                     console.log('Loi: ' + JSON.stringify(res.data));
