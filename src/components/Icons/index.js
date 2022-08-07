@@ -210,7 +210,7 @@ export const LiveActiveIcon = ({ width = '3.2rem', height = '3.2rem', className 
         ></path>
     </svg>
 );
-export const CloseIcon = ({ width = '2.2rem', height = '2.2rem', className }) => (
+export const CloseIcon = ({ width = '2.6rem', height = '2.6rem', className }) => (
     <svg
         className={className}
         width={width}

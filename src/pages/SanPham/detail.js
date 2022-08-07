@@ -11,7 +11,15 @@ function Detail({ currentItems }) {
         RemoveCookie('detail');
         SetCookie('detail', JSON.stringify(id));
     };
-
+    function formatCash(str) {
+        return str
+            .toString()
+            .split('')
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + '.') + prev;
+            });
+    }
     return (
         <div className={cx('images')}>
             {currentItems.map((image) => {
@@ -31,7 +39,11 @@ function Detail({ currentItems }) {
                         <div className={cx('card-body')}>
                             <h3 className={cx('card-title')}>{image.nameProduct}</h3>
                             <strong className={cx('card-text')}>
-                                {image.money}₫ <small>-{image.promotion}%</small>
+                                <small className={cx('card-money')}>{formatCash(image.money)}₫ </small>
+                                <small>-{image.promotion}%</small>
+                            </strong>
+                            <strong className={cx('card-text')}>
+                                <small>{formatCash(image.money * ((100 - image.promotion) / 100))}₫ </small>
                             </strong>
                             <p className={cx('item-gift')}>Tặng PMH 4 triệu, Gói Samsung Care+ 4.5 triệu, Trả góp 0%</p>
                         </div>

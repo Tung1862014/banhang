@@ -8,7 +8,7 @@ import Search from '../Search';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEarthAsia, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faEarthAsia, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { CartIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
@@ -85,9 +85,9 @@ function Header() {
     const userMenu = [
         ...MENU_ITEMS,
         {
-            icon: <FontAwesomeIcon icon={faSignOut} />,
+            icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Setting',
-            href: `${process.env.REACT_APP_URL_FRONTEND}/user/setting`,
+            to: `/user/setting`,
             separate: true,
             setting: true,
         },
@@ -273,8 +273,7 @@ function Header() {
                                         <Image
                                             className={cx('user-avatar')}
                                             src={
-                                                process.env.REACT_APP_URL_NODEJS_IMAGE +
-                                                    JSON.parse(GetCookie('usrin')).image ||
+                                                JSON.parse(GetCookie('usrin')).image ||
                                                 process.env.REACT_APP_URL_IMAGE_AVATAR
                                             }
                                             alt=""

@@ -14,51 +14,56 @@ import styles from './Sidebar.module.scss';
 import config from '~/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-//mport { useState } from 'react';
+//import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
-    //const [menuIcon, setMenuIcon] = useState(false);
-    // const handleClickClose = () => {
-    //     console.log(document.querySelector('#sidebar-menu').interHTML);
-    // };
+    // const [menuIcon, setMenuIcon] = useState(false);
+    const handleClickClose = () => {
+        console.log(document.querySelector('#sidebar-menu').interHTML);
+        const icon_menu_close = document.getElementById('menu-mobile-input');
+        const input_close = document.querySelector('#sidebar-menu');
+        icon_menu_close.onclick = () => input_close;
+    };
     return (
         <aside className={cx('wrapper')}>
             <nav className={cx('menu-icon')}>
                 <label htmlFor="menu-mobile-input" className={cx('menu-mobile-input')}>
-                    <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon icon={faBars} className={cx('menu-mobile-input-icon')} />
                 </label>
                 <input type="checkbox" hidden className={cx('sidebar-menu')} id="menu-mobile-input" />
 
                 {/* {menuIcon && clickMenu && ( */}
-                <div className={cx('wrapper-icon')}>
+                <div id="menu-mobile-input" className={cx('wrapper-icon')}>
                     <label htmlFor="menu-mobile-input">
                         <CloseIcon className={cx('icon-close')} />
                     </label>
-                    <Menu>
-                        <MenuItem
-                            title="Trang Chủ"
-                            to={config.routes.home}
-                            icon={<HomeIcon className={cx('icon-size')} />}
-                            activeIcon={<HomeActiveIcon className={cx('icon-size')} />}
-                            //onClick={() => handleClickClose()}
-                        />
-                        <MenuItem
-                            title="Sản Phẩm"
-                            to={config.routes.sanpham}
-                            icon={<UserGroupIcon className={cx('icon-size')} />}
-                            activeIcon={<UserGroupActiveIcon className={cx('icon-size')} />}
-                            // onClick={() => setClickMenu(false)}
-                            //onClick={() => handleClickClose()}
-                        />
-                        <MenuItem
-                            title="Phụ kiện"
-                            to={config.routes.phukien}
-                            icon={<LiveIcon className={cx('icon-size')} />}
-                            activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
-                        />
-                    </Menu>
+                    <div className={cx('menu-sidebar')}>
+                        <Menu>
+                            <MenuItem
+                                title="Trang Chủ"
+                                to={config.routes.home}
+                                icon={<HomeIcon className={cx('icon-size')} />}
+                                activeIcon={<HomeActiveIcon className={cx('icon-size')} />}
+                                onclick={handleClickClose}
+                            />
+                            <MenuItem
+                                title="Sản Phẩm"
+                                to={config.routes.sanpham}
+                                icon={<UserGroupIcon className={cx('icon-size')} />}
+                                activeIcon={<UserGroupActiveIcon className={cx('icon-size')} />}
+                                // onClick={() => setClickMenu(false)}
+                                onclick={handleClickClose}
+                            />
+                            <MenuItem
+                                title="Phụ kiện"
+                                to={config.routes.phukien}
+                                icon={<LiveIcon className={cx('icon-size')} />}
+                                activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
+                            />
+                        </Menu>
+                    </div>
                 </div>
             </nav>
             {/* )} */}

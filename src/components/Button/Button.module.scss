@@ -1,4 +1,7 @@
 @media only screen and (max-width: 739px) {
+    a[href] {
+        color: #161823;
+    }
     .wrapper {
         display: inline-flex;
         align-items: center;
@@ -107,6 +110,9 @@
 }
 
 @media only screen and (min-width: 740px) {
+    a[href] {
+        color: #161823;
+    }
     .wrapper {
         display: inline-flex;
         align-items: center;

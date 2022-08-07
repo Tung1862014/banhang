@@ -1,0 +1,72 @@
+@media only screen and (max-width: 768px) {
+    .wapper {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .wapper {
+        --font-family-beautifull: 'Muli', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--default-layout-width);
+        height: 50px;
+        background-color: rgb(135, 216, 155);
+    }
+
+    .inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 1.8rem;
+        max-width: var(--default-layout-width);
+        width: 700px;
+        height: 40px;
+    }
+
+    .home {
+        font-family: var(--font-family-beautifull);
+        &:hover {
+            color: #fe2c55;
+        }
+    }
+
+    .menu-list {
+        width: 750px;
+        height: 150px;
+        padding: 10px 15px;
+        background-color: #fff;
+        box-shadow: 0 1px 11px 0px rgba(101, 95, 95, 0.2);
+    }
+
+    .menu-popper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-flow: wrap;
+    }
+
+    .menu-body {
+        font-size: 1.8rem;
+        font-family: var(--font-family);
+        margin-right: 10px;
+        border-radius: 4px;
+        height: 30px;
+        padding: 2px;
+        box-shadow: 0px 2px 8px rgba(22, 24, 35, 0.12);
+
+        &:hover {
+            color: #fe2c55;
+            background-color: rgba(22, 24, 35, 0.12);
+        }
+    }
+
+    .product {
+        font-family: var(--font-family-beautifull);
+        &:hover {
+            color: #fe2c55;
+        }
+    }
+}

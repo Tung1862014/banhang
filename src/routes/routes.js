@@ -17,7 +17,7 @@ const publicRoutes = [
     { path: config.routes.phukien, component: PhuKien },
     { path: '/giohang', component: GioHang, layout: HeaderOnly },
     { path: '/sanpham/@:idSP', component: Detail },
-    { path: '/user/setting', component: Setting, layout: HeaderOnly },
+    { path: '/user/setting', component: Setting },
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
 ];

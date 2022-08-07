@@ -26,7 +26,7 @@ function MenuItem({ data, onClick }) {
                     <span className={cx('menu-title')}>Logout</span>
                 </button>
             ) : data.setting ? (
-                <Button className={classes} leftIcon={data.icon} href={data.href} onClick={onClick}>
+                <Button className={classes} leftIcon={data.icon} to={data.to} onClick={onClick}>
                     {data.title}
                 </Button>
             ) : (

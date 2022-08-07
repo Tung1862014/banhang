@@ -36,9 +36,7 @@ function Setting() {
     const [userEmail, setUserEmail] = useState(JSON.parse(GetCookie('usrin')).email);
     const [userPassword, setUserPassword] = useState(JSON.parse(GetCookie('usrin')).password);
     const [repeatPassword, setRepeatPassword] = useState(JSON.parse(GetCookie('usrin')).password);
-    const [imageValue, setImageValue] = useState(
-        process.env.REACT_APP_URL_NODEJS_IMAGE + JSON.parse(GetCookie('usrin')).image,
-    );
+    const [imageValue, setImageValue] = useState(JSON.parse(GetCookie('usrin')).image);
     const [address, setAddress] = useState(JSON.parse(GetCookie('usrin')).address);
     const [birthday, setBirthday] = useState(YMD);
     const [phone, setPhone] = useState(JSON.parse(GetCookie('usrin')).phone);
@@ -301,7 +299,7 @@ function Setting() {
                                     name="choose-file"
                                     type="file"
                                     valueImage={showImage}
-                                    image={imageValue}
+                                    image={imageValue || process.env.REACT_APP_URL_IMAGE_AVATAR}
                                     check={true}
                                     accept="image/*"
                                     hidden
