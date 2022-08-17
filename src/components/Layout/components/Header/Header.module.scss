@@ -40,8 +40,13 @@
     }
 
     .action-btn {
-        position: relative;
         display: none;
+    }
+
+    .action-btn-cart {
+        position: relative;
+        right: 10px;
+        display: flex;
         color: #161823;
 
         font-size: 1rem;
@@ -61,12 +66,12 @@
     .badge {
         position: absolute;
         top: -3px;
-        right: 0px;
-        padding: 0px 6px;
-        height: 2rem;
-        line-height: 2rem;
+        right: 3px;
+        padding: 0px 3px;
+        height: 1.7rem;
+        line-height: 1.7rem;
         border-radius: 10px;
-        font-size: 1.4rem;
+        font-size: 1rem;
         font-weight: 600;
         color: var(--white);
         font-family: 'ProximaNova', sans-serif;
@@ -126,7 +131,8 @@
         cursor: pointer;
     }
 
-    .action-btn {
+    .action-btn,
+    .action-btn-cart {
         position: relative;
         display: flex;
         color: #161823;

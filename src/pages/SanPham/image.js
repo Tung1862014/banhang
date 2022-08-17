@@ -42,7 +42,7 @@ function Image(props) {
     };
 
     return (
-        <div className={cx('wapper')}>
+        <div className={cx('wrapper')}>
             <div className={cx('info-product')}>
                 <strong>
                     <h3>Danh Sách Nổi Bật</h3>

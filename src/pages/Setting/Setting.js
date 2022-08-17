@@ -18,7 +18,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 function Setting() {
-    const dateValue = new Date(JSON.parse(GetCookie('usrin')).birthday);
+    const dateValue = new Date(JSON.parse(GetCookie('usrin')).Ngaysinh);
     let day = dateValue.getDate();
     let month = dateValue.getMonth() + 1;
     let year = dateValue.getFullYear();
@@ -31,16 +31,16 @@ function Setting() {
         YMD = year + '-' + month + '-' + day;
     }
 
-    const [fullName, setFullName] = useState(JSON.parse(GetCookie('usrin')).fullName);
+    const [fullName, setFullName] = useState(JSON.parse(GetCookie('usrin')).Hoten);
     //const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState(JSON.parse(GetCookie('usrin')).email);
+    const [userEmail, setUserEmail] = useState(JSON.parse(GetCookie('usrin')).Email);
     const [userPassword, setUserPassword] = useState(JSON.parse(GetCookie('usrin')).password);
     const [repeatPassword, setRepeatPassword] = useState(JSON.parse(GetCookie('usrin')).password);
     const [imageValue, setImageValue] = useState(JSON.parse(GetCookie('usrin')).image);
-    const [address, setAddress] = useState(JSON.parse(GetCookie('usrin')).address);
+    const [address, setAddress] = useState('Can Tho');
     const [birthday, setBirthday] = useState(YMD);
-    const [phone, setPhone] = useState(JSON.parse(GetCookie('usrin')).phone);
-    const [checkEmail, setCheckEmail] = useState(JSON.parse(GetCookie('usrin')).email ? true : false);
+    const [phone, setPhone] = useState(JSON.parse(GetCookie('usrin')).Sodt);
+    const [checkEmail, setCheckEmail] = useState(JSON.parse(GetCookie('usrin')).Email ? true : false);
     const [blur, setBlur] = useState(false);
     const [testPassword, setTestPassword] = useState(JSON.parse(GetCookie('usrin')).password.length > 6 ? true : false);
     const [checkPassword, setCheckPassword] = useState(false);
@@ -297,6 +297,7 @@ function Setting() {
                                     className5="img-preview-setting-show"
                                     title="Chọn ảnh đại diện"
                                     name="choose-file"
+                                    idname="choose-file"
                                     type="file"
                                     valueImage={showImage}
                                     image={imageValue || process.env.REACT_APP_URL_IMAGE_AVATAR}

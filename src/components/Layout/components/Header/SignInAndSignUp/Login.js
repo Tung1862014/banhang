@@ -8,16 +8,17 @@ import Menu from './Menu';
 import MenuItem from './Menu/MenuItem';
 // import jwt_decode from 'jwt-decode';
 // import SetCookie from '~/components/Hook/SetCookies';
-import RemoveCookie from '~/components/Hook/RemoveCookies';
-import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
+// import RemoveCookie from '~/components/Hook/RemoveCookies';
+// import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
-function Login({ onClickLogin, onClick, onResult, Loading }) {
+function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
     const [userName, setUserName] = useState('');
     const [passValue, setPassValue] = useState('');
+    const [checkSeller, setCheckSeller] = useState(false);
     //const userObjectCookie = GetCookie('userGoogle') || {};
 
     //const [userGoogle, setUserGoogle] = useState(userObjectCookie);
@@ -50,6 +51,7 @@ function Login({ onClickLogin, onClick, onResult, Loading }) {
 
     const user = useDebounce(userName, 500);
     const pass = useDebounce(passValue, 500);
+    const seller = useDebounce(checkSeller, 100);
 
     const handleUserName = (e) => {
         setUserName(e.target.value);
@@ -59,10 +61,10 @@ function Login({ onClickLogin, onClick, onResult, Loading }) {
         setPassValue(e.target.value);
     };
 
-    const google = () => {
-        RemoveCookie('err');
-        window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/google`, '_self');
-    };
+    // const google = () => {
+    //     RemoveCookie('err');
+    //     window.open(`${process.env.REACT_APP_URL_NODEJS}/auth/google`, '_self');
+    // };
     // function handleCallbackResponse(response) {
     //     //console.log('Encoded JWT ID tooken: ' + response.credential);
     //     var userObject = jwt_decode(response.credential);
@@ -125,10 +127,10 @@ function Login({ onClickLogin, onClick, onResult, Loading }) {
                                 className2="form_label"
                                 className3="form_control"
                                 className4="form_message"
-                                title="Tên đăng nhập"
+                                title={checkSeller ? 'Nhập email' : 'Tên đăng nhập'}
                                 name="userName"
-                                type="text"
-                                placeholder="VD: ThanhTung"
+                                type={checkSeller ? 'email' : 'text'}
+                                placeholder={checkSeller ? 'tung1862014@gmail.com' : 'VD: ThanhTung'}
                                 onChange={(e) => handleUserName(e)}
                             />
                         </Menu>
@@ -161,18 +163,31 @@ function Login({ onClickLogin, onClick, onResult, Loading }) {
                             />
                         </Menu>
 
-                        <div id="signInDiv" className={cx('login_button-google')} onClick={google}>
+                        {/* <div id="signInDiv" className={cx('login_button-google')} onClick={google}>
                             <FontAwesomeIcon className={cx('icon')} icon={faGooglePlus} />
                             Tiếp tục với Google
+                        </div> */}
+
+                        <div className={cx('check-seller')}>
+                            <input type="checkbox" id="seller" onChange={() => setCheckSeller((prev) => !prev)} />
+                            <label htmlFor="seller" className={cx('seller')}>
+                                Đăng nhập với tư cách người bán
+                            </label>
                         </div>
 
-                        <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user)}>
+                        <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user, seller)}>
                             {'Đăng nhập'}
                         </Button>
                         <div className={cx('sign-header')}>
                             <div>Already have an account? </div>
                             <span className={cx('loginLink-header')} onClick={onClick}>
                                 Sign up
+                            </span>
+                        </div>
+                        <div className={cx('sign-header')}>
+                            <div>Already have an account? </div>
+                            <span className={cx('loginLink-header')} onClick={onClickSeller}>
+                                Đăng ký người bán
                             </span>
                         </div>
                     </div>

@@ -11,6 +11,8 @@ import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
 import { SearchIcon, VoiceActiveIcon, VoiceIcon } from '~/components/Icons';
 import VoiceSearchBox from './VoiceSearchBox';
+import SetCookie from '~/components/Hook/SetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
 //import { useReactMediaRecorder } from 'react-media-recorder';
 
 const cx = classNames.bind(styles);
@@ -28,7 +30,8 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
     const [isListening, setIsListening] = useState(false);
-    const [toLink, setToLink] = useState(false);
+    //const [toLink, setToLink] = useState(false);
+    const [check, setCheck] = useState(false);
 
     //const { startRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
 
@@ -82,12 +85,16 @@ function Search() {
                 return prev;
             }
         });
-        setShowResult(true);
+
+        if (!check) {
+            setShowResult(true);
+        }
 
         axios
-            .get(`http://localhost:5000/home?q=${debounced}`)
+            .get(`${process.env.REACT_APP_URL_NODEJS}/home?q=${debounced}`)
             .then((res) => {
                 // handle success
+
                 setSearchResult(res.data);
                 console.log(res.data);
                 setLoading(false);
@@ -96,7 +103,7 @@ function Search() {
                 // handle error
                 setLoading(false);
             });
-    }, [debounced]);
+    }, [debounced, check]);
 
     const handleClear = () => {
         setSearchValue('');
@@ -108,18 +115,29 @@ function Search() {
         setShowResult(false);
     };
 
-    const handleImage = (e) => {
-        setSearchValue(e.target.value);
-    };
+    // const handleImage = (e) => {
+
+    // };
 
     const handleClickProduct = (e) => {
-        setSearchValue(e);
-        setToLink(true);
+        RemoveCookie('detail');
+        SetCookie('detail', JSON.stringify(e.idSP));
+        setSearchValue(e.nameProduct);
+
+        setCheck(true);
     };
 
     const handleClearVoiceSearch = () => {
         setShowResult(true);
         setIsListening((prevState) => !prevState);
+    };
+
+    const handleButtonSearch = () => {
+        console.log('value: ' + JSON.stringify(searchValue));
+        setShowResult(false);
+        RemoveCookie('search');
+        SetCookie('search', JSON.stringify(searchValue));
+        window.open(`${process.env.REACT_APP_URL_FRONTEND}/search?name=${searchValue}`, '_self', 1);
     };
 
     return (
@@ -131,14 +149,15 @@ function Search() {
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
                             <h4 className={cx('search-title')}>Kết quả</h4>
-                            {searchResult.map((result, index) => (
-                                <AccountItem
-                                    key={index}
-                                    toLink={() => toLink}
-                                    data={result}
-                                    onClick={() => handleClickProduct(result.tensp)}
-                                />
-                            ))}
+                            {!check &&
+                                searchResult.map((result, index) => (
+                                    <AccountItem
+                                        key={index}
+                                        toLink={false}
+                                        data={result}
+                                        onClick={() => handleClickProduct(result)}
+                                    />
+                                ))}
                         </PopperWrapper>
                     </div>
                 )}
@@ -150,8 +169,12 @@ function Search() {
                         value={searchValue}
                         placeholder="Tìm kiếm ...."
                         multiple={'multiple'}
-                        onChange={(e) => handleImage(e)}
-                        onFocus={() => setShowResult(true)}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        onFocus={() => {
+                            setShowResult(true);
+                            setCheck(false);
+                            //setToLink(false);
+                        }}
                     />
 
                     {!!searchValue && !loading && (
@@ -163,7 +186,7 @@ function Search() {
                         <button
                             className={cx('voice')}
                             onClick={() => {
-                                setIsListening((prevState) => !prevState);
+                                setIsListening(false);
                             }}
                         >
                             <VoiceActiveIcon />
@@ -175,7 +198,7 @@ function Search() {
                             onClick={() => {
                                 //startRecording();
                                 setShowResult(false);
-                                setIsListening((prevState) => !prevState);
+                                setIsListening(true);
                             }}
                         >
                             <VoiceIcon className={cx('voiceIcon')} />
@@ -187,7 +210,7 @@ function Search() {
                     )}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                    <button className={cx('search-btn')}>
+                    <button className={cx('search-btn')} onClick={handleButtonSearch}>
                         <SearchIcon />
                     </button>
                 </div>

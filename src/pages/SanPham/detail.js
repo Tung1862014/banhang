@@ -11,6 +11,8 @@ function Detail({ currentItems }) {
         RemoveCookie('detail');
         SetCookie('detail', JSON.stringify(id));
     };
+
+    const rating = [`&#9733;`, '&#9733;', '&#9733;', '&#9733;', '&#9733;'];
     function formatCash(str) {
         return str
             .toString()
@@ -45,7 +47,15 @@ function Detail({ currentItems }) {
                             <strong className={cx('card-text')}>
                                 <small>{formatCash(image.money * ((100 - image.promotion) / 100))}₫ </small>
                             </strong>
-                            <p className={cx('item-gift')}>Tặng PMH 4 triệu, Gói Samsung Care+ 4.5 triệu, Trả góp 0%</p>
+                            <div className={cx('item-rating')}>
+                                {rating.map((rating, i) => {
+                                    if (i < 4) {
+                                        return <p className={cx('rating-color')}>&#9733;</p>;
+                                    } else {
+                                        return <p>&#9733;</p>;
+                                    }
+                                })}
+                            </div>
                         </div>
                         {/* <div key={image.id}>
                     <img className={cx('images-url')} src={image.url} alt={image.title} />

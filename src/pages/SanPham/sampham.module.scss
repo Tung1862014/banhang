@@ -1,5 +1,5 @@
 @media only screen and (max-width: 740px) {
-    .wapper {
+    .wrapper {
         display: flex;
         flex-direction: column;
         position: relative;
@@ -168,11 +168,9 @@
 }
 
 @media only screen and (min-width: 740px) {
-    .wapper {
+    .wrapper {
         position: relative;
         top: 31px;
-        width: 100%;
-        height: 100%;
     }
     .info-product {
         position: relative;
@@ -270,9 +268,16 @@
         text-decoration-line: line-through;
     }
 
-    .item-gift {
+    .item-rating {
+        display: flex;
+        flex-direction: row;
         position: relative;
         top: 5px;
+        font-size: 25px;
+        color: #ccc;
+    }
+    .rating-color {
+        color: #c1f123;
     }
 
     .pagination {

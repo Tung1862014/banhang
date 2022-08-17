@@ -12,6 +12,7 @@ function MenuItem({
     inputRef,
     title,
     name,
+    idname,
     type,
     accept,
     placeholder,
@@ -37,8 +38,8 @@ function MenuItem({
                 </label>
                 <input
                     ref={inputRef}
-                    id={name}
                     name={name}
+                    id={idname}
                     type={type}
                     accept={accept}
                     placeholder={placeholder}

@@ -1,0 +1,60 @@
+import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+import styles from './sampham.module.scss';
+import SetCookie from '~/components/Hook/SetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
+
+const cx = classNames.bind(styles);
+
+function Detail({ currentItems }) {
+    const handleDetail = (id) => {
+        RemoveCookie('detail');
+        SetCookie('detail', JSON.stringify(id));
+    };
+    function formatCash(str) {
+        return str
+            .toString()
+            .split('')
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + '.') + prev;
+            });
+    }
+    return (
+        <div className={cx('images')}>
+            {currentItems.map((image) => {
+                return (
+                    <div key={image.idSP} className={cx('card')}>
+                        <div className={cx('item-label')}>
+                            <span className={cx('lb-tragop')}>Trả góp 0%</span>
+                        </div>
+                        <Link to={`@${image.idSP}`} onClick={() => handleDetail(image.idSP)}>
+                            <img
+                                className={cx('card-img')}
+                                src={`${process.env.REACT_APP_URL_NODEJS}/images/${image.image}`}
+                                alt={image.nameProduct}
+                            />
+                        </Link>
+
+                        <div className={cx('card-body')}>
+                            <h3 className={cx('card-title')}>{image.nameProduct}</h3>
+                            <strong className={cx('card-text')}>
+                                <small className={cx('card-money')}>{formatCash(image.money)}₫ </small>
+                                <small>-{image.promotion}%</small>
+                            </strong>
+                            <strong className={cx('card-text')}>
+                                <small>{formatCash(image.money * ((100 - image.promotion) / 100))}₫ </small>
+                            </strong>
+                            <p className={cx('item-gift')}>Tặng PMH 4 triệu, Gói Samsung Care+ 4.5 triệu, Trả góp 0%</p>
+                        </div>
+                        {/* <div key={image.id}>
+                    <img className={cx('images-url')} src={image.url} alt={image.title} />
+                </div> */}
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+export default Detail;

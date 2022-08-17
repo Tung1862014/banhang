@@ -1,0 +1,149 @@
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 70px;
+    background-color: antiquewhite;
+}
+
+.setting-shop {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 30px;
+    background-color: aqua;
+}
+
+.image-setting-shop {
+    height: 220px;
+    width: 310px;
+    border-radius: 4px;
+    padding: 10px;
+}
+.image-shop-input {
+    position: relative;
+    display: flex;
+    z-index: 10;
+    height: 200px;
+    width: 290px;
+    border-radius: 4px;
+}
+
+//
+.avatar-user-establish {
+    display: flex;
+    justify-content: space-between;
+    width: 290px;
+}
+
+.avatar {
+    //background-image: url(https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207);
+    position: relative;
+    top: -25px;
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.avata-logo {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.avatar-edit-label {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.user {
+    position: relative;
+    top: 0px;
+    font-weight: 600;
+    z-index: 10;
+    width: 210px;
+}
+
+//thiet lap ho so
+.info {
+    width: 425px;
+    padding: 10px;
+}
+
+.name-shop {
+    display: flex;
+    flex-direction: column;
+
+    input {
+        height: 30px;
+        padding: 3px 3px 3px 10px;
+        outline: none;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+        margin-top: 8px;
+    }
+}
+
+.image-shop-label {
+    background: #f15d22;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    padding: 8px 15px;
+    position: relative;
+    transition: all 0.3s;
+    margin-top: 10px;
+    //vertical-align: middle;
+
+    &:hover {
+        background-color: darken(#f15d22, 10%);
+        opacity: 8;
+    }
+}
+
+.type-product {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 10px;
+}
+
+.type-product-select {
+    height: 30px;
+    padding: 3px 5px;
+    outline: none;
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);
+    margin-top: 8px;
+}
+
+.btn-submit-update {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 20px;
+}

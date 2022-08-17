@@ -53,37 +53,29 @@ function Navbar() {
                     </Link>
                 </div>
                 <div className={cx('home')}>
-                    <Link to="/" className={cx('home')}>
+                    <Link to="/gioithieu" className={cx('home')}>
                         Giới thiệu
                     </Link>
                 </div>
 
-                <Tippy
-                    interactive
-                    delay={[0, 400]}
-                    offset={[12, 8]}
-                    placement="bottom"
-                    render={(attrs) => (
-                        <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                            {/* PopperWrapper để Dựng khung menu  */}
-                            <div className={cx('menu-popper')}>{renderItems(MENU_ITEMS)}</div>
+                <div>
+                    <Tippy
+                        interactive
+                        delay={[0, 400]}
+                        offset={[12, 8]}
+                        placement="bottom"
+                        render={(attrs) => (
+                            <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+                                {/* PopperWrapper để Dựng khung menu  */}
+                                <div className={cx('menu-popper')}>{renderItems(MENU_ITEMS)}</div>
+                            </div>
+                        )}
+                        //onHide={() => setHistory((prev) => prev.slice(0, 1))}
+                    >
+                        <div className={cx('product')}>
+                            Sản phẩm <FontAwesomeIcon icon={faCaretDown} />
                         </div>
-                    )}
-                    //onHide={() => setHistory((prev) => prev.slice(0, 1))}
-                >
-                    <div className={cx('product')}>
-                        Sản phẩm <FontAwesomeIcon icon={faCaretDown} />
-                    </div>
-                </Tippy>
-                <div className={cx('home')}>
-                    <Link to="/" className={cx('home')}>
-                        Tin Tức
-                    </Link>
-                </div>
-                <div className={cx('home')}>
-                    <Link to="/" className={cx('home')}>
-                        Liện Hệ
-                    </Link>
+                    </Tippy>
                 </div>
             </div>
         </div>

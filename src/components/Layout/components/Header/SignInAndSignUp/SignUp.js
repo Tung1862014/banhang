@@ -234,6 +234,7 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
                                 className5="img-preview"
                                 title="Chọn ảnh đại diện"
                                 name="choose-file"
+                                idname="choose-file"
                                 type="file"
                                 check={false}
                                 accept="image/*"
