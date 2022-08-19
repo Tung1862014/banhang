@@ -1,18 +1,22 @@
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames/bind';
-import styles from './SellerAddProduct.module.scss';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
+import styles from './SellerUpdateProduct.module.scss';
 
 const cx = classNames.bind(styles);
 
-function SellerAddProduct() {
+function SellerUpdateProduct() {
+    const [productUpdate, setProductUpdate] = useState('');
+    const [describeUpdate, setDescribeUpdate] = useState('');
+    const [describeWeightUpdate, setDescribeWeightUpdate] = useState('');
+    const [productCategoryUpdate, setProductCategoryUpdate] = useState('');
+    const [imageUpdate, setImageUpdate] = useState('');
     const [nameProduct, setNameProduct] = useState('');
     const [coverImage, setCoverImage] = useState('');
     const [describeProduct, setDescribeProduct] = useState('');
@@ -24,16 +28,51 @@ function SellerAddProduct() {
     const [image, setImage] = useState('');
     const [imageTwo, setImageTwo] = useState('');
     const [imageThree, setImageThree] = useState('');
-    // const [takeWeight, setTakeWeight] = useState('');
+
     const [checkWeight, setCheckWeight] = useState('');
     const [checkCategory, setCheckCategory] = useState('');
 
-    // if (takeWeight !== '') {
-    //     //  console.log(takeWeight.length);
-    //     if (checkWeight) {
-    //         handleWeight(takeWeight);
-    //     }
-    // }
+    console.log(describeWeightUpdate);
+    ///take data product
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const result = pathId.slice(24);
+        // console.log('Page path is:  ' + result);
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show`, {
+                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                SP_id: result,
+            })
+            .then((res) => {
+                // console.log(res.data.result[0]);
+                if (productUpdate === '') {
+                    setProductUpdate(res.data.result[0]);
+                    setProductCategoryUpdate(res.data.category[0]);
+                }
+            })
+            .catch((err) => {});
+    }, [productUpdate]);
+
+    //Take motasanpham
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const result = pathId.slice(24);
+        // console.log('Page path is:  ' + result);
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/describe`, {
+                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                SP_id: result,
+            })
+            .then((res) => {
+                // console.log(res.data.result[0]);
+                if (productUpdate === '') {
+                    setDescribeUpdate(res.data.result[0]);
+                    setDescribeWeightUpdate(res.data.weight[0]);
+                }
+            })
+            .catch((err) => {});
+    }, [productUpdate]);
+    //console.log('Page path is ' + window.location.pathname.length);
 
     useEffect(() => {
         // setCheckWeight(false);
@@ -86,7 +125,6 @@ function SellerAddProduct() {
             selectValue.appendChild(optionValue);
         }
     }
-
     function handleCategory(takeWeight) {
         const selectValue = document.getElementById('input-category-select');
 
@@ -102,17 +140,15 @@ function SellerAddProduct() {
     function ChooseImg(e) {
         const chooseFile = document.getElementById('choose-file');
         const imgPreview = document.getElementById('img-preview-setting-show');
-        const labelImage = document.getElementById('shopee-image-manager__upload__content');
-        const iconImage = document.getElementById('shopee__icon');
+        const closeImage = document.getElementById('img-preview-setting-show__image');
         const files = chooseFile.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('image: ' + this.result);
-                labelImage.style.padding = '0px';
-                iconImage.style.display = 'none';
                 imgPreview.style.display = 'flex';
+                closeImage.style.display = 'none';
                 imgPreview.innerHTML =
                     '<img src="' +
                     this.result +
@@ -190,149 +226,6 @@ function SellerAddProduct() {
             setImageThree(e.target.files);
         }
     }
-
-    function handleSubmitAddProduct(
-        nameProduct,
-        coverImage,
-        describeProduct,
-        weight,
-        number,
-        price,
-        promotion,
-        category,
-        image,
-        imageTwo,
-        imageThree,
-    ) {
-        console.log(describeProduct);
-
-        if (nameProduct === '') {
-            toast.error('Tên sản phẩm không được bỏ trống!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (coverImage === '') {
-            toast.error('Ảnh bìa không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (describeProduct === '') {
-            toast.error('Mô tả không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (number === '') {
-            toast.error('Số lượng không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (price === '') {
-            toast.error('Giá không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (category === '') {
-            toast.error('Danh mục không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else if (image === '' || imageTwo === '' || imageThree === '') {
-            toast.error('Hình ảnh không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        } else {
-            const formData = new FormData();
-            formData.append('image', coverImage[0]);
-            formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-            formData.append('SP_ten', nameProduct);
-            formData.append('SP_soluong', number);
-            formData.append('SP_gia', price);
-            formData.append('SP_khuyenmai', promotion);
-            formData.append('DM_id', category);
-            axios({
-                method: 'POST',
-                url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add`,
-                data: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {});
-            handleDescribeProduct(describeProduct, weight);
-            setTimeout(() => handleImageProduct(image), 900);
-            setTimeout(() => handleImageProductTwo(imageTwo), 1200);
-            setTimeout(() => handleImageProductThree(imageThree), 1400);
-
-            setTimeout(() => window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/product`, '_self', 1), 5000);
-        }
-    }
-
-    function handleDescribeProduct(describeProduct, weight) {
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/describe`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                MTSP_noidung: describeProduct,
-                TL_trongluong: weight,
-            })
-            .then((res) => {})
-            .catch((err) => {});
-    }
-
-    function handleImageProduct(image) {
-        const formData = new FormData();
-        formData.append('image', image[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-        axios({
-            method: 'POST',
-            url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((res) => {})
-            .catch((err) => {});
-    }
-    function handleImageProductTwo(imageTwo) {
-        const formData = new FormData();
-        formData.append('image', imageTwo[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-        axios({
-            method: 'POST',
-            url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((res) => {})
-            .catch((err) => {});
-    }
-    function handleImageProductThree(imageThree) {
-        const formData = new FormData();
-        formData.append('image', imageThree[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-        axios({
-            method: 'POST',
-            url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((res) => {
-                toast.success('Lưu sản phẩm thành công', {
-                    position: toast.POSITION.TOP_CENTER,
-                    className: `${cx('toast-message')}`,
-                });
-            })
-            .catch((err) => {});
-    }
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('product-edit__section')}>
@@ -357,6 +250,7 @@ function SellerAddProduct() {
                                     restrictiontype="input"
                                     max="Infinity"
                                     min="-Infinity"
+                                    defaultValue={productUpdate.SP_ten}
                                     className={cx('shopee-input__input')}
                                     onChange={(e) => setNameProduct(e.target.value)}
                                 />
@@ -390,8 +284,14 @@ function SellerAddProduct() {
                             id="shopee-image-manager__upload__content"
                             className={cx('shopee-image-manager__upload__content')}
                         >
-                            <FontAwesomeIcon id="shopee__icon" icon={faCirclePlus} />
-                            <div id="img-preview-setting-show" className={cx('img-preview-setting-show')}></div>
+                            <div id="img-preview-setting-show" className={cx('img-preview-setting-show')}>
+                                <img
+                                    src={productUpdate.SP_image || '#'}
+                                    alt=""
+                                    id="img-preview-setting-show__image"
+                                    className={cx('img-preview-setting-show__image')}
+                                />
+                            </div>
                         </label>
                     </div>
                 </div>
@@ -405,7 +305,8 @@ function SellerAddProduct() {
                     <div className={cx('shopee-input shopee-input__area')}>
                         <CKEditor
                             editor={ClassicEditor}
-                            data=""
+                            data={describeUpdate.MTSP_noidung || ''}
+                            defaultValue={describeUpdate.MTSP_noidung || ''}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
                                 setDescribeProduct(data);
@@ -430,8 +331,13 @@ function SellerAddProduct() {
                                     className={cx('input-Weight')}
                                     onChange={(e) => setWeight(e.target.value)}
                                 >
-                                    <option value="" disabled hidden className={cx('input-type-weight')}>
-                                        Vui lòng chọn
+                                    <option
+                                        value={describeWeightUpdate.TL_id || ''}
+                                        disabled
+                                        hidden
+                                        className={cx('input-type-weight')}
+                                    >
+                                        {describeWeightUpdate.TL_trongluong}
                                     </option>
                                     {/* <option value="" className={cx('input-type-weight')}></option> */}
                                     {/* {takeWeight !== ''
@@ -472,6 +378,7 @@ function SellerAddProduct() {
                                             restrictiontype="input"
                                             max="Infinity"
                                             min="-Infinity"
+                                            defaultValue={productUpdate.SP_soluong}
                                             className={cx('shopee-input__input')}
                                             onChange={(e) => setNumber(e.target.value)}
                                         />
@@ -505,6 +412,7 @@ function SellerAddProduct() {
                                             restrictiontype="input"
                                             max="Infinity"
                                             min="-Infinity"
+                                            defaultValue={productUpdate.SP_gia}
                                             className={cx('shopee-input__input')}
                                             onChange={(e) => setPrice(e.target.value)}
                                         />
@@ -533,6 +441,7 @@ function SellerAddProduct() {
                                             restrictiontype="input"
                                             max="Infinity"
                                             min="-Infinity"
+                                            defaultValue={productUpdate.SP_khuyenmai}
                                             className={cx('shopee-input__input')}
                                             onChange={(e) => setPromotion(e.target.value)}
                                         />
@@ -558,8 +467,13 @@ function SellerAddProduct() {
                                     defaultValue={''}
                                     onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <option value="" disabled hidden className={cx('input-type-weight')}>
-                                        Vui lòng chọn
+                                    <option
+                                        value={productCategoryUpdate.DM_id}
+                                        disabled
+                                        hidden
+                                        className={cx('input-type-weight')}
+                                    >
+                                        {productCategoryUpdate.DM_danhmuc}
                                     </option>
                                     {/* <option value="" className={cx('input-type-weight')}></option>
                                     <option value="1" className={cx('input-type-weight')}>
@@ -687,21 +601,21 @@ function SellerAddProduct() {
             <div className={cx('btn-save-product')}>
                 <div
                     className={cx('btn-save')}
-                    onClick={() =>
-                        handleSubmitAddProduct(
-                            nameProduct,
-                            coverImage,
-                            describeProduct,
-                            weight,
-                            number,
-                            price,
-                            promotion,
-                            category,
-                            image,
-                            imageTwo,
-                            imageThree,
-                        )
-                    }
+                    // onClick={() =>
+                    //     handleSubmitAddProduct(
+                    //         nameProduct,
+                    //         coverImage,
+                    //         describeProduct,
+                    //         weight,
+                    //         number,
+                    //         price,
+                    //         promotion,
+                    //         category,
+                    //         image,
+                    //         imageTwo,
+                    //         imageThree,
+                    //     )
+                    // }
                 >
                     <div className={cx('btn-save-text')}>Lưu</div>
                 </div>
@@ -711,4 +625,4 @@ function SellerAddProduct() {
     );
 }
 
-export default SellerAddProduct;
+export default SellerUpdateProduct;

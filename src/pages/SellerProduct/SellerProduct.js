@@ -16,7 +16,7 @@ function SellerProduct() {
 
     useEffect(() => {
         axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/seller/product/show/all`, {
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/all`, {
                 NB_id: JSON.parse(GetCookie('seller')).NB_id,
                 SP_trangthai: checkOutOfStock || '',
             })
