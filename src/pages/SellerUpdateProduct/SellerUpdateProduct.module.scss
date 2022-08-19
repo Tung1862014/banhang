@@ -209,7 +209,7 @@
     border-radius: 4px;
     -webkit-transition: border-color 0.2s ease-in-out;
     transition: border-color 0.2s ease-in-out;
-    display: none;
+    display: flex;
 }
 
 .shopee-image-manager__upload__content-details {
@@ -219,7 +219,7 @@
     max-height: 80px;
     margin: 0 16px 40px 0;
     position: relative;
-    padding: 32px;
+    padding: 0px;
     overflow: hidden;
     background-color: #fafafa;
     border: 1px dashed #d8d8d8;
@@ -228,6 +228,14 @@
     transition: border-color 0.2s ease-in-out;
     cursor: pointer;
     z-index: 10;
+}
+
+.img-preview-setting-show__image1 {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-preview-setting-show-details-two {
@@ -243,7 +251,7 @@
     border-radius: 4px;
     -webkit-transition: border-color 0.2s ease-in-out;
     transition: border-color 0.2s ease-in-out;
-    display: none;
+    display: flex;
 }
 
 .shopee-image-manager__upload__content-details-two {
@@ -253,7 +261,7 @@
     max-height: 80px;
     margin: 0 16px 40px 0;
     position: relative;
-    padding: 32px;
+    padding: 0px;
     overflow: hidden;
     background-color: #fafafa;
     border: 1px dashed #d8d8d8;
@@ -262,6 +270,14 @@
     transition: border-color 0.2s ease-in-out;
     cursor: pointer;
     z-index: 10;
+}
+
+.img-preview-setting-show__image2 {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .img-preview-setting-show-details-three {
@@ -277,7 +293,7 @@
     border-radius: 4px;
     -webkit-transition: border-color 0.2s ease-in-out;
     transition: border-color 0.2s ease-in-out;
-    display: none;
+    display: flex;
 }
 
 .shopee-image-manager__upload__content-details-three {
@@ -287,7 +303,7 @@
     max-height: 80px;
     margin: 0 16px 40px 0;
     position: relative;
-    padding: 32px;
+    padding: 0px;
     overflow: hidden;
     background-color: #fafafa;
     border: 1px dashed #d8d8d8;
@@ -296,6 +312,14 @@
     transition: border-color 0.2s ease-in-out;
     cursor: pointer;
     z-index: 10;
+}
+
+.img-preview-setting-show__image3 {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 //button

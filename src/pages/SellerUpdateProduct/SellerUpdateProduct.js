@@ -16,6 +16,9 @@ function SellerUpdateProduct() {
     const [describeUpdate, setDescribeUpdate] = useState('');
     const [describeWeightUpdate, setDescribeWeightUpdate] = useState('');
     const [productCategoryUpdate, setProductCategoryUpdate] = useState('');
+    const [image1Update, setImage1Update] = useState('');
+    const [image2Update, setImage2Update] = useState('');
+    const [image3Update, setImage3Update] = useState('');
     const [imageUpdate, setImageUpdate] = useState('');
     const [nameProduct, setNameProduct] = useState('');
     const [coverImage, setCoverImage] = useState('');
@@ -72,6 +75,27 @@ function SellerUpdateProduct() {
             })
             .catch((err) => {});
     }, [productUpdate]);
+
+    //Take image
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const result = pathId.slice(24);
+        // console.log('Page path is:  ' + result);
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/image`, {
+                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                SP_id: result,
+            })
+            .then((res) => {
+                // console.log(res.data.result[0]);
+                if (image1Update === '') {
+                    setImage1Update(res.data.image1);
+                    setImage2Update(res.data.image2);
+                    setImage3Update(res.data.image3);
+                }
+            })
+            .catch((err) => {});
+    }, [image1Update]);
     //console.log('Page path is ' + window.location.pathname.length);
 
     useEffect(() => {
@@ -161,17 +185,16 @@ function SellerUpdateProduct() {
     function ChooseImgDetails(e) {
         const chooseFile = document.getElementById('choose-file-details');
         const imgPreview = document.getElementById('img-preview-setting-show-details');
-        const labelImage = document.getElementById('shopee-image-manager__upload__content-details');
-        const iconImage = document.getElementById('shopee-close-icon');
+        const closeImage = document.getElementById('img-preview-setting-show__image1');
+
         const files = chooseFile.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('imageString: ' + typeof this.result);
-                labelImage.style.padding = '0px';
-                iconImage.style.display = 'none';
                 imgPreview.style.display = 'flex';
+                closeImage.style.display = 'none';
                 imgPreview.innerHTML =
                     '<img src="' +
                     this.result +
@@ -184,16 +207,14 @@ function SellerUpdateProduct() {
     function ChooseImgDetailsTwo(e) {
         const chooseFile = document.getElementById('choose-file-details-two');
         const imgPreview = document.getElementById('img-preview-setting-show-details-two');
-        const labelImage = document.getElementById('shopee-image-manager__upload__content-details-two');
-        const iconImage = document.getElementById('shopee-close-icon-two');
+        const closeImage = document.getElementById('img-preview-setting-show__image2');
         const files = chooseFile.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('imageString: ' + typeof this.result);
-                labelImage.style.padding = '0px';
-                iconImage.style.display = 'none';
+                closeImage.style.display = 'none';
                 imgPreview.style.display = 'flex';
                 imgPreview.innerHTML =
                     '<img src="' +
@@ -207,17 +228,15 @@ function SellerUpdateProduct() {
     function ChooseImgDetailsThree(e) {
         const chooseFile = document.getElementById('choose-file-details-three');
         const imgPreview = document.getElementById('img-preview-setting-show-details-three');
-        const labelImage = document.getElementById('shopee-image-manager__upload__content-details-three');
-        const iconImage = document.getElementById('shopee-close-icon-three');
+        const closeImage = document.getElementById('img-preview-setting-show__image3');
         const files = chooseFile.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('imageString: ' + typeof this.result);
-                labelImage.style.padding = '0px';
-                iconImage.style.display = 'none';
                 imgPreview.style.display = 'flex';
+                closeImage.style.display = 'none';
                 imgPreview.innerHTML =
                     '<img src="' +
                     this.result +
@@ -226,6 +245,117 @@ function SellerUpdateProduct() {
             setImageThree(e.target.files);
         }
     }
+
+    function handleSubmitUpdateProduct(
+        nameProduct,
+        coverImage,
+        describeProduct,
+        weight,
+        number,
+        price,
+        promotion,
+        category,
+        image,
+        imageTwo,
+        imageThree,
+    ) {
+        console.log(
+            nameProduct,
+            coverImage,
+            describeProduct,
+            weight,
+            number,
+            price,
+            promotion,
+            category,
+            image,
+            imageTwo,
+            imageThree,
+        );
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
+        if (coverImage === '') {
+            axios
+                .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
+                    SP_id: resultId,
+                    NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                    SP_ten: nameProduct,
+                    SP_soluong: number,
+                    SP_gia: price,
+                    SP_khuyenmai: promotion,
+                    DM_id: category,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        } else {
+            const formData = new FormData();
+            formData.append('image', coverImage[0]);
+            formData.append('SP_id', resultId);
+            formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+            formData.append('SP_ten', nameProduct);
+            formData.append('SP_soluong', number);
+            formData.append('SP_gia', price);
+            formData.append('SP_khuyenmai', promotion);
+            formData.append('DM_id', category);
+            axios({
+                method: 'POST',
+                url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {});
+        }
+
+        if (describeProduct !== '') {
+            handleDescribeProduct(describeProduct, weight);
+        }
+        if (image !== '') {
+            setTimeout(() => handleImageProduct(image), 900);
+        }
+        if (imageTwo !== '') {
+            setTimeout(() => handleImageProduct(imageTwo), 1200);
+        }
+        if (imageThree !== '') {
+            setTimeout(() => handleImageProduct(imageThree), 1400);
+        }
+    }
+
+    function handleDescribeProduct(describeProduct, weight) {
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/update/describe`, {
+                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                MTSP_noidung: describeProduct,
+                TL_trongluong: weight,
+            })
+            .then((res) => {})
+            .catch((err) => {});
+    }
+
+    function handleImageProduct(image) {
+        const formData = new FormData();
+        formData.append('image', image[0]);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/update/image/subphoto`,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((res) => {})
+            .catch((err) => {});
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('product-edit__section')}>
@@ -516,15 +646,17 @@ function SellerUpdateProduct() {
                                         id="shopee-image-manager__upload__content-details"
                                         className={cx('shopee-image-manager__upload__content-details')}
                                     >
-                                        <FontAwesomeIcon
-                                            icon={faCirclePlus}
-                                            id="shopee-close-icon"
-                                            className={cx('shopee-close-icon')}
-                                        />
                                         <div
                                             id="img-preview-setting-show-details"
                                             className={cx('img-preview-setting-show-details')}
-                                        ></div>
+                                        >
+                                            <img
+                                                src={image1Update.HA_image || '#'}
+                                                alt=""
+                                                id="img-preview-setting-show__image1"
+                                                className={cx('img-preview-setting-show__image1')}
+                                            />
+                                        </div>
                                     </label>
                                 </div>
                             </div>
@@ -549,15 +681,17 @@ function SellerUpdateProduct() {
                                         id="shopee-image-manager__upload__content-details-two"
                                         className={cx('shopee-image-manager__upload__content-details-two')}
                                     >
-                                        <FontAwesomeIcon
-                                            icon={faCirclePlus}
-                                            id="shopee-close-icon-two"
-                                            className={cx('shopee-close-icon-two')}
-                                        />
                                         <div
                                             id="img-preview-setting-show-details-two"
                                             className={cx('img-preview-setting-show-details-two')}
-                                        ></div>
+                                        >
+                                            <img
+                                                src={image2Update.HA_image || '#'}
+                                                alt=""
+                                                id="img-preview-setting-show__image2"
+                                                className={cx('img-preview-setting-show__image2')}
+                                            />
+                                        </div>
                                     </label>
                                 </div>
                             </div>
@@ -582,15 +716,17 @@ function SellerUpdateProduct() {
                                         id="shopee-image-manager__upload__content-details-three"
                                         className={cx('shopee-image-manager__upload__content-details-three')}
                                     >
-                                        <FontAwesomeIcon
-                                            icon={faCirclePlus}
-                                            id="shopee-close-icon-three"
-                                            className={cx('shopee-close-icon-three')}
-                                        />
                                         <div
                                             id="img-preview-setting-show-details-three"
                                             className={cx('img-preview-setting-show-details-three')}
-                                        ></div>
+                                        >
+                                            <img
+                                                src={image3Update.HA_image || '#'}
+                                                alt=""
+                                                id="img-preview-setting-show__image3"
+                                                className={cx('img-preview-setting-show__image3')}
+                                            />
+                                        </div>
                                     </label>
                                 </div>
                             </div>
@@ -601,23 +737,23 @@ function SellerUpdateProduct() {
             <div className={cx('btn-save-product')}>
                 <div
                     className={cx('btn-save')}
-                    // onClick={() =>
-                    //     handleSubmitAddProduct(
-                    //         nameProduct,
-                    //         coverImage,
-                    //         describeProduct,
-                    //         weight,
-                    //         number,
-                    //         price,
-                    //         promotion,
-                    //         category,
-                    //         image,
-                    //         imageTwo,
-                    //         imageThree,
-                    //     )
-                    // }
+                    onClick={() =>
+                        handleSubmitUpdateProduct(
+                            nameProduct,
+                            coverImage,
+                            describeProduct,
+                            weight,
+                            number,
+                            price,
+                            promotion,
+                            category,
+                            image,
+                            imageTwo,
+                            imageThree,
+                        )
+                    }
                 >
-                    <div className={cx('btn-save-text')}>Lưu</div>
+                    <div className={cx('btn-save-text')}>Cập nhật</div>
                 </div>
             </div>
             <ToastContainer />
