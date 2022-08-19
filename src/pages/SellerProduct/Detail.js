@@ -1,10 +1,12 @@
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SellerProduct.module.scss';
 
 const cx = classNames.bind(styles);
 
 function Detail({ currentItems }) {
+    const [checkBox, setCheckBox] = useState('');
     //const rating = [`&#9733;`, '&#9733;', '&#9733;', '&#9733;', '&#9733;'];
     function formatCash(str) {
         return str
@@ -14,6 +16,34 @@ function Detail({ currentItems }) {
             .reduce((prev, next, index) => {
                 return (index % 3 ? next : next + '.') + prev;
             });
+    }
+    function handleChecked(checkid) {
+        //const checkedId = document.getElementById(`checkId${checkid}`);
+        // for (let i = 0; i < checkBox.length; i++) {
+        console.log(checkBox);
+        if (checkBox === '') {
+            setCheckBox(checkid.toString());
+        } else {
+            const arr = checkBox.split(',');
+            let locationId;
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] === checkid.toString()) {
+                    locationId = i;
+                }
+            }
+            if (locationId === undefined) {
+                let idcheck = checkBox + ',' + checkid;
+                setCheckBox(idcheck);
+                return;
+            } else {
+                arr.splice(locationId, 1);
+
+                setCheckBox(arr.join(','));
+            }
+            console.log(arr);
+        }
+        //}
     }
     return (
         <div className={cx('product-list-setion')}>
@@ -38,8 +68,10 @@ function Detail({ currentItems }) {
                                             <input
                                                 type="checkbox"
                                                 name="id[]"
+                                                id={`checkId${pro.SP_id}`}
                                                 className={cx('checkbox')}
                                                 value="<?=$bien['idsp']?>"
+                                                onChange={() => handleChecked(pro.SP_id)}
                                             />
                                         </td>
                                         <td className={cx('td_table-name')}>

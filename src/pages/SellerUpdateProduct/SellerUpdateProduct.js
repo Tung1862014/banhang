@@ -1,11 +1,11 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerUpdateProduct.module.scss';
 
@@ -19,7 +19,7 @@ function SellerUpdateProduct() {
     const [image1Update, setImage1Update] = useState('');
     const [image2Update, setImage2Update] = useState('');
     const [image3Update, setImage3Update] = useState('');
-    const [imageUpdate, setImageUpdate] = useState('');
+    //const [imageUpdate, setImageUpdate] = useState('');
     const [nameProduct, setNameProduct] = useState('');
     const [coverImage, setCoverImage] = useState('');
     const [describeProduct, setDescribeProduct] = useState('');
@@ -259,94 +259,131 @@ function SellerUpdateProduct() {
         imageTwo,
         imageThree,
     ) {
-        console.log(
-            nameProduct,
-            coverImage,
-            describeProduct,
-            weight,
-            number,
-            price,
-            promotion,
-            category,
-            image,
-            imageTwo,
-            imageThree,
-        );
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(24);
-        if (coverImage === '') {
-            axios
-                .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
-                    SP_id: resultId,
-                    NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                    SP_ten: nameProduct,
-                    SP_soluong: number,
-                    SP_gia: price,
-                    SP_khuyenmai: promotion,
-                    DM_id: category,
+        if (window.confirm('Bạn đồng ý thay đổi') === true) {
+            const pathId = window.location.pathname.toString();
+            const resultId = pathId.slice(24);
+            if (coverImage === '') {
+                axios
+                    .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
+                        SP_id: resultId,
+                        NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                        SP_ten: nameProduct,
+                        SP_soluong: number,
+                        SP_gia: price,
+                        SP_khuyenmai: promotion,
+                        DM_id: category,
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+                    .catch((err) => {
+                        console.log('loi');
+                    });
+            } else {
+                const formData = new FormData();
+                formData.append('image', coverImage[0]);
+                formData.append('SP_id', resultId);
+                formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+                formData.append('SP_ten', nameProduct);
+                formData.append('SP_soluong', number);
+                formData.append('SP_gia', price);
+                formData.append('SP_khuyenmai', promotion);
+                formData.append('DM_id', category);
+                axios({
+                    method: 'POST',
+                    url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
+                    data: formData,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 })
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    console.log('loi');
-                });
-        } else {
-            const formData = new FormData();
-            formData.append('image', coverImage[0]);
-            formData.append('SP_id', resultId);
-            formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-            formData.append('SP_ten', nameProduct);
-            formData.append('SP_soluong', number);
-            formData.append('SP_gia', price);
-            formData.append('SP_khuyenmai', promotion);
-            formData.append('DM_id', category);
-            axios({
-                method: 'POST',
-                url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
-                data: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {});
-        }
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+                    .catch((err) => {});
+            }
 
-        if (describeProduct !== '') {
-            handleDescribeProduct(describeProduct, weight);
-        }
-        if (image !== '') {
-            setTimeout(() => handleImageProduct(image), 900);
-        }
-        if (imageTwo !== '') {
-            setTimeout(() => handleImageProduct(imageTwo), 1200);
-        }
-        if (imageThree !== '') {
-            setTimeout(() => handleImageProduct(imageThree), 1400);
+            if (describeProduct !== '') {
+                handleDescribeProduct(describeProduct, weight);
+            }
+            if (image !== '') {
+                handleImageProduct(image);
+            }
+            if (imageTwo !== '') {
+                handleImageTwoProduct(imageTwo);
+            }
+            if (imageThree !== '') {
+                handleImageThreeProduct(imageThree);
+            }
         }
     }
 
     function handleDescribeProduct(describeProduct, weight) {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
         axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/update/describe`, {
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/describe`, {
+                SP_id: resultId,
                 NB_id: JSON.parse(GetCookie('seller')).NB_id,
                 MTSP_noidung: describeProduct,
-                TL_trongluong: weight,
+                TL_id: weight,
             })
-            .then((res) => {})
+            .then((res) => {
+                console.log(res.data);
+                toast.success('Lưu sản phẩm thành công', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            })
             .catch((err) => {});
     }
 
     function handleImageProduct(image) {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
         const formData = new FormData();
         formData.append('image', image[0]);
+        formData.append('SP_id', resultId);
         formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
         axios({
             method: 'POST',
-            url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/update/image/subphoto`,
+            url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto1`,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((res) => {})
+            .catch((err) => {});
+    }
+    function handleImageTwoProduct(imageTwo) {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
+        const formData = new FormData();
+        formData.append('image', imageTwo[0]);
+        formData.append('SP_id', resultId);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto2`,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+            .then((res) => {})
+            .catch((err) => {});
+    }
+    function handleImageThreeProduct(imageThree) {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
+        const formData = new FormData();
+        formData.append('image', imageThree[0]);
+        formData.append('SP_id', resultId);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto3`,
             data: formData,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -451,6 +488,9 @@ function SellerUpdateProduct() {
                     <div className={cx('attribute-select-list')}>
                         <div className={cx('grid-detail')}>
                             <div className={cx('edit-label')} data-education-trigger-key="name">
+                                <div className={cx('mandatory')}>
+                                    <span className={cx('mandatory-icon')}>*</span>
+                                </div>{' '}
                                 <span>Trọng lượng</span>
                             </div>
                             <div className="edit-input">
@@ -553,6 +593,9 @@ function SellerUpdateProduct() {
                                 </div>
                             </div>
                             <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <div className={cx('mandatory')}>
+                                    <span className={cx('mandatory-icon')}>*</span>
+                                </div>
                                 <span>Khuyến mãi</span>
                             </div>
                             <div className={cx('edit-input-detail-money-promotion')}>
