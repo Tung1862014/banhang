@@ -87,7 +87,7 @@ function SellerProduct() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <div data-v-d8c4d7c4="" className={cx('tabs__tab2')} onClick={handlerClickAllAction}>
-                                    Đang hoạt động
+                                    Đang hoạt động<span className={cx('tab-badge')}>( {number - status} )</span>
                                 </div>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
@@ -96,7 +96,7 @@ function SellerProduct() {
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
                                 >
-                                    Hết hàng<span className={cx('tab-badge')}>{status}</span>
+                                    Hết hàng<span className={cx('tab-badge')}> ( {status} )</span>
                                 </div>{' '}
                             </div>
                         </div>{' '}
@@ -122,7 +122,7 @@ function SellerProduct() {
                                     <path d="M17.5 2.5h-3v12h-12v3h12v12h3v-12h12v-3h-12v-12z"></path>
                                 </svg>
                             </i>
-                            <span>Thêm 1 sản phẩm mới</span>
+                            <span className={cx('shopee-add-title')}>Thêm 1 sản phẩm mới</span>
                         </Link>
                     </div>
                 </div>

@@ -69,6 +69,12 @@ function Sidebar() {
                                 icon={<LiveIcon className={cx('icon-size')} />}
                                 activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
                             />
+                            <MenuItem
+                                title="Quản lý danh mục và trong lượng"
+                                to={'/seller/categoryandweight'}
+                                icon={<LiveIcon className={cx('icon-size')} />}
+                                activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
+                            />
                         </Menu>
                     </div>
                 </div>

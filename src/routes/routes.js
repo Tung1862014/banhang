@@ -16,6 +16,7 @@ import SellerSetting from '~/pages/SellerSetting';
 import SellerProduct from '~/pages/SellerProduct';
 import SellerAddProduct from '~/pages/SellerAddProduct';
 import SellerUpdateProduct from '~/pages/SellerUpdateProduct';
+import SellerCategoryAndWeight from '~/pages/SellerCategoryAndWeight';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -34,6 +35,7 @@ const publicRoutes = [
     { path: '/seller/product', component: SellerProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/insert', component: SellerAddProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/update/@:id', component: SellerUpdateProduct, layout: DefaultLayoutSeller },
+    { path: '/seller/categoryandweight', component: SellerCategoryAndWeight, layout: DefaultLayoutSeller },
 ];
 
 const privateRoutes = [];

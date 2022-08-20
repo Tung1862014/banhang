@@ -1,6 +1,6 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SellerProduct.module.scss';
 
