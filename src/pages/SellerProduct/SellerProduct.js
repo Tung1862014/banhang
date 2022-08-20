@@ -43,6 +43,9 @@ function SellerProduct() {
         tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = 'red';
+        tab1.style.fontFamily = 'Helvetica';
+        tab2.style.fontFamily = 'Helvetica';
+        tab3.style.fontFamily = 'Helvetica';
         setCheckOutOfStock('');
     };
     const handlerClickAllAction = () => {
@@ -52,6 +55,9 @@ function SellerProduct() {
         tab2.style.color = 'red';
         tab3.style.color = '';
         tab1.style.color = '';
+        tab1.style.fontFamily = 'Helvetica';
+        tab2.style.fontFamily = 'Helvetica';
+        tab3.style.fontFamily = 'Helvetica';
         setCheckOutOfStock('trangthaiaction');
     };
     const handlerClickAllOutOfStock = () => {
@@ -61,6 +67,9 @@ function SellerProduct() {
         tab2.style.color = '';
         tab3.style.color = 'red';
         tab1.style.color = '';
+        tab1.style.fontFamily = 'Helvetica';
+        tab2.style.fontFamily = 'Helvetica';
+        tab3.style.fontFamily = 'Helvetica';
         setCheckOutOfStock('trangthai');
     };
 

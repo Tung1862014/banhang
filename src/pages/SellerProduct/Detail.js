@@ -1,5 +1,6 @@
+import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SellerProduct.module.scss';
 
@@ -7,7 +8,9 @@ const cx = classNames.bind(styles);
 
 function Detail({ currentItems }) {
     const [checkBox, setCheckBox] = useState('');
+    const [checkDelete, setCheckDelete] = useState(false);
     //const rating = [`&#9733;`, '&#9733;', '&#9733;', '&#9733;', '&#9733;'];
+    console.log(checkBox);
     function formatCash(str) {
         return str
             .toString()
@@ -17,9 +20,59 @@ function Detail({ currentItems }) {
                 return (index % 3 ? next : next + '.') + prev;
             });
     }
+
+    function handleDeleteAll() {
+        let checkValue = checkBox.split(',');
+        for (let i = 0; i < checkValue.length; i++) {
+            console.log('check: ', checkValue[i]);
+            axios
+                .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/delete`, {
+                    SP_id: checkValue[i],
+                })
+
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch(() => {
+                    console.log('loi khong the delete product');
+                });
+        }
+        setCheckDelete(false);
+        window.open('http://localhost:3000/seller/product', '_self', 1);
+    }
+
+    const handleDelete = () => {
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        if (!checkDelete && checkBox !== '') {
+            deleteModalContainer.style.display = 'flex';
+            // deleteModalContainer.style.position = 'fixed';
+            // deleteModalBox.style.display = 'flex';
+        }
+    };
+
+    const handleDeleteHuy = () => {
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        // deleteModalBox.style.display = 'none';
+    };
+
+    const handleDeleteAgree = () => {
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        setCheckDelete(true);
+        // deleteModalBox.style.display = 'none';
+        handleDeleteAll();
+    };
+
     function handleChecked(checkid) {
         //const checkedId = document.getElementById(`checkId${checkid}`);
         // for (let i = 0; i < checkBox.length; i++) {
+        const checkAll = document.getElementById('checkAll');
         console.log(checkBox);
         if (checkBox === '') {
             setCheckBox(checkid.toString());
@@ -35,9 +88,15 @@ function Detail({ currentItems }) {
             if (locationId === undefined) {
                 let idcheck = checkBox + ',' + checkid;
                 setCheckBox(idcheck);
+                if (checkAll.checked === false && idcheck.length === 11) {
+                    checkAll.checked = true;
+                }
                 return;
             } else {
                 arr.splice(locationId, 1);
+                if (checkAll.checked === true) {
+                    checkAll.checked = false;
+                }
 
                 setCheckBox(arr.join(','));
             }
@@ -45,8 +104,60 @@ function Detail({ currentItems }) {
         }
         //}
     }
+
+    function handleCheckAll() {
+        const checkAll = document.getElementById('checkAll');
+        let idcheck;
+        for (let i = 0; i < currentItems.length; i++) {
+            let checkedId = document.getElementById(`checkId${currentItems[i].SP_id}`);
+            //console.log(checkedId.checked);
+            if (checkAll.checked) {
+                checkedId.checked = true;
+                if (idcheck === undefined) {
+                    idcheck = currentItems[i].SP_id;
+                } else {
+                    idcheck = idcheck + ',' + currentItems[i].SP_id;
+                }
+            } else {
+                checkedId.checked = false;
+                idcheck = '';
+                // console.log(checkAll.checked);
+            }
+            setCheckBox(idcheck);
+        }
+        console.log(checkAll.checked);
+    }
+
     return (
         <div className={cx('product-list-setion')}>
+            <div id="delete-modal__container" className={cx('delete-modal__container')}>
+                <div id="delete-modal__box" className={cx('delete-modal__box')}>
+                    <div className={cx('delete-modal__content')}>
+                        <div className={cx('delete-modal__header')}>
+                            <div className={cx('delete-modal__header-inner-confirm')}>
+                                <div className={cx('delete-modal__title')}>Xác nhận</div>
+                            </div>
+                            <div className={cx('delete-modal__header-inner-title')}>
+                                <div className={cx('delete-modal__title')}>Bạn có muốn xóa sản phẩm?</div>
+                            </div>
+                        </div>
+                        <div className={cx('delete-modal__footer')}>
+                            <div className={cx('delete-modal__footer-buttons')}>
+                                <button type="button" className={cx('delete-button--normal')} onClick={handleDeleteHuy}>
+                                    <span>Hủy</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--primary')}
+                                    onClick={handleDeleteAgree}
+                                >
+                                    <span>Đồng ý</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className={cx('product-list-container')}>
                 <div className={cx('product-list-table')}>
                     <div className={cx('shopee-table__header-container')}>
@@ -54,7 +165,13 @@ function Detail({ currentItems }) {
                             <thead>
                                 <tr className={cx('table__header')}>
                                     <td width="30">
-                                        <input type="checkbox" name="check" className="checkbox" />
+                                        <input
+                                            type="checkbox"
+                                            name="check"
+                                            id="checkAll"
+                                            className="checkbox"
+                                            onChange={() => handleCheckAll()}
+                                        />
                                     </td>
                                     <td className={cx('td_table-name')}>Tên sản phẩm</td>
                                     <td className={cx('td_table-name')}>Số lượng</td>
@@ -91,6 +208,29 @@ function Detail({ currentItems }) {
                             </thead>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div className={cx('selected-panel')}>
+                <div className={cx('selected')}>
+                    <div className={cx('selected-text')}>
+                        {checkBox.length === 0
+                            ? 0
+                            : checkBox.length === 1
+                            ? 1
+                            : checkBox.length === 3
+                            ? 2
+                            : checkBox.length === 5
+                            ? 3
+                            : checkBox.length === 7
+                            ? 4
+                            : checkBox.length === 9
+                            ? 5
+                            : 6}
+                        <span> sản phẩm đã được chọn</span>
+                    </div>
+                    <button type="button" className={cx('delete-button')} onClick={handleDelete}>
+                        <span>Xóa</span>
+                    </button>
                 </div>
             </div>
         </div>

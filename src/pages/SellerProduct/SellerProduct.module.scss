@@ -241,7 +241,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 30px;
+    top: 13px;
     font-size: 1.6rem;
     gap: 5px;
 
@@ -283,4 +283,194 @@
     .active {
         background-color: #5ab1bb;
     }
+}
+
+//btn delete
+.selected-panel {
+    display: fixed;
+    height: 64px;
+    background-color: #aae9f0;
+    box-shadow: 0 -2px 6px 0 rgba(4, 4, 4, 0.12);
+    overflow: hidden;
+}
+
+.selected {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    height: inherit;
+    font-size: 16px;
+    padding: 0px 10px;
+}
+
+.selected-text {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.delete-button {
+    margin-left: 16px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 72px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+
+    &:hover {
+        color: #fff;
+        background-color: #ee4d2d;
+    }
+}
+
+//form xac nhan delete
+.delete-modal__container {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 10;
+}
+.delete-modal__box {
+    display: flex;
+    width: 400px;
+    height: 184px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 11;
+}
+
+.delete-modal__content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 13;
+}
+
+.delete-modal__header {
+    height: 104px;
+    width: 100%;
+}
+
+.delete-modal__header-inner-confirm {
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    height: 72px;
+    overflow: hidden;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+}
+
+.delete-modal__header-inner-title {
+    height: 32px;
+    flex-grow: 1;
+    min-height: 32px;
+    padding: 0 24px;
+    overflow: auto;
+    font-size: 14px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+}
+
+.delete-modal__footer {
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    padding: 24px;
+    overflow: hidden;
+}
+
+.delete-modal__footer-buttons {
+    display: inline-flex;
+    float: right;
+}
+
+.delete-button--normal {
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    align-items: center;
+    -webkit-box-pack: center;
+    display: inline-flex;
+    -webkit-box-align: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 72px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+
+    &:hover {
+        background-color: rgb(229, 228, 228);
+    }
+}
+
+.delete-button--primary {
+    margin-left: 16px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #fff;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    align-items: center;
+    -webkit-box-pack: center;
+    display: inline-flex;
+    -webkit-box-align: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 72px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
 }
