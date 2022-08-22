@@ -11,7 +11,6 @@ import {
 import Menu from './Menu';
 import MenuItem from './Menu/MenuItem';
 import styles from './SidebarSeller.module.scss';
-import config from '~/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 //import { useState } from 'react';
@@ -65,7 +64,7 @@ function Sidebar() {
                             />
                             <MenuItem
                                 title="Đơn hàng"
-                                to={config.routes.phukien}
+                                to={'/seller/bill'}
                                 icon={<LiveIcon className={cx('icon-size')} />}
                                 activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
                             />
