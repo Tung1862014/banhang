@@ -2,3 +2,178 @@
     size: auto;
     margin: 0mm;
 }
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.inner {
+    width: 755px;
+    padding: 20px;
+    display: flex;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+}
+
+.bill-print-detail {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-print {
+    height: 60px;
+    width: 100%;
+    padding: 0px 30px;
+    border: 2px dashed rgba(0, 0, 0, 0.09);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shop-print-infomation {
+    max-height: 400px;
+    height: 150px;
+    width: 100%;
+    padding: 0px 10px;
+    border-left: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    display: flex;
+}
+
+.from-seller {
+    flex: inherit;
+    padding: 10px 10px 10px 0px;
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+}
+
+.to-print,
+.from-print {
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.from-user {
+    flex: inherit;
+    padding: 10px 0px 10px 10px;
+}
+
+.conten-product {
+    max-height: 400px;
+    height: 150px;
+    width: 100%;
+    padding: 10px 10px;
+    border-left: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+}
+
+.content-title {
+    position: relative;
+    font-weight: 700;
+}
+
+.content-product-detail {
+    display: flex;
+    position: relative;
+    margin-top: 10px;
+}
+
+.stt-product {
+    position: relative;
+    margin-right: 5px;
+}
+
+.number-product {
+    position: relative;
+    margin-left: 5px;
+}
+
+.regulations-shop {
+    max-height: 400px;
+    height: 60px;
+    width: 100%;
+    padding: 10px 10px;
+    border-left: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    display: flex;
+}
+
+.content-regulations-shop {
+    font-weight: 600;
+    padding-right: 10px;
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+}
+
+.date-order {
+    flex: 1;
+    padding-left: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+}
+
+.date-content {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.money-user {
+    max-height: 400px;
+    height: 150px;
+    width: 100%;
+    padding: 10px 10px;
+    border-left: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    display: flex;
+}
+
+.money-user-details {
+    display: flex;
+    padding-right: 10px;
+    flex-direction: column;
+}
+
+.money-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 130px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.signature-user {
+    width: 250px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    border: 2px solid rgb(2, 0, 0);
+}
+
+.signature-title {
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+}
+.signature-content {
+    width: 200px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerDetailBill.module.scss';
@@ -97,11 +96,11 @@ function SellerDetailBill() {
             });
     }
 
-    const handlePrintBill = () => {
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(21);
-        window.open(`http://localhost:3000/seller/bill/detail/print/@${resultId}`, '_blank', 1);
-    };
+    // const handlePrintBill = () => {
+    //     const pathId = window.location.pathname.toString();
+    //     const resultId = pathId.slice(21);
+    //     window.open(`http://localhost:3000/seller/bill/detail/print/@${resultId}`, '_blank', 1);
+    // };
     return (
         <>
             {information !== ''
@@ -431,9 +430,14 @@ function SellerDetailBill() {
                               </div>
                           ) : (
                               <div className={cx('grid-right')}>
-                                  <button className={cx('add-action')} onClick={handlePrintBill}>
+                                  <a
+                                      href={`http://localhost:3000/seller/bill/detail/print/@${info.DH_id}`}
+                                      target={'_blank'}
+                                      rel="noreferrer"
+                                      className={cx('add-action')}
+                                  >
                                       <span className={cx('shopee-add-title')}>In hóa đơn</span>
-                                  </button>
+                                  </a>
                               </div>
                           )}
                           <ToastContainer />
