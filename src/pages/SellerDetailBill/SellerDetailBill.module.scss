@@ -1,0 +1,477 @@
+.card-style {
+    padding: 20px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    margin: 16px 0;
+    background: #fff;
+    border-radius: 4px;
+    position: relative;
+}
+
+.detail-card__content {
+    color: #333;
+    line-height: 1;
+    font-size: 14px;
+    line-height: 22px;
+    //color: #999;
+}
+
+.row-grid-section {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: start;
+    align-items: flex-start;
+    align-content: normal;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+}
+
+.col-detail {
+    flex: 0 0 50%;
+    width: 50%;
+    max-width: 50%;
+}
+
+.header-detail {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.icon-detail {
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.order-detail-title-icon {
+    width: 16px;
+    height: 16px;
+    color: #ee4d2d;
+    margin-right: 16px;
+    display: inline-block;
+    line-height: 0;
+    fill: currentColor;
+}
+
+.name-detail {
+    color: #333;
+}
+
+.body-detail {
+    margin-left: 32px;
+    margin-top: 12px;
+    color: #666;
+    line-height: normal;
+}
+
+.section {
+    margin-top: 24px;
+}
+
+.image-container {
+    display: flex;
+    -webkit-box-align: center;
+    //-ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    margin: 10px;
+}
+
+.image-combine {
+    position: relative;
+    width: 46px;
+    height: 46px;
+}
+
+.image-item-1 {
+    width: 50%;
+    height: 50%;
+    float: left;
+    margin: 0;
+    border: 1px solid #e8e8e8;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+}
+
+.image-item-detail {
+    width: 46px;
+    height: 46px;
+    border-radius: 5px;
+}
+
+.image-desc {
+    margin-left: 8px;
+    color: #666;
+}
+
+//thongtinthanhtoan
+.product-list {
+    position: relative;
+    margin-left: 30px;
+}
+
+.product-list-item-head {
+    background: #fafafa;
+    line-height: 30px;
+    height: 30px;
+    color: #8c8c8c;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.no-detail {
+    flex: 0 0 40px;
+    text-align: center;
+    align-self: center;
+    padding: 0 8px;
+}
+
+.product-detail-item {
+    padding: 0 8px;
+    flex: 1;
+}
+
+.price-detail {
+    flex: 0 0 120px;
+    text-align: right;
+    position: relative;
+    padding: 0 8px;
+}
+
+.qty-detail {
+    flex: 0 0 67px;
+    text-align: right;
+    padding: 0 8px;
+}
+
+.subtotal-detail {
+    flex: 0 0 78px;
+    text-align: right;
+    padding: 0 8px;
+}
+
+.product-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.product-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    line-height: 30px;
+}
+
+.image-item-detail-product {
+    flex: 0 0 60px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    margin-right: 10px;
+    position: relative;
+    border: 1px solid #e8e8e8;
+}
+
+.product-detail-title {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.product-name-title {
+    width: 389px;
+    line-height: 1.2;
+    flex-grow: 1;
+    word-break: break-all;
+}
+
+.product-meta {
+    font-size: 12px;
+    color: #8c8c8c;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+//tongtien
+.payment-info-details {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.income-container {
+    display: flex;
+}
+
+.income-label-column {
+    flex: 1;
+    padding-right: 16px;
+    min-width: 0;
+    text-align: right;
+}
+
+.income-item-subtotal {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin: 10px 0 6px;
+    min-height: 24px;
+    line-height: 24px;
+}
+
+.income-label {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    font-size: 14px;
+    color: #404040;
+}
+
+.question-popover--light {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+}
+.shopee-popover__ref {
+    display: flex;
+}
+
+.shopee-icon {
+    width: 100% !important;
+    height: 100% !important;
+    color: #bababa;
+    box-sizing: content-box;
+    display: inline-block;
+    line-height: 0;
+    fill: currentColor;
+}
+
+.income-item-total-subtotal {
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    color: #8c8c8c;
+    margin: 10px 0 6px;
+    min-height: 24px;
+}
+
+.income-value-column {
+    position: relative;
+    padding: 0 8px 0 24px;
+    max-width: 660px;
+    min-width: 140px;
+    text-align: right;
+}
+
+.income-item-income-subtotal {
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    color: #8c8c8c;
+    margin: 10px 0 6px;
+    min-height: 24px;
+}
+.income-value-big-total {
+    color: #ee4d2d;
+    font-size: 24px;
+    font-weight: 500;
+    flex: 1;
+    max-width: 660px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+//Chuanbi
+
+.grid-right {
+    display: flex;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    align-content: flex-start;
+    -webkit-box-pack: end;
+    position: relative;
+    margin-bottom: 20px;
+    width: 180px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.add-action {
+    margin-left: 16px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #fff;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    height: 40px;
+    min-width: 80px;
+    padding: 0 16px;
+    font-size: 14px;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    user-select: none;
+}
+
+.add-action:hover {
+    opacity: 8;
+}
+
+//form xac nhan delete
+.delete-modal__container {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 10;
+}
+.delete-modal__box {
+    display: flex;
+    width: 400px;
+    height: 184px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 11;
+}
+
+.delete-modal__content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 13;
+}
+
+.delete-modal__header {
+    height: 104px;
+    width: 100%;
+}
+
+.delete-modal__header-inner-confirm {
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    height: 72px;
+    overflow: hidden;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+}
+
+.delete-modal__header-inner-title {
+    height: 32px;
+    flex-grow: 1;
+    min-height: 32px;
+    padding: 0 24px;
+    overflow: auto;
+    font-size: 14px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+}
+
+.delete-modal__footer {
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    padding: 24px;
+    overflow: hidden;
+}
+
+.delete-modal__footer-buttons {
+    display: inline-flex;
+    float: right;
+}
+
+.delete-button--normal {
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    align-items: center;
+    -webkit-box-pack: center;
+    display: inline-flex;
+    -webkit-box-align: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 72px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+
+    &:hover {
+        background-color: rgb(229, 228, 228);
+    }
+}
+
+.delete-button--primary {
+    margin-left: 16px;
+    font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    color: #fff;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    align-items: center;
+    -webkit-box-pack: center;
+    display: inline-flex;
+    -webkit-box-align: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 72px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+}

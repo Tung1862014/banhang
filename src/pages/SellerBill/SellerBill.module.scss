@@ -453,8 +453,9 @@
 .shopee-popover__ref {
     display: inline-block;
 }
+
 .shopee-button--normal {
-    color: #2673dd;
+    color: #2673dd !important;
     background-color: transparent;
     border-color: transparent;
     height: unset;
@@ -472,4 +473,56 @@
     display: inline-block;
     line-height: 0;
     fill: currentColor;
+}
+
+//pag
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 8px;
+    margin-bottom: 19px;
+    font-size: 1.6rem;
+    gap: 5px;
+
+    .page-num {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+
+    .page-num-fisrt {
+        padding: 5px 5px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+
+    .page-num-last {
+        padding: 5px 14px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+    .active {
+        background-color: #5ab1bb;
+    }
 }

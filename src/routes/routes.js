@@ -18,6 +18,8 @@ import SellerAddProduct from '~/pages/SellerAddProduct';
 import SellerUpdateProduct from '~/pages/SellerUpdateProduct';
 import SellerCategoryAndWeight from '~/pages/SellerCategoryAndWeight';
 import SellerBill from '~/pages/SellerBill';
+import SellerDetailBill from '~/pages/SellerDetailBill';
+import SellerPrintBill from '~/pages/SellerPrintBill';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -38,6 +40,8 @@ const publicRoutes = [
     { path: '/seller/product/update/@:id', component: SellerUpdateProduct, layout: DefaultLayoutSeller },
     { path: '/seller/categoryandweight', component: SellerCategoryAndWeight, layout: DefaultLayoutSeller },
     { path: '/seller/bill', component: SellerBill, layout: DefaultLayoutSeller },
+    { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
+    { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
 ];
 
 const privateRoutes = [];
