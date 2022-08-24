@@ -9,12 +9,11 @@
 }
 
 .inner {
-    width: 755px;
+    width: 650px;
     padding: 20px;
-    display: flex;
-    background-color: #fff;
-    -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
-    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    // background-color: #fff;
+    // -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    // box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
 }
 
 .bill-print-detail {
@@ -24,10 +23,14 @@
 }
 
 .header-print {
-    height: 60px;
+    height: 80px;
     width: 100%;
-    padding: 0px 30px;
-    border: 2px dashed rgba(0, 0, 0, 0.09);
+    max-width: 650px;
+    padding: 0px 10px;
+    border-top: 2px solid #333;
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,8 +41,8 @@
     height: 150px;
     width: 100%;
     padding: 0px 10px;
-    border-left: 2px dashed rgba(0, 0, 0, 0.09);
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
     border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
     display: flex;
 }
@@ -64,11 +67,11 @@
 
 .conten-product {
     max-height: 400px;
-    height: 150px;
+    height: 250px;
     width: 100%;
     padding: 10px 10px;
-    border-left: 2px dashed rgba(0, 0, 0, 0.09);
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
     border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
 }
 
@@ -95,11 +98,11 @@
 
 .regulations-shop {
     max-height: 400px;
-    height: 60px;
+    height: 90px;
     width: 100%;
     padding: 10px 10px;
-    border-left: 2px dashed rgba(0, 0, 0, 0.09);
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
     border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
     display: flex;
 }
@@ -111,7 +114,8 @@
 }
 
 .date-order {
-    flex: 1;
+    flex: 1 1 1;
+    width: 200px;
     padding-left: 10px;
     justify-content: center;
     align-items: center;
@@ -136,9 +140,9 @@
     height: 150px;
     width: 100%;
     padding: 10px 10px;
-    border-left: 2px dashed rgba(0, 0, 0, 0.09);
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
-    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
     display: flex;
 }
 
