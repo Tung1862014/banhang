@@ -24,14 +24,336 @@
 
 .title {
     color: #333;
-    font-size: 22px;
+    font-size: 1.8rem;
     font-weight: 500;
     line-height: 25px;
-    margin-bottom: 6px;
     font-weight: var(--font-weight);
 }
 
 .subtitle {
     color: #999;
+    font-size: 1.8rem;
+    position: relative;
+    margin-left: 3px;
+}
+
+//content
+.reviews-tabs-module-normal {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.shopee-tabs__nav {
+    margin-bottom: 16px;
+    position: relative;
     font-size: 14px;
+    line-height: 16px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.shopee-tabs__nav:before {
+    border-width: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+.shopee-tabs__nav-warp {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+.shopee-tabs__nav-tabs {
+    display: flex;
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+    transform: translateX(0px);
+}
+.shopee-tabs__nav-tab-all {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab-5 {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab-4 {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab-3 {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab-2 {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab-1 {
+    padding: 7px 16px;
+    border: 1px solid #e5e5e5;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 1.8rem;
+}
+
+.shopee-tabs__nav-tab:not(:last-child) {
+    margin-right: -1px;
+}
+
+.shopee-tabs__nav-tab:first-child {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.table-header {
+    display: flex;
+    margin-bottom: 16px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: #f2f2f2;
+    font-size: 14px;
+    color: #888;
+    height: 34px;
+    border-radius: 4px;
+}
+
+.column-information {
+    text-align: center;
+    width: 250px;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.column-evaluation-content {
+    text-align: center;
+    -webkit-box-flex: 1;
+    flex: 1;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.column-reply {
+    text-align: center;
+    width: 250px;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-right: 24px;
+    color: #999;
+}
+
+//comments
+
+.comments {
+    position: relative;
+}
+
+.comment {
+    margin-bottom: 0px;
+}
+
+.table {
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+    padding: 10px 10px;
+}
+
+.top {
+    display: flex;
+    background: #fafafa;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.user {
+    margin-left: 24px;
+    color: #999;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.bottom {
+    display: flex;
+}
+
+.column-information-product {
+    border-right: 1px solid #e8e8e8;
+    padding: 24px;
+    width: 250px;
+    min-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.product-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.product-name {
+    width: 152px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.product-variation {
+    line-height: 18px;
+    color: #888;
+    word-break: break-all;
+}
+
+.comment-info {
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.review-rate-disabled {
+    width: 100px;
+    height: 100%;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+    display: flex;
+}
+
+.shopee-rate-star {
+    margin-left: 0;
+    margin-right: 6px;
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.shopee-rate-star__front {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.shopee-icon1 {
+    display: flex;
+    width: 14px;
+    height: 100%;
+    color: #ffbf00;
+}
+.shopee-icon2 {
+    display: flex;
+    width: 14px;
+    height: 100%;
+    color: #ffbf00;
+}
+
+.shopee-icon3 {
+    display: flex;
+    width: 14px;
+    height: 100%;
+    color: #ffbf00;
+}
+
+.shopee-icon4 {
+    display: flex;
+    width: 14px;
+    height: 100%;
+    color: #e8e8e8;
+}
+
+.shopee-icon5 {
+    display: flex;
+    width: 14px;
+    height: 100%;
+    color: #e8e8e8;
 }
