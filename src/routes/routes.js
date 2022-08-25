@@ -20,6 +20,7 @@ import SellerCategoryAndWeight from '~/pages/SellerCategoryAndWeight';
 import SellerBill from '~/pages/SellerBill';
 import SellerDetailBill from '~/pages/SellerDetailBill';
 import SellerPrintBill from '~/pages/SellerPrintBill';
+import SellerShopReviews from '~/pages/SellerShopReviews';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -42,6 +43,7 @@ const publicRoutes = [
     { path: '/seller/bill', component: SellerBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
+    { path: '/seller/shop/reviews', component: SellerShopReviews, layout: DefaultLayoutSeller },
 ];
 
 const privateRoutes = [];

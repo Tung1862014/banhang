@@ -210,29 +210,36 @@ function Detail({ currentItems }) {
                     </div>
                 </div>
             </div>
-            <div className={cx('selected-panel')}>
-                <div className={cx('selected')}>
-                    <div className={cx('selected-text')}>
-                        {checkBox.length === 0
-                            ? 0
-                            : checkBox.length === 1
-                            ? 1
-                            : checkBox.length === 3
-                            ? 2
-                            : checkBox.length === 5
-                            ? 3
-                            : checkBox.length === 7
-                            ? 4
-                            : checkBox.length === 9
-                            ? 5
-                            : 6}
-                        <span> sản phẩm đã được chọn</span>
+            {currentItems[0] !== undefined && (
+                <div className={cx('selected-panel')}>
+                    <div className={cx('selected')}>
+                        <div className={cx('selected-text')}>
+                            {checkBox.length === 0
+                                ? 0
+                                : checkBox.length === 1
+                                ? 1
+                                : checkBox.length === 3
+                                ? 2
+                                : checkBox.length === 5
+                                ? 3
+                                : checkBox.length === 7
+                                ? 4
+                                : checkBox.length === 9
+                                ? 5
+                                : 6}
+                            <span> sản phẩm đã được chọn</span>
+                        </div>
+                        <button type="button" className={cx('delete-button')} onClick={handleDelete}>
+                            <span>Xóa</span>
+                        </button>
                     </div>
-                    <button type="button" className={cx('delete-button')} onClick={handleDelete}>
-                        <span>Xóa</span>
-                    </button>
                 </div>
-            </div>
+            )}
+            {currentItems[0] === undefined ? (
+                <div className={cx('bill-title-no-product')}>Không có sản phẩm nào.</div>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

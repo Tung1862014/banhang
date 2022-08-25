@@ -1,4 +1,6 @@
 // import axios from 'axios';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 // import { useState } from 'react';
@@ -137,11 +139,34 @@ function Detail({ bill }) {
                                         <div className={cx('shopee-popover__content')}></div>
                                     </div>
                                 </div>{' '}
+                                {bill.DH_trangthai === 2 && (
+                                    <div className={cx('shopee-popover--light')}>
+                                        <div className={cx('shopee-popover__ref')}>
+                                            <a
+                                                href={`http://localhost:3000/seller/bill/detail/print/@${bill.DH_id}`}
+                                                target={'_blank'}
+                                                rel="noreferrer"
+                                                className={cx('shopee-button--normal')}
+                                            >
+                                                <FontAwesomeIcon className={cx('shopee-icon')} icon={faPrint} />
+                                                <span>In hóa đơn</span>
+                                            </a>
+                                        </div>{' '}
+                                        <div
+                                            className={cx(
+                                                'shopee-popper shopee-popover__popper shopee-popover__popper--light with-arrow',
+                                            )}
+                                        >
+                                            <div className={cx('shopee-popover__content')}></div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             ))}
+            {bill[0] === undefined ? <div className={cx('bill-title-no-product')}>Không có đơn hàng nào.</div> : ''}
         </div>
     );
 }

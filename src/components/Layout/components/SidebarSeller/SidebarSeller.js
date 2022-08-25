@@ -74,6 +74,12 @@ function Sidebar() {
                                 icon={<LiveIcon className={cx('icon-size')} />}
                                 activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
                             />
+                            <MenuItem
+                                title="Đánh giá shop"
+                                to={'/seller/shop/reviews'}
+                                icon={<LiveIcon className={cx('icon-size')} />}
+                                activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
+                            />
                         </Menu>
                     </div>
                 </div>

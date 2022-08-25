@@ -422,13 +422,13 @@ function SellerDetailBill() {
                                   </div>
                               </div>
                           </div>
-                          {info.DH_trangthai === 1 ? (
+                          {info.DH_trangthai === 1 && info.DH_trangthai !== 3 ? (
                               <div className={cx('grid-right')}>
                                   <button className={cx('add-action')} onClick={handlePrepare}>
                                       <span className={cx('shopee-add-title')}>Chuẩn bị đơn hàng</span>
                                   </button>
                               </div>
-                          ) : (
+                          ) : info.DH_trangthai !== 3 ? (
                               <div className={cx('grid-right')}>
                                   <a
                                       href={`http://localhost:3000/seller/bill/detail/print/@${info.DH_id}`}
@@ -439,6 +439,8 @@ function SellerDetailBill() {
                                       <span className={cx('shopee-add-title')}>In hóa đơn</span>
                                   </a>
                               </div>
+                          ) : (
+                              ''
                           )}
                           <ToastContainer />
                       </div>
