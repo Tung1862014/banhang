@@ -1,15 +1,50 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerShopReviews.module.scss';
 
 const cx = classNames.bind(styles);
 
 function SellerShopReviews() {
+    const [star, setStar] = useState('');
+    const [evaluate, setEvaluate] = useState('');
+    const [star5Value, setStar5Value] = useState('');
+    const [star4Value, setStar4Value] = useState('');
+    const [star3Value, setStar3Value] = useState('');
+    const [star2Value, setStar2Value] = useState('');
+    const [star1Value, setStar1Value] = useState('');
+
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).NB_id
+                }&DG_sosao=${star || ''}`,
+            )
+
+            .then((res) => {
+                console.log(res.data.result);
+                setEvaluate(res.data.result);
+                if (res.data.result[0] !== undefined) {
+                    setStar5Value(res.data.star5[0].star5);
+                    setStar4Value(res.data.star4[0].star4);
+                    setStar3Value(res.data.star3[0].star3);
+                    setStar2Value(res.data.star2[0].star2);
+                    setStar1Value(res.data.star1[0].star1);
+                }
+            })
+            .catch(() => {
+                console.log('loi khong the show product');
+            });
+    }, [star]);
+
     useEffect(() => {
         handleCheckAll();
     }, []);
+
     function handleCheckAll() {
         const checkAll = document.getElementById('shopee-tabs__nav-tab-all');
         const checkStar5 = document.getElementById('shopee-tabs__nav-tab-5');
@@ -39,6 +74,7 @@ function SellerShopReviews() {
         subtitle3.style.color = '';
         subtitle2.style.color = '';
         subtitle1.style.color = '';
+        setStar('');
     }
 
     function handleCheckStar5() {
@@ -70,6 +106,7 @@ function SellerShopReviews() {
         subtitle3.style.color = '';
         subtitle2.style.color = '';
         subtitle1.style.color = '';
+        setStar('5');
     }
     function handleCheckStar4() {
         const checkAll = document.getElementById('shopee-tabs__nav-tab-all');
@@ -100,6 +137,7 @@ function SellerShopReviews() {
         subtitle3.style.color = '';
         subtitle2.style.color = '';
         subtitle1.style.color = '';
+        setStar('4');
     }
     function handleCheckStar3() {
         const checkAll = document.getElementById('shopee-tabs__nav-tab-all');
@@ -130,6 +168,7 @@ function SellerShopReviews() {
         subtitle3.style.color = 'red';
         subtitle2.style.color = '';
         subtitle1.style.color = '';
+        setStar('3');
     }
     function handleCheckStar2() {
         const checkAll = document.getElementById('shopee-tabs__nav-tab-all');
@@ -160,6 +199,7 @@ function SellerShopReviews() {
         subtitle3.style.color = '';
         subtitle2.style.color = 'red';
         subtitle1.style.color = '';
+        setStar('2');
     }
     function handleCheckStar1() {
         const checkAll = document.getElementById('shopee-tabs__nav-tab-all');
@@ -190,6 +230,23 @@ function SellerShopReviews() {
         subtitle3.style.color = '';
         subtitle2.style.color = '';
         subtitle1.style.color = 'red';
+        setStar('1');
+    }
+
+    function takeDate(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+        let hour = dateValue.getHours();
+        let minute = dateValue.getMinutes();
+        if (month < 10) {
+            return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
+        } else if (day < 10) {
+            return hour + ':' + minute + ', 0' + day + '-' + month + year;
+        } else {
+            return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
+        }
     }
 
     return (
@@ -221,7 +278,7 @@ function SellerShopReviews() {
                                     >
                                         <span className={cx('title-5')}>5 Sao</span>
                                         <span id="subtitle5" className={cx('subtitle')}>
-                                            (&nbsp;1&nbsp;)
+                                            (&nbsp;{star5Value || 0}&nbsp;)
                                         </span>
                                     </div>
                                     <div
@@ -231,7 +288,7 @@ function SellerShopReviews() {
                                     >
                                         <span className={cx('title-4')}>4 Sao</span>{' '}
                                         <span id="subtitle4" className={cx('subtitle')}>
-                                            (&nbsp;1&nbsp;)
+                                            (&nbsp;{star4Value || 0}&nbsp;)
                                         </span>
                                     </div>
                                     <div
@@ -241,7 +298,7 @@ function SellerShopReviews() {
                                     >
                                         <span className={cx('title-3')}>3 Sao</span>{' '}
                                         <span id="subtitle3" className={cx('subtitle')}>
-                                            (&nbsp;1&nbsp;)
+                                            (&nbsp;{star3Value || 0}&nbsp;)
                                         </span>
                                     </div>
                                     <div
@@ -251,7 +308,7 @@ function SellerShopReviews() {
                                     >
                                         <span className={cx('title-2')}>2 Sao</span>{' '}
                                         <span id="subtitle2" className={cx('subtitle')}>
-                                            (&nbsp;1&nbsp;)
+                                            (&nbsp;{star2Value || 0}&nbsp;)
                                         </span>
                                     </div>
                                     <div
@@ -261,121 +318,179 @@ function SellerShopReviews() {
                                     >
                                         <span className={cx('title-1')}>1 Sao</span>{' '}
                                         <span id="subtitle1" className={cx('subtitle')}>
-                                            (&nbsp;1&nbsp;)
+                                            (&nbsp;{star1Value || 0}&nbsp;)
                                         </span>
                                     </div>
                                 </div>{' '}
                             </div>{' '}
                         </div>{' '}
-                        <div className="shopee-tabs__content">
-                            <div className="shopee-tabs-tabpane"></div> <div className="shopee-tabs-tabpane"></div>
-                            <div className="shopee-tabs-tabpane"></div>
-                            <div className="shopee-tabs-tabpane"></div>
-                            <div className="shopee-tabs-tabpane"></div>
-                            <div className="shopee-tabs-tabpane"></div>
-                        </div>
                     </div>
                     <div className={cx('table-header')}>
                         <div className={cx('column-information')}>Thông tin Sản phẩm</div>{' '}
                         <div className={cx('column-evaluation-content')}>Đánh giá của Người mua</div>{' '}
                     </div>
                     <div>
-                        <div className={cx('comments')}>
-                            <div className={cx('comment')}>
-                                <div className={cx('container')}>
-                                    <div className={cx('table')}>
-                                        <div className={cx('top')}>
-                                            <div className={cx('column-information')}>
-                                                <div className={cx('user')}>
-                                                    Người mua:
-                                                    <span className={cx('username')}>hoalan485</span>
-                                                </div>
-                                            </div>{' '}
-                                            <div className={cx('column-evaluation-content')}></div>{' '}
-                                            <div className={cx('column-reply')}>ID đơn hàng:2204070MCYBCPS</div>
-                                        </div>{' '}
-                                        <div className={cx('bottom')}>
-                                            <div className={cx('column-information-product')}>
-                                                <img
-                                                    src="https://cf.shopee.vn/file/0595d246caa2025dd7e2978bc64a722a_tn"
-                                                    alt=""
-                                                    className={cx('product-image')}
-                                                />{' '}
-                                                <div>
-                                                    <div className={cx('product-name')}>
-                                                        Nước Tẩy Trang Hoa Hồng Cocoon
-                                                    </div>{' '}
-                                                    <div className={cx('product-variation')}>
-                                                        Phân loại:1 chai|Combo 2 chai
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={cx('column-evaluation-content')}>
-                                                <div>
-                                                    <div className={cx('comment-info')}>
-                                                        <div className={cx('content')}>
-                                                            <div className={cx('review-rate-disabled')}>
-                                                                <div className={cx('shopee-rate-star')}>
-                                                                    <div className={cx('shopee-rate-star__front')}>
-                                                                        <FontAwesomeIcon
-                                                                            className={cx('shopee-icon1')}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>{' '}
-                                                                </div>
-                                                                <div className={cx('shopee-rate-star')}>
-                                                                    <div className={cx('shopee-rate-star__front')}>
-                                                                        <FontAwesomeIcon
-                                                                            className={cx('shopee-icon2')}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>{' '}
-                                                                </div>
-                                                                <div className={cx('shopee-rate-star')}>
-                                                                    <div className={cx('shopee-rate-star__front')}>
-                                                                        <FontAwesomeIcon
-                                                                            className={cx('shopee-icon3')}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>{' '}
-                                                                </div>
-                                                                <div className={cx('shopee-rate-star')}>
-                                                                    <div className={cx('shopee-rate-star__front')}>
-                                                                        <FontAwesomeIcon
-                                                                            className={cx('shopee-icon4')}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>{' '}
-                                                                </div>
-                                                                <div className={cx('shopee-rate-star')}>
-                                                                    <div className={cx('shopee-rate-star__front')}>
-                                                                        <FontAwesomeIcon
-                                                                            className={cx('shopee-icon5')}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>{' '}
-                                                                </div>
-                                                            </div>{' '}
-                                                            <div>
-                                                                <div className={cx('content')}>
-                                                                    <div className={cx('comment')}>
-                                                                        Công dụng:chất lượng sản phẩm tuyệt vời , đóng
-                                                                        gói cẩn thận, giao hàng nhanh
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>{' '}
-                                                    </div>{' '}
-                                                    <div data-v-21a0901d="" className={cx('date')}>
-                                                        10:44 01/05/2022
-                                                    </div>
-                                                </div>
-                                            </div>{' '}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {evaluate !== '' && evaluate !== undefined
+                            ? evaluate.map((review, index) => (
+                                  <div key={index}>
+                                      <div className={cx('comments')}>
+                                          <div className={cx('comment')}>
+                                              <div className={cx('container')}>
+                                                  <div className={cx('table')}>
+                                                      <div className={cx('top')}>
+                                                          <div className={cx('column-information')}>
+                                                              <div className={cx('user')}>
+                                                                  Người mua:
+                                                                  <span className={cx('username')}>
+                                                                      {review.product[0].ND_hoten}
+                                                                  </span>
+                                                              </div>
+                                                          </div>{' '}
+                                                          <div className={cx('column-evaluation-content')}></div>{' '}
+                                                          <div className={cx('column-reply')}>
+                                                              ID đơn hàng:{review.DH_id}
+                                                          </div>
+                                                      </div>{' '}
+                                                      <div className={cx('bottom')}>
+                                                          <div className={cx('column-information-product')}>
+                                                              <img
+                                                                  src={review.product[0].SP_image || ''}
+                                                                  alt=""
+                                                                  className={cx('product-image')}
+                                                              />{' '}
+                                                              <div>
+                                                                  <div className={cx('product-name')}>
+                                                                      {review.product[0].SP_ten}
+                                                                  </div>{' '}
+                                                                  {/* <div className={cx('product-variation')}>
+                                                                      Phân loại:1 chai|Combo 2 chai
+                                                                  </div> */}
+                                                              </div>
+                                                          </div>
+                                                          <div className={cx('column-evaluation-content')}>
+                                                              <div>
+                                                                  <div className={cx('comment-info')}>
+                                                                      <div className={cx('content')}>
+                                                                          <div className={cx('review-rate-disabled')}>
+                                                                              <div className={cx('shopee-rate-star')}>
+                                                                                  <div
+                                                                                      className={cx(
+                                                                                          'shopee-rate-star__front',
+                                                                                      )}
+                                                                                  >
+                                                                                      <FontAwesomeIcon
+                                                                                          className={cx(
+                                                                                              review.DG_sosao === 5 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      4 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      3 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      2 ||
+                                                                                                  review.DG_sosao === 1
+                                                                                                  ? 'shopee-icon'
+                                                                                                  : '',
+                                                                                          )}
+                                                                                          icon={faStar}
+                                                                                      />
+                                                                                  </div>{' '}
+                                                                              </div>
+                                                                              <div className={cx('shopee-rate-star')}>
+                                                                                  <div
+                                                                                      className={cx(
+                                                                                          'shopee-rate-star__front',
+                                                                                      )}
+                                                                                  >
+                                                                                      <FontAwesomeIcon
+                                                                                          className={cx(
+                                                                                              review.DG_sosao === 5 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      4 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      3 ||
+                                                                                                  review.DG_sosao === 2
+                                                                                                  ? 'shopee-icon'
+                                                                                                  : 'shopee-icon-no',
+                                                                                          )}
+                                                                                          icon={faStar}
+                                                                                      />
+                                                                                  </div>{' '}
+                                                                              </div>
+                                                                              <div className={cx('shopee-rate-star')}>
+                                                                                  <div
+                                                                                      className={cx(
+                                                                                          'shopee-rate-star__front',
+                                                                                      )}
+                                                                                  >
+                                                                                      <FontAwesomeIcon
+                                                                                          className={cx(
+                                                                                              review.DG_sosao === 5 ||
+                                                                                                  review.DG_sosao ===
+                                                                                                      4 ||
+                                                                                                  review.DG_sosao === 3
+                                                                                                  ? 'shopee-icon'
+                                                                                                  : 'shopee-icon-no',
+                                                                                          )}
+                                                                                          icon={faStar}
+                                                                                      />
+                                                                                  </div>{' '}
+                                                                              </div>
+                                                                              <div className={cx('shopee-rate-star')}>
+                                                                                  <div
+                                                                                      className={cx(
+                                                                                          'shopee-rate-star__front',
+                                                                                      )}
+                                                                                  >
+                                                                                      <FontAwesomeIcon
+                                                                                          className={cx(
+                                                                                              review.DG_sosao === 5 ||
+                                                                                                  review.DG_sosao === 4
+                                                                                                  ? 'shopee-icon'
+                                                                                                  : 'shopee-icon-no',
+                                                                                          )}
+                                                                                          icon={faStar}
+                                                                                      />
+                                                                                  </div>{' '}
+                                                                              </div>
+                                                                              <div className={cx('shopee-rate-star')}>
+                                                                                  <div
+                                                                                      className={cx(
+                                                                                          'shopee-rate-star__front',
+                                                                                      )}
+                                                                                  >
+                                                                                      <FontAwesomeIcon
+                                                                                          className={cx(
+                                                                                              review.DG_sosao === 5
+                                                                                                  ? 'shopee-icon'
+                                                                                                  : 'shopee-icon-no',
+                                                                                          )}
+                                                                                          icon={faStar}
+                                                                                      />
+                                                                                  </div>{' '}
+                                                                              </div>
+                                                                          </div>{' '}
+                                                                          <div>
+                                                                              <div className={cx('content')}>
+                                                                                  <div className={cx('comment')}>
+                                                                                      {review.DG_mota}
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>{' '}
+                                                                  </div>{' '}
+                                                                  <div className={cx('date')}>
+                                                                      {takeDate(review.DG_ngayDG)}
+                                                                  </div>
+                                                              </div>
+                                                          </div>{' '}
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              ))
+                            : ''}
                     </div>
                 </div>
             </div>
