@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerBill.module.scss';
 import SellerBillPage from './SellerBillPage';
@@ -37,7 +38,17 @@ function SellerBill() {
     }, [checkStatus]);
 
     useEffect(() => {
-        handlerClickAll();
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(14);
+        if (resultId === 'all') {
+            handlerClickAll();
+        } else if (resultId === 'confirm') {
+            handlerClickAllConfirm();
+        } else if (resultId === 'delivered') {
+            handlerClickAllDelivered();
+        } else {
+            handlerClickAllCancelOrder();
+        }
     }, []);
 
     const handlerClickAll = () => {
@@ -129,28 +140,36 @@ function SellerBill() {
                     <div className={cx('shopee-tabs__nav-warp')}>
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div data-v-d8c4d7c4="" className={cx('tabs__tab1')} onClick={handlerClickAll}>
+                                <Link to="/seller/bill/@all" className={cx('tabs__tab1')} onClick={handlerClickAll}>
                                     Tất cả
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div data-v-d8c4d7c4="" className={cx('tabs__tab2')} onClick={handlerClickAllConfirm}>
+                                <Link
+                                    to="/seller/bill/@confirm"
+                                    className={cx('tabs__tab2')}
+                                    onClick={handlerClickAllConfirm}
+                                >
                                     Chờ xác nhận<span className={cx('tab-badge')}>( {statusConfirm} )</span>
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div data-v-d8c4d7c4="" className={cx('tabs__tab3')} onClick={handlerClickAllDelivered}>
+                                <Link
+                                    to="/seller/bill/@delivered"
+                                    className={cx('tabs__tab3')}
+                                    onClick={handlerClickAllDelivered}
+                                >
                                     Đã giao<span className={cx('tab-badge')}> ( {statusDelivered} )</span>
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div
-                                    data-v-d8c4d7c4=""
+                                <Link
+                                    to="/seller/bill/@canceloder"
                                     className={cx('tabs__tab4')}
                                     onClick={handlerClickAllCancelOrder}
                                 >
                                     Đơn hủy<span className={cx('tab-badge')}> ( {statusCancelOrder} )</span>
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                         </div>{' '}
                         <div className={cx('shopee-tabs__ink-bar')}></div>

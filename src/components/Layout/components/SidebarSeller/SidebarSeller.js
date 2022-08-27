@@ -56,7 +56,7 @@ function Sidebar() {
                             />
                             <MenuItem
                                 title="Quản lý sản phẩm"
-                                to={'/seller/product'}
+                                to={'/seller/product/@all'}
                                 icon={<UserGroupIcon className={cx('icon-size')} />}
                                 activeIcon={<UserGroupActiveIcon className={cx('icon-size')} />}
                                 // onClick={() => setClickMenu(false)}
@@ -64,7 +64,7 @@ function Sidebar() {
                             />
                             <MenuItem
                                 title="Đơn hàng"
-                                to={'/seller/bill'}
+                                to={`/seller/bill/@${'all'}`}
                                 icon={<LiveIcon className={cx('icon-size')} />}
                                 activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
                             />
@@ -76,7 +76,7 @@ function Sidebar() {
                             />
                             <MenuItem
                                 title="Đánh giá shop"
-                                to={'/seller/shop/reviews'}
+                                to={'/seller/shop/reviews/@all'}
                                 icon={<LiveIcon className={cx('icon-size')} />}
                                 activeIcon={<LiveActiveIcon className={cx('icon-size')} />}
                             />

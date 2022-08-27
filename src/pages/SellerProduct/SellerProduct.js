@@ -34,7 +34,15 @@ function SellerProduct() {
     }, [checkOutOfStock]);
 
     useEffect(() => {
-        handlerClickAll();
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(17);
+        if (resultId === 'all') {
+            handlerClickAll();
+        } else if (resultId === 'action') {
+            handlerClickAllAction();
+        } else {
+            handlerClickAllOutOfStock();
+        }
     }, []);
 
     const handlerClickAll = () => {
@@ -101,23 +109,27 @@ function SellerProduct() {
                     <div className={cx('shopee-tabs__nav-warp')}>
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div data-v-d8c4d7c4="" className={cx('tabs__tab1')} onClick={handlerClickAll}>
+                                <Link to="/seller/product/@all" className={cx('tabs__tab1')} onClick={handlerClickAll}>
                                     Tất cả
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div data-v-d8c4d7c4="" className={cx('tabs__tab2')} onClick={handlerClickAllAction}>
+                                <Link
+                                    to="/seller/product/@action"
+                                    className={cx('tabs__tab2')}
+                                    onClick={handlerClickAllAction}
+                                >
                                     Đang hoạt động<span className={cx('tab-badge')}>( {number - status} )</span>
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <div
-                                    data-v-d8c4d7c4=""
+                                <Link
+                                    to="/seller/product/@OutOfStock"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
                                 >
                                     Hết hàng<span className={cx('tab-badge')}> ( {status} )</span>
-                                </div>{' '}
+                                </Link>{' '}
                             </div>
                         </div>{' '}
                         <div className={cx('shopee-tabs__ink-bar')}></div>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerShopReviews.module.scss';
 import SellerShopReviewsPage from './SellerShopReviewsPage';
@@ -41,7 +42,21 @@ function SellerShopReviews() {
     }, [star]);
 
     useEffect(() => {
-        handleCheckAll();
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(22);
+        if (resultId === 'all') {
+            handleCheckAll();
+        } else if (resultId === 'five') {
+            handleCheckStar5();
+        } else if (resultId === 'four') {
+            handleCheckStar4();
+        } else if (resultId === 'three') {
+            handleCheckStar3();
+        } else if (resultId === 'two') {
+            handleCheckStar2();
+        } else if (resultId === 'one') {
+            handleCheckStar1();
+        }
     }, []);
 
     function handleCheckAll() {
@@ -247,14 +262,16 @@ function SellerShopReviews() {
                             {' '}
                             <div className={cx('shopee-tabs__nav-warp')}>
                                 <div className={cx('shopee-tabs__nav-tabs')}>
-                                    <div
+                                    <Link
+                                        to={'/seller/shop/reviews/@all'}
                                         id="shopee-tabs__nav-tab-all"
                                         className={cx('shopee-tabs__nav-tab-all')}
                                         onClick={handleCheckAll}
                                     >
                                         Tất cả{' '}
-                                    </div>
-                                    <div
+                                    </Link>
+                                    <Link
+                                        to={'/seller/shop/reviews/@five'}
                                         id="shopee-tabs__nav-tab-5"
                                         className={cx('shopee-tabs__nav-tab-5')}
                                         onClick={handleCheckStar5}
@@ -263,8 +280,9 @@ function SellerShopReviews() {
                                         <span id="subtitle5" className={cx('subtitle')}>
                                             (&nbsp;{star5Value || 0}&nbsp;)
                                         </span>
-                                    </div>
-                                    <div
+                                    </Link>
+                                    <Link
+                                        to={'/seller/shop/reviews/@four'}
                                         id="shopee-tabs__nav-tab-4"
                                         className={cx('shopee-tabs__nav-tab-4')}
                                         onClick={handleCheckStar4}
@@ -273,8 +291,9 @@ function SellerShopReviews() {
                                         <span id="subtitle4" className={cx('subtitle')}>
                                             (&nbsp;{star4Value || 0}&nbsp;)
                                         </span>
-                                    </div>
-                                    <div
+                                    </Link>
+                                    <Link
+                                        to={'/seller/shop/reviews/@three'}
                                         id="shopee-tabs__nav-tab-3"
                                         className={cx('shopee-tabs__nav-tab-3')}
                                         onClick={handleCheckStar3}
@@ -283,8 +302,9 @@ function SellerShopReviews() {
                                         <span id="subtitle3" className={cx('subtitle')}>
                                             (&nbsp;{star3Value || 0}&nbsp;)
                                         </span>
-                                    </div>
-                                    <div
+                                    </Link>
+                                    <Link
+                                        to={'/seller/shop/reviews/@two'}
                                         id="shopee-tabs__nav-tab-2"
                                         className={cx('shopee-tabs__nav-tab-2')}
                                         onClick={handleCheckStar2}
@@ -293,8 +313,9 @@ function SellerShopReviews() {
                                         <span id="subtitle2" className={cx('subtitle')}>
                                             (&nbsp;{star2Value || 0}&nbsp;)
                                         </span>
-                                    </div>
-                                    <div
+                                    </Link>
+                                    <Link
+                                        to={'/seller/shop/reviews/@one'}
                                         id="shopee-tabs__nav-tab-1"
                                         className={cx('shopee-tabs__nav-tab-1')}
                                         onClick={handleCheckStar1}
@@ -303,7 +324,7 @@ function SellerShopReviews() {
                                         <span id="subtitle1" className={cx('subtitle')}>
                                             (&nbsp;{star1Value || 0}&nbsp;)
                                         </span>
-                                    </div>
+                                    </Link>
                                 </div>{' '}
                             </div>{' '}
                         </div>{' '}

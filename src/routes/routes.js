@@ -36,14 +36,14 @@ const publicRoutes = [
     { path: '/gioithieu', component: Information, layout: HeaderOnly },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
-    { path: '/seller/product', component: SellerProduct, layout: DefaultLayoutSeller },
+    { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/insert', component: SellerAddProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/update/@:id', component: SellerUpdateProduct, layout: DefaultLayoutSeller },
     { path: '/seller/categoryandweight', component: SellerCategoryAndWeight, layout: DefaultLayoutSeller },
-    { path: '/seller/bill', component: SellerBill, layout: DefaultLayoutSeller },
+    { path: '/seller/bill/@:id', component: SellerBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
-    { path: '/seller/shop/reviews', component: SellerShopReviews, layout: DefaultLayoutSeller },
+    { path: '/seller/shop/reviews/@:id', component: SellerShopReviews, layout: DefaultLayoutSeller },
 ];
 
 const privateRoutes = [];
