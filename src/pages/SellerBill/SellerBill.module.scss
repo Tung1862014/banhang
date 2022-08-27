@@ -56,7 +56,23 @@
     cursor: pointer;
 }
 
-.tab-badge {
+.tab-badge1 {
+    margin-left: 4px;
+    display: inline-block;
+    color: #999;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.tab-badge2 {
+    margin-left: 4px;
+    display: inline-block;
+    color: #999;
+    -webkit-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+.tab-badge3 {
     margin-left: 4px;
     display: inline-block;
     color: #999;

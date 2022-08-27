@@ -46,39 +46,51 @@ function SellerProduct() {
     }, []);
 
     const handlerClickAll = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
         tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = 'red';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = '#999';
         setCheckOutOfStock('');
     };
     const handlerClickAllAction = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
         tab2.style.color = 'red';
         tab3.style.color = '';
         tab1.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
+        badge1.style.color = 'red';
+        badge2.style.color = '#999';
         setCheckOutOfStock('trangthaiaction');
     };
     const handlerClickAllOutOfStock = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
         tab2.style.color = '';
         tab3.style.color = 'red';
         tab1.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = 'red';
         setCheckOutOfStock('trangthai');
     };
 
@@ -109,26 +121,40 @@ function SellerProduct() {
                     <div className={cx('shopee-tabs__nav-warp')}>
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <Link to="/seller/product/@all" className={cx('tabs__tab1')} onClick={handlerClickAll}>
+                                <Link
+                                    to="/seller/product/@all"
+                                    id="tabs__tab1"
+                                    className={cx('tabs__tab1')}
+                                    onClick={handlerClickAll}
+                                >
                                     Tất cả
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/product/@action"
+                                    id="tabs__tab2"
                                     className={cx('tabs__tab2')}
                                     onClick={handlerClickAllAction}
                                 >
-                                    Đang hoạt động<span className={cx('tab-badge')}>( {number - status} )</span>
+                                    Đang hoạt động
+                                    <span id="tab-badge1" className={cx('tab-badge1')}>
+                                        ( {number - status} )
+                                    </span>
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/product/@OutOfStock"
+                                    id="tabs__tab3"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
                                 >
-                                    Hết hàng<span className={cx('tab-badge')}> ( {status} )</span>
+                                    Hết hàng
+                                    <span id="tab-badge2" className={cx('tab-badge2')}>
+                                        {' '}
+                                        ( {status} )
+                                    </span>
                                 </Link>{' '}
                             </div>
                         </div>{' '}

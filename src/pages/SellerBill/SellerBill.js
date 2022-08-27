@@ -52,10 +52,13 @@ function SellerBill() {
     }, []);
 
     const handlerClickAll = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
-        const tab4 = document.querySelector('.tabs__tab4');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const tab4 = document.getElementById('tabs__tab4');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
+        const badge3 = document.getElementById('tab-badge3');
         tab2.style.color = '';
         tab3.style.color = '';
         tab4.style.color = '';
@@ -64,13 +67,19 @@ function SellerBill() {
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         tab4.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = '#999';
+        badge3.style.color = '#999';
         setCheckStatus('');
     };
     const handlerClickAllConfirm = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
-        const tab4 = document.querySelector('.tabs__tab4');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const tab4 = document.getElementById('tabs__tab4');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
+        const badge3 = document.getElementById('tab-badge3');
         tab2.style.color = 'red';
         tab3.style.color = '';
         tab1.style.color = '';
@@ -79,13 +88,19 @@ function SellerBill() {
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         tab4.style.fontFamily = 'Helvetica';
+        badge1.style.color = 'red';
+        badge2.style.color = '#999';
+        badge3.style.color = '#999';
         setCheckStatus('trangthaixacnhan');
     };
     const handlerClickAllDelivered = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
-        const tab4 = document.querySelector('.tabs__tab4');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const tab4 = document.getElementById('tabs__tab4');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
+        const badge3 = document.getElementById('tab-badge3');
         tab2.style.color = '';
         tab3.style.color = 'red';
         tab1.style.color = '';
@@ -94,14 +109,20 @@ function SellerBill() {
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         tab4.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = 'red';
+        badge3.style.color = '#999';
         setCheckStatus('trangthaidagiao');
     };
 
     const handlerClickAllCancelOrder = () => {
-        const tab1 = document.querySelector('.tabs__tab1');
-        const tab2 = document.querySelector('.tabs__tab2');
-        const tab3 = document.querySelector('.tabs__tab3');
-        const tab4 = document.querySelector('.tabs__tab4');
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const tab4 = document.getElementById('tabs__tab4');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
+        const badge3 = document.getElementById('tab-badge3');
         tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = '';
@@ -110,6 +131,9 @@ function SellerBill() {
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         tab4.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = '#999';
+        badge3.style.color = 'red';
         setCheckStatus('trangthaihuy');
     };
 
@@ -140,35 +164,54 @@ function SellerBill() {
                     <div className={cx('shopee-tabs__nav-warp')}>
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
-                                <Link to="/seller/bill/@all" className={cx('tabs__tab1')} onClick={handlerClickAll}>
+                                <Link
+                                    to="/seller/bill/@all"
+                                    id="tabs__tab1"
+                                    className={cx('tabs__tab1')}
+                                    onClick={handlerClickAll}
+                                >
                                     Tất cả
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/bill/@confirm"
+                                    id="tabs__tab2"
                                     className={cx('tabs__tab2')}
                                     onClick={handlerClickAllConfirm}
                                 >
-                                    Chờ xác nhận<span className={cx('tab-badge')}>( {statusConfirm} )</span>
+                                    Chờ xác nhận
+                                    <span id="tab-badge1" className={cx('tab-badge1')}>
+                                        ( {statusConfirm} )
+                                    </span>
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/bill/@delivered"
+                                    id="tabs__tab3"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllDelivered}
                                 >
-                                    Đã giao<span className={cx('tab-badge')}> ( {statusDelivered} )</span>
+                                    Đã giao
+                                    <span id="tab-badge2" className={cx('tab-badge2')}>
+                                        {' '}
+                                        ( {statusDelivered} )
+                                    </span>
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/bill/@canceloder"
+                                    id="tabs__tab4"
                                     className={cx('tabs__tab4')}
                                     onClick={handlerClickAllCancelOrder}
                                 >
-                                    Đơn hủy<span className={cx('tab-badge')}> ( {statusCancelOrder} )</span>
+                                    Đơn hủy
+                                    <span id="tab-badge3" className={cx('tab-badge3')}>
+                                        {' '}
+                                        ( {statusCancelOrder} )
+                                    </span>
                                 </Link>{' '}
                             </div>
                         </div>{' '}
