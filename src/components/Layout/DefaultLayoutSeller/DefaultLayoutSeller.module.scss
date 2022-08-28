@@ -29,11 +29,16 @@
 
     .content {
         flex: 1;
+        position: relative;
+        z-index: 0;
     }
     .container1 {
         display: flex;
         width: var(--default-layout-width);
         max-width: 100%;
+        position: relative;
+        top: 61px;
+        margin-top: 3px;
     }
     .container {
         display: none;

@@ -34,10 +34,14 @@
         display: flex;
         width: var(--default-layout-width);
         max-width: 100%;
+        position: relative;
+        top: 200px;
     }
     .container {
-        display: none;
+        display: flex;
         width: var(--default-layout-width);
         max-width: 100%;
+        position: relative;
+        top: 100px;
     }
 }
