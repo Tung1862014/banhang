@@ -130,11 +130,123 @@ const cx = classNames.bind(styles);
 function Home() {
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('inner')}>
-                <div className={cx('title')}>
-                    <h3>Gợi Ý Hôm Nay</h3>
+            <div className={cx('stardust-tabs-header-wrapper')}>
+                <ul className={cx('stardust-tabs-header')}>
+                    <li className={cx('stardust-tabs-header__tab-active')}>
+                        <div className={cx('FA284N-N-5qHu-suggestions')}></div>
+                        <div className={cx('FJibgJ')}>
+                            <span>GỢI Ý HÔM NAY</span>
+                        </div>
+                    </li>
+                    <li className={cx('stardust-tabs-header__tab-active')}>
+                        <div className={cx('FA284N-N-5qHu')}></div>
+                        <div className={cx('FJibgJ')}>
+                            <span>SẢN PHẨM KHUYẾN MÃI</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div className={cx('stardust-tabs-panels')}>
+                <div className={cx('stardust-tabs-panels__panel')}>
+                    <div className={cx('_6wTCb6')}>
+                        <div className={cx('_4beVMw')}>
+                            <a
+                                data-sqe="link"
+                                href="/Kệ-để-màn-hình-máy-tính-laptop-để-bàn-bằng-gỗ-trơn-kiểu-dáng-đơn-giản-tiện-dụng-giá-rẻ-HDS-NTK04-i.136547353.5441076077?sp_atk=ea821488-9a1a-4c60-9dd4-bef21a79cd0d&amp;xptdk=ea821488-9a1a-4c60-9dd4-bef21a79cd0d"
+                            >
+                                <div className={cx('yZLQT4')}>
+                                    <div className={cx('uA1waf_4QQ4Ir')}>
+                                        <div className={cx('UB2waf')}>
+                                            <div className={cx('n-CE6j-iRsxV')}>
+                                                <img
+                                                    width="invalid-value"
+                                                    height="invalid-value"
+                                                    alt="Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng đơn giản tiện dụng giá rẻ HDS-NTK04"
+                                                    className={cx('Vz6gJ3-edy5hG')}
+                                                    src="https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn"
+                                                />
+                                                <div className={cx('vmaKHl')}>
+                                                    <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
+                                                        <span className={cx('percent')}>47%</span>
+                                                        <span className={cx('mXP-A3')}>giảm</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={cx('W3bJfG')}>
+                                            <div className={cx('qUEEG4')}>
+                                                <div className={cx('hPc1Pf')}>
+                                                    <div className={cx('vc0PvV-AxYdVM')}>
+                                                        Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng
+                                                        đơn giản tiện dụng giá rẻ HDS-NTK04
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('imdVqB_2fuFWg')}>
+                                                <div className={cx('WSVId4-fepoRf')}>
+                                                    <span className={cx('Fea6JM')}>₫</span>
+                                                    <span className={cx('j0vBz2')}>49.000</span>
+                                                </div>
+                                                <div className={cx('upl8wJ _82UoSS')}>Đã bán 2k</div>
+                                            </div>
+                                        </div>
+                                        {/* <div className={cx('shopee-item-card__hover-footer _1X2yZq')}>
+                                            Tìm sản phẩm tương tự
+                                        </div> */}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div className={cx('_4beVMw')}>
+                            <a
+                                data-sqe="link"
+                                href="/Kệ-để-màn-hình-máy-tính-laptop-để-bàn-bằng-gỗ-trơn-kiểu-dáng-đơn-giản-tiện-dụng-giá-rẻ-HDS-NTK04-i.136547353.5441076077?sp_atk=ea821488-9a1a-4c60-9dd4-bef21a79cd0d&amp;xptdk=ea821488-9a1a-4c60-9dd4-bef21a79cd0d"
+                            >
+                                <div className={cx('yZLQT4')}>
+                                    <div className={cx('uA1waf_4QQ4Ir')}>
+                                        <div className={cx('UB2waf')}>
+                                            <div className={cx('n-CE6j-iRsxV')}>
+                                                <img
+                                                    width="invalid-value"
+                                                    height="invalid-value"
+                                                    alt="Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng đơn giản tiện dụng giá rẻ HDS-NTK04"
+                                                    className={cx('Vz6gJ3-edy5hG')}
+                                                    src="https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn"
+                                                />
+                                                <div className={cx('vmaKHl')}>
+                                                    <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
+                                                        <span className={cx('percent')}>47%</span>
+                                                        <span className={cx('mXP-A3')}>giảm</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={cx('W3bJfG')}>
+                                            <div className={cx('qUEEG4')}>
+                                                <div className={cx('hPc1Pf')}>
+                                                    <div className={cx('vc0PvV-AxYdVM')}>
+                                                        Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng
+                                                        đơn giản tiện dụng giá rẻ HDS-NTK04
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('imdVqB_2fuFWg')}>
+                                                <div className={cx('WSVId4-fepoRf')}>
+                                                    <span className={cx('Fea6JM')}>₫</span>
+                                                    <span className={cx('j0vBz2')}>49.000</span>
+                                                </div>
+                                                <div className={cx('upl8wJ _82UoSS')}>Đã bán 2k</div>
+                                            </div>
+                                        </div>
+                                        {/* <div className={cx('shopee-item-card__hover-footer _1X2yZq')}>
+                                            Tìm sản phẩm tương tự
+                                        </div> */}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div className={cx('product')}></div>
             </div>
         </div>
     );

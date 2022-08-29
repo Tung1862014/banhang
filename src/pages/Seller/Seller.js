@@ -61,7 +61,9 @@ function Seller() {
     const [dateValue1, setDateValue1] = useState('2022-01-13');
     const [dateValue2, setDateValue2] = useState('2022-09-18');
     const [activeTurnover, setActiveTurnover] = useState(
-        `http://localhost:5000/chart?ngdi=${dateValue1}&ngde=${dateValue2}`,
+        `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
+            JSON.parse(GetCookie('seller')).NB_id
+        }`,
     );
     const [chartListData, setChartListData] = useState([]);
     const [chartListNumber, setChartListNumber] = useState([]);
@@ -135,7 +137,11 @@ function Seller() {
     }, [chartListData, chartListNumber, chartListTurnover]);
 
     const handleStatistic = () => {
-        setActiveTurnover(`http://localhost:5000/chart?ngdi=${dateValue1}&ngde=${dateValue2}`);
+        setActiveTurnover(
+            `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
+                JSON.parse(GetCookie('seller')).NB_id
+            }`,
+        );
     };
 
     return (

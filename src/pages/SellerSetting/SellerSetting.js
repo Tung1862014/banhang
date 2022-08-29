@@ -15,6 +15,7 @@ function SellerSetting() {
     // const [field, setField] = useState('');
     const [address, setAddress] = useState('');
     const [establish, setEstablished] = useState('');
+    const [checkLogo, setCheckLogo] = useState(false);
 
     const dateValue = new Date(JSON.parse(GetCookie('seller')).NB_ngay);
     let day = dateValue.getDate();
@@ -84,10 +85,12 @@ function SellerSetting() {
                 },
             })
                 .then((res) => {
-                    toast.success('Lưu thành công', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
+                    if (checkLogo) {
+                        toast.success('Lưu thành công nha', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-message')}`,
+                        });
+                    }
                 })
                 .catch(() => {
                     toast.error('Lưu thất bại !', {
@@ -186,7 +189,13 @@ function SellerSetting() {
                 })
                     .then((res) => {
                         console.log(res.data);
-                        if (res.data.seller === false) {
+                        if (res.data.exist === true) {
+                            setCheckLogo(false);
+                            toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
+                                position: toast.POSITION.TOP_RIGHT,
+                                className: `${cx('toast-message')}`,
+                            });
+                        } else if (res.data.seller === true) {
                             //alert('Tên đăng nhập đã tồn tại!');
                             toast.error('Lưu thất bại', {
                                 position: toast.POSITION.TOP_RIGHT,
@@ -194,6 +203,7 @@ function SellerSetting() {
                             });
                         } else {
                             //alert('Đăng ký thành công');
+
                             if (imageLogo !== '') {
                             } else {
                                 toast.success('Lưu thành công', {
@@ -251,13 +261,18 @@ function SellerSetting() {
                         MTS_diachi: address,
                     })
                     .then((res) => {
-                        if (res.data.seller === true) {
+                        if (res.data.exist === true) {
+                            toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
+                                position: toast.POSITION.TOP_RIGHT,
+                                className: `${cx('toast-message')}`,
+                            });
+                        } else if (res.data.seller === true) {
                             toast.success('Lưu thành công', {
                                 position: toast.POSITION.TOP_RIGHT,
                                 className: `${cx('toast-message')}`,
                             });
                         } else {
-                            toast.error('Lưu thất bại !', {
+                            toast.error('Thiết lập thất bại!', {
                                 position: toast.POSITION.TOP_RIGHT,
                                 className: `${cx('toast-message')}`,
                             });
@@ -276,6 +291,7 @@ function SellerSetting() {
                 });
             }
         } else if (imageLogo !== '') {
+            setCheckLogo(true);
             setTimeout(() => saveFileSellerLogo(imageLogo), 500);
         }
     }
