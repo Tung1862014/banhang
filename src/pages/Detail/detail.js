@@ -329,6 +329,8 @@
 
 // export default Detail;
 
+import { faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import styles from './Detail.module.scss';
 const cx = classNames.bind(styles);
@@ -345,7 +347,7 @@ function Detail() {
                                     <div className={cx('_3uzKon_2PWsS4')}>
                                         <img
                                             className={cx('_3uzKon_2PWsS4-img')}
-                                            src={'https://cf.shopee.vn/file/a4958d8529c3086a4b91926f6b515693'}
+                                            src={'https://cf.shopee.vn/file/09859e00592d7a3ea8d418368de656d6_tn'}
                                             alt=""
                                         />
                                     </div>
@@ -359,7 +361,7 @@ function Detail() {
                                         <div className={cx('X2N8Bt_2PWsS4')}>
                                             <img
                                                 className={cx('X2N8Bt_2PWsS4-img')}
-                                                src="https://cf.shopee.vn/file/1d5310da4f050e662f7dffc0ae1bae84_tn"
+                                                src="https://cf.shopee.vn/file/09859e00592d7a3ea8d418368de656d6_tn"
                                                 alt=""
                                             />
                                         </div>
@@ -373,7 +375,7 @@ function Detail() {
                                         <div className={cx('X2N8Bt_2PWsS4')}>
                                             <img
                                                 className={cx('X2N8Bt_2PWsS4-img')}
-                                                src="https://cf.shopee.vn/file/1d5310da4f050e662f7dffc0ae1bae84_tn"
+                                                src="https://cf.shopee.vn/file/575323ffcc1c3f476a809833f585afc1_tn"
                                                 alt=""
                                             />
                                         </div>
@@ -387,7 +389,7 @@ function Detail() {
                                         <div className={cx('X2N8Bt_2PWsS4')}>
                                             <img
                                                 className={cx('X2N8Bt_2PWsS4-img')}
-                                                src="https://cf.shopee.vn/file/1d5310da4f050e662f7dffc0ae1bae84_tn"
+                                                src="https://cf.shopee.vn/file/d4a6f5105502c14ec1dc02981263f5e3_tn"
                                                 alt=""
                                             />
                                         </div>
@@ -401,7 +403,7 @@ function Detail() {
                                         <div className={cx('X2N8Bt_2PWsS4')}>
                                             <img
                                                 className={cx('X2N8Bt_2PWsS4-img')}
-                                                src="https://cf.shopee.vn/file/1d5310da4f050e662f7dffc0ae1bae84_tn"
+                                                src="https://cf.shopee.vn/file/f9959bac33e8ab08ac7c02e4f45471af_tn"
                                                 alt=""
                                             />
                                         </div>
@@ -415,7 +417,7 @@ function Detail() {
                                         <div className={cx('X2N8Bt_2PWsS4')}>
                                             <img
                                                 className={cx('X2N8Bt_2PWsS4-img')}
-                                                src="https://cf.shopee.vn/file/1d5310da4f050e662f7dffc0ae1bae84_tn"
+                                                src="https://cf.shopee.vn/file/f05af5f7c18f6b31e3248b466490cc25_tn"
                                                 alt=""
                                             />
                                         </div>
@@ -445,6 +447,170 @@ function Detail() {
                                     <polygon points="11.1 9.9 2.1 .9 -.1 3.1 7.9 11 -.1 18.9 2.1 21 11.1 12 12.1 11"></polygon>
                                 </svg>
                             </button>
+                        </div>
+                    </div>
+                </div>
+                <div className={cx('flex-auto-eTjGTe')}>
+                    <div className={cx('flex-auto-flex-column_1Kkkb')}>
+                        <div className={cx('_2rQP1z')}>
+                            <span>KHÔ CÁ LÓC CHẤT LƯỢNG THƠM NGON BỔ DƯỠNG KHÔNG CHẤT BẢO QUẢN PHẨM MÀU</span>
+                        </div>
+                        <div className={cx('flex_3tkSsu')}>
+                            <div className={cx('flex_3T9OoL')}>
+                                <div className={cx('_3y5XOB_14izon')}>5.0</div>
+                                <div className={cx('_1HyS82')}>
+                                    <div className={cx('shopee-rating-stars')}>
+                                        <div className={cx('shopee-rating-stars__stars')}>
+                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                <div className={cx('shopee-rating-stars__lit')}>
+                                                    <FontAwesomeIcon
+                                                        className={cx('shopee-svg-icon')}
+                                                        //   className={cx(
+                                                        //       review.DG_sosao === 5 ||
+                                                        //           review.DG_sosao === 4 ||
+                                                        //           review.DG_sosao === 3 ||
+                                                        //           review.DG_sosao === 2 ||
+                                                        //           review.DG_sosao === 1
+                                                        //           ? 'shopee-icon'
+                                                        //           : '',
+                                                        //   )}
+                                                        icon={faStar}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                <div className={cx('shopee-rating-stars__lit')}>
+                                                    <FontAwesomeIcon
+                                                        className={cx('shopee-svg-icon')}
+                                                        //   className={cx(
+                                                        //       review.DG_sosao === 5 ||
+                                                        //           review.DG_sosao === 4 ||
+                                                        //           review.DG_sosao === 3 ||
+                                                        //           review.DG_sosao === 2 ||
+                                                        //           review.DG_sosao === 1
+                                                        //           ? 'shopee-icon'
+                                                        //           : '',
+                                                        //   )}
+                                                        icon={faStar}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                <div className={cx('shopee-rating-stars__lit')}>
+                                                    <FontAwesomeIcon
+                                                        className={cx('shopee-svg-icon')}
+                                                        //   className={cx(
+                                                        //       review.DG_sosao === 5 ||
+                                                        //           review.DG_sosao === 4 ||
+                                                        //           review.DG_sosao === 3 ||
+                                                        //           review.DG_sosao === 2 ||
+                                                        //           review.DG_sosao === 1
+                                                        //           ? 'shopee-icon'
+                                                        //           : '',
+                                                        //   )}
+                                                        icon={faStar}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                <div className={cx('shopee-rating-stars__lit')}>
+                                                    <FontAwesomeIcon
+                                                        className={cx('shopee-svg-icon')}
+                                                        //   className={cx(
+                                                        //       review.DG_sosao === 5 ||
+                                                        //           review.DG_sosao === 4 ||
+                                                        //           review.DG_sosao === 3 ||
+                                                        //           review.DG_sosao === 2 ||
+                                                        //           review.DG_sosao === 1
+                                                        //           ? 'shopee-icon'
+                                                        //           : '',
+                                                        //   )}
+                                                        icon={faStar}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                <div className={cx('shopee-rating-stars__lit')}>
+                                                    <FontAwesomeIcon
+                                                        className={cx('shopee-svg-icon')}
+                                                        //   className={cx(
+                                                        //       review.DG_sosao === 5 ||
+                                                        //           review.DG_sosao === 4 ||
+                                                        //           review.DG_sosao === 3 ||
+                                                        //           review.DG_sosao === 2 ||
+                                                        //           review.DG_sosao === 1
+                                                        //           ? 'shopee-icon'
+                                                        //           : '',
+                                                        //   )}
+                                                        icon={faStar}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('flex_3T9OoL')}>
+                                <div className={cx('_3y5XOB')}>1</div>
+                                <div className={cx('_1HyS82')}>đánh giá</div>
+                            </div>
+                            <div className={cx('flex_3EOMd6')}>
+                                <div className={cx('HmRxgn')}>7</div>
+                                <div className={cx('qBnNRR')}>đã bán</div>
+                            </div>
+                        </div>
+                        <div className={cx('flex-column-price')}>
+                            <div className={cx('flex-column_38g6so')}>
+                                <div className={cx('items-center-price')}>
+                                    <div className={cx('items-center-price_34BHKe')}>
+                                        <div className={cx('_2yjfFH')}>₫210.000 - ₫375.000</div>
+                                        <div className={cx('items-center-price')}>
+                                            <div className={cx('_2Shl1j')}>₫130.000 - ₫269.000</div>
+                                            <div className={cx('_3PlIlX')}>38% giảm</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={cx('flex_VrhRS0_1RCFQu')}>
+                            <div className={cx('flex-column-number')}>
+                                <div className={cx('flex-column-number_283ldj')}>
+                                    <div className={cx('_34CHXV')}>Số lượng</div>
+                                    <div className={cx('flex-column-number')}>
+                                        <div>
+                                            <div className={cx('_1RTqoK-input-quantity')}>
+                                                <button className={cx('_1MGNbJ')}>
+                                                    <FontAwesomeIcon icon={faMinus} />
+                                                </button>
+                                                <input
+                                                    className={cx('_1MGNbJ_1eS5m1')}
+                                                    type="text"
+                                                    role="spinbutton"
+                                                    aria-valuenow="1"
+                                                    value="1"
+                                                />
+                                                <button className={cx('_1MGNbJ')}>
+                                                    <FontAwesomeIcon icon={faPlus} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>263 sản phẩm có sẵn</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className={cx('_3pcTIL')}>
+                                <div className={cx('_37uIr4')}>
+                                    <button className={cx('btn btn-tinted btn--l _3f7_YI _1TpzVc')}>
+                                        <FontAwesomeIcon icon={faPlus} />
+                                        <span>thêm vào giỏ hàng</span>
+                                    </button>
+                                    <button type="button" className={cx('btn btn-solid-primary btn--l _3f7_YI')}>
+                                        Mua ngay
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
