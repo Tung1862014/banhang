@@ -25,11 +25,11 @@ import SellerShopReviews from '~/pages/SellerShopReviews';
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
     { path: '/search', component: Search },
-    { path: '/search/@:idSP', component: Detail },
+    { path: '/search/@:idSP', component: Detail, layout: HeaderOnly },
     { path: config.routes.sanpham, component: SanPham },
     { path: config.routes.phukien, component: PhuKien },
     { path: '/giohang', component: GioHang, layout: HeaderOnly },
-    { path: '/sanpham/@:idSP', component: Detail },
+    { path: '/detail/product/nameid:id', component: Detail, layout: HeaderOnly },
     { path: '/user/setting', component: Setting },
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
