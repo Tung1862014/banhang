@@ -119,7 +119,7 @@ function Detail({ bill }) {
                             <div className={cx('item-action')}>
                                 <div className={cx('shopee-popover--light')}>
                                     <div className={cx('shopee-popover__ref')}>
-                                        <Link to={`detail/@${bill.DH_id}`} className={cx('shopee-button--normal')}>
+                                        <a href={`detail/@${bill.DH_id}`} className={cx('shopee-button--normal')}>
                                             <i className={cx('shopee-icon')}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                                                     <g>
@@ -129,7 +129,7 @@ function Detail({ bill }) {
                                                 </svg>
                                             </i>
                                             <span>Xem chi tiết</span>
-                                        </Link>
+                                        </a>
                                     </div>{' '}
                                     <div
                                         className={cx(
@@ -143,7 +143,7 @@ function Detail({ bill }) {
                                     <div className={cx('shopee-popover--light')}>
                                         <div className={cx('shopee-popover__ref')}>
                                             <a
-                                                href={`http://localhost:3000/seller/bill/detail/print/@${bill.DH_id}`}
+                                                href={`/seller/bill/detail/print/@${bill.DH_id}`}
                                                 target={'_blank'}
                                                 rel="noreferrer"
                                                 className={cx('shopee-button--normal')}

@@ -199,9 +199,9 @@ function Detail({ currentItems }) {
                                         <td className={cx('td_table-name')}>{formatCash(pro.SP_gia)}₫</td>
                                         <td className={cx('td_table-name')}>{pro.SP_soluongban}</td>
                                         <td>
-                                            <Link to={`update/@${pro.SP_id}`} className={cx('btn-update')}>
+                                            <a href={`update/@${pro.SP_id}`} className={cx('btn-update')}>
                                                 Cập nhật
-                                            </Link>
+                                            </a>
                                         </td>
                                     </tr>
                                 ))}
