@@ -331,11 +331,28 @@
 
 import { faCartPlus, faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 import styles from './Detail.module.scss';
 const cx = classNames.bind(styles);
 
 function Detail() {
+    //const [product, setProduct] = useState('');
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(22);
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/productdetail/detail/product?SP_id=${resultId}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log('loi');
+            });
+    }, []);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('product-briefing_2qM0Iy')}>
@@ -587,7 +604,7 @@ function Detail() {
                                                     type="text"
                                                     role="spinbutton"
                                                     aria-valuenow="1"
-                                                    value="1"
+                                                    defaultValue="1"
                                                 />
                                                 <button className={cx('_1MGNbJ')}>
                                                     <FontAwesomeIcon icon={faPlus} />
@@ -637,7 +654,7 @@ function Detail() {
                                             viewBox="0 0 15 15"
                                             x="0"
                                             y="0"
-                                            stroke-width="0"
+                                            strokeWidth="0"
                                             className={cx('svg-icon_1rcInn')}
                                         >
                                             <path d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z"></path>
@@ -705,7 +722,7 @@ function Detail() {
                                             <div className={cx('detail-avatar')}>
                                                 <div className={cx('detail-avatar__placeholder')}>
                                                     <svg
-                                                        enable-background="new 0 0 15 15"
+                                                        enableBackground="new 0 0 15 15"
                                                         viewBox="0 0 15 15"
                                                         x="0"
                                                         y="0"
@@ -717,13 +734,13 @@ function Detail() {
                                                                 cy="4.5"
                                                                 fill="none"
                                                                 r="3.8"
-                                                                stroke-miterlimit="10"
+                                                                strokeMiterlimit="10"
                                                             ></circle>
                                                             <path
                                                                 d="m1.5 14.2c0-3.3 2.7-6 6-6s6 2.7 6 6"
                                                                 fill="none"
-                                                                stroke-linecap="round"
-                                                                stroke-miterlimit="10"
+                                                                strokeLinecap="round"
+                                                                strokeMiterlimit="10"
                                                             ></path>
                                                         </g>
                                                     </svg>
@@ -823,14 +840,14 @@ function Detail() {
                     </div>
                     <div className={cx('recommendation-by-carousel')}>
                         <div>
-                            <div className={cx('shopee-header-section _2Pk9pv shopee-header-section--simple')}>
-                                <div className={cx('shopee-header-section__header')}>
-                                    <div className={cx('shopee-header-section__header__title')}>
+                            <div className={cx('detail-header-section_2Pk9pv--simple')}>
+                                <div className={cx('detail-header-section__header')}>
+                                    <div className={cx('detail-header-section__header__title')}>
                                         <div>Các sản phẩm khác của Shop</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className={cx('image-carousel DBnDYq')}>
+                            <div className={cx('image-carousel_DBnDYq')}>
                                 <div className={cx('image-carousel__item-list-wrapper')}>
                                     <ul className={cx('image-carousel__item-list')}>
                                         <li className={cx('image-carousel__item')}>
@@ -839,103 +856,42 @@ function Detail() {
                                                     data-sqe="link"
                                                     href="/Khô-cá-lóc-Đồng-Tháp-đủ-3-nắng-tự-nhiên-ít-mặn-dai-thơm-đảm-bảo-vệ-sinh-Không-dử-dụng-chất-bảo-quản-i.477743977.9273761219?sp_atk=3cef0878-8d69-44fc-9c4b-5f6c573b90bf&amp;xptdk=3cef0878-8d69-44fc-9c4b-5f6c573b90bf"
                                                 >
-                                                    <div class="_3tGY4K">
-                                                        <div class="_27gjnh">
-                                                            <div style="pointer-events: none;">
-                                                                <div class="_1OPdfl _34Bbgp">
+                                                    <div className={cx('_3tGY4K')}>
+                                                        <div className={cx('_27gjnh')}>
+                                                            <div>
+                                                                <div className={cx('_1OPdfl_34Bbgp')}>
                                                                     <img
                                                                         width="invalid-value"
                                                                         height="invalid-value"
                                                                         alt="Khô cá lóc Đồng Tháp đủ 3 nắng tự nhiên, ít mặn, dai thơm  ,đảm bảo vệ sinh Không dử dụng chất bảo quản"
-                                                                        class="_3DRMhT _2PWsS4"
-                                                                        style="object-fit: contain"
+                                                                        className={cx('_3DRMhT_2PWsS4')}
                                                                         src="https://cf.shopee.vn/file/5ae7210d56a92df9658b16d8783bf630_tn"
                                                                     />
-                                                                    <div class="_3F69Qs">
-                                                                        <div
-                                                                            class="_3eZsU2 _2BHlBE"
-                                                                            style="color: rgb(242, 82, 32);"
-                                                                        >
-                                                                            <span class="_2KPc0Z">Yêu thích</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="_23y7qS">
-                                                                        <div class="VPfNgf _3Vf-cm pKWQzh">
-                                                                            <span class="percent">40%</span>
-                                                                            <span class="_1dKOej">giảm</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="_3AoG8W">
-                                                                        <div class="customized-overlay-image">
-                                                                            <img
-                                                                                alt=""
-                                                                                src="https://cf.shopee.vn/file/32a76c9dddedcd5ee92d7db20830b6e8"
-                                                                                width=""
-                                                                                height=""
-                                                                            />
+
+                                                                    <div className={cx('_23y7qS')}>
+                                                                        <div className={cx('VPfNgf_3Vf-cm_pKWQzh')}>
+                                                                            <span className={cx('percent')}>40%</span>
+                                                                            <span className={cx('_1dKOej')}>giảm</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="weFbbG">
-                                                                <div class="_3Xp1Jg">
-                                                                    <div class="_17eONp">
-                                                                        <div class="_3KpaoK _2UGSVV">
+                                                            <div className={cx('weFbbG')}>
+                                                                <div className={cx('_3Xp1Jg')}>
+                                                                    <div className={cx('_17eONp')}>
+                                                                        <div className={cx('_3KpaoK_2UGSVV')}>
                                                                             Khô cá lóc Đồng Tháp đủ 3 nắng tự nhiên, ít
                                                                             mặn, dai thơm ,đảm bảo vệ sinh Không dử dụng
                                                                             chất bảo quản
                                                                         </div>
                                                                     </div>
-                                                                    <div class="_34HOLt">
-                                                                        <div
-                                                                            class="_1PWkR nt-medium nt-foot _3nkRL"
-                                                                            style="color: rgb(246, 145, 19);"
-                                                                        >
-                                                                            <svg
-                                                                                class="_2DRZW _2xFcL"
-                                                                                viewBox="-0.5 -0.5 4 16"
-                                                                            >
-                                                                                <path
-                                                                                    d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
-                                                                                    stroke-width="1"
-                                                                                    transform=""
-                                                                                    stroke="currentColor"
-                                                                                    fill="#f69113"
-                                                                                ></path>
-                                                                            </svg>
-                                                                            <div
-                                                                                class="_1FKkT _3Ao0A"
-                                                                                style="color: white; background-color: rgb(246, 145, 19);"
-                                                                            >
-                                                                                5% Giảm
-                                                                            </div>
-                                                                            <svg
-                                                                                class="_2DRZW _2xFcL"
-                                                                                viewBox="-0.5 -0.5 4 16"
-                                                                            >
-                                                                                <path
-                                                                                    d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3"
-                                                                                    stroke-width="1"
-                                                                                    transform="rotate(180) translate(-3 -15)"
-                                                                                    stroke="currentColor"
-                                                                                    fill="#f69113"
-                                                                                ></path>
-                                                                            </svg>
-                                                                        </div>
-                                                                        <div
-                                                                            class="_3rLTln"
-                                                                            style="color: rgb(255, 0, 32);"
-                                                                        >
-                                                                            #ShopDacBiet
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
-                                                                <div class="vMfGQW _2NzYpj">
-                                                                    <div class="_3NkBUm rMbdeO">
-                                                                        <span class="_181cfk">₫</span>
-                                                                        <span class="_2igTXp">125.000</span>
+                                                                <div className={cx('vMfGQW_2NzYpj')}>
+                                                                    <div className={cx('_3NkBUm_rMbdeO')}>
+                                                                        <span className={cx('_181cfk')}>₫</span>
+                                                                        <span className={cx('_2igTXp')}>125.000</span>
                                                                     </div>
-                                                                    <div class="_2J8hZZ _2For-u">Đã bán 8</div>
+                                                                    <div className={cx('_2J8hZZ_2For-u')}>Đã bán 8</div>
                                                                 </div>
                                                             </div>
                                                         </div>

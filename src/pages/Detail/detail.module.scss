@@ -996,3 +996,237 @@ p {
     padding: 3px 5px;
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
 }
+
+//product of shop
+.recommendation-by-carousel {
+    margin-top: 20px;
+}
+
+.detail-header-section_2Pk9pv--simple {
+}
+
+.detail-header-section__header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.detail-header-section__header__title {
+    font-size: 1.6rem;
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: 500;
+    text-transform: uppercase;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 1.25rem;
+    padding: 5px 3px;
+}
+
+.image-carousel_DBnDYq {
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.image-carousel__item-list-wrapper {
+    height: 100%;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+
+.image-carousel__item-list {
+    width: 400%;
+    transform: translate(0px, 0px);
+    display: flex;
+    position: relative;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.image-carousel__item {
+    width: 159px;
+    padding: 5px 5px !important;
+    overflow-x: hidden;
+    list-style: none;
+    float: left;
+    touch-action: pan-y;
+    margin-bottom: 10px;
+}
+
+.product-recommend-items__item-wrapper {
+    height: 100%;
+    list-style: none;
+
+    a {
+        position: relative;
+        overflow: visible;
+        outline: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+._3tGY4K {
+    height: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+._27gjnh {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+    box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0.125rem;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.6, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.6, 1),
+        -webkit-transform 0.1s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+._1OPdfl_34Bbgp {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    user-select: none;
+}
+
+._3DRMhT_2PWsS4 {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #fff;
+    object-fit: contain;
+    -webkit-user-drag: none;
+    vertical-align: bottom;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+._23y7qS {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.VPfNgf_3Vf-cm_pKWQzh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    font-weight: 400;
+    line-height: 13px;
+    color: #ee4d2d;
+    text-transform: uppercase;
+    width: 36px;
+    height: 32px;
+    background-color: rgba(255, 212, 36, 0.9);
+    padding: 4px 3px;
+    box-sizing: border-box;
+}
+
+.percent {
+    text-align: center;
+    position: relative;
+    font-weight: 400;
+    color: #ee4d2d;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+._1dKOej {
+    text-align: center;
+    position: relative;
+    font-weight: 400;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+.weFbbG {
+    padding: 0.5rem;
+    overflow: hidden;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+._3Xp1Jg {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+._17eONp {
+    flex-grow: 1;
+    min-height: 1.75rem;
+}
+
+._3KpaoK_2UGSVV {
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 14px;
+    font-size: 1.4rem;
+}
+
+.vMfGQW_2NzYpj {
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    height: 26px;
+    overflow: hidden;
+}
+
+._3NkBUm_rMbdeO {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1 0 auto;
+    max-width: 75%;
+    color: #ee4d2d;
+    display: flex;
+    align-items: center;
+}
+
+._181cfk {
+    font-size: 1.4rem;
+    color: #ee4d2d;
+}
+
+._2igTXp {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    color: #ee4d2d;
+}
+
+._2J8hZZ_2For-u {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.54);
+}
