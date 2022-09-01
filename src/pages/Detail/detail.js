@@ -1,340 +1,15 @@
-// import axios from 'axios';
-// import { useState, useEffect } from 'react';
-// import Slider from 'react-slick';
-// import classNames from 'classnames/bind';
-// import styles from './detail.module.scss';
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
-
-// import GetCookie from '~/components/Hook/GetCookies';
-// import Button from '~/components/Button';
-
-// const cx = classNames.bind(styles);
-
-// function Detail() {
-//     const [detailValue, setDetailValue] = useState('');
-
-//     //const idValue = useDebounce(GetCookie('detail'), 500);
-
-//     useEffect(() => {
-//         axios
-//             .get(`${process.env.REACT_APP_URL_NODEJS}/product/detail?q=${JSON.parse(GetCookie('detail'))}`)
-//             .then((res) => {
-//                 setDetailValue(res.data);
-//                 console.log(res);
-//             })
-//             .catch((err) => console.log('Loii:' + err));
-//     }, []);
-
-//     const settings = {
-//         dots: false,
-//         infinite: true,
-//         speed: 500,
-//         slidesToShow: 1,
-//         slidesToScroll: 1,
-//     };
-
-//     const handleShowImage = () => {
-//         window.open(`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`, '_blank');
-//     };
-
-//     function formatCash(str) {
-//         return str
-//             .toString()
-//             .split('')
-//             .reverse()
-//             .reduce((prev, next, index) => {
-//                 return (index % 3 ? next : next + '.') + prev;
-//             });
-//     }
-
-//     return (
-//         <div className={cx('wrapper')}>
-//             <div className={cx('intro')}>
-//                 <div className={cx('img-product')}>
-//                     <img
-//                         className={cx('img-product-detail')}
-//                         src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-//                         alt="#"
-//                         onClick={handleShowImage}
-//                     />
-//                     <div className={cx('menu-list')}>
-//                         <div className={cx('menu-list-img')}>
-//                             <Slider {...settings}>
-//                                 <div className={cx('list-img')}>
-//                                     <div className={cx('list-img-group')}>
-//                                         <img
-//                                             className={cx('list-img-product-detail')}
-//                                             src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-//                                             alt="#"
-//                                         />
-//                                         <img
-//                                             className={cx('list-img-product-detail')}
-//                                             src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-//                                             alt="#"
-//                                         />
-//                                         <img
-//                                             className={cx('list-img-product-detail')}
-//                                             src={`${process.env.REACT_APP_URL_NODEJS}/images/${detailValue.image}`}
-//                                             alt="#"
-//                                         />
-//                                     </div>
-//                                 </div>
-//                                 <div>
-//                                     <h3>2</h3>
-//                                 </div>
-//                             </Slider>
-//                         </div>
-//                     </div>
-//                 </div>
-//                 <div className={cx('describe')}>
-//                     <div className={cx('name-product')}>{detailValue.nameProduct}</div>
-//                     <div className={cx('trademark-product')}>Thương hiệu: IPHONE</div>
-//                     <div className={cx('number-product')}>
-//                         Số lượng còn lại: {detailValue.number - detailValue.sellNumber}
-//                     </div>
-//                     <div className={cx('number-product')}>Giảm: {detailValue.promotion}%</div>
-//                     <div className={cx('money-product')}>
-//                         Giá: {formatCash(detailValue.money * ((100 - detailValue.promotion) / 100))}₫
-//                         <div className={cx('cost-product')}>
-//                             {formatCash(detailValue.money * ((100 - detailValue.promotion) / 100))}₫
-//                         </div>
-//                     </div>
-//                     <div className={cx('btn-insert')}>
-//                         <Button className={cx('btn-insert-card')} primary>
-//                             THÊM VÀO GIỎ HÀNG
-//                         </Button>
-//                     </div>
-//                 </div>
-//             </div>
-//             <div className={cx('describe-product-details')}>
-//                 <div className={cx('describe-product')}>
-//                     <h2>Mô tả sản phẩm</h2>
-//                     <div className={cx('describe')}>phần mô tả</div>
-//                 </div>
-//                 <div className={cx('detail-product')}>
-//                     <h2>Thông tin chi tiết</h2>
-//                     <div className={cx('table-detail')}>
-//                         <div className={cx('css-1h28ttq')}>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Thương hiệu
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     APPLE
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Bảo hành
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     12
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Thông tin chung
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Nhóm sản phẩm
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Điện thoại
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Tên
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     iPhone 12 Pro Max - MGDL3VN/A
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Màu sắc
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     {' '}
-//                                     Bạc Silver{' '}
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Màn hình
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Loại màn hình
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     6.7" Super Retina XDR
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Độ phân giải
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     2778 x 1284 pixels
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Cấu hình
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Dung lượng (ROM)
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     256GB
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Hệ điều hành
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     IOS
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     RAM
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     6GB
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Chip
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Apple A14 Bionic
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Pin
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Lithium ‑ ion
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Công nghệ pin
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     - Sạc pin nhanh- Tiết kiệm pin- Sạc không dây
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Cổng sạc
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Lightning
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Loại sim
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Nano SIM và eSIM
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Mạng di động
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Hỗ trợ 5G
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Camera
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Camera sau
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     3x 12MP
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Camera trước
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     12MP
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Kết nối
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Wifi
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     - Wi-Fi 802.11 a/b/g/n/ac/ax - Wi-Fi hotspot- Dual-band (2.4 GHz/5 GHz)
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     GPS
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     - GLONASS- BDS- A-GPS
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Kết nối khác
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     OTG
-//                                 </div>
-//                             </div>
-//                             <div type="body" color="textSecondary" className="css-xjd6tr">
-//                                 Thiết kế &amp; trọng lượng
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Kích thước
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     160.8 x 78.1 x 7.4 mm
-//                                 </div>
-//                             </div>
-//                             <div className={cx('css-1i3ajxp')}>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     Khối lượng
-//                                 </div>
-//                                 <div type="body" className={cx('css-ivgpor')}>
-//                                     228 g
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Detail;
-
 import { faCartPlus, faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import styles from './Detail.module.scss';
+import StarDetailPage from './StarDetailPage';
+import { useDispatch } from 'react-redux';
+import { addNumberProduct } from '~/actions/NumberProduct';
 const cx = classNames.bind(styles);
 
 function Detail() {
@@ -343,6 +18,18 @@ function Detail() {
     const [evaluationNum, setEvaluationNum] = useState('');
     const [evaluationStar, setEvaluationStar] = useState('');
     const [productValue, setProductValue] = useState('');
+    //
+    const [numberValue, setNumberValue] = useState(1);
+    const [imageValue, setImageValue] = useState('');
+    const [checkAddOfCart, setCheckAddOfCart] = useState(false);
+    //console.log(numberValue);
+
+    //const numberProduct = useSelector((state) => state.numberProduct.list);
+    const dispatchNumberProduct = useDispatch();
+
+    // if (localStorage.getItem('product') !== '') {
+    //     console.log('local: ', JSON.parse(localStorage.getItem('product')));
+    // }
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -385,24 +72,89 @@ function Detail() {
             });
     }
 
-    function takeDate(date) {
-        const dateValue = new Date(date);
-        let day = dateValue.getDate();
-        let month = dateValue.getMonth() + 1;
-        let year = dateValue.getFullYear();
-        let hour = dateValue.getHours();
-        let minute = dateValue.getMinutes();
-        if (month < 10) {
-            return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
-        } else if (day < 10) {
-            return hour + ':' + minute + ', 0' + day + '-' + month + year;
-        } else {
-            return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
-        }
-    }
+    const center = cx('center-slider');
 
+    var settings = {
+        className: center,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 6,
+    };
+
+    const handlePlusNumber = () => {
+        if (numberValue < product.SP_soluong - product.SP_soluongban) {
+            setNumberValue(numberValue + 1);
+        }
+    };
+
+    const handleMinusNumber = () => {
+        if (numberValue > 1) {
+            setNumberValue(numberValue - 1);
+        }
+    };
+
+    const handleMouseOverImage = (index) => {
+        const imageMain = document.getElementById('_3uzKon_2PWsS4-img');
+        const image = document.getElementById(`X2N8Bt_2PWsS4-img-${index}`);
+
+        setImageValue(imageMain.src);
+
+        imageMain.src = image.src;
+        //console.log(image.src);
+    };
+
+    const handleMouseOutImage = (index) => {
+        const imageMain = document.getElementById('_3uzKon_2PWsS4-img');
+
+        imageMain.src = imageValue;
+    };
+
+    const handleClickImage = (index) => {
+        const imageMain = document.getElementById('_3uzKon_2PWsS4-img');
+        const image = document.getElementById(`X2N8Bt_2PWsS4-img-${index}`);
+        setImageValue(image.src);
+        imageMain.src = image.src;
+    };
+
+    //mua hang
+    function handleAddToCart() {
+        setCheckAddOfCart(true);
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(22);
+        const cart = [{ id: resultId, soluong: numberValue }];
+        const action = addNumberProduct(cart);
+        dispatchNumberProduct(action);
+
+        setTimeout(() => setCheckAddOfCart(false), 3000);
+    }
     return (
         <div className={cx('wrapper')}>
+            {checkAddOfCart && (
+                <div className={cx('action-toast')}>
+                    <div className={cx('toast')}>
+                        <div className={cx('toast__container')}>
+                            <div className={cx('toast__icon')}>
+                                <div className={cx('action-toast__icon')}>
+                                    <svg
+                                        enable-background="new 0 0 12 12"
+                                        viewBox="0 0 12 12"
+                                        x="0"
+                                        y="0"
+                                        className={cx('icon-tick-bold')}
+                                    >
+                                        <g>
+                                            <path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div className={cx('toast__text')}>Sản phẩm đã được thêm vào Giỏ hàng</div>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className={cx('product-briefing_2qM0Iy')}>
                 <div className={cx('jexb7x')}>
                     <div className={cx('flex-column')}>
@@ -410,7 +162,12 @@ function Detail() {
                             <div className={cx('_2fbO7Q')}>
                                 <div className={cx('_1OPdfl')}>
                                     <div className={cx('_3uzKon_2PWsS4')}>
-                                        <img className={cx('_3uzKon_2PWsS4-img')} src={product.SP_image} alt="" />
+                                        <img
+                                            id="_3uzKon_2PWsS4-img"
+                                            className={cx('_3uzKon_2PWsS4-img')}
+                                            src={product.SP_image}
+                                            alt=""
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -423,9 +180,13 @@ function Detail() {
                                               <div className={cx('_1OPdfl')}>
                                                   <div className={cx('X2N8Bt_2PWsS4')}>
                                                       <img
+                                                          id={`X2N8Bt_2PWsS4-img-${index}`}
                                                           className={cx('X2N8Bt_2PWsS4-img')}
                                                           src={image.HA_image}
                                                           alt=""
+                                                          onMouseOver={() => handleMouseOverImage(index)}
+                                                          onMouseOut={() => handleMouseOutImage(index)}
+                                                          onClick={() => handleClickImage(index)}
                                                       />
                                                   </div>
                                               </div>
@@ -550,17 +311,16 @@ function Detail() {
                                     <div className={cx('flex-column-number')}>
                                         <div>
                                             <div className={cx('_1RTqoK-input-quantity')}>
-                                                <button className={cx('_1MGNbJ')}>
+                                                <button className={cx('_1MGNbJ')} onClick={handleMinusNumber}>
                                                     <FontAwesomeIcon icon={faMinus} />
                                                 </button>
                                                 <input
                                                     className={cx('_1MGNbJ_1eS5m1')}
                                                     type="text"
-                                                    role="spinbutton"
-                                                    aria-valuenow="1"
-                                                    defaultValue="1"
+                                                    value={numberValue}
+                                                    onChange={(e) => setNumberValue(e.target.value)}
                                                 />
-                                                <button className={cx('_1MGNbJ')}>
+                                                <button className={cx('_1MGNbJ')} onClick={handlePlusNumber}>
                                                     <FontAwesomeIcon icon={faPlus} />
                                                 </button>
                                             </div>
@@ -576,7 +336,7 @@ function Detail() {
                         <div>
                             <div className={cx('_3pcTIL')}>
                                 <div className={cx('_37uIr4')}>
-                                    <button className={cx('btn-tinted_3f7_YI_1TpzVc')}>
+                                    <button className={cx('btn-tinted_3f7_YI_1TpzVc')} onClick={handleAddToCart}>
                                         <FontAwesomeIcon
                                             className={cx('shopee-svg-icon_1FtIAE-icon-add-to-cart')}
                                             icon={faCartPlus}
@@ -610,7 +370,7 @@ function Detail() {
                                 <div className={cx('_2xDNx7')}>
                                     <a
                                         className={cx('btn-light--link_1CglVM')}
-                                        href="/haisanmekong?categoryId=100629&amp;itemId=10515661050"
+                                        href={`/shop/name=${product.shop[0].MTS_ten}`}
                                     >
                                         <svg
                                             enableBackground="new 0 0 15 15"
@@ -646,92 +406,7 @@ function Detail() {
                         <div className={cx('product-ratings')}>
                             <div className={cx('product-ratings__header')}>ĐÁNH GIÁ SẢN PHẨM</div>
                             <div className={cx('product-ratings__list')}>
-                                <div className={cx('detail-product-comment-list')}>
-                                    {evaluation !== ''
-                                        ? evaluation.map((evalue, index) => (
-                                              <div key={index} className={cx('detail-product-rating')}>
-                                                  <a
-                                                      className={cx('detail-product-rating__avatar')}
-                                                      href="/shop/154890615"
-                                                  >
-                                                      <div className={cx('detail-avatar')}>
-                                                          {/*  */}
-                                                          <img
-                                                              className={cx('detail-avatar__img')}
-                                                              alt=""
-                                                              src={evalue.userName.ND_image || ''}
-                                                          />
-                                                      </div>
-                                                  </a>
-                                                  <div className={cx('detail-product-rating__main')}>
-                                                      <a
-                                                          className={cx('detail-product-rating__author-name')}
-                                                          href="/shop/154890615"
-                                                      >
-                                                          {evalue.userName.ND_hoten || ''}
-                                                      </a>
-                                                      <div className={cx('repeat-purchase-con')}>
-                                                          <div className={cx('detail-product-rating__rating')}>
-                                                              <FontAwesomeIcon
-                                                                  className={cx(
-                                                                      evalue.DG_sosao === 5 ||
-                                                                          evalue.DG_sosao === 4 ||
-                                                                          evalue.DG_sosao === 3 ||
-                                                                          evalue.DG_sosao === 2 ||
-                                                                          evalue.DG_sosao === 1
-                                                                          ? 'shopee-svg-icon'
-                                                                          : '',
-                                                                  )}
-                                                                  icon={faStar}
-                                                              />
-                                                              <FontAwesomeIcon
-                                                                  className={cx(
-                                                                      evalue.DG_sosao === 5 ||
-                                                                          evalue.DG_sosao === 4 ||
-                                                                          evalue.DG_sosao === 3 ||
-                                                                          evalue.DG_sosao === 2
-                                                                          ? 'shopee-svg-icon'
-                                                                          : '',
-                                                                  )}
-                                                                  icon={faStar}
-                                                              />
-                                                              <FontAwesomeIcon
-                                                                  className={cx(
-                                                                      evalue.DG_sosao === 5 ||
-                                                                          evalue.DG_sosao === 4 ||
-                                                                          evalue.DG_sosao === 3
-                                                                          ? 'shopee-svg-icon'
-                                                                          : '',
-                                                                  )}
-                                                                  icon={faStar}
-                                                              />
-                                                              <FontAwesomeIcon
-                                                                  className={cx(
-                                                                      evalue.DG_sosao === 5 || evalue.DG_sosao === 4
-                                                                          ? 'shopee-svg-icon'
-                                                                          : '',
-                                                                  )}
-                                                                  icon={faStar}
-                                                              />
-                                                              <FontAwesomeIcon
-                                                                  className={cx(
-                                                                      evalue.DG_sosao === 5 ? 'shopee-svg-icon' : '',
-                                                                  )}
-                                                                  icon={faStar}
-                                                              />
-                                                          </div>
-                                                      </div>
-                                                      <div className={cx('detail-product-rating__time')}>
-                                                          {takeDate(evalue.DG_ngayDG)}
-                                                      </div>
-                                                      <div className={cx('detail-product-rating__tags')}>
-                                                          <span>{evalue.DG_mota || ''}</span>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          ))
-                                        : ''}
-                                </div>
+                                {evaluation !== '' ? <StarDetailPage data={evaluation} /> : ''}
                             </div>
                         </div>
                     </div>
@@ -747,81 +422,92 @@ function Detail() {
                             <div className={cx('image-carousel_DBnDYq')}>
                                 <div className={cx('image-carousel__item-list-wrapper')}>
                                     <ul className={cx('image-carousel__item-list')}>
-                                        {productValue !== ''
-                                            ? productValue.map((prodvalue, index) => (
-                                                  <li key={index} className={cx('image-carousel__item')}>
-                                                      <div className={cx('product-recommend-items__item-wrapper')}>
-                                                          <a
-                                                              data-sqe="link"
-                                                              href={`/detail/product/nameid${prodvalue.SP_id}`}
-                                                          >
-                                                              <div className={cx('_3tGY4K')}>
-                                                                  <div className={cx('_27gjnh')}>
-                                                                      <div>
-                                                                          <div className={cx('_1OPdfl_34Bbgp')}>
-                                                                              <img
-                                                                                  width="invalid-value"
-                                                                                  height="invalid-value"
-                                                                                  alt="Khô cá lóc Đồng Tháp đủ 3 nắng tự nhiên, ít mặn, dai thơm  ,đảm bảo vệ sinh Không dử dụng chất bảo quản"
-                                                                                  className={cx('_3DRMhT_2PWsS4')}
-                                                                                  src={prodvalue.SP_image || ''}
-                                                                              />
+                                        <Slider {...settings}>
+                                            {productValue !== ''
+                                                ? productValue.map((prodvalue, index) => (
+                                                      <li key={index} className={cx('image-carousel__item')}>
+                                                          <div className={cx('product-recommend-items__item-wrapper')}>
+                                                              <a
+                                                                  data-sqe="link"
+                                                                  href={`/detail/product/nameid${prodvalue.SP_id}`}
+                                                              >
+                                                                  <div className={cx('_3tGY4K')}>
+                                                                      <div className={cx('_27gjnh')}>
+                                                                          <div>
+                                                                              <div className={cx('_1OPdfl_34Bbgp')}>
+                                                                                  <img
+                                                                                      width="invalid-value"
+                                                                                      height="invalid-value"
+                                                                                      alt="Khô cá lóc Đồng Tháp đủ 3 nắng tự nhiên, ít mặn, dai thơm  ,đảm bảo vệ sinh Không dử dụng chất bảo quản"
+                                                                                      className={cx('_3DRMhT_2PWsS4')}
+                                                                                      src={prodvalue.SP_image || ''}
+                                                                                  />
 
-                                                                              <div className={cx('_23y7qS')}>
-                                                                                  <div
-                                                                                      className={cx(
-                                                                                          'VPfNgf_3Vf-cm_pKWQzh',
-                                                                                      )}
-                                                                                  >
-                                                                                      <span className={cx('percent')}>
-                                                                                          {prodvalue.SP_khuyenmai}%
-                                                                                      </span>
-                                                                                      <span className={cx('_1dKOej')}>
-                                                                                          giảm
-                                                                                      </span>
+                                                                                  <div className={cx('_23y7qS')}>
+                                                                                      <div
+                                                                                          className={cx(
+                                                                                              'VPfNgf_3Vf-cm_pKWQzh',
+                                                                                          )}
+                                                                                      >
+                                                                                          <span
+                                                                                              className={cx('percent')}
+                                                                                          >
+                                                                                              {prodvalue.SP_khuyenmai}%
+                                                                                          </span>
+                                                                                          <span
+                                                                                              className={cx('_1dKOej')}
+                                                                                          >
+                                                                                              giảm
+                                                                                          </span>
+                                                                                      </div>
                                                                                   </div>
                                                                               </div>
                                                                           </div>
-                                                                      </div>
-                                                                      <div className={cx('weFbbG')}>
-                                                                          <div className={cx('_3Xp1Jg')}>
-                                                                              <div className={cx('_17eONp')}>
-                                                                                  <div className={cx('_3KpaoK_2UGSVV')}>
-                                                                                      {prodvalue.SP_ten}
+                                                                          <div className={cx('weFbbG')}>
+                                                                              <div className={cx('_3Xp1Jg')}>
+                                                                                  <div className={cx('_17eONp')}>
+                                                                                      <div
+                                                                                          className={cx(
+                                                                                              '_3KpaoK_2UGSVV',
+                                                                                          )}
+                                                                                      >
+                                                                                          {prodvalue.SP_ten}
+                                                                                      </div>
                                                                                   </div>
                                                                               </div>
-                                                                          </div>
-                                                                          <div className={cx('vMfGQW_2NzYpj')}>
-                                                                              <div className={cx('_3NkBUm_rMbdeO')}>
-                                                                                  <span className={cx('_181cfk')}>
-                                                                                      ₫
-                                                                                  </span>
-                                                                                  <span className={cx('_2igTXp')}>
-                                                                                      {formatCash(
-                                                                                          prodvalue.SP_gia *
-                                                                                              ((100 -
-                                                                                                  prodvalue.SP_khuyenmai) /
-                                                                                                  100),
-                                                                                      )}
-                                                                                  </span>
-                                                                              </div>
-                                                                              <div className={cx('_2J8hZZ_2For-u')}>
-                                                                                  Đã bán {prodvalue.SP_soluongban}
+                                                                              <div className={cx('vMfGQW_2NzYpj')}>
+                                                                                  <div className={cx('_3NkBUm_rMbdeO')}>
+                                                                                      <span className={cx('_181cfk')}>
+                                                                                          ₫
+                                                                                      </span>
+                                                                                      <span className={cx('_2igTXp')}>
+                                                                                          {formatCash(
+                                                                                              prodvalue.SP_gia *
+                                                                                                  ((100 -
+                                                                                                      prodvalue.SP_khuyenmai) /
+                                                                                                      100),
+                                                                                          )}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div className={cx('_2J8hZZ_2For-u')}>
+                                                                                      Đã bán {prodvalue.SP_soluongban}
+                                                                                  </div>
                                                                               </div>
                                                                           </div>
                                                                       </div>
                                                                   </div>
-                                                              </div>
-                                                          </a>
-                                                      </div>
-                                                  </li>
-                                              ))
-                                            : ''}
+                                                              </a>
+                                                          </div>
+                                                      </li>
+                                                  ))
+                                                : ''}
+                                        </Slider>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     {/* / */}
                 </div>
             </div>

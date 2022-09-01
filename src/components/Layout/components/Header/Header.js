@@ -18,8 +18,8 @@ import { useCallback } from 'react';
 import SetCookie from '~/components/Hook/SetCookies';
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
-import { useSelector, useDispatch } from 'react-redux';
-import { addNewSignIn } from '~/actions/SignIn';
+//import { useSelector } from 'react-redux';
+// import { addNumberProduct } from '~/actions/NumberProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignUpSeller from './SignInAndSignUp/SignUpSeller';
@@ -58,9 +58,11 @@ function Header() {
 
     //console.log('Google: ' + GetCookie('logout'));
 
-    const siginList = useSelector((state) => state.signin.list);
-    const dispatchSignIn = useDispatch();
-    console.log('signin: ', siginList);
+    // const siginList = useSelector((state) => state.numberProduct.list);
+    // // const dispatchSignIn = useDispatch();
+    // console.log('product: ', siginList);
+    //localStorage.removeItem('product');
+    // localStorage.setItem('product', JSON.stringify(siginList));
 
     const getUser = async () => {
         try {
@@ -179,8 +181,8 @@ function Header() {
                         //alert('Đăng nhập thành công');
                         setLoginResult([...loginResult, res.data.result]);
                         //setLoading(false);
-                        const action = addNewSignIn(res.data.result);
-                        dispatchSignIn(action);
+                        // const action = addNumberProduct(res.data.result);
+                        // dispatchSignIn(action);
                         toast.success('Đăng nhập thành công người bán', {
                             position: toast.POSITION.TOP_RIGHT,
                         });
@@ -223,8 +225,8 @@ function Header() {
                         //alert('Đăng nhập thành công');
                         setLoginResult([...loginResult, res.data.result]);
                         //setLoading(false);
-                        const action = addNewSignIn(res.data.result);
-                        dispatchSignIn(action);
+                        // const action = addNumberProduct(res.data.result);
+                        // dispatchSignIn(action);
                         toast.success('Success Notification !', {
                             position: toast.POSITION.TOP_RIGHT,
                         });

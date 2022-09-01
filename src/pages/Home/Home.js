@@ -127,6 +127,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+//import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -134,6 +135,10 @@ function Home() {
     const [product, setProduct] = useState('');
     const [clickSuggestions, setClickSuggestions] = useState('');
     //console.log(product.length);
+
+    // const siginList = useSelector((state) => state.numberProduct.list);
+    // console.log('product: ', siginList);
+
     useEffect(() => {
         let url;
         if (clickSuggestions === 'suggestions' || clickSuggestions === '') {

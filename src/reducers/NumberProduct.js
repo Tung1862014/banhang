@@ -3,9 +3,9 @@ const initialState = {
     list: [],
     activeId: null,
 };
-const signinReducer = (state = initialState, action) => {
+const numberProductReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'USER_LOGIN': {
+        case 'ADD_NUMBER_PRODUCT': {
             const newList = [...state.list];
             newList.push(action.payload);
             return {
@@ -17,4 +17,4 @@ const signinReducer = (state = initialState, action) => {
             return state;
     }
 };
-export default signinReducer;
+export default numberProductReducer;

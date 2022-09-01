@@ -3,7 +3,7 @@ import { DefaultLayoutSeller } from '~/components/Layout';
 
 import Home from '~/pages/Home';
 import SanPham from '~/pages/SanPham';
-import PhuKien from '~/pages/PhuKien';
+import Shop from '~/pages/Shop';
 import GioHang from '~/pages/GioHang';
 import Search from '~/pages/Search';
 import Detail from '~/pages/Detail';
@@ -27,7 +27,7 @@ const publicRoutes = [
     { path: '/search', component: Search },
     { path: '/search/@:idSP', component: Detail, layout: HeaderOnly },
     { path: config.routes.sanpham, component: SanPham },
-    { path: config.routes.phukien, component: PhuKien },
+    { path: '/shop/name=:id', component: Shop, layout: HeaderOnly },
     { path: '/giohang', component: GioHang, layout: HeaderOnly },
     { path: '/detail/product/nameid:id', component: Detail, layout: HeaderOnly },
     { path: '/user/setting', component: Setting },
