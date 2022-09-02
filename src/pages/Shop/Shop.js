@@ -1,18 +1,107 @@
 import { faBars, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames/bind';
+import { useEffect, useState } from 'react';
 import styles from './Shop.module.scss';
 
 const cx = classNames.bind(styles);
 
 const Shop = () => {
+    const [shopValue, setShopValue] = useState('');
+    const [numProduct, setNumProduct] = useState('');
+    const [evaluate, setEvaluate] = useState('');
+    const [categoryValue, setCategoryValue] = useState('');
+
+    console.log(shopValue, numProduct, evaluate, categoryValue);
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(11);
+        console.log(resultId);
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/productshop/shop/show?NB_id=${resultId}`)
+            .then((res) => {
+                //console.log(res.data);
+                setShopValue(res.data.results);
+                setNumProduct(res.data.numproduct.numproduct);
+                setEvaluate(res.data.evaluate.evaluate);
+                setCategoryValue(res.data.category);
+            })
+            .catch((err) => {
+                console.error('loi');
+            });
+    }, []);
+
+    function takeDate(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10) {
+            return +day + '-0' + month + '-' + year;
+        } else if (day < 10) {
+            return '0' + day + '-' + month + year;
+        } else {
+            return +day + '-' + month + '-' + year;
+        }
+    }
+
+    const handleMouseOverPrice = () => {
+        const price = document.getElementById('select-with-status__dropdown-shop-modal__transition-enter-done');
+
+        price.style.display = 'flex';
+    };
+
+    const handleMouseOutPrice = () => {
+        const price = document.getElementById('select-with-status__dropdown-shop-modal__transition-enter-done');
+
+        price.style.display = 'none';
+    };
+
+    const handleMouseOverTall = () => {
+        const tallprice = document.getElementById(
+            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-tall',
+        );
+
+        tallprice.style.color = '#ee4d2d';
+    };
+
+    const handleMouseOutTall = () => {
+        const tallprice = document.getElementById(
+            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-tall',
+        );
+        tallprice.style.color = '#222';
+    };
+
+    const handleMouseOverShort = () => {
+        const shortprice = document.getElementById(
+            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-short',
+        );
+        shortprice.style.color = '#ee4d2d';
+    };
+
+    const handleMouseOutShort = () => {
+        const shortprice = document.getElementById(
+            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-short',
+        );
+        shortprice.style.color = '#222';
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('shop-page__info')}>
                 <div className={cx('section-seller-overview-horizontal-container')}>
                     <div className={cx('section-seller-overview-horizontal__leading')}>
                         <div className={cx('section-seller-overview-horizontal__leading-background')}>
-                            <img src={'https://cf.shopee.vn/file/4c5dddef57e11647150a0e7549e9d44f_tn'} alt="" />
+                            <img
+                                src={
+                                    shopValue !== ''
+                                        ? shopValue.MTS_image
+                                        : process.env.REACT_APP_URL_NODEJS_IMAGE + '/default-ui-image.webp'
+                                }
+                                alt=""
+                            />
                         </div>
                         <div className={cx('section-seller-overview-horizontal__leading-background-mask')}></div>
                         <div className={cx('section-seller-overview-horizontal__leading-content')}>
@@ -21,18 +110,22 @@ const Shop = () => {
                                     <div className={cx('shop-avatar_1a-fH5')}>
                                         <img
                                             className={cx('shop-avatar__img')}
-                                            src="https://cf.shopee.vn/file/aa873a4c115057d53fb2c3ad9f56cdfb_tn"
+                                            src={
+                                                shopValue !== ''
+                                                    ? shopValue.MTS_logo
+                                                    : process.env.REACT_APP_URL_NODEJS_IMAGE + '/default-ui-image.webp'
+                                            }
                                             alt=""
                                         />
                                     </div>
                                 </div>
                                 <div className={cx('section-seller-overview-horizontal__portrait-info')}>
                                     <h1 className={cx('section-seller-overview-horizontal__portrait-name')}>
-                                        haisanmekong
+                                        {shopValue !== '' ? shopValue.MTS_ten : 'Tên Shop'}
                                     </h1>
                                     <div className={cx('section-seller-overview-horizontal__portrait-status')}>
                                         <div className={cx('section-seller-overview-horizontal__active-time')}>
-                                            Online 40 phút trước
+                                            Tham gia: {shopValue !== '' ? takeDate(shopValue.NB_ngay) : ''}
                                         </div>
                                     </div>
                                 </div>
@@ -55,16 +148,10 @@ const Shop = () => {
                             </div>
                             <div className={cx('section-seller-overview__item-text')}>
                                 <div className={cx('section-seller-overview__item-text-name')}>Sản phẩm:&nbsp;</div>
-                                <div className={cx('section-seller-overview__item-text-value')}>198</div>
+                                <div className={cx('section-seller-overview__item-text-value')}>
+                                    {numProduct !== '' ? numProduct : 0}
+                                </div>
                             </div>
-                            {/* <div
-                                className={cx(
-                                    'section-seller-overview__item-text section-seller-overview__item-text--no-product',
-                                )}
-                            >
-                                <div className={cx('section-seller-overview__item-text-value')}>198</div>
-                                <div className={cx('section-seller-overview__item-text-name')}>Sản phẩm</div>
-                            </div> */}
                         </div>
                         <div className={cx('section-seller-overview__item-section-seller-overview__item--clickable')}>
                             <div className={cx('section-seller-overview__item-icon-wrapper')}>
@@ -86,16 +173,10 @@ const Shop = () => {
                             </div>
                             <div className={cx('section-seller-overview__item-text')}>
                                 <div className={cx('section-seller-overview__item-text-name')}>đánh giá:&nbsp;</div>
-                                <div className={cx('section-seller-overview__item-text-value')}>4.8 (380 đánh giá)</div>
+                                <div className={cx('section-seller-overview__item-text-value')}>
+                                    {evaluate !== '' ? evaluate : 0} đánh giá
+                                </div>
                             </div>
-                            {/* <div
-                                className={cx(
-                                    'section-seller-overview__item-text section-seller-overview__item-text--no-product',
-                                )}
-                            >
-                                <div className={cx('section-seller-overview__item-text-value')}>4.8 (380 đánh giá)</div>
-                                <div className={cx('section-seller-overview__item-text-name')}>đánh giá</div>
-                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -126,12 +207,16 @@ const Shop = () => {
                             </svg>
                             Sản Phẩm
                         </div>
-                        <div className={cx('_3mieT7')}>
-                            <svg viewBox="0 0 4 7" className={cx('shop-svg-icon_3mieT7')}>
-                                <polygon points="4 3.5 0 0 0 7"></polygon>
-                            </svg>
-                            KHÔ GÀ NHÀ LÀM
-                        </div>
+                        {categoryValue !== ''
+                            ? categoryValue.map((category, index) => (
+                                  <div key={index} className={cx('_3mieT7')}>
+                                      <svg viewBox="0 0 4 7" className={cx('shop-svg-icon_3mieT7')}>
+                                          <polygon points="4 3.5 0 0 0 7"></polygon>
+                                      </svg>
+                                      {category.DM_danhmuc}
+                                  </div>
+                              ))
+                            : ''}
                     </div>
                 </div>
                 {/* / */}
@@ -147,6 +232,8 @@ const Shop = () => {
                                     <div className={cx('select-with-status')}>
                                         <div
                                             className={cx('select-with-status__holder-select-with-status__box-shadow')}
+                                            onMouseOver={handleMouseOverPrice}
+                                            onMouseOut={handleMouseOutPrice}
                                         >
                                             <span className={cx('select-with-status__placeholder')}>Giá</span>
                                             <span>
@@ -157,7 +244,35 @@ const Shop = () => {
                                                     ></path>
                                                 </svg>
                                             </span>
-                                            <div></div>
+                                            <div>
+                                                <div
+                                                    id="select-with-status__dropdown-shop-modal__transition-enter-done"
+                                                    className={cx(
+                                                        'select-with-status__dropdown-shop-modal__transition-enter-done',
+                                                    )}
+                                                >
+                                                    <div
+                                                        id="select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-tall"
+                                                        className={cx(
+                                                            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-tall',
+                                                        )}
+                                                        onMouseOver={handleMouseOverTall}
+                                                        onMouseOut={handleMouseOutTall}
+                                                    >
+                                                        Giá: Thấp đến Cao
+                                                    </div>
+                                                    <div
+                                                        id="select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-short"
+                                                        className={cx(
+                                                            'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-short',
+                                                        )}
+                                                        onMouseOver={handleMouseOverShort}
+                                                        onMouseOut={handleMouseOutShort}
+                                                    >
+                                                        Giá: Cao đến Thấp
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +282,7 @@ const Shop = () => {
                         <div className={cx('shop-search-result-view')}>
                             <div className={cx('row')}>
                                 <div className={cx('shop-search-result-view__item-col-xs-2-4')}>
-                                    <a data-sqe="link" href="/" className={cx('dd')}>
+                                    <a data-sqe="link" href="/detail/product/nameid11" className={cx('dd')}>
                                         <div className={cx('_3DGyGY')}>
                                             <div className={cx('_3ZU4Xu')}>
                                                 <div className={cx('nHUlre_2CaWwM')}>
@@ -204,11 +319,32 @@ const Shop = () => {
                                                     </div>
                                                     <div className={cx('_3UeJ1q')}>
                                                         <div className={cx('_3VDfUA')}>
-                                                            <div className={cx('shopee-rating-stars')}>
-                                                                <div className={cx('shopee-rating-stars__stars')}>
+                                                            <div className={cx('shop-rating-stars')}>
+                                                                <div className={cx('shop-rating-stars__stars')}>
                                                                     <div
                                                                         className={cx(
-                                                                            'shopee-rating-stars__star-wrapper',
+                                                                            'shop-rating-stars__star-wrapper',
+                                                                        )}
+                                                                    >
+                                                                        <FontAwesomeIcon
+                                                                            className={cx(
+                                                                                'shop-rating-stars__gold-star',
+                                                                            )}
+                                                                            // className={cx(
+                                                                            //     evaluationStar === 5 ||
+                                                                            //         evaluationStar === 4 ||
+                                                                            //         evaluationStar === 3 ||
+                                                                            //         evaluationStar === 2 ||
+                                                                            //         evaluationStar === 1
+                                                                            //         ? 'shopee-svg-icon'
+                                                                            //         : '',
+                                                                            // )}
+                                                                            icon={faStar}
+                                                                        />
+                                                                    </div>
+                                                                    <div
+                                                                        className={cx(
+                                                                            'shop-rating-stars__star-wrapper',
                                                                         )}
                                                                     >
                                                                         <FontAwesomeIcon
@@ -226,7 +362,7 @@ const Shop = () => {
                                                                     </div>
                                                                     <div
                                                                         className={cx(
-                                                                            'shopee-rating-stars__star-wrapper',
+                                                                            'shop-rating-stars__star-wrapper',
                                                                         )}
                                                                     >
                                                                         <FontAwesomeIcon
@@ -244,7 +380,7 @@ const Shop = () => {
                                                                     </div>
                                                                     <div
                                                                         className={cx(
-                                                                            'shopee-rating-stars__star-wrapper',
+                                                                            'shop-rating-stars__star-wrapper',
                                                                         )}
                                                                     >
                                                                         <FontAwesomeIcon
@@ -262,25 +398,7 @@ const Shop = () => {
                                                                     </div>
                                                                     <div
                                                                         className={cx(
-                                                                            'shopee-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shopee-rating-stars__star-wrapper',
+                                                                            'shop-rating-stars__star-wrapper',
                                                                         )}
                                                                     >
                                                                         <FontAwesomeIcon

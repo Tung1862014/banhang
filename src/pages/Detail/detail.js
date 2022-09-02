@@ -369,8 +369,9 @@ function Detail() {
                                 </div>
                                 <div className={cx('_2xDNx7')}>
                                     <a
+                                        data-sqe="link"
                                         className={cx('btn-light--link_1CglVM')}
-                                        href={product !== '' ? `/shop/name=${product.shop[0].MTS_ten}` : ''}
+                                        href={product !== '' ? `/shop/name=${product.NB_id}` : ''}
                                     >
                                         <svg
                                             enableBackground="new 0 0 15 15"
