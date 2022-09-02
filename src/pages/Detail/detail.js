@@ -370,7 +370,7 @@ function Detail() {
                                 <div className={cx('_2xDNx7')}>
                                     <a
                                         className={cx('btn-light--link_1CglVM')}
-                                        href={`/shop/name=${product.shop[0].MTS_ten}`}
+                                        href={product !== '' ? `/shop/name=${product.shop[0].MTS_ten}` : ''}
                                     >
                                         <svg
                                             enableBackground="new 0 0 15 15"
