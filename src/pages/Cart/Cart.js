@@ -34,11 +34,12 @@ function Cart() {
                                         title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
                                         href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
                                     >
-                                        <img
-                                            src="https://cf.shopee.vn/file/91610f27f34ee9874bf0a862cd7e4562_tn"
-                                            alt=""
-                                        />
-                                        <div className={cx('_3SWf-5')}></div>
+                                        <div className={cx('_3SWf-5')}>
+                                            <img
+                                                src="https://cf.shopee.vn/file/91610f27f34ee9874bf0a862cd7e4562_tn"
+                                                alt=""
+                                            />
+                                        </div>
                                     </a>
                                     <div className={cx('_3OrWGt')}>
                                         <a
@@ -54,26 +55,26 @@ function Cart() {
                             {/* / */}
                             <div className={cx('Ra8lP2')}>
                                 <div>
-                                    <span className={cx('_1CXksa _1k1Vcm')}>₫199.000</span>
+                                    <span className={cx('_1CXksa_1k1Vcm')}>₫199.000</span>
                                     <span className={cx('_1CXksa')}>₫39.000</span>
                                 </div>
                             </div>
                             {/* / */}
                             <div className={cx('_2ZUrV7')}>
-                                <div className={cx('_36kVQQ shopee-input-quantity')}>
+                                <div className={cx('_36kVQQ-input-quantity')}>
                                     <button className={cx('EcPhjV')}>
                                         <svg
                                             enable-background="new 0 0 10 10"
                                             viewBox="0 0 10 10"
                                             x="0"
                                             y="0"
-                                            className={cx('shopee-svg-icon')}
+                                            className={cx('shop-svg-icon')}
                                         >
                                             <polygon points="4.5 4.5 3.5 4.5 0 4.5 0 5.5 3.5 5.5 4.5 5.5 10 5.5 10 4.5"></polygon>
                                         </svg>
                                     </button>
                                     <input
-                                        className={cx('EcPhjV _3cj9Np')}
+                                        className={cx('EcPhjV_3cj9Np')}
                                         type="text"
                                         role="spinbutton"
                                         aria-valuenow="1"
@@ -85,7 +86,7 @@ function Cart() {
                                             viewBox="0 0 10 10"
                                             x="0"
                                             y="0"
-                                            className={cx('shopee-svg-icon icon-plus-sign')}
+                                            className={cx('shop-svg-icon')}
                                         >
                                             <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon>
                                         </svg>
@@ -97,7 +98,7 @@ function Cart() {
                                 <span>₫39.000</span>
                             </div>
                             {/* / */}
-                            <div className={cx('_2y8iJi _2qPRqW')}>
+                            <div className={cx('_2y8iJi_2qPRqW')}>
                                 <button className={cx('RCd1Gx')}>Xóa</button>
                             </div>
                         </div>
@@ -106,6 +107,20 @@ function Cart() {
                 {/* / */}
             </div>
             {/* / */}
+            <div className={cx('W2HjBQ_zzOmij')}>
+                <div className={cx('_2BT_es')}>
+                    <div className={cx('_3BPMNN')}>
+                        <div className={cx('_2LMWss')}>
+                            <div className={cx('_10A7e2')}>Tổng thanh toán (0 Sản phẩm):</div>
+                            <div className={cx('nBHs8H')}>₫0</div>
+                        </div>
+                    </div>
+                    <div className={cx('_1TwgPm')}></div>
+                </div>
+                <button className={cx('-button-solid--primary')}>
+                    <span className={cx('kcsswk')}>Mua hàng</span>
+                </button>
+            </div>
         </div>
     );
 }
