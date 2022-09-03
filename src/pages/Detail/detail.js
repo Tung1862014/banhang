@@ -291,13 +291,23 @@ function Detail() {
                             <div className={cx('flex-column_38g6so')}>
                                 <div className={cx('items-center-price')}>
                                     <div className={cx('items-center-price_34BHKe')}>
-                                        <div className={cx('_2yjfFH')}>
-                                            ₫{product !== '' && formatCash(product.SP_gia)}
-                                        </div>
-                                        <div className={cx('items-center-price')}>
-                                            <div className={cx('_2Shl1j')}>
-                                                ₫{formatCash(product.SP_gia * ((100 - product.SP_khuyenmai) / 100))}
+                                        {product.SP_khuyenmai !== 0 ? (
+                                            <div className={cx('_2yjfFH')}>
+                                                ₫{product !== '' && formatCash(product.SP_gia)}
                                             </div>
+                                        ) : (
+                                            ''
+                                        )}
+
+                                        <div className={cx('items-center-price')}>
+                                            {product.SP_khuyenmai !== 0 ? (
+                                                <div className={cx('_2Shl1j')}>
+                                                    ₫{formatCash(product.SP_gia * ((100 - product.SP_khuyenmai) / 100))}
+                                                </div>
+                                            ) : (
+                                                <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
+                                            )}
+
                                             <div className={cx('_3PlIlX')}>{product.SP_khuyenmai}% giảm</div>
                                         </div>
                                     </div>
@@ -371,7 +381,7 @@ function Detail() {
                                     <a
                                         data-sqe="link"
                                         className={cx('btn-light--link_1CglVM')}
-                                        href={product !== '' ? `/shop/name=${product.NB_id}` : ''}
+                                        href={product !== '' ? `/shop/name=${product.NB_id}?page=${0}` : ''}
                                     >
                                         <svg
                                             enableBackground="new 0 0 15 15"
@@ -445,22 +455,33 @@ function Detail() {
                                                                                   />
 
                                                                                   <div className={cx('_23y7qS')}>
-                                                                                      <div
-                                                                                          className={cx(
-                                                                                              'VPfNgf_3Vf-cm_pKWQzh',
-                                                                                          )}
-                                                                                      >
-                                                                                          <span
-                                                                                              className={cx('percent')}
+                                                                                      {prodvalue.SP_khuyenmai !== 0 ? (
+                                                                                          <div
+                                                                                              className={cx(
+                                                                                                  'VPfNgf_3Vf-cm_pKWQzh',
+                                                                                              )}
                                                                                           >
-                                                                                              {prodvalue.SP_khuyenmai}%
-                                                                                          </span>
-                                                                                          <span
-                                                                                              className={cx('_1dKOej')}
-                                                                                          >
-                                                                                              giảm
-                                                                                          </span>
-                                                                                      </div>
+                                                                                              <span
+                                                                                                  className={cx(
+                                                                                                      'percent',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  {
+                                                                                                      prodvalue.SP_khuyenmai
+                                                                                                  }
+                                                                                                  %
+                                                                                              </span>
+                                                                                              <span
+                                                                                                  className={cx(
+                                                                                                      '_1dKOej',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  giảm
+                                                                                              </span>
+                                                                                          </div>
+                                                                                      ) : (
+                                                                                          ''
+                                                                                      )}
                                                                                   </div>
                                                                               </div>
                                                                           </div>

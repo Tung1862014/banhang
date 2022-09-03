@@ -3,22 +3,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+//import { Link } from 'react-router-dom';
 import styles from './Shop.module.scss';
 
 const cx = classNames.bind(styles);
 
 const Shop = () => {
+    // const pathId = window.location.pathname.toString();
+    // const resultIdlocal = pathId.slice(11);
     const [shopValue, setShopValue] = useState('');
     const [numProduct, setNumProduct] = useState('');
     const [evaluate, setEvaluate] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
 
-    console.log(shopValue, numProduct, evaluate, categoryValue);
+    //
+
+    const [priceSortValue, setPriceSortValue] = useState('gia');
+    const [sortValue, setSortValue] = useState('all');
+    const [chooseCategory, setChooseCategory] = useState('all');
+    const [productValue, setProductValue] = useState('');
+
+    //console.log(shopValue, numProduct, evaluate, categoryValue);
+    console.log(chooseCategory);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(11);
-        console.log(resultId);
+
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/productshop/shop/show?NB_id=${resultId}`)
             .then((res) => {
@@ -32,6 +43,25 @@ const Shop = () => {
                 console.error('loi');
             });
     }, []);
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(11);
+        console.log(resultId);
+        if (chooseCategory !== '') {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/productshop/shop/product/show/all?NB_id=${resultId}&DM_id=${chooseCategory}&sort=${sortValue}&price=${priceSortValue}`,
+                )
+                .then((res) => {
+                    console.log(res.data);
+                    setProductValue(res.data.results);
+                })
+                .catch((err) => {
+                    console.error('loi');
+                });
+        }
+    }, [chooseCategory, sortValue, priceSortValue]);
 
     function takeDate(date) {
         const dateValue = new Date(date);
@@ -66,6 +96,13 @@ const Shop = () => {
         );
 
         tallprice.style.color = '#ee4d2d';
+        tallprice.addEventListener('click', function () {
+            const price = document.getElementById('select-with-status__placeholder');
+
+            price.innerHTML = 'Giá: Thấp đến Cao';
+            price.style.color = '#ee4d2d';
+            setPriceSortValue('lowtohigh');
+        });
     };
 
     const handleMouseOutTall = () => {
@@ -80,6 +117,14 @@ const Shop = () => {
             'select-with-status__dropdown-item-select-with-status__dropdown-item--with-tick-short',
         );
         shortprice.style.color = '#ee4d2d';
+
+        shortprice.addEventListener('click', function () {
+            const price = document.getElementById('select-with-status__placeholder');
+
+            price.innerHTML = 'Giá: Cap đến Thấp';
+            price.style.color = '#ee4d2d';
+            setPriceSortValue('hightolow');
+        });
     };
 
     const handleMouseOutShort = () => {
@@ -88,6 +133,62 @@ const Shop = () => {
         );
         shortprice.style.color = '#222';
     };
+
+    const handleSelling = () => {
+        const selling = document.getElementById('shop-sort-by-options__option1');
+        const newproduct = document.getElementById('shop-sort-by-options__option2');
+
+        selling.style.color = '#fff';
+        selling.style.backgroundColor = '#ee4d2d';
+        newproduct.style.color = 'black';
+        newproduct.style.backgroundColor = '#fff';
+        setSortValue('selling');
+    };
+
+    const handleNewProduct = () => {
+        const selling = document.getElementById('shop-sort-by-options__option1');
+        const newproduct = document.getElementById('shop-sort-by-options__option2');
+
+        selling.style.color = 'black';
+        selling.style.backgroundColor = '#fff';
+        newproduct.style.color = '#fff';
+        newproduct.style.backgroundColor = '#ee4d2d';
+
+        setSortValue('promotion');
+    };
+
+    const handleCategory = (index, DM) => {
+        const category = document.getElementById(`shop-svg-icon_3mieT7${index}`);
+        const title = document.getElementById(`_3mieT7${index}`);
+        console.log(index);
+        category.style.display = 'inline-block';
+        title.style.color = '#ee4d2d';
+        setChooseCategory(DM);
+        for (let i = 0; i < categoryValue.length; i++) {
+            if (index !== 't') {
+                const categoryIdProduct = document.getElementById(`shop-svg-icon_3mieT7t`);
+                const titleId = document.getElementById(`_3mieT7t`);
+                categoryIdProduct.style.display = 'none';
+                titleId.style.color = 'black';
+            }
+            if (i !== index) {
+                const categoryId = document.getElementById(`shop-svg-icon_3mieT7${i}`);
+                const titleId = document.getElementById(`_3mieT7${i}`);
+                categoryId.style.display = 'none';
+                titleId.style.color = 'black';
+            }
+        }
+    };
+
+    function formatCash(str) {
+        return str
+            .toString()
+            .split('')
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + '.') + prev;
+            });
+    }
     return (
         <div className={cx('wrapper')}>
             <div className={cx('shop-page__info')}>
@@ -201,16 +302,25 @@ const Shop = () => {
                         Danh Mục
                     </div>
                     <div>
-                        <div className={cx('_3mieT7')}>
-                            <svg viewBox="0 0 4 7" className={cx('shop-svg-icon_3mieT7')}>
+                        <div id="_3mieT7t" className={cx('_3mieT7t')} onClick={() => handleCategory('t', 'all')}>
+                            <svg viewBox="0 0 4 7" id="shop-svg-icon_3mieT7t" className={cx('shop-svg-icon_3mieT7t')}>
                                 <polygon points="4 3.5 0 0 0 7"></polygon>
                             </svg>
                             Sản Phẩm
                         </div>
                         {categoryValue !== ''
                             ? categoryValue.map((category, index) => (
-                                  <div key={index} className={cx('_3mieT7')}>
-                                      <svg viewBox="0 0 4 7" className={cx('shop-svg-icon_3mieT7')}>
+                                  <div
+                                      key={index}
+                                      id={`_3mieT7${index}`}
+                                      className={cx(`_3mieT7${index}`)}
+                                      onClick={() => handleCategory(index, category.DM_id)}
+                                  >
+                                      <svg
+                                          viewBox="0 0 4 7"
+                                          id={`shop-svg-icon_3mieT7${index}`}
+                                          className={cx(`shop-svg-icon_3mieT7${index}`)}
+                                      >
                                           <polygon points="4 3.5 0 0 0 7"></polygon>
                                       </svg>
                                       {category.DM_danhmuc}
@@ -225,9 +335,20 @@ const Shop = () => {
                         <div className={cx('shop-sort-bar__label')}>
                             <span className={cx('shop-sort-bar__label-sort')}>Sắp xếp theo</span>
                             <div className={cx('shop-sort-by-options')}>
-                                <div className={cx('shop-sort-by-options__option')}>Phổ biến</div>
-                                <div className={cx('shop-sort-by-options__option')}>Mới nhất</div>
-                                <div className={cx('shop-sort-by-options__option')}>Bán chạy</div>
+                                <div
+                                    id="shop-sort-by-options__option1"
+                                    className={cx('shop-sort-by-options__option1')}
+                                    onClick={handleSelling}
+                                >
+                                    Bán chạy
+                                </div>
+                                <div
+                                    id="shop-sort-by-options__option2"
+                                    className={cx('shop-sort-by-options__option2')}
+                                    onClick={handleNewProduct}
+                                >
+                                    Khuyến mãi
+                                </div>
                                 <div>
                                     <div className={cx('select-with-status')}>
                                         <div
@@ -235,7 +356,12 @@ const Shop = () => {
                                             onMouseOver={handleMouseOverPrice}
                                             onMouseOut={handleMouseOutPrice}
                                         >
-                                            <span className={cx('select-with-status__placeholder')}>Giá</span>
+                                            <span
+                                                id="select-with-status__placeholder"
+                                                className={cx('select-with-status__placeholder')}
+                                            >
+                                                Giá
+                                            </span>
                                             <span>
                                                 <svg viewBox="0 0 10 6" className={cx('shop-svg-icon-sort')}>
                                                     <path
@@ -281,149 +407,163 @@ const Shop = () => {
                         {/* / */}
                         <div className={cx('shop-search-result-view')}>
                             <div className={cx('row')}>
-                                <div className={cx('shop-search-result-view__item-col-xs-2-4')}>
-                                    <a data-sqe="link" href="/detail/product/nameid11" className={cx('dd')}>
-                                        <div className={cx('_3DGyGY')}>
-                                            <div className={cx('_3ZU4Xu')}>
-                                                <div className={cx('nHUlre_2CaWwM')}>
-                                                    <img
-                                                        width="invalid-value"
-                                                        height="invalid-value"
-                                                        alt="Khô cá dứa  cần giờ ngon đặc biệt thịt dai thơm ngon - hút chân không bảo quản lâu dùng chất lượng Mekong Foods"
-                                                        className={cx('yFkmMY_1KQ1MG')}
-                                                        src="https://cf.shopee.vn/file/1b9c60b8f2145a2307ca35c64959a4e6_tn"
-                                                    />
-                                                    <div className={cx('_3atTkb')}>
-                                                        <div className={cx('CNco3q_2PoYxv_HpfQ6t')}>
-                                                            <span className={cx('percent')}>43%</span>
-                                                            <span className={cx('_338wTY')}>giảm</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className={cx('_2477Dv')}>
-                                                    <div className={cx('_1G5uNe')}>
-                                                        <div className={cx('_2mQnW2')}>
-                                                            <div className={cx('_3Gla5X_2j2K92_3j20V6')}>
-                                                                Khô cá dứa cần giờ ngon đặc biệt thịt dai thơm ngon -
-                                                                hút chân không bảo quản lâu dùng chất lượng Mekong Foods
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className={cx('_3CsOH6')}>
-                                                        <div className={cx('_3w3Slt_1NAEoM')}>
-                                                            <span className={cx('_2whgI2')}>₫</span>
-                                                            <span className={cx('_3TJGx5')}>77.000</span> -{' '}
-                                                            <span className={cx('_2whgI2')}>₫</span>
-                                                            <span className={cx('_3TJGx5')}>115.000</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className={cx('_3UeJ1q')}>
-                                                        <div className={cx('_3VDfUA')}>
-                                                            <div className={cx('shop-rating-stars')}>
-                                                                <div className={cx('shop-rating-stars__stars')}>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shop-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            className={cx(
-                                                                                'shop-rating-stars__gold-star',
-                                                                            )}
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shop-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shop-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shop-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                    <div
-                                                                        className={cx(
-                                                                            'shop-rating-stars__star-wrapper',
-                                                                        )}
-                                                                    >
-                                                                        <FontAwesomeIcon
-                                                                            // className={cx(
-                                                                            //     evaluationStar === 5 ||
-                                                                            //         evaluationStar === 4 ||
-                                                                            //         evaluationStar === 3 ||
-                                                                            //         evaluationStar === 2 ||
-                                                                            //         evaluationStar === 1
-                                                                            //         ? 'shopee-svg-icon'
-                                                                            //         : '',
-                                                                            // )}
-                                                                            icon={faStar}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className={cx('_2Tc7Qg _2R-Crv')}>Đã bán 93</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                {productValue !== ''
+                                    ? productValue.map((prod, index) => (
+                                          <div key={index} className={cx('shop-search-result-view__item-col-xs-2-4')}>
+                                              <a data-sqe="link" href="/detail/product/nameid11" className={cx('dd')}>
+                                                  <div className={cx('_3DGyGY')}>
+                                                      <div className={cx('_3ZU4Xu')}>
+                                                          <div className={cx('nHUlre_2CaWwM')}>
+                                                              <img
+                                                                  width="invalid-value"
+                                                                  height="invalid-value"
+                                                                  alt="Khô cá dứa  cần giờ ngon đặc biệt thịt dai thơm ngon - hút chân không bảo quản lâu dùng chất lượng Mekong Foods"
+                                                                  className={cx('yFkmMY_1KQ1MG')}
+                                                                  src="https://cf.shopee.vn/file/1b9c60b8f2145a2307ca35c64959a4e6_tn"
+                                                              />
+                                                              {prod.SP_khuyenmai !== 0 ? (
+                                                                  <div className={cx('_3atTkb')}>
+                                                                      <div className={cx('CNco3q_2PoYxv_HpfQ6t')}>
+                                                                          <span className={cx('percent')}>
+                                                                              {prod.SP_khuyenmai}%
+                                                                          </span>
+                                                                          <span className={cx('_338wTY')}>giảm</span>
+                                                                      </div>
+                                                                  </div>
+                                                              ) : (
+                                                                  ''
+                                                              )}
+                                                          </div>
+                                                          <div className={cx('_2477Dv')}>
+                                                              <div className={cx('_1G5uNe')}>
+                                                                  <div className={cx('_2mQnW2')}>
+                                                                      <div className={cx('_3Gla5X_2j2K92_3j20V6')}>
+                                                                          {prod.SP_ten}
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className={cx('_3CsOH6')}>
+                                                                  <div className={cx('_3w3Slt_1NAEoM')}>
+                                                                      {prod.SP_khuyenmai !== 0 ? (
+                                                                          <span className={cx('_2whgI2')}>
+                                                                              ₫{formatCash(prod.SP_gia)}
+                                                                          </span>
+                                                                      ) : (
+                                                                          ''
+                                                                      )}
+
+                                                                      <span className={cx('_3TJGx5')}>
+                                                                          ₫
+                                                                          {formatCash(
+                                                                              prod.SP_gia *
+                                                                                  ((100 - prod.SP_khuyenmai) / 100),
+                                                                          )}
+                                                                      </span>
+                                                                  </div>
+                                                              </div>
+                                                              <div className={cx('_3UeJ1q')}>
+                                                                  <div className={cx('_3VDfUA')}>
+                                                                      <div className={cx('shop-rating-stars')}>
+                                                                          <div
+                                                                              className={cx('shop-rating-stars__stars')}
+                                                                          >
+                                                                              <div
+                                                                                  className={cx(
+                                                                                      'shop-rating-stars__star-wrapper',
+                                                                                  )}
+                                                                              >
+                                                                                  <FontAwesomeIcon
+                                                                                      className={cx(
+                                                                                          prod.star === 5 ||
+                                                                                              prod.star === 4 ||
+                                                                                              prod.star === 3 ||
+                                                                                              prod.star === 2 ||
+                                                                                              prod.star === 1
+                                                                                              ? 'shop-rating-stars__gold-star'
+                                                                                              : '',
+                                                                                      )}
+                                                                                      icon={faStar}
+                                                                                  />
+                                                                              </div>
+                                                                              <div
+                                                                                  className={cx(
+                                                                                      'shop-rating-stars__star-wrapper',
+                                                                                  )}
+                                                                              >
+                                                                                  <FontAwesomeIcon
+                                                                                      className={cx(
+                                                                                          prod.star === 5 ||
+                                                                                              prod.star === 4 ||
+                                                                                              prod.star === 3 ||
+                                                                                              prod.star === 2
+                                                                                              ? 'shop-rating-stars__gold-star'
+                                                                                              : '',
+                                                                                      )}
+                                                                                      icon={faStar}
+                                                                                  />
+                                                                              </div>
+                                                                              <div
+                                                                                  className={cx(
+                                                                                      'shop-rating-stars__star-wrapper',
+                                                                                  )}
+                                                                              >
+                                                                                  <FontAwesomeIcon
+                                                                                      className={cx(
+                                                                                          prod.star === 5 ||
+                                                                                              prod.star === 4 ||
+                                                                                              prod.star === 3
+                                                                                              ? 'shop-rating-stars__gold-star'
+                                                                                              : '',
+                                                                                      )}
+                                                                                      icon={faStar}
+                                                                                  />
+                                                                              </div>
+                                                                              <div
+                                                                                  className={cx(
+                                                                                      'shop-rating-stars__star-wrapper',
+                                                                                  )}
+                                                                              >
+                                                                                  <FontAwesomeIcon
+                                                                                      className={cx(
+                                                                                          prod.star === 5 ||
+                                                                                              prod.star === 4
+                                                                                              ? 'shop-rating-stars__gold-star'
+                                                                                              : '',
+                                                                                      )}
+                                                                                      icon={faStar}
+                                                                                  />
+                                                                              </div>
+                                                                              <div
+                                                                                  className={cx(
+                                                                                      'shop-rating-stars__star-wrapper',
+                                                                                  )}
+                                                                              >
+                                                                                  <FontAwesomeIcon
+                                                                                      className={cx(
+                                                                                          prod.star === 5
+                                                                                              ? 'shop-rating-stars__gold-star'
+                                                                                              : '',
+                                                                                      )}
+                                                                                      icon={faStar}
+                                                                                  />
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div className={cx('_2Tc7Qg_2R-Crv')}>
+                                                                      Đã bán{' '}
+                                                                      {prod.SP_soluongban !== null
+                                                                          ? prod.SP_soluongban
+                                                                          : '0'}
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </a>
+                                          </div>
+                                      ))
+                                    : ''}
                             </div>
                         </div>
                     </div>
