@@ -23,6 +23,7 @@ import RemoveCookie from '~/components/Hook/RemoveCookies';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignUpSeller from './SignInAndSignUp/SignUpSeller';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -369,10 +370,10 @@ function Header() {
                         {GetCookie('seller') === undefined && (
                             <>
                                 <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                                    <button className={cx('action-btn-cart')}>
+                                    <Link to="/cart" className={cx('action-btn-cart')}>
                                         <CartIcon className={cx('cart-icon')} />
                                         <span className={cx('badge')}>12</span>
-                                    </button>
+                                    </Link>
                                 </Tippy>
                                 <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
                                     <button className={cx('action-btn')}>

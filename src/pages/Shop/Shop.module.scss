@@ -1161,3 +1161,55 @@
     margin-left: 2px;
     font-size: 1.5rem;
 }
+
+//pag
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    top: 15px;
+    margin-bottom: 19px;
+    font-size: 1.6rem;
+    gap: 5px;
+
+    .page-num {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+
+    .page-num-fisrt {
+        padding: 5px 5px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+
+    .page-num-last {
+        padding: 5px 5px;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 0.1px solid #d6d6d6;
+
+        &:hover {
+            background-color: #5ab1bb;
+            color: #fff;
+        }
+    }
+    .active {
+        background-color: #5ab1bb;
+    }
+}

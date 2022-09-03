@@ -10,7 +10,6 @@ import Detail from '~/pages/Detail';
 import Setting from '~/pages/Setting';
 import Login from '~/pages/Login';
 import Seller from '~/pages/Seller';
-import Information from '~/pages/Information';
 import config from '~/config';
 import SellerSetting from '~/pages/SellerSetting';
 import SellerProduct from '~/pages/SellerProduct';
@@ -21,6 +20,7 @@ import SellerBill from '~/pages/SellerBill';
 import SellerDetailBill from '~/pages/SellerDetailBill';
 import SellerPrintBill from '~/pages/SellerPrintBill';
 import SellerShopReviews from '~/pages/SellerShopReviews';
+import Cart from '~/pages/Cart';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -33,7 +33,7 @@ const publicRoutes = [
     { path: '/user/setting', component: Setting },
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
-    { path: '/gioithieu', component: Information, layout: HeaderOnly },
+    { path: '/cart', component: Cart, layout: HeaderOnly },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },
