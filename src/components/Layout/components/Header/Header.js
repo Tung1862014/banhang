@@ -216,11 +216,11 @@ function Header() {
                 });
         } else {
             axios
-                .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, { password: pass, userName: user })
+                .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, { ND_password: pass, ND_username: user })
                 .then((res) => {
-                    console.log('data: ' + JSON.stringify(res.data.result.image));
+                    //console.log('data: ' + JSON.stringify(res.data.result.image));
                     // handle success
-                    if (res.data.result && res.data.result.password === pass) {
+                    if (res.data.result && res.data.result.ND_password === pass) {
                         RemoveCookie('usrin');
                         SetCookie('usrin', JSON.stringify(res.data.result));
                         //alert('Đăng nhập thành công');
@@ -239,7 +239,7 @@ function Header() {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-toastify-message')}`,
                         });
-                    } else if (res.data.result.password !== pass) {
+                    } else if (res.data.result.ND_password !== pass) {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
                         toast.error('Mật khẩu không đúng', {
