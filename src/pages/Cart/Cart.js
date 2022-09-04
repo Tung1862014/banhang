@@ -10,8 +10,9 @@ function Cart() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
+    const [numberValue, setNumberValue] = useState('');
 
-    console.log(sellerName);
+    console.log(numberValue);
 
     useEffect(() => {
         axios
@@ -32,6 +33,7 @@ function Cart() {
     useEffect(() => {
         let sellerArr = [];
         let sellerName = [];
+        let number = [];
         for (let i = 0; i < orderValue.length; i++) {
             console.log(orderValue[i].NB_id);
             if (sellerArr.length > 0) {
@@ -47,6 +49,7 @@ function Cart() {
                 sellerArr = [...sellerArr, orderValue[i].NB_id];
                 sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
             }
+            number = [...number, orderValue[i].TTDH_soluong];
         }
         //console.log(sellerArr);
         if (sellerArr.length > 0) {
@@ -56,6 +59,12 @@ function Cart() {
             });
             setSellerName((prev) => {
                 const newSeller = [...prev, sellerName];
+                return newSeller[0];
+            });
+        }
+        if (number.length > 0) {
+            setNumberValue((prev) => {
+                const newSeller = [...prev, number];
                 return newSeller[0];
             });
         }
@@ -70,6 +79,52 @@ function Cart() {
                 return (index % 3 ? next : next + '.') + prev;
             });
     }
+
+    const handleAddNumber = (ttdhid, number, index) => {
+        console.log('id: ', ttdhid, 'number: ', number);
+        const inpurId = document.getElementById(`EcPhjV_3cj9Np${index}`);
+        console.log(inpurId.value);
+        inpurId.value = Number(inpurId.value) + 1;
+        //let numbers = [];
+        axios
+            .put(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/update/number/product`, {
+                TTDH_id: ttdhid,
+                TTDH_soluong: number + 1,
+            })
+            .then((res) => {})
+            .catch((err) => {
+                console.log('loi');
+            });
+
+        // for (let i = 0; i < numberValue.length; i++) {
+        //     if (i !== index) {
+        //         numbers = [...numbers, numberValue[i]];
+        //     } else {
+        //         numbers = [...numbers, numberValue[i] + 1];
+        //     }
+
+        //     if (i === numberValue.length - 1) {
+        //         setNumberValue(numbers);
+        //     }
+        // }
+    };
+
+    const handlePlusNumber = (ttdhid, number) => {
+        console.log('id: ', ttdhid, 'number: ', number);
+        axios
+            .put(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/update/number/product`, {
+                TTDH_id: ttdhid,
+                TTDH_soluong: number - 1,
+            })
+            .then((res) => {})
+            .catch((err) => {
+                console.log('loi');
+            });
+    };
+
+    // const handleChangeNumber = (number) => {
+    //     console.log('soluong', number);
+    // };
 
     return (
         <div className={cx('wrapper')}>
@@ -149,6 +204,12 @@ function Cart() {
                                                             <button className={cx('EcPhjV')}>
                                                                 <svg
                                                                     enableBackground="new 0 0 10 10"
+                                                                    onClick={() =>
+                                                                        handlePlusNumber(
+                                                                            order.TTDH_id,
+                                                                            order.TTDH_soluong,
+                                                                        )
+                                                                    }
                                                                     viewBox="0 0 10 10"
                                                                     x="0"
                                                                     y="0"
@@ -157,14 +218,28 @@ function Cart() {
                                                                     <polygon points="4.5 4.5 3.5 4.5 0 4.5 0 5.5 3.5 5.5 4.5 5.5 10 5.5 10 4.5"></polygon>
                                                                 </svg>
                                                             </button>
+
                                                             <input
+                                                                key={index}
+                                                                id={`EcPhjV_3cj9Np${index}`}
                                                                 className={cx('EcPhjV_3cj9Np')}
                                                                 type="text"
                                                                 role="spinbutton"
                                                                 aria-valuenow="1"
-                                                                defaultValue={order.TTDH_soluong}
+                                                                defaultValue={numberValue[index]}
+                                                                //onChange={() => handleChangeNumber(order.TTDH_id)}
                                                             />
-                                                            <button className={cx('EcPhjV')}>
+
+                                                            <button
+                                                                className={cx('EcPhjV')}
+                                                                onClick={() =>
+                                                                    handleAddNumber(
+                                                                        order.TTDH_id,
+                                                                        order.TTDH_soluong,
+                                                                        index,
+                                                                    )
+                                                                }
+                                                            >
                                                                 <svg
                                                                     enableBackground="new 0 0 10 10"
                                                                     viewBox="0 0 10 10"
