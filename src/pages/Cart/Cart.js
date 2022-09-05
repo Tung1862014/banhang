@@ -28,7 +28,7 @@ function Cart() {
                 }`,
             )
             .then((res) => {
-                console.log(res.data.results);
+                console.log(res.data);
                 setOrderValue(res.data.results);
             })
             .catch((err) => {
@@ -42,29 +42,13 @@ function Cart() {
         let number = [];
         let sumnumber = 0;
         let price = 0;
-        let test = false;
-        //console.log('sellerArrLenght', sellerArr.length);
+
         for (let i = 0; i < orderValue.length; i++) {
-            console.log(`sellerArrbcvb${i}`, sellerArr);
-            if (sellerArr.length > 0) {
-                console.log(`length`, sellerArr.length);
-                for (let j = 0; j < sellerArr.length; j++) {
-                    console.log(`sellerArr${j}`, sellerArr[j]);
-                    if (orderValue[i].NB_id.toString() === sellerArr[j].toString()) {
-                        //console.log(`numcontinue`);
-                        test = true;
-                    }
-                }
-                if (!test) {
-                    console.log(`num`, orderValue[i].NB_id);
-                    sellerArr = [...sellerArr, orderValue[i].NB_id];
-                    sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
-                }
-            } else {
-                console.log('1');
-                sellerArr = [...sellerArr, orderValue[i].NB_id];
-                sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
+            if (!sellerArr.includes(orderValue[i].NB_id)) {
+                sellerArr.push(orderValue[i].NB_id);
+                sellerName.push(orderValue[i].seller.NB_hoten);
             }
+
             number = [...number, orderValue[i].TTDH_soluong];
             sumnumber += 1;
             price +=
@@ -72,7 +56,7 @@ function Cart() {
                 orderValue[i].TTDH_soluong *
                 ((100 - orderValue[i].product.SP_khuyenmai) / 100);
         }
-        //console.log(sellerArr);
+        console.log('sellerArr', sellerArr);
         if (sellerArr.length > 0) {
             setSellerValue((prev) => {
                 const newSeller = [...prev, sellerArr];
