@@ -11,8 +11,14 @@ function Cart() {
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
     const [numberValue, setNumberValue] = useState('');
+    const [checkNumber, setCheckNumber] = useState('');
+    const [checkId, setCheckId] = useState('');
 
-    console.log(numberValue);
+    const [sumNumber, setSumNumber] = useState('');
+    const [price, setPrice] = useState('');
+
+    // console.log('sellerValue', sellerValue);
+    // console.log('sellerName', sellerName);
 
     useEffect(() => {
         axios
@@ -34,22 +40,37 @@ function Cart() {
         let sellerArr = [];
         let sellerName = [];
         let number = [];
+        let sumnumber = 0;
+        let price = 0;
+        let test = false;
+        //console.log('sellerArrLenght', sellerArr.length);
         for (let i = 0; i < orderValue.length; i++) {
-            console.log(orderValue[i].NB_id);
+            console.log(`sellerArrbcvb${i}`, sellerArr);
             if (sellerArr.length > 0) {
+                console.log(`length`, sellerArr.length);
                 for (let j = 0; j < sellerArr.length; j++) {
-                    if (sellerArr[j] !== orderValue[i].NB_id) {
-                        if (j === sellerArr.length - 1) {
-                            sellerArr = [...sellerArr, orderValue[i].NB_id];
-                            sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
-                        }
+                    console.log(`sellerArr${j}`, sellerArr[j]);
+                    if (orderValue[i].NB_id.toString() === sellerArr[j].toString()) {
+                        //console.log(`numcontinue`);
+                        test = true;
                     }
                 }
+                if (!test) {
+                    console.log(`num`, orderValue[i].NB_id);
+                    sellerArr = [...sellerArr, orderValue[i].NB_id];
+                    sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
+                }
             } else {
+                console.log('1');
                 sellerArr = [...sellerArr, orderValue[i].NB_id];
                 sellerName = [...sellerName, orderValue[i].seller.NB_hoten];
             }
             number = [...number, orderValue[i].TTDH_soluong];
+            sumnumber += 1;
+            price +=
+                orderValue[i].product.SP_gia *
+                orderValue[i].TTDH_soluong *
+                ((100 - orderValue[i].product.SP_khuyenmai) / 100);
         }
         //console.log(sellerArr);
         if (sellerArr.length > 0) {
@@ -67,8 +88,25 @@ function Cart() {
                 const newSeller = [...prev, number];
                 return newSeller[0];
             });
+
+            setSumNumber(sumnumber);
+            setPrice(price);
         }
     }, [orderValue]);
+
+    useEffect(() => {
+        if (checkNumber !== '' && checkId !== '') {
+            axios
+                .put(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/update/number/product`, {
+                    TTDH_id: checkId,
+                    TTDH_soluong: checkNumber,
+                })
+                .then((res) => {})
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [checkNumber, checkId]);
 
     function formatCash(str) {
         return str
@@ -80,43 +118,55 @@ function Cart() {
             });
     }
 
-    const handleAddNumber = (ttdhid, number, index) => {
-        console.log('id: ', ttdhid, 'number: ', number);
+    const handleAddNumber = (ttdhid, index, price, promotion, number, sellnumber) => {
+        console.log('id: ', ttdhid, 'number: ');
         const inpurId = document.getElementById(`EcPhjV_3cj9Np${index}`);
-        console.log(inpurId.value);
-        inpurId.value = Number(inpurId.value) + 1;
-        //let numbers = [];
-        axios
-            .put(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/update/number/product`, {
-                TTDH_id: ttdhid,
-                TTDH_soluong: number + 1,
-            })
-            .then((res) => {})
-            .catch((err) => {
-                console.log('loi');
-            });
+        console.log(index);
+        if (number - sellnumber > Number(inpurId.value)) {
+            inpurId.value = Number(inpurId.value) + 1;
 
-        // for (let i = 0; i < numberValue.length; i++) {
-        //     if (i !== index) {
-        //         numbers = [...numbers, numberValue[i]];
-        //     } else {
-        //         numbers = [...numbers, numberValue[i] + 1];
-        //     }
+            const priceVaule = document.getElementById(`dn3H7Y${index}`);
+            priceVaule.innerHTML = '₫' + formatCash(price * Number(inpurId.value) * ((100 - promotion) / 100));
 
-        //     if (i === numberValue.length - 1) {
-        //         setNumberValue(numbers);
-        //     }
-        // }
+            setCheckNumber(inpurId.value);
+            setCheckId(ttdhid);
+        } else {
+            console.log('số lượng đã đặt giới hạn');
+            const notification = document.getElementById('cart-popup-modal__transition-enter-done');
+            notification.style.display = 'inline-block';
+
+            setTimeout(() => (notification.style.display = 'none'), 1200);
+        }
     };
 
-    const handlePlusNumber = (ttdhid, number) => {
-        console.log('id: ', ttdhid, 'number: ', number);
+    const handlePlusNumber = (ttdhid, index, price, promotion, number, sellnumber) => {
+        console.log('id: ', ttdhid, 'number: ');
+        console.log('id: ', ttdhid, 'number: ');
+        const inpurId = document.getElementById(`EcPhjV_3cj9Np${index}`);
+        console.log(index);
+        if (Number(inpurId.value) > 1) {
+            inpurId.value = Number(inpurId.value) - 1;
+
+            const priceVaule = document.getElementById(`dn3H7Y${index}`);
+            priceVaule.innerHTML = '₫' + formatCash(price * Number(inpurId.value) * ((100 - promotion) / 100));
+
+            setCheckNumber(inpurId.value);
+            setCheckId(ttdhid);
+        } else {
+            console.log('số lượng 1');
+        }
+    };
+
+    const handleDeleteProduct = (ttdhid) => {
         axios
-            .put(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/update/number/product`, {
-                TTDH_id: ttdhid,
-                TTDH_soluong: number - 1,
+            .delete(`${process.env.REACT_APP_URL_NODEJS}/cartcustomer/delete/product`, {
+                data: {
+                    TTDH_id: ttdhid,
+                },
             })
-            .then((res) => {})
+            .then((res) => {
+                //console.log(res.data);
+            })
             .catch((err) => {
                 console.log('loi');
             });
@@ -128,6 +178,19 @@ function Cart() {
 
     return (
         <div className={cx('wrapper')}>
+            <div id="cart-popup-modal__transition-enter-done" className={cx('cart-popup-modal__transition-enter-done')}>
+                <div className={cx('cart-popup__overlay')}></div>
+                <div className={cx('cart-popup__container')}>
+                    <div className={cx('cart-alert-popup_card')}>
+                        <div className={cx('cart-alert-popup__message')}>
+                            Rất tiếc, bạn chỉ có thể mua tối đa 10 sản phẩm của chương trình giảm giá này.
+                            <div className={cx('cart-alert-popup__message-list')}>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className={cx('_1nrPtQ')}>
                 <div className={cx('_27GGo9')}>Sản Phẩm</div>
                 <div className={cx('_3hJbyz')}>Đơn Giá</div>
@@ -201,15 +264,21 @@ function Cart() {
                                                     {/* / */}
                                                     <div className={cx('_2ZUrV7')}>
                                                         <div className={cx('_36kVQQ-input-quantity')}>
-                                                            <button className={cx('EcPhjV')}>
+                                                            <button
+                                                                className={cx('EcPhjV')}
+                                                                onClick={() =>
+                                                                    handlePlusNumber(
+                                                                        order.TTDH_id,
+                                                                        index,
+                                                                        order.product.SP_gia,
+                                                                        order.product.SP_khuyenmai,
+                                                                        order.product.SP_soluong,
+                                                                        order.product.SP_soluongban,
+                                                                    )
+                                                                }
+                                                            >
                                                                 <svg
                                                                     enableBackground="new 0 0 10 10"
-                                                                    onClick={() =>
-                                                                        handlePlusNumber(
-                                                                            order.TTDH_id,
-                                                                            order.TTDH_soluong,
-                                                                        )
-                                                                    }
                                                                     viewBox="0 0 10 10"
                                                                     x="0"
                                                                     y="0"
@@ -226,7 +295,11 @@ function Cart() {
                                                                 type="text"
                                                                 role="spinbutton"
                                                                 aria-valuenow="1"
-                                                                defaultValue={numberValue[index]}
+                                                                defaultValue={
+                                                                    numberValue !== ''
+                                                                        ? numberValue[index]
+                                                                        : order.TTDH_soluong
+                                                                }
                                                                 //onChange={() => handleChangeNumber(order.TTDH_id)}
                                                             />
 
@@ -235,8 +308,11 @@ function Cart() {
                                                                 onClick={() =>
                                                                     handleAddNumber(
                                                                         order.TTDH_id,
-                                                                        order.TTDH_soluong,
                                                                         index,
+                                                                        order.product.SP_gia,
+                                                                        order.product.SP_khuyenmai,
+                                                                        order.product.SP_soluong,
+                                                                        order.product.SP_soluongban,
                                                                     )
                                                                 }
                                                             >
@@ -253,7 +329,7 @@ function Cart() {
                                                         </div>
                                                     </div>
                                                     {/* / */}
-                                                    <div className={cx('dn3H7Y')}>
+                                                    <div id={`dn3H7Y${index}`} className={cx('dn3H7Y')}>
                                                         <span>
                                                             ₫
                                                             {formatCash(
@@ -265,7 +341,13 @@ function Cart() {
                                                     </div>
                                                     {/* / */}
                                                     <div className={cx('_2y8iJi_2qPRqW')}>
-                                                        <button className={cx('RCd1Gx')}>Xóa</button>
+                                                        <a
+                                                            href="/cart"
+                                                            className={cx('RCd1Gx')}
+                                                            onClick={() => handleDeleteProduct(order.TTDH_id)}
+                                                        >
+                                                            Xóa
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -283,8 +365,10 @@ function Cart() {
                 <div className={cx('_2BT_es')}>
                     <div className={cx('_3BPMNN')}>
                         <div className={cx('_2LMWss')}>
-                            <div className={cx('_10A7e2')}>Tổng thanh toán (0 Sản phẩm):</div>
-                            <div className={cx('nBHs8H')}>₫0</div>
+                            <div className={cx('_10A7e2')}>
+                                Tổng thanh toán ({sumNumber !== '' ? sumNumber : ''} Sản phẩm):
+                            </div>
+                            <div className={cx('nBHs8H')}>₫{price !== '' ? formatCash(price) : ''}</div>
                         </div>
                     </div>
                     <div className={cx('_1TwgPm')}></div>

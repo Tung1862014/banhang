@@ -8,8 +8,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './Detail.module.scss';
 import StarDetailPage from './StarDetailPage';
-import { useDispatch } from 'react-redux';
-import { addNumberProduct } from '~/actions/NumberProduct';
+import GetCookie from '~/components/Hook/GetCookies';
+// import { useDispatch } from 'react-redux';
+// import { addNumberProduct } from '~/actions/NumberProduct';
 const cx = classNames.bind(styles);
 
 function Detail() {
@@ -25,7 +26,7 @@ function Detail() {
     //console.log(numberValue);
 
     //const numberProduct = useSelector((state) => state.numberProduct.list);
-    const dispatchNumberProduct = useDispatch();
+    //const dispatchNumberProduct = useDispatch();
 
     // if (localStorage.getItem('product') !== '') {
     //     console.log('local: ', JSON.parse(localStorage.getItem('product')));
@@ -123,11 +124,22 @@ function Detail() {
         setCheckAddOfCart(true);
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(22);
-        const cart = [{ id: resultId, soluong: numberValue }];
-        const action = addNumberProduct(cart);
-        dispatchNumberProduct(action);
-
-        setTimeout(() => setCheckAddOfCart(false), 3000);
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/productdetail/add/product/customer`, {
+                ND_id: JSON.parse(GetCookie('usrin')).ND_id,
+                NB_id: product.NB_id,
+                TTDH_soluong: numberValue,
+                SP_id: resultId,
+            })
+            .then((res) => {
+                //console.log(res.data);
+                setTimeout(() => {
+                    setCheckAddOfCart(false);
+                }, 1200);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
     }
     return (
         <div className={cx('wrapper')}>
@@ -138,7 +150,7 @@ function Detail() {
                             <div className={cx('toast__icon')}>
                                 <div className={cx('action-toast__icon')}>
                                     <svg
-                                        enable-background="new 0 0 12 12"
+                                        enableBackground="new 0 0 12 12"
                                         viewBox="0 0 12 12"
                                         x="0"
                                         y="0"
