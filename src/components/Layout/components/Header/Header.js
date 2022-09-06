@@ -90,19 +90,21 @@ function Header() {
     }, []);
 
     useEffect(() => {
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
-                    JSON.parse(GetCookie('usrin')).ND_id
-                }`,
-            )
-            .then((res) => {
-                console.log(res.data);
-                setSumNumber(res.data.results.length + 1);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
+        if (GetCookie('usrin') !== undefined) {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
+                        JSON.parse(GetCookie('usrin')).ND_id
+                    }`,
+                )
+                .then((res) => {
+                    console.log(res.data);
+                    setSumNumber(res.data.results.length + 1);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
     }, []);
 
     const userMenu = [
@@ -394,9 +396,9 @@ function Header() {
                                     </Link>
                                 </Tippy>
                                 <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
-                                    <button className={cx('action-btn')}>
+                                    <Link to="/history/purchase" className={cx('action-btn')}>
                                         <InboxIcon className={cx('inbox-icon')} />
-                                    </button>
+                                    </Link>
                                 </Tippy>
                             </>
                         )}

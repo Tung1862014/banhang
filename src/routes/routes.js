@@ -4,7 +4,7 @@ import { DefaultLayoutSeller } from '~/components/Layout';
 import Home from '~/pages/Home';
 import SanPham from '~/pages/SanPham';
 import Shop from '~/pages/Shop';
-import GioHang from '~/pages/GioHang';
+import Order from '~/pages/Order';
 import Search from '~/pages/Search';
 import Detail from '~/pages/Detail';
 import Setting from '~/pages/Setting';
@@ -21,6 +21,7 @@ import SellerDetailBill from '~/pages/SellerDetailBill';
 import SellerPrintBill from '~/pages/SellerPrintBill';
 import SellerShopReviews from '~/pages/SellerShopReviews';
 import Cart from '~/pages/Cart';
+import HistoryBill from '~/pages/HistoryBill';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -28,12 +29,13 @@ const publicRoutes = [
     { path: '/search/@:idSP', component: Detail, layout: HeaderOnly },
     { path: config.routes.sanpham, component: SanPham },
     { path: '/shop/name=:id', component: Shop, layout: HeaderOnly },
-    { path: '/giohang', component: GioHang, layout: HeaderOnly },
+    { path: '/cart/order', component: Order, layout: HeaderOnly },
     { path: '/detail/product/nameid:id', component: Detail, layout: HeaderOnly },
     { path: '/user/setting', component: Setting },
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
     { path: '/cart', component: Cart, layout: HeaderOnly },
+    { path: '/history/purchase', component: HistoryBill, layout: HeaderOnly },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },

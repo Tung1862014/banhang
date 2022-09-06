@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './Cart.module.scss';
 
@@ -357,9 +358,9 @@ function Cart() {
                     </div>
                     <div className={cx('_1TwgPm')}></div>
                 </div>
-                <button className={cx('-button-solid--primary')}>
+                <Link to={'/cart/order'} className={cx('-button-solid--primary')}>
                     <span className={cx('kcsswk')}>Mua hàng</span>
-                </button>
+                </Link>
             </div>
         </div>
     );
