@@ -127,10 +127,10 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                                 className2="form_label"
                                 className3="form_control"
                                 className4="form_message"
-                                title={checkSeller ? 'Nhập email' : 'Tên đăng nhập'}
+                                title={'Tên đăng nhập'}
                                 name="userName"
-                                type={checkSeller ? 'email' : 'text'}
-                                placeholder={checkSeller ? 'tung1862014@gmail.com' : 'VD: ThanhTung'}
+                                type={'text'}
+                                placeholder={'VD: ThanhTung'}
                                 onChange={(e) => handleUserName(e)}
                             />
                         </Menu>

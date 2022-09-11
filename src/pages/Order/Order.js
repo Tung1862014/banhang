@@ -53,8 +53,8 @@ function Order() {
     useEffect(() => {
         let sellerArr = [];
         let sellerName = [];
-        let sumnumber = [];
-        let price = [];
+        let sumnumber = 0;
+        let price = 0;
 
         for (let i = 0; i < orderValue.length; i++) {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
@@ -133,7 +133,8 @@ function Order() {
     const handleSubmitFormAddress = () => {
         console.log('cty', ctyVaule);
         console.log('address', addressVaule);
-        if (ctyVaule !== '' && addressVaule !== '') {
+        if (ctyVaule === '' && addressVaule === '') {
+        } else {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/orderproduct/update/address`, {
                     ND_id: JSON.parse(GetCookie('usrin')).ND_id,
@@ -149,6 +150,38 @@ function Order() {
                 .catch((err) => {
                     console.log('loi');
                 });
+        }
+    };
+
+    const handleClickPay = (pay) => {
+        const buttonTick1 = document.getElementById('product-variation--selected');
+        const buttonTick2 = document.getElementById('product-variation--selected_pay');
+        const iconTick1 = document.getElementById('icon-tick-bold-1');
+        const iconTick2 = document.getElementById('icon-tick-bold-2');
+        const payID = document.getElementById('_3hU2wO');
+        const orderId = document.getElementById('KqH1Px');
+
+        if (pay === 'pay') {
+            buttonTick1.style.color = '#222';
+            buttonTick1.style.border = '1px solid #222';
+            iconTick1.style.display = 'none';
+
+            buttonTick2.style.color = '#ee4d2d';
+            buttonTick2.style.border = '1px solid #ee4d2d';
+            iconTick2.style.display = 'inline-block';
+            payID.style.display = 'none';
+            orderId.style.display = 'none';
+        } else {
+            buttonTick2.style.color = '#222';
+            buttonTick2.style.border = '1px solid #222';
+            iconTick2.style.display = 'none';
+            const orderId = document.getElementById('KqH1Px');
+
+            buttonTick1.style.color = '#ee4d2d';
+            buttonTick1.style.border = '1px solid #ee4d2d';
+            iconTick1.style.display = 'inline-block';
+            payID.style.display = 'flex';
+            orderId.style.display = 'grid';
         }
     };
 
@@ -360,17 +393,18 @@ function Order() {
                                 <div className={cx('checkout-payment-setting__payment-methods-tab')}>
                                     <span tabIndex="0">
                                         <button
+                                            id="product-variation--selected"
                                             className={cx('product-variation--selected')}
-                                            aria-label="Ví ShopeePay"
-                                            aria-disabled="false"
+                                            onClick={() => handleClickPay()}
                                         >
-                                            Ví ShopeePay
+                                            Thanh toán khi nhận hàng
                                             <div className={cx('product-variation__tick')}>
                                                 <svg
                                                     enableBackground="new 0 0 12 12"
                                                     viewBox="0 0 12 12"
                                                     x="0"
                                                     y="0"
+                                                    id="icon-tick-bold-1"
                                                     className={cx('icon-tick-bold-1')}
                                                 >
                                                     <g>
@@ -381,33 +415,22 @@ function Order() {
                                         </button>
                                     </span>
                                     <span tabIndex="0">
-                                        <button className={cx('product-variation--selected')}>
-                                            Thẻ Tín dụng/Ghi nợ
-                                            <div className={cx('product-variation__tick')}>
+                                        <button
+                                            id="product-variation--selected_pay"
+                                            className={cx('product-variation--selected_pay')}
+                                            aria-label="Ví ShopeePay"
+                                            aria-disabled="false"
+                                            onClick={() => handleClickPay('pay')}
+                                        >
+                                            Ví Pay
+                                            <div className={cx('product-variation__tick_pay')}>
                                                 <svg
                                                     enableBackground="new 0 0 12 12"
                                                     viewBox="0 0 12 12"
                                                     x="0"
                                                     y="0"
+                                                    id="icon-tick-bold-2"
                                                     className={cx('icon-tick-bold-2')}
-                                                >
-                                                    <g>
-                                                        <path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path>
-                                                    </g>
-                                                </svg>
-                                            </div>
-                                        </button>
-                                    </span>
-                                    <span tabIndex="0">
-                                        <button className={cx('product-variation--selected')}>
-                                            Thanh toán khi nhận hàng
-                                            <div className={cx('product-variation__tick')}>
-                                                <svg
-                                                    enableBackground="new 0 0 12 12"
-                                                    viewBox="0 0 12 12"
-                                                    x="0"
-                                                    y="0"
-                                                    className={cx('icon-tick-bold-3')}
                                                 >
                                                     <g>
                                                         <path d="m5.2 10.9c-.2 0-.5-.1-.7-.2l-4.2-3.7c-.4-.4-.5-1-.1-1.4s1-.5 1.4-.1l3.4 3 5.1-7c .3-.4 1-.5 1.4-.2s.5 1 .2 1.4l-5.7 7.9c-.2.2-.4.4-.7.4 0-.1 0-.1-.1-.1z"></path>
@@ -418,7 +441,7 @@ function Order() {
                                     </span>
                                 </div>
                             </div>
-                            <div className={cx('_3hU2wO')}>
+                            <div id="_3hU2wO" className={cx('_3hU2wO')}>
                                 <div className={cx('hVo8me')}>
                                     <div className={cx('WHQQMV')}>Thanh toán khi nhận hàng</div>
                                     <div className={cx('g5caBa')}>
@@ -431,13 +454,13 @@ function Order() {
                             </div>
                         </div>
                     </div>
-                    <div className={cx('KqH1Px')}>
+                    <div id="KqH1Px" className={cx('KqH1Px')}>
                         <div className={cx('lhwDvd_Exv9ow_c5Dezq')}>Tổng tiền hàng</div>
-                        <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>₫218.000</div>
+                        <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>₫{price !== '' ? formatCash(price) : ''}</div>
                         <div className={cx('lhwDvd_Exv9ow_B6k-vE')}>Phí vận chuyển</div>
                         <div className={cx('lhwDvd_Uu2y3K_B6k-vE')}>₫75.300</div>
                         <div className={cx('lhwDvd_Exv9ow_A4gPS6')}>Tổng thanh toán:</div>
-                        <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>₫293.300</div>
+                        <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>₫{price !== '' ? formatCash(price) : ''}</div>
                         <div className={cx('Ql2fz0')}>
                             <button className={cx('stardust-button--large_gG-FcK')}>Đặt hàng</button>
                         </div>

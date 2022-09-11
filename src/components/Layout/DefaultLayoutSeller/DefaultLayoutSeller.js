@@ -3,7 +3,7 @@ import HeaderSeller from '~/components/Layout/components/HeaderSeller';
 import styles from './DefaultLayoutSeller.module.scss';
 import SidebarSeller from '../components/SidebarSeller';
 // import Navbar from '~/components/Layout/components/HeaderNav';
-import Footer from '~/components/Layout/components/Footer';
+//import Footer from '~/components/Layout/components/Footer';
 
 const cx = classNames.bind(styles);
 
@@ -16,9 +16,9 @@ function DefaultLayoutSeller({ children }) {
 
                 <div className={cx('content')}>{children}</div>
             </div>
-            <div className={cx('footer')}>
+            {/* <div className={cx('footer')}>
                 <Footer />
-            </div>
+            </div> */}
         </div>
     );
 }

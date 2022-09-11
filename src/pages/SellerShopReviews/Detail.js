@@ -1,6 +1,7 @@
 // import axios from 'axios';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import classNames from 'classnames/bind';
 // import { useState } from 'react';
 // import { Link } from 'react-router-dom';
@@ -24,8 +25,78 @@ function Detail({ evaluate }) {
             return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
         }
     }
+
+    const handleAnswers = (review) => {
+        const form = document.getElementById('ReDGyJ');
+        const btnSave = document.getElementById('HtW4DS_IJ1jvV');
+
+        form.style.display = 'flex';
+
+        btnSave.addEventListener('click', function () {
+            const text = document.getElementById('ChI2Nx_92k3pl');
+            console.log('review', text.value);
+            axios
+                .put(`${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/update/answer`, {
+                    DG_id: review,
+                    DG_traloi: text.value,
+                })
+                .then((res) => {
+                    console.log('successfully');
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        });
+    };
+
     return (
         <div>
+            <div id="ReDGyJ" className={cx('ReDGyJ')}>
+                <div className={cx('_68lNMv')}>
+                    <div className={cx('nwCEcV')}>
+                        <div className={cx('w2EqJ')}>
+                            <div className={cx('_84tOMz')}>Trả lời</div>
+                            <form>
+                                <div className={cx('lHCVqO')}>
+                                    <div className={cx('iWBSHn')}>
+                                        <div className={cx('_0fHnjY')}>
+                                            <div className={cx('XjHkd3')}>
+                                                <div className={cx('T1souv')}>
+                                                    <div className={cx('u1wAmL')}>
+                                                        <div className={cx('vEFwLK_6DXlE9')}>Nội dung</div>
+                                                        <textarea
+                                                            id="ChI2Nx_92k3pl"
+                                                            className={cx('ChI2Nx_92k3pl')}
+                                                            //onChange={(e) => setContenValue(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* / */}
+                                    <div className={cx('GixP1t')}>
+                                        <button
+                                            className={cx('HtW4DS_x4AEET')}
+                                            //onClick={() => handleShowFormAddress('back')}
+                                        >
+                                            Trở Lại
+                                        </button>
+                                        <button
+                                            id="HtW4DS_IJ1jvV"
+                                            className={cx('HtW4DS_IJ1jvV')}
+                                            //onClick={() => handleSubmitFormAddress()}
+                                        >
+                                            Lưu
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {evaluate !== '' && evaluate !== undefined
                 ? evaluate.map((review, index) => (
                       <div key={index}>
@@ -147,8 +218,21 @@ function Detail({ evaluate }) {
                                                           </div>{' '}
                                                       </div>{' '}
                                                       <div className={cx('date')}>{takeDate(review.DG_ngayDG)}</div>
+                                                      <div className={cx('content-answer')}>
+                                                          <div className={cx('content-answer-shop')}>
+                                                              Phản hồi: {review.DG_traloi}
+                                                          </div>
+                                                      </div>
                                                   </div>
                                               </div>{' '}
+                                              <div className={cx('btn-evaluation-answer')}>
+                                                  <button
+                                                      className={cx('btn-evaluation-answer-button')}
+                                                      onClick={() => handleAnswers(review.DG_id)}
+                                                  >
+                                                      Trả lời
+                                                  </button>
+                                              </div>
                                           </div>
                                       </div>
                                   </div>

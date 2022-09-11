@@ -36,7 +36,7 @@ function Detail({ bill }) {
                                     </div>
                                 </div>
                                 <div className={cx('id-btn')}>
-                                    <span className={cx('orderid')}>ID Đơn hàng&nbsp;22080492QKCNVA{bill.DH_id}</span>
+                                    <span className={cx('orderid')}>ID Đơn hàng&nbsp;{bill.DH_id}</span>
                                 </div>
                             </div>
                         ))}

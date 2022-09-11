@@ -445,9 +445,7 @@ function Sidebar() {
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
                                         />
-                                        <span className={cx('sidebar-menu-item-text')}>
-                                            Quản Lý Danh Mục Và Trọng Lượng
-                                        </span>
+                                        <span className={cx('sidebar-menu-item-text')}>Quản Lý Danh Mục</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
                                             id="sidebar-menu-item-collapse-down-weight"
@@ -468,7 +466,7 @@ function Sidebar() {
                                                 className={cx('sidebar-submenu-item-link1-weight')}
                                                 onClick={handleClickCategory1Weight}
                                             >
-                                                <span>Danh Mục Và Trọng Lượng</span>
+                                                <span>Danh Mục</span>
                                             </Link>
                                         </li>
                                     </ul>

@@ -190,94 +190,98 @@ function Header() {
     function handleSubmitLogin(pass, user, seller) {
         //setLoading(true);
 
-        if (seller) {
-            axios
-                .post(`${process.env.REACT_APP_URL_NODEJS}/seller/login`, { password: pass, userName: user })
-                .then((res) => {
-                    // handle success
-                    console.log(res.data);
-                    if (res.data.result && res.data.result.NB_password === pass) {
-                        RemoveCookie('seller');
-                        SetCookie('seller', JSON.stringify(res.data.result));
-                        //alert('Đăng nhập thành công');
-                        setLoginResult([...loginResult, res.data.result]);
-                        //setLoading(false);
-                        // const action = addNumberProduct(res.data.result);
-                        // dispatchSignIn(action);
-                        toast.success('Đăng nhập thành công người bán', {
-                            position: toast.POSITION.TOP_RIGHT,
-                        });
-                        window.open('http://localhost:3000/seller', '_self', 1);
-                    } else if (res.data.result === undefined) {
-                        //alert('Tài khoản không tồn tại');
-                        //const lastname = `${cx('toast-message')}`;
-                        //setLoading(false);
-                        toast.error('Tài khoản không tồn tại nguoi ban', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-toastify-message')}`,
-                        });
-                    } else if (res.data.result.password !== pass) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        toast.error('Mật khẩu không đúng', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    }
-                })
-                .catch(() => {
-                    // handle error
-                    console.log('loiiiii');
-                    setLoading(false);
-                    toast.error('ERROR', {
+        //  if (seller) {
+        //     axios
+        //         .post(`${process.env.REACT_APP_URL_NODEJS}/seller/login`, { password: pass, userName: user, seller: seller })
+        //         .then((res) => {
+        //             // handle success
+        //             console.log(res.data);
+        //             if (res.data.result && res.data.result.NB_password === pass) {
+        //                 RemoveCookie('seller');
+        //                 SetCookie('seller', JSON.stringify(res.data.result));
+        //                 //alert('Đăng nhập thành công');
+        //                 setLoginResult([...loginResult, res.data.result]);
+        //                 //setLoading(false);
+        //                 // const action = addNumberProduct(res.data.result);
+        //                 // dispatchSignIn(action);
+        //                 toast.success('Đăng nhập thành công người bán', {
+        //                     position: toast.POSITION.TOP_RIGHT,
+        //                 });
+        //                 window.open('http://localhost:3000/seller', '_self', 1);
+        //             } else if (res.data.result === undefined) {
+        //                 //alert('Tài khoản không tồn tại');
+        //                 //const lastname = `${cx('toast-message')}`;
+        //                 //setLoading(false);
+        //                 toast.error('Tài khoản không tồn tại nguoi ban', {
+        //                     position: toast.POSITION.TOP_RIGHT,
+        //                     className: `${cx('toast-toastify-message')}`,
+        //                 });
+        //             } else if (res.data.result.password !== pass) {
+        //                 //alert('Mật khẩu không đúng');
+        //                 //setLoading(false);
+        //                 toast.error('Mật khẩu không đúng', {
+        //                     position: toast.POSITION.TOP_RIGHT,
+        //                     className: `${cx('toast-message')}`,
+        //                 });
+        //             }
+        //         })
+        //         .catch(() => {
+        //             // handle error
+        //             console.log('loiiiii');
+        //             setLoading(false);
+        //             toast.error('ERROR', {
+        //                 position: toast.POSITION.TOP_RIGHT,
+        //                 className: `${cx('toast-message')}`,
+        //             });
+        //         });
+        // } else {
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, {
+                ND_password: pass,
+                ND_username: user,
+                seller: seller,
+            })
+            .then((res) => {
+                //console.log('data: ' + JSON.stringify(res.data.result.image));
+                // handle success
+                if (res.data.result && res.data.result.ND_password === pass) {
+                    RemoveCookie('usrin');
+                    SetCookie('usrin', JSON.stringify(res.data.result));
+                    //alert('Đăng nhập thành công');
+                    setLoginResult([...loginResult, res.data.result]);
+                    //setLoading(false);
+                    // const action = addNumberProduct(res.data.result);
+                    // dispatchSignIn(action);
+                    toast.success('Success Notification !', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                } else if (res.data.result === undefined) {
+                    //alert('Tài khoản không tồn tại');
+                    //const lastname = `${cx('toast-message')}`;
+                    //setLoading(false);
+                    toast.error('Tài khoản không tồn tại', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-toastify-message')}`,
+                    });
+                } else if (res.data.result.ND_password !== pass) {
+                    //alert('Mật khẩu không đúng');
+                    //setLoading(false);
+                    toast.error('Mật khẩu không đúng', {
                         position: toast.POSITION.TOP_RIGHT,
                         className: `${cx('toast-message')}`,
                     });
+                }
+            })
+            .catch(() => {
+                // handle error
+                console.log('loiiiii');
+                setLoading(false);
+                toast.error('ERROR', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    className: `${cx('toast-message')}`,
                 });
-        } else {
-            axios
-                .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, { ND_password: pass, ND_username: user })
-                .then((res) => {
-                    //console.log('data: ' + JSON.stringify(res.data.result.image));
-                    // handle success
-                    if (res.data.result && res.data.result.ND_password === pass) {
-                        RemoveCookie('usrin');
-                        SetCookie('usrin', JSON.stringify(res.data.result));
-                        //alert('Đăng nhập thành công');
-                        setLoginResult([...loginResult, res.data.result]);
-                        //setLoading(false);
-                        // const action = addNumberProduct(res.data.result);
-                        // dispatchSignIn(action);
-                        toast.success('Success Notification !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                        });
-                    } else if (res.data.result === undefined) {
-                        //alert('Tài khoản không tồn tại');
-                        //const lastname = `${cx('toast-message')}`;
-                        //setLoading(false);
-                        toast.error('Tài khoản không tồn tại', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-toastify-message')}`,
-                        });
-                    } else if (res.data.result.ND_password !== pass) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        toast.error('Mật khẩu không đúng', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    }
-                })
-                .catch(() => {
-                    // handle error
-                    console.log('loiiiii');
-                    setLoading(false);
-                    toast.error('ERROR', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
-                });
-        }
+            });
+        // }
     }
 
     function handleSubmitRegister(fullName, userName, email, password, image, address, birthday, phone) {

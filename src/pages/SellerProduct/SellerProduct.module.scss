@@ -237,10 +237,39 @@
 }
 
 .td_table-name {
-    width: 130px;
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.td_table-name-number {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.td_table-name-sp {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    margin-left: 10px;
+}
+
+.name-product-sp {
+    height: 35px;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    position: relative;
+    margin-left: 5px;
 }
 
 //Link

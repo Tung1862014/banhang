@@ -9,37 +9,37 @@ const cx = classNames.bind(styles);
 
 function SellerCategoryAndWeight() {
     const [takeCategory, setTakeCategory] = useState('');
-    const [takeWeight, setTakeWeight] = useState('');
-    const [checkWeight, setCheckWeight] = useState('');
+    //const [takeWeight, setTakeWeight] = useState('');
+    //const [checkWeight, setCheckWeight] = useState('');
     const [checkCategory, setCheckCategory] = useState('');
     const [category, setCategory] = useState('');
-    const [weight, setWeight] = useState('');
+    //const [weight, setWeight] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
-    const [weightValue, setWeightValue] = useState('');
+    //const [weightValue, setWeightValue] = useState('');
     //const [categoryValueContent, setCategoryValueContent] = useState('');
 
     console.log(category);
 
-    useEffect(() => {
-        // setCheckWeight(false);
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
-                }`,
-            )
-            .then((res) => {
-                //console.log(res.data.result);
-                if (checkWeight === '') {
-                    handleWeight(res.data.result);
-                    setCheckWeight('weight');
-                    setTakeWeight(res.data.result);
-                }
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }, [checkWeight]);
+    // useEffect(() => {
+    //     // setCheckWeight(false);
+    //     axios
+    //         .get(
+    //             `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
+    //                 JSON.parse(GetCookie('seller')).NB_id
+    //             }`,
+    //         )
+    //         .then((res) => {
+    //             //console.log(res.data.result);
+    //             if (checkWeight === '') {
+    //                 handleWeight(res.data.result);
+    //                 setCheckWeight('weight');
+    //                 //setTakeWeight(res.data.result);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }, [checkWeight]);
 
     useEffect(() => {
         // setCheckWeight(false);
@@ -62,17 +62,17 @@ function SellerCategoryAndWeight() {
             });
     }, [checkCategory]);
 
-    function handleWeight(takeWeight) {
-        const selectValue = document.getElementById('input-weight-select');
+    // function handleWeight(takeWeight) {
+    //     const selectValue = document.getElementById('input-weight-select');
 
-        for (let i = 0; i < takeWeight.length; i++) {
-            const optionValue = document.createElement('option');
-            console.log(takeWeight[i].TL_id);
-            optionValue.value = takeWeight[i].TL_id;
-            optionValue.textContent = takeWeight[i].TL_trongluong;
-            selectValue.appendChild(optionValue);
-        }
-    }
+    //     for (let i = 0; i < takeWeight.length; i++) {
+    //         const optionValue = document.createElement('option');
+    //         console.log(takeWeight[i].TL_id);
+    //         optionValue.value = takeWeight[i].TL_id;
+    //         optionValue.textContent = takeWeight[i].TL_trongluong;
+    //         selectValue.appendChild(optionValue);
+    //     }
+    // }
 
     function handleCategory(takeWeight) {
         const selectValue = document.getElementById('input-category-select');
@@ -197,114 +197,114 @@ function SellerCategoryAndWeight() {
     }
 
     ///Weight
-    function handleAddWeight() {
-        const clickAdd = document.getElementById('grid-weight-container');
-        const clickUpdate = document.getElementById('grid-weight-container-update');
-        clickAdd.style.display = 'flex';
-        clickUpdate.style.display = 'none';
-    }
+    // function handleAddWeight() {
+    //     const clickAdd = document.getElementById('grid-weight-container');
+    //     const clickUpdate = document.getElementById('grid-weight-container-update');
+    //     clickAdd.style.display = 'flex';
+    //     clickUpdate.style.display = 'none';
+    // }
 
-    function handleUpdateWeight() {
-        if (weight !== '') {
-            const clickAdd = document.getElementById('grid-weight-container');
-            const clickUpdate = document.getElementById('grid-weight-container-update');
-            clickAdd.style.display = 'none';
-            clickUpdate.style.display = 'flex';
-        } else {
-            toast.error('Bạn cần chọn trọng lượng!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        }
-    }
+    // function handleUpdateWeight() {
+    //     if (weight !== '') {
+    //         const clickAdd = document.getElementById('grid-weight-container');
+    //         const clickUpdate = document.getElementById('grid-weight-container-update');
+    //         clickAdd.style.display = 'none';
+    //         clickUpdate.style.display = 'flex';
+    //     } else {
+    //         toast.error('Bạn cần chọn trọng lượng!', {
+    //             position: toast.POSITION.TOP_CENTER,
+    //             className: `${cx('toast-message')}`,
+    //         });
+    //     }
+    // }
 
-    function handleTakeWeight(e) {
-        setWeight(e.target.value);
-        let valueCategory = e.target.value;
-        handleTakeWeightValue(valueCategory);
-    }
+    // function handleTakeWeight(e) {
+    //     setWeight(e.target.value);
+    //     let valueCategory = e.target.value;
+    //     handleTakeWeightValue(valueCategory);
+    // }
 
-    function handleTakeWeightValue(valueCategory) {
-        if (valueCategory !== '') {
-            for (let i = 0; i < takeWeight.length; i++) {
-                //console.log(typeof takeCategory[i].DM_id);
-                if (valueCategory === takeWeight[i].TL_id.toString()) {
-                    //console.log(takeCategory[i].DM_danhmuc);
-                    setWeightValue(takeWeight[i].TL_trongluong);
-                }
-            }
-        }
-    }
+    // function handleTakeWeightValue(valueCategory) {
+    //     if (valueCategory !== '') {
+    //         for (let i = 0; i < takeWeight.length; i++) {
+    //             //console.log(typeof takeCategory[i].DM_id);
+    //             if (valueCategory === takeWeight[i].TL_id.toString()) {
+    //                 //console.log(takeCategory[i].DM_danhmuc);
+    //                 setWeightValue(takeWeight[i].TL_trongluong);
+    //             }
+    //         }
+    //     }
+    // }
 
-    function handleAddWeightDatabase() {
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/add`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                TL_trongluong: weight,
-            })
-            .then((res) => {
-                console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }
+    // function handleAddWeightDatabase() {
+    //     axios
+    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/add`, {
+    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //             TL_trongluong: weight,
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }
 
-    function handleUpdateWeightDatabase() {
-        axios
-            .put(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/update`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                TL_id: weight,
-                TL_trongluong: weightValue,
-            })
-            .then((res) => {
-                console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }
-    function handleDeleteWeight() {
-        if (weight !== '') {
-            const clicShowForm = document.getElementById('delete-weight-modal__container');
-            clicShowForm.style.display = 'flex';
-        } else {
-            toast.error('Bạn cần chọn một trọng lượng!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
-        }
-    }
+    // function handleUpdateWeightDatabase() {
+    //     axios
+    //         .put(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/update`, {
+    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //             TL_id: weight,
+    //             TL_trongluong: weightValue,
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }
+    // function handleDeleteWeight() {
+    //     if (weight !== '') {
+    //         const clicShowForm = document.getElementById('delete-weight-modal__container');
+    //         clicShowForm.style.display = 'flex';
+    //     } else {
+    //         toast.error('Bạn cần chọn một trọng lượng!', {
+    //             position: toast.POSITION.TOP_CENTER,
+    //             className: `${cx('toast-message')}`,
+    //         });
+    //     }
+    // }
 
-    function handleDeleteHuyWeight() {
-        const clicShowForm = document.getElementById('delete-weight-modal__container');
-        clicShowForm.style.display = 'none';
-    }
+    // function handleDeleteHuyWeight() {
+    //     const clicShowForm = document.getElementById('delete-weight-modal__container');
+    //     clicShowForm.style.display = 'none';
+    // }
 
-    function handleDeleteAgreeWeight() {
-        const clicShowForm = document.getElementById('delete-weight-modal__container');
-        clicShowForm.style.display = 'none';
-        handleDeleteWeightDatabase();
-    }
+    // function handleDeleteAgreeWeight() {
+    //     const clicShowForm = document.getElementById('delete-weight-modal__container');
+    //     clicShowForm.style.display = 'none';
+    //     handleDeleteWeightDatabase();
+    // }
 
-    function handleDeleteWeightDatabase() {
-        axios
-            .delete(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/delete`, {
-                data: {
-                    NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                    TL_id: weight,
-                },
-            })
-            .then((res) => {
-                console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }
+    // function handleDeleteWeightDatabase() {
+    //     axios
+    //         .delete(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/weight/delete`, {
+    //             data: {
+    //                 NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //                 TL_id: weight,
+    //             },
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }
 
     return (
         <div className={cx('wrapper')}>
@@ -336,7 +336,7 @@ function SellerCategoryAndWeight() {
                     </div>
                 </div>
             </div>
-            <div id="delete-weight-modal__container" className={cx('delete-weight-modal__container')}>
+            {/* <div id="delete-weight-modal__container" className={cx('delete-weight-modal__container')}>
                 <div id="delete-modal__box" className={cx('delete-modal__box')}>
                     <div className={cx('delete-modal__content')}>
                         <div className={cx('delete-modal__header')}>
@@ -367,7 +367,7 @@ function SellerCategoryAndWeight() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className={cx('product-edit__section')}>
                 <h2>Danh mục sản phẩm</h2>
                 <div className={cx('grid-detail')}>
@@ -497,136 +497,7 @@ function SellerCategoryAndWeight() {
                     </div>
                 </div>
             </div>
-            <div className={cx('product-edit__section')}>
-                <h2>Trọng lượng sản phẩm</h2>
-                <div className={cx('grid-detail')}>
-                    <div className={cx('edit-label')} data-education-trigger-key="name">
-                        <span>Trọng lượng</span>
-                    </div>
-                    <div className="edit-input">
-                        <select
-                            name="weight"
-                            id="input-weight-select"
-                            defaultValue={''}
-                            className={cx('input-Weight')}
-                            onChange={(e) => handleTakeWeight(e)}
-                        >
-                            <option value="" disabled hidden className={cx('input-type-weight')}>
-                                Vui lòng chọn
-                            </option>
-                        </select>
-                    </div>
-                    <div className={cx('grid-detail-category')}>
-                        <div className={cx('btn-add-category')}>
-                            <button type="button" className={cx('delete-button')} onClick={handleAddWeight}>
-                                Thêm
-                            </button>
-                        </div>
-                        <div className={cx('btn-add-category')}>
-                            <button type="button" className={cx('delete-button')} onClick={handleUpdateWeight}>
-                                Cập nhật
-                            </button>
-                        </div>
-                        <div className={cx('btn-add-category')}>
-                            <button type="button" className={cx('delete-button')} onClick={handleDeleteWeight}>
-                                Xóa
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('grid-table-container')}>
-                    <table className={cx('table__header')}>
-                        <thead>
-                            <tr className={cx('table__header-tr')}>
-                                <td className={cx('td_table-name')}>Mã trọng lượng</td>
-                                <td className={cx('td_table-name')}>Trọng lượng</td>
-                            </tr>
 
-                            {takeWeight !== ''
-                                ? takeWeight.map((pro, index) => (
-                                      <tr key={index} className={cx('table__header-conten')}>
-                                          <td className={cx('td_table-name')}>{pro.TL_id}</td>
-                                          <td className={cx('td_table-name')}>{pro.TL_trongluong}</td>
-                                      </tr>
-                                  ))
-                                : ''}
-                        </thead>
-                    </table>
-                    <div id="grid-weight-container" className={cx('grid-weight-container')}>
-                        <div className={cx('grid-category-center')}>
-                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
-                                <span>Trọng lượng</span>
-                            </div>
-                            <div className={cx('edit-input-detail')}>
-                                <div className={cx('shopee-input')}>
-                                    <div className={cx('shopee-input__inner')}>
-                                        <input
-                                            type="text"
-                                            placeholder="Nhập vào"
-                                            size="large"
-                                            resize="none"
-                                            rows="2"
-                                            minrows="2"
-                                            restrictiontype="input"
-                                            max="Infinity"
-                                            min="-Infinity"
-                                            //value={weightValue || ''}
-                                            className={cx('shopee-input__input')}
-                                            onChange={(e) => setWeight(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('btn-add-category-perform')}>
-                            <button
-                                type="button"
-                                className={cx('delete-button')}
-                                onClick={() => handleAddWeightDatabase()}
-                            >
-                                Thêm
-                            </button>
-                        </div>
-                    </div>
-                    <div id="grid-weight-container-update" className={cx('grid-weight-container-update')}>
-                        <div className={cx('grid-category-center')}>
-                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
-                                <span>Trọng lượng</span>
-                            </div>
-                            <div className={cx('edit-input-detail')}>
-                                <div className={cx('shopee-input')}>
-                                    <div className={cx('shopee-input__inner')}>
-                                        <input
-                                            type="text"
-                                            placeholder="Nhập vào"
-                                            size="large"
-                                            resize="none"
-                                            rows="2"
-                                            minrows="2"
-                                            restrictiontype="input"
-                                            max="Infinity"
-                                            min="-Infinity"
-                                            //defaultValue={categoryValue || ''}
-                                            value={weightValue || ''}
-                                            className={cx('shopee-input__input')}
-                                            onChange={(e) => setWeightValue(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('btn-add-category-perform')}>
-                            <button
-                                type="button"
-                                className={cx('delete-button')}
-                                onClick={() => handleUpdateWeightDatabase()}
-                            >
-                                Cập nhật
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <ToastContainer />
         </div>
     );

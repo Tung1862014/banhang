@@ -538,7 +538,41 @@
     justify-content: center;
 }
 
+.product-variation--selected_pay {
+    font-weight: 500;
+    border-radius: 2px;
+    height: 40px;
+    align-items: center;
+    display: inline-flex;
+    border-color: var(--brand-primary-color, #ee4d2d);
+    overflow: visible;
+    cursor: pointer;
+    min-width: 5rem;
+    min-height: 2.125rem;
+    box-sizing: border-box;
+    padding: 4px 12px;
+    margin: 0 8px 8px 0;
+    text-align: left;
+    //color: #ee4d2d;
+    //border: 1px solid #ee4d2d;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    position: relative;
+    background: #fff;
+    outline: 0;
+    word-break: break-word;
+    justify-content: center;
+}
+
 .product-variation__tick {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    overflow: hidden;
+    right: 3px;
+    bottom: 2px;
+}
+
+.product-variation__tick_pay {
     width: 15px;
     height: 15px;
     position: absolute;
@@ -564,7 +598,7 @@
     bottom: 0;
     color: #06eb30;
     font-size: 1.7rem;
-    display: inline-block;
+    display: none;
     width: 8px;
     height: 8px;
     fill: currentColor;

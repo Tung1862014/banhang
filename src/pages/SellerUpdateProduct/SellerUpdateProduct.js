@@ -32,7 +32,7 @@ function SellerUpdateProduct() {
     const [imageTwo, setImageTwo] = useState('');
     const [imageThree, setImageThree] = useState('');
 
-    const [checkWeight, setCheckWeight] = useState('');
+    //const [checkWeight, setCheckWeight] = useState('');
     const [checkCategory, setCheckCategory] = useState('');
 
     console.log(describeWeightUpdate);
@@ -98,25 +98,25 @@ function SellerUpdateProduct() {
     }, [image1Update]);
     //console.log('Page path is ' + window.location.pathname.length);
 
-    useEffect(() => {
-        // setCheckWeight(false);
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
-                }`,
-            )
-            .then((res) => {
-                //console.log(res.data.result);
-                if (checkWeight === '') {
-                    handleWeight(res.data.result);
-                    setCheckWeight('weight');
-                }
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }, [checkWeight]);
+    // useEffect(() => {
+    //     // setCheckWeight(false);
+    //     axios
+    //         .get(
+    //             `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
+    //                 JSON.parse(GetCookie('seller')).NB_id
+    //             }`,
+    //         )
+    //         .then((res) => {
+    //             //console.log(res.data.result);
+    //             if (checkWeight === '') {
+    //                 handleWeight(res.data.result);
+    //                 setCheckWeight('weight');
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }, [checkWeight]);
 
     useEffect(() => {
         // setCheckWeight(false);
@@ -138,17 +138,17 @@ function SellerUpdateProduct() {
             });
     }, [checkCategory]);
 
-    function handleWeight(takeWeight) {
-        const selectValue = document.getElementById('input-weight-select');
+    // function handleWeight(takeWeight) {
+    //     const selectValue = document.getElementById('input-weight-select');
 
-        for (let i = 0; i < takeWeight.length; i++) {
-            const optionValue = document.createElement('option');
-            console.log(takeWeight[i].TL_id);
-            optionValue.value = takeWeight[i].TL_id;
-            optionValue.textContent = takeWeight[i].TL_trongluong;
-            selectValue.appendChild(optionValue);
-        }
-    }
+    //     for (let i = 0; i < takeWeight.length; i++) {
+    //         const optionValue = document.createElement('option');
+    //         console.log(takeWeight[i].TL_id);
+    //         optionValue.value = takeWeight[i].TL_id;
+    //         optionValue.textContent = takeWeight[i].TL_trongluong;
+    //         selectValue.appendChild(optionValue);
+    //     }
+    // }
     function handleCategory(takeWeight) {
         const selectValue = document.getElementById('input-category-select');
 
@@ -272,6 +272,8 @@ function SellerUpdateProduct() {
                         SP_gia: price,
                         SP_khuyenmai: promotion,
                         DM_id: category,
+                        SP_trongluong: weight,
+                        SP_mota: describeProduct,
                     })
                     .then((res) => {
                         console.log(res.data);
@@ -289,6 +291,8 @@ function SellerUpdateProduct() {
                 formData.append('SP_gia', price);
                 formData.append('SP_khuyenmai', promotion);
                 formData.append('DM_id', category);
+                formData.append('SP_trongluong', weight);
+                formData.append('SP_mota', describeProduct);
                 axios({
                     method: 'POST',
                     url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
@@ -303,9 +307,9 @@ function SellerUpdateProduct() {
                     .catch((err) => {});
             }
 
-            if (describeProduct !== '') {
-                handleDescribeProduct(describeProduct, weight);
-            }
+            // if (describeProduct !== '') {
+            //     handleDescribeProduct(describeProduct, weight);
+            // }
             if (image !== '') {
                 handleImageProduct(image);
             }
@@ -318,25 +322,25 @@ function SellerUpdateProduct() {
         }
     }
 
-    function handleDescribeProduct(describeProduct, weight) {
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(24);
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/describe`, {
-                SP_id: resultId,
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                MTSP_noidung: describeProduct,
-                TL_id: weight,
-            })
-            .then((res) => {
-                console.log(res.data);
-                toast.success('Lưu sản phẩm thành công', {
-                    position: toast.POSITION.TOP_CENTER,
-                    className: `${cx('toast-message')}`,
-                });
-            })
-            .catch((err) => {});
-    }
+    // function handleDescribeProduct(describeProduct, weight) {
+    //     const pathId = window.location.pathname.toString();
+    //     const resultId = pathId.slice(24);
+    //     axios
+    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/describe`, {
+    //             SP_id: resultId,
+    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //             MTSP_noidung: describeProduct,
+    //             TL_id: weight,
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             toast.success('Lưu sản phẩm thành công', {
+    //                 position: toast.POSITION.TOP_CENTER,
+    //                 className: `${cx('toast-message')}`,
+    //             });
+    //         })
+    //         .catch((err) => {});
+    // }
 
     function handleImageProduct(image) {
         const pathId = window.location.pathname.toString();
@@ -472,8 +476,8 @@ function SellerUpdateProduct() {
                     <div className={cx('shopee-input shopee-input__area')}>
                         <CKEditor
                             editor={ClassicEditor}
-                            data={describeUpdate.MTSP_noidung || ''}
-                            defaultValue={describeUpdate.MTSP_noidung || ''}
+                            data={productUpdate.SP_mota || ''}
+                            defaultValue={productUpdate.SP_mota || ''}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
                                 setDescribeProduct(data);
@@ -493,40 +497,32 @@ function SellerUpdateProduct() {
                                 </div>{' '}
                                 <span>Trọng lượng</span>
                             </div>
-                            <div className="edit-input">
-                                <select
-                                    name="weight"
-                                    id="input-weight-select"
-                                    defaultValue={''}
-                                    className={cx('input-Weight')}
-                                    onChange={(e) => setWeight(e.target.value)}
-                                >
-                                    <option
-                                        value={describeWeightUpdate.TL_id || ''}
-                                        disabled
-                                        hidden
-                                        className={cx('input-type-weight')}
-                                    >
-                                        {describeWeightUpdate.TL_trongluong}
-                                    </option>
-                                    {/* <option value="" className={cx('input-type-weight')}></option> */}
-                                    {/* {takeWeight !== ''
-                                        ? takeWeight.map((valueWith, index) => (
-                                              <option key={index} value={valueWith} className={cx('input-type-weight')}>
-                                                  {valueWith}
-                                              </option>
-                                          ))
-                                        : ''} */}
-                                    {/* <option value="1" className={cx('input-type-weight')}>
-                                        500g
-                                    </option>
-                                    <option value="2" className={cx('input-type-weight')}>
-                                        1kg
-                                    </option>
-                                    <option value="3" className={cx('input-type-weight')}>
-                                        1.5kg
-                                    </option> */}
-                                </select>
+
+                            <div className={cx('edit-input-detail-money-promotion')}>
+                                <div className={cx('shopee-input')}>
+                                    <div className={cx('shopee-input__inner')}>
+                                        <div className={cx('shopee-input__prefix')}>
+                                            gam<span className={cx('shopee-input__prefix-split')}></span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            placeholder="Nhập vào"
+                                            size="large"
+                                            resize="none"
+                                            rows="2"
+                                            minrows="2"
+                                            restrictiontype="input"
+                                            max="Infinity"
+                                            min="-Infinity"
+                                            defaultValue={productUpdate.SP_trongluong}
+                                            className={cx('shopee-input__input')}
+                                            onChange={(e) => setWeight(e.target.value)}
+                                        />
+                                        {/* <div className={cx('shopee-input__suffix')}>
+                                    <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                </div> */}
+                                    </div>
+                                </div>
                             </div>
 
                             <div className={cx('edit-label-detail')} data-education-trigger-key="name">

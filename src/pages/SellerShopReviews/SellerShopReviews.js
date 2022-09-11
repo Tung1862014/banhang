@@ -331,7 +331,7 @@ function SellerShopReviews() {
                     </div>
                     <div className={cx('table-header')}>
                         <div className={cx('column-information')}>Thông tin Sản phẩm</div>{' '}
-                        <div className={cx('column-evaluation-content')}>Đánh giá của Người mua</div>{' '}
+                        <div className={cx('column-evaluation-content')}>Đánh giá</div>{' '}
                     </div>
                     <SellerShopReviewsPage data={evaluate} />
                 </div>

@@ -311,6 +311,11 @@
     align-items: center;
     justify-content: center;
 
+    span {
+        display: flex;
+        justify-content: center;
+    }
+
     &:hover {
         opacity: 0.9;
     }

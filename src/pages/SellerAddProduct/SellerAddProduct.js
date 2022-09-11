@@ -25,7 +25,7 @@ function SellerAddProduct() {
     const [imageTwo, setImageTwo] = useState('');
     const [imageThree, setImageThree] = useState('');
     // const [takeWeight, setTakeWeight] = useState('');
-    const [checkWeight, setCheckWeight] = useState('');
+    //const [checkWeight, setCheckWeight] = useState('');
     const [checkCategory, setCheckCategory] = useState('');
 
     // if (takeWeight !== '') {
@@ -35,25 +35,25 @@ function SellerAddProduct() {
     //     }
     // }
 
-    useEffect(() => {
-        // setCheckWeight(false);
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
-                }`,
-            )
-            .then((res) => {
-                //console.log(res.data.result);
-                if (checkWeight === '') {
-                    handleWeight(res.data.result);
-                    setCheckWeight('weight');
-                }
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }, [checkWeight]);
+    // useEffect(() => {
+    //     // setCheckWeight(false);
+    //     axios
+    //         .get(
+    //             `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/weight?seller=${
+    //                 JSON.parse(GetCookie('seller')).NB_id
+    //             }`,
+    //         )
+    //         .then((res) => {
+    //             //console.log(res.data.result);
+    //             if (checkWeight === '') {
+    //                 handleWeight(res.data.result);
+    //                 setCheckWeight('weight');
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }, [checkWeight]);
 
     useEffect(() => {
         // setCheckWeight(false);
@@ -75,17 +75,17 @@ function SellerAddProduct() {
             });
     }, [checkCategory]);
 
-    function handleWeight(takeWeight) {
-        const selectValue = document.getElementById('input-weight-select');
+    // function handleWeight(takeWeight) {
+    //     const selectValue = document.getElementById('input-weight-select');
 
-        for (let i = 0; i < takeWeight.length; i++) {
-            const optionValue = document.createElement('option');
-            console.log(takeWeight[i].TL_id);
-            optionValue.value = takeWeight[i].TL_id;
-            optionValue.textContent = takeWeight[i].TL_trongluong;
-            selectValue.appendChild(optionValue);
-        }
-    }
+    //     for (let i = 0; i < takeWeight.length; i++) {
+    //         const optionValue = document.createElement('option');
+    //         console.log(takeWeight[i].TL_id);
+    //         optionValue.value = takeWeight[i].TL_id;
+    //         optionValue.textContent = takeWeight[i].TL_trongluong;
+    //         selectValue.appendChild(optionValue);
+    //     }
+    // }
 
     function handleCategory(takeWeight) {
         const selectValue = document.getElementById('input-category-select');
@@ -250,6 +250,8 @@ function SellerAddProduct() {
             formData.append('SP_gia', price);
             formData.append('SP_khuyenmai', promotion);
             formData.append('DM_id', category);
+            formData.append('SP_trongluong', weight);
+            formData.append('SP_mota', describeProduct);
             axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add`,
@@ -262,25 +264,28 @@ function SellerAddProduct() {
                     console.log(res.data);
                 })
                 .catch((err) => {});
-            handleDescribeProduct(describeProduct, weight);
+            // handleDescribeProduct(describeProduct, weight);
             setTimeout(() => handleImageProduct(image), 900);
             setTimeout(() => handleImageProductTwo(imageTwo), 1200);
             setTimeout(() => handleImageProductThree(imageThree), 1400);
 
-            setTimeout(() => window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/product`, '_self', 1), 5000);
+            setTimeout(
+                () => window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/product/@all`, '_self', 1),
+                5000,
+            );
         }
     }
 
-    function handleDescribeProduct(describeProduct, weight) {
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/describe`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                MTSP_noidung: describeProduct,
-                TL_trongluong: weight,
-            })
-            .then((res) => {})
-            .catch((err) => {});
-    }
+    // function handleDescribeProduct(describeProduct, weight) {
+    //     axios
+    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/describe`, {
+    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //             MTSP_noidung: describeProduct,
+    //             TL_trongluong: weight,
+    //         })
+    //         .then((res) => {})
+    //         .catch((err) => {});
+    // }
 
     function handleImageProduct(image) {
         const formData = new FormData();
@@ -419,38 +424,36 @@ function SellerAddProduct() {
                 <div className={cx('attribute-select-container')}>
                     <div className={cx('attribute-select-list')}>
                         <div className={cx('grid-detail')}>
-                            <div className={cx('edit-label')} data-education-trigger-key="name">
+                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <div className={cx('mandatory')}>
+                                    <span className={cx('mandatory-icon')}>*</span>
+                                </div>{' '}
                                 <span>Trọng lượng</span>
                             </div>
-                            <div className="edit-input">
-                                <select
-                                    name="weight"
-                                    id="input-weight-select"
-                                    defaultValue={''}
-                                    className={cx('input-Weight')}
-                                    onChange={(e) => setWeight(e.target.value)}
-                                >
-                                    <option value="" disabled hidden className={cx('input-type-weight')}>
-                                        Vui lòng chọn
-                                    </option>
-                                    {/* <option value="" className={cx('input-type-weight')}></option> */}
-                                    {/* {takeWeight !== ''
-                                        ? takeWeight.map((valueWith, index) => (
-                                              <option key={index} value={valueWith} className={cx('input-type-weight')}>
-                                                  {valueWith}
-                                              </option>
-                                          ))
-                                        : ''} */}
-                                    {/* <option value="1" className={cx('input-type-weight')}>
-                                        500g
-                                    </option>
-                                    <option value="2" className={cx('input-type-weight')}>
-                                        1kg
-                                    </option>
-                                    <option value="3" className={cx('input-type-weight')}>
-                                        1.5kg
-                                    </option> */}
-                                </select>
+                            <div className={cx('edit-input-detail-money-promotion')}>
+                                <div className={cx('shopee-input')}>
+                                    <div className={cx('shopee-input__inner')}>
+                                        <div className={cx('shopee-input__prefix')}>
+                                            gam<span className={cx('shopee-input__prefix-split')}></span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            placeholder="Nhập vào"
+                                            size="large"
+                                            resize="none"
+                                            rows="2"
+                                            minrows="2"
+                                            restrictiontype="input"
+                                            max="Infinity"
+                                            min="-Infinity"
+                                            className={cx('shopee-input__input')}
+                                            onChange={(e) => setWeight(e.target.value)}
+                                        />
+                                        {/* <div className={cx('shopee-input__suffix')}>
+                                    <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                </div> */}
+                                    </div>
+                                </div>
                             </div>
 
                             <div className={cx('edit-label-detail')} data-education-trigger-key="name">
