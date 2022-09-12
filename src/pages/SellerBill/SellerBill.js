@@ -182,7 +182,7 @@ function SellerBill() {
                                 >
                                     Chờ xác nhận
                                     <span id="tab-badge1" className={cx('tab-badge1')}>
-                                        ( {statusConfirm} )
+                                        ( {statusConfirm !== '' ? statusConfirm : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>
@@ -196,7 +196,7 @@ function SellerBill() {
                                     Đã giao
                                     <span id="tab-badge2" className={cx('tab-badge2')}>
                                         {' '}
-                                        ( {statusDelivered} )
+                                        ( {statusDelivered !== '' ? statusDelivered : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>
@@ -210,7 +210,7 @@ function SellerBill() {
                                     Đơn hủy
                                     <span id="tab-badge3" className={cx('tab-badge3')}>
                                         {' '}
-                                        ( {statusCancelOrder} )
+                                        ( {statusCancelOrder !== '' ? statusCancelOrder : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>

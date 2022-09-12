@@ -241,6 +241,11 @@ function Detail({ evaluate }) {
                       </div>
                   ))
                 : ''}
+            {evaluate[0] === undefined ? (
+                <div className={cx('reviews-title-no-product')}>Không có đánh giá nào.</div>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

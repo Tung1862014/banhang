@@ -153,7 +153,7 @@ function SellerProduct() {
                                     Hết hàng
                                     <span id="tab-badge2" className={cx('tab-badge2')}>
                                         {' '}
-                                        ( {status} )
+                                        ( {status !== '' ? status : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>

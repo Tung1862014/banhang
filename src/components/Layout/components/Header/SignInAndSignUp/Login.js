@@ -103,7 +103,9 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         <button className={cx('btn-icon-close')} onClick={onClickLogin}>
                             <CloseIcon className={cx('icon-close')} />
                         </button>
-                        <h3 className={cx('heading')}>Thành viên đăng nhập</h3>
+                        <h3 className={cx('heading')}>
+                            {checkSeller ? 'Đăng nhập người bán' : 'Thành viên đăng nhập'}
+                        </h3>
 
                         <div className={cx('spacer')}></div>
 
@@ -184,17 +186,18 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             {'Đăng nhập'}
                         </Button>
                         <div className={cx('sign-header')}>
-                            <div>Đăng ký tài khoản người dùng? </div>
+                            <div>Đăng ký tài khoản? </div>
                             <span className={cx('loginLink-header')} onClick={onClick}>
-                                Đăng ký
+                                Người dùng
                             </span>
-                        </div>
-                        <div className={cx('sign-header')}>
-                            <div>Đăng ký tài khoản người bán? </div>
+                            <span className={cx('loginLink-header-bulkhead')}>/</span>
                             <span className={cx('loginLink-header')} onClick={onClickSeller}>
-                                Đăng ký
+                                Người bán
                             </span>
                         </div>
+                        {/* <div className={cx('sign-header')}>
+                            <div>Đăng ký tài khoản người bán? </div>
+                        </div> */}
                     </div>
                     {Loading && (
                         <div className={cx('loading-icon')}>

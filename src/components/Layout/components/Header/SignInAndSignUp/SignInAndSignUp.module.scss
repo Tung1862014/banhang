@@ -180,6 +180,14 @@
         }
     }
 
+    .loginLink-header-bulkhead {
+        color: var(--primary);
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
     //lỗi
 
     .login_button-google {
@@ -435,13 +443,26 @@
         justify-content: center;
         align-items: center;
         padding: 10px 0px 0px 0px;
+
+        div {
+            margin-right: 5px;
+        }
     }
 
     .loginLink-header {
         color: var(--primary);
         cursor: pointer;
-        padding: 0px 0px 0px 5px;
+        padding: 0px;
 
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .loginLink-header-bulkhead {
+        color: var(--primary);
+        cursor: pointer;
+        margin-left: 1px;
         &:hover {
             text-decoration: underline;
         }

@@ -363,28 +363,37 @@ function Header() {
                 console.log('loi insert');
             });
     }
-    function handleSubmitRegisterSeller(fullName, email, password, address, phone, YMD) {
+    function handleSubmitRegisterSeller(fullName, userName, email, password, image, address, YMD, phone) {
         //setLoading(true);
-        console.log('fullname: ' + fullName, email, password, address, phone);
+        //console.log('fullname: ' + fullName, email, password, address, phone);
         // const formData = new FormData();
         //console.log(image);
 
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/seller/signup`, {
-                fullName,
-                email,
-                password,
-                address,
-                phone,
-                YMD,
-            })
-
+        const formData = new FormData();
+        console.log(image);
+        for (let i = 0; i < image.length; i++) {
+            formData.append('image', image[i]);
+        }
+        formData.append('ND_hoten', fullName);
+        formData.append('ND_username', userName);
+        formData.append('ND_email', email);
+        formData.append('ND_password', password);
+        formData.append('ND_diachi', address);
+        formData.append('ND_ngay', YMD);
+        formData.append('ND_sdt', phone);
+        axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_URL_NODEJS}/seller/signup`,
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
             .then((res) => {
                 console.log(res.data);
-                if (res.data.err === true && res.data.email === 'email already exist') {
+                if (res.data.ND_username === false) {
                     //alert('Tên đăng nhập đã tồn tại!');
-                    console.log(res.data);
-                    toast.error('Email đã tồn tại!', {
+                    toast.error('Tên đăng nhập đã tồn tại!', {
                         position: toast.POSITION.TOP_RIGHT,
                         className: `${cx('toast-message')}`,
                     });

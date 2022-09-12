@@ -56,7 +56,7 @@ function HeaderSeller() {
     useEffect(() => {
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish/show`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
             })
 
             .then((res) => {
@@ -79,7 +79,11 @@ function HeaderSeller() {
                             <img src={establish.MTS_logo} className={cx('account-avatar')} alt="" />
                         ) : (
                             <img
-                                src={'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'}
+                                src={
+                                    JSON.parse(GetCookie('seller')).ND_image !== undefined
+                                        ? JSON.parse(GetCookie('seller')).ND_image
+                                        : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
+                                }
                                 className={cx('account-avatar')}
                                 alt=""
                             />
@@ -92,7 +96,7 @@ function HeaderSeller() {
                                             {' '}
                                             {establish !== '' && establish !== undefined
                                                 ? establish.MTS_ten
-                                                : 'Xin chào ' + JSON.parse(GetCookie('seller')).NB_hoten}
+                                                : 'Xin chào ' + JSON.parse(GetCookie('seller')).ND_hoten}
                                             <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
                                         </h3>
                                     </div>

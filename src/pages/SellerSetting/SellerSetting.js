@@ -17,7 +17,7 @@ function SellerSetting() {
     const [establish, setEstablished] = useState('');
     const [checkLogo, setCheckLogo] = useState(false);
 
-    const dateValue = new Date(JSON.parse(GetCookie('seller')).NB_ngay);
+    const dateValue = new Date(JSON.parse(GetCookie('seller')).ND_ngay);
     let day = dateValue.getDate();
     let month = dateValue.getMonth() + 1;
     let year = dateValue.getFullYear();
