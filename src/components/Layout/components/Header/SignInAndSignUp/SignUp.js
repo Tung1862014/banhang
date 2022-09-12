@@ -20,7 +20,7 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [image, setImage] = useState('');
     const [address, setAddress] = useState('');
-    const [birthday, setBirthday] = useState('');
+    //const [birthday, setBirthday] = useState('');
     const [phone, setPhone] = useState('');
     const [checkEmail, setCheckEmail] = useState(false);
     const [blur, setBlur] = useState(false);
@@ -34,6 +34,20 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
     const inputRef = useRef();
 
     //console.log('Image: ' + image);
+    const dateValue = new Date();
+    let day = dateValue.getDate();
+    let month = dateValue.getMonth() + 1;
+    let year = dateValue.getFullYear();
+    let YMD = '';
+    if (month < 10) {
+        YMD = year + '-0' + month + '-' + day;
+    } else if (day < 10) {
+        YMD = year + '-' + month + '-0' + day;
+    } else {
+        YMD = year + '-' + month + '-' + day;
+    }
+
+    console.log('YMD', YMD);
 
     useEffect(() => {
         const regexExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
@@ -197,7 +211,7 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
                             />
                         </Menu>
 
-                        <Menu>
+                        {/* <Menu>
                             <MenuItem
                                 className1="form_group-control"
                                 className2="form_label"
@@ -209,7 +223,7 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
                                 placeholder="VD: 14/02/2000"
                                 onChange={(e) => setBirthday(e.target.value)}
                             />
-                        </Menu>
+                        </Menu> */}
 
                         <Menu>
                             <MenuItem
@@ -251,16 +265,7 @@ function SignUp({ onClickSignUp, onClick, onRegister, Loading }) {
                         onClick={() => {
                             checkEmail &&
                                 checkPassword &&
-                                onRegister(
-                                    fullName,
-                                    userName,
-                                    userEmail,
-                                    userPassword,
-                                    image,
-                                    address,
-                                    birthday,
-                                    phone,
-                                );
+                                onRegister(fullName, userName, userEmail, userPassword, image, address, YMD, phone);
                         }}
                     >
                         {'Đăng ký'}

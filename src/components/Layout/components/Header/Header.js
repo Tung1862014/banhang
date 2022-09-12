@@ -8,7 +8,7 @@ import Search from '../Search';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faEarthAsia, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { CartIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
@@ -27,27 +27,27 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-const MENU_ITEMS = [
-    {
-        icon: <FontAwesomeIcon icon={faEarthAsia} />,
-        title: 'English',
-        children: {
-            title: 'Languare',
-            data: [
-                {
-                    code: 'en',
-                    title: 'English',
-                    type: 'language',
-                },
-                {
-                    code: 'vn',
-                    title: 'Tiếng Việt',
-                    type: 'language',
-                },
-            ],
-        },
-    },
-];
+// const MENU_ITEMS = [
+//     {
+//         icon: <FontAwesomeIcon icon={faEarthAsia} />,
+//         title: 'English',
+//         children: {
+//             title: 'Languare',
+//             data: [
+//                 {
+//                     code: 'en',
+//                     title: 'English',
+//                     type: 'language',
+//                 },
+//                 {
+//                     code: 'vn',
+//                     title: 'Tiếng Việt',
+//                     type: 'language',
+//                 },
+//             ],
+//         },
+//     },
+// ];
 
 function Header() {
     const [loginAvtice, setLoginAvtice] = useState(false);
@@ -108,7 +108,7 @@ function Header() {
     }, []);
 
     const userMenu = [
-        ...MENU_ITEMS,
+        // ...MENU_ITEMS,
         {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Setting',
@@ -136,7 +136,7 @@ function Header() {
     ];
 
     const userMenuLogout = [
-        ...MENU_ITEMS,
+        // ...MENU_ITEMS,
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
@@ -244,32 +244,63 @@ function Header() {
             .then((res) => {
                 //console.log('data: ' + JSON.stringify(res.data.result.image));
                 // handle success
-                if (res.data.result && res.data.result.ND_password === pass) {
-                    RemoveCookie('usrin');
-                    SetCookie('usrin', JSON.stringify(res.data.result));
-                    //alert('Đăng nhập thành công');
-                    setLoginResult([...loginResult, res.data.result]);
-                    //setLoading(false);
-                    // const action = addNumberProduct(res.data.result);
-                    // dispatchSignIn(action);
-                    toast.success('Success Notification !', {
-                        position: toast.POSITION.TOP_RIGHT,
-                    });
-                } else if (res.data.result === undefined) {
-                    //alert('Tài khoản không tồn tại');
-                    //const lastname = `${cx('toast-message')}`;
-                    //setLoading(false);
-                    toast.error('Tài khoản không tồn tại', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-toastify-message')}`,
-                    });
-                } else if (res.data.result.ND_password !== pass) {
-                    //alert('Mật khẩu không đúng');
-                    //setLoading(false);
-                    toast.error('Mật khẩu không đúng', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
+                if (seller) {
+                    if (res.data.result && res.data.result.ND_password === pass) {
+                        RemoveCookie('seller');
+                        SetCookie('seller', JSON.stringify(res.data.result));
+                        //alert('Đăng nhập thành công');
+                        setLoginResult([...loginResult, res.data.result]);
+                        //setLoading(false);
+                        // const action = addNumberProduct(res.data.result);
+                        // dispatchSignIn(action);
+                        toast.success('Đăng nhập thành công người bán', {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                        window.open('http://localhost:3000/seller', '_self', 1);
+                    } else if (res.data.result === undefined) {
+                        //alert('Tài khoản không tồn tại');
+                        //const lastname = `${cx('toast-message')}`;
+                        //setLoading(false);
+                        toast.error('Tài khoản không tồn tại', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-toastify-message')}`,
+                        });
+                    } else if (res.data.result.ND_password !== pass) {
+                        //alert('Mật khẩu không đúng');
+                        //setLoading(false);
+                        toast.error('Mật khẩu không đúng', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-message')}`,
+                        });
+                    }
+                } else {
+                    if (res.data.result && res.data.result.ND_password === pass) {
+                        RemoveCookie('usrin');
+                        SetCookie('usrin', JSON.stringify(res.data.result));
+                        //alert('Đăng nhập thành công');
+                        setLoginResult([...loginResult, res.data.result]);
+                        //setLoading(false);
+                        // const action = addNumberProduct(res.data.result);
+                        // dispatchSignIn(action);
+                        toast.success('Đăng nhập thành công', {
+                            position: toast.POSITION.TOP_RIGHT,
+                        });
+                    } else if (res.data.result === undefined) {
+                        //alert('Tài khoản không tồn tại');
+                        //const lastname = `${cx('toast-message')}`;
+                        //setLoading(false);
+                        toast.error('Tài khoản không tồn tại!', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-toastify-message')}`,
+                        });
+                    } else if (res.data.result.ND_password !== pass) {
+                        //alert('Mật khẩu không đúng');
+                        //setLoading(false);
+                        toast.error('Mật khẩu không đúng', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-message')}`,
+                        });
+                    }
                 }
             })
             .catch(() => {
@@ -284,7 +315,7 @@ function Header() {
         // }
     }
 
-    function handleSubmitRegister(fullName, userName, email, password, image, address, birthday, phone) {
+    function handleSubmitRegister(fullName, userName, email, password, image, address, YMD, phone) {
         //event.preventDefault();
         setLoading(true);
         const formData = new FormData();
@@ -292,13 +323,13 @@ function Header() {
         for (let i = 0; i < image.length; i++) {
             formData.append('image', image[i]);
         }
-        formData.append('fullName', fullName);
-        formData.append('userName', userName);
-        formData.append('email', email);
-        formData.append('password', password);
-        formData.append('address', address);
-        formData.append('birthday', birthday);
-        formData.append('phone', phone);
+        formData.append('ND_hoten', fullName);
+        formData.append('ND_username', userName);
+        formData.append('ND_email', email);
+        formData.append('ND_password', password);
+        formData.append('ND_diachi', address);
+        formData.append('ND_ngay', YMD);
+        formData.append('ND_sdt', phone);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/customer/signup`,
@@ -309,7 +340,7 @@ function Header() {
         })
             .then((res) => {
                 console.log(res.data);
-                if (res.data.userName === false) {
+                if (res.data.ND_username === false) {
                     //alert('Tên đăng nhập đã tồn tại!');
                     toast.error('Tên đăng nhập đã tồn tại!', {
                         position: toast.POSITION.TOP_RIGHT,
@@ -416,13 +447,13 @@ function Header() {
                             </Button>
                         )}
                         {GetCookie('usrin') && (
-                            <Menu items={GetCookie('usrin') !== undefined ? userMenu : MENU_ITEMS}>
+                            <Menu items={GetCookie('usrin') !== undefined ? userMenu : ''}>
                                 {GetCookie('usrin') && (
                                     <div>
                                         <Image
                                             className={cx('user-avatar')}
                                             src={
-                                                JSON.parse(GetCookie('usrin')).image ||
+                                                JSON.parse(GetCookie('usrin')).ND_image ||
                                                 process.env.REACT_APP_URL_IMAGE_AVATAR
                                             }
                                             alt=""
@@ -433,11 +464,11 @@ function Header() {
                             </Menu>
                         )}
                         {GetCookie('seller') && (
-                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : MENU_ITEMS}>
+                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
                                 {GetCookie('seller') && (
                                     <div>
                                         <h3>
-                                            Xin chào {JSON.parse(GetCookie('seller')).NB_hoten}
+                                            Xin chào {JSON.parse(GetCookie('seller')).ND_hoten}
                                             <FontAwesomeIcon icon={faCaretDown} />
                                         </h3>
                                     </div>
@@ -445,7 +476,7 @@ function Header() {
                             </Menu>
                         )}
                         {GetCookie('logout') && userGoogle && (
-                            <Menu items={GetCookie('logout') ? userMenuLogout : MENU_ITEMS}>
+                            <Menu items={GetCookie('logout') ? userMenuLogout : ''}>
                                 <div>
                                     <Image
                                         className={cx('user-avatar')}

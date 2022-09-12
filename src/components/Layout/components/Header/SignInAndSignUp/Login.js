@@ -169,7 +169,12 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         </div> */}
 
                         <div className={cx('check-seller')}>
-                            <input type="checkbox" id="seller" onChange={() => setCheckSeller((prev) => !prev)} />
+                            <input
+                                type="checkbox"
+                                id="seller"
+                                className={cx('input-check-seller')}
+                                onChange={() => setCheckSeller((prev) => !prev)}
+                            />
                             <label htmlFor="seller" className={cx('seller')}>
                                 Đăng nhập với tư cách người bán
                             </label>
@@ -179,15 +184,15 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             {'Đăng nhập'}
                         </Button>
                         <div className={cx('sign-header')}>
-                            <div>Already have an account? </div>
+                            <div>Đăng ký tài khoản người dùng? </div>
                             <span className={cx('loginLink-header')} onClick={onClick}>
-                                Sign up
+                                Đăng ký
                             </span>
                         </div>
                         <div className={cx('sign-header')}>
-                            <div>Already have an account? </div>
+                            <div>Đăng ký tài khoản người bán? </div>
                             <span className={cx('loginLink-header')} onClick={onClickSeller}>
-                                Đăng ký người bán
+                                Đăng ký
                             </span>
                         </div>
                     </div>

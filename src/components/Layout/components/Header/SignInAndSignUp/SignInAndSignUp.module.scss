@@ -447,6 +447,20 @@
         }
     }
 
+    .check-seller {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .input-check-seller {
+        width: 19px;
+        height: 19px;
+        position: relative;
+        margin-right: 5px;
+    }
     //button google
     .login_button-google {
         width: 100%;
