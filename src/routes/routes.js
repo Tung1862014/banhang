@@ -1,5 +1,6 @@
 import { HeaderOnly } from '~/components/Layout';
 import { DefaultLayoutSeller } from '~/components/Layout';
+import { DefaultLayoutAdmin } from '~/components/Layout';
 
 import Home from '~/pages/Home';
 import SanPham from '~/pages/SanPham';
@@ -22,6 +23,8 @@ import SellerPrintBill from '~/pages/SellerPrintBill';
 import SellerShopReviews from '~/pages/SellerShopReviews';
 import Cart from '~/pages/Cart';
 import HistoryBill from '~/pages/HistoryBill';
+import LoginAdmin from '~/pages/LoginAdmin';
+import ManageCustomer from '~/pages/ManageCustomer';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -36,6 +39,8 @@ const publicRoutes = [
     { path: '/login', component: Login, layout: HeaderOnly },
     { path: '/cart', component: Cart, layout: HeaderOnly },
     { path: '/history/purchase', component: HistoryBill, layout: HeaderOnly },
+    { path: '/login/admin', component: LoginAdmin, layout: null },
+    { path: '/manage/customer/admin', component: ManageCustomer, layout: DefaultLayoutAdmin },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },

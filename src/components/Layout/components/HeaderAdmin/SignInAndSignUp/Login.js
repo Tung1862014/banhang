@@ -12,7 +12,6 @@ import MenuItem from './Menu/MenuItem';
 // import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -104,9 +103,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         <button className={cx('btn-icon-close')} onClick={onClickLogin}>
                             <CloseIcon className={cx('icon-close')} />
                         </button>
-                        <h3 className={cx('heading')}>
-                            {checkSeller ? 'Đăng nhập người bán' : 'Thành viên đăng nhập'}
-                        </h3>
+                        <h3 className={cx('heading')}>Thành viên đăng nhập</h3>
 
                         <div className={cx('spacer')}></div>
 
@@ -130,10 +127,10 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                                 className2="form_label"
                                 className3="form_control"
                                 className4="form_message"
-                                title={'Tên đăng nhập'}
+                                title={checkSeller ? 'Nhập email' : 'Tên đăng nhập'}
                                 name="userName"
-                                type={'text'}
-                                placeholder={'VD: ThanhTung'}
+                                type={checkSeller ? 'email' : 'text'}
+                                placeholder={checkSeller ? 'tung1862014@gmail.com' : 'VD: ThanhTung'}
                                 onChange={(e) => handleUserName(e)}
                             />
                         </Menu>
@@ -172,12 +169,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         </div> */}
 
                         <div className={cx('check-seller')}>
-                            <input
-                                type="checkbox"
-                                id="seller"
-                                className={cx('input-check-seller')}
-                                onChange={() => setCheckSeller((prev) => !prev)}
-                            />
+                            <input type="checkbox" id="seller" onChange={() => setCheckSeller((prev) => !prev)} />
                             <label htmlFor="seller" className={cx('seller')}>
                                 Đăng nhập với tư cách người bán
                             </label>
@@ -187,20 +179,16 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             {'Đăng nhập'}
                         </Button>
                         <div className={cx('sign-header')}>
-                            <div>Đăng ký tài khoản? </div>
+                            <div>Already have an account? </div>
                             <span className={cx('loginLink-header')} onClick={onClick}>
-                                Người dùng
-                            </span>
-                            <span className={cx('loginLink-header-bulkhead')}>/</span>
-                            <span className={cx('loginLink-header')} onClick={onClickSeller}>
-                                Người bán
+                                Sign up
                             </span>
                         </div>
                         <div className={cx('sign-header')}>
-                            <div></div>
-                            <Link to={'/login/admin'} className={cx('loginLink-header')} onClick={onClickLogin}>
-                                Đăng nhập quản lý
-                            </Link>
+                            <div>Already have an account? </div>
+                            <span className={cx('loginLink-header')} onClick={onClickSeller}>
+                                Đăng ký người bán
+                            </span>
                         </div>
                     </div>
                     {Loading && (
