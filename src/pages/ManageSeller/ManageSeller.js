@@ -4,20 +4,16 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 //import ProductSeller from './ProductSeller';
-import styles from './ManageCustomer.module.scss';
+import styles from './ManageSeller.module.scss';
 
 const cx = classNames.bind(styles);
 
-function ManageCustomer() {
+function ManageSeller() {
     const [product, setProduct] = useState([]);
     const [status, setStatus] = useState('');
     const [number, setNumber] = useState('');
     const [checkOutOfStock, setCheckOutOfStock] = useState();
     const [searchValue, setSearchValue] = useState('');
-
-    const [checkBox, setCheckBox] = useState('');
-    const [currentItems, setCurrentItems] = useState([]);
-    //const [checkDelete, setCheckDelete] = useState(false);
 
     useEffect(() => {
         // axios
@@ -38,7 +34,7 @@ function ManageCustomer() {
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(23);
+        const resultId = pathId.slice(21);
         if (resultId === 'all') {
             handlerClickAll();
         } else if (resultId === 'action') {
@@ -116,65 +112,6 @@ function ManageCustomer() {
             });
     };
 
-    function handleChecked(checkid) {
-        //const checkedId = document.getElementById(`checkId${checkid}`);
-        // for (let i = 0; i < checkBox.length; i++) {
-        const checkAll = document.getElementById('checkAll');
-        console.log(checkBox);
-        if (checkBox === '') {
-            setCheckBox(checkid.toString());
-        } else {
-            const arr = checkBox.split(',');
-            let locationId;
-
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i] === checkid.toString()) {
-                    locationId = i;
-                }
-            }
-            if (locationId === undefined) {
-                let idcheck = checkBox + ',' + checkid;
-                setCheckBox(idcheck);
-                if (checkAll.checked === false && idcheck.length === 11) {
-                    checkAll.checked = true;
-                }
-                return;
-            } else {
-                arr.splice(locationId, 1);
-                if (checkAll.checked === true) {
-                    checkAll.checked = false;
-                }
-
-                setCheckBox(arr.join(','));
-            }
-            console.log(arr);
-        }
-        //}
-    }
-
-    function handleCheckAll() {
-        const checkAll = document.getElementById('checkAll');
-        let idcheck;
-        for (let i = 0; i < currentItems.length; i++) {
-            let checkedId = document.getElementById(`checkId${currentItems[i].SP_id}`);
-            //console.log(checkedId.checked);
-            if (checkAll.checked) {
-                checkedId.checked = true;
-                if (idcheck === undefined) {
-                    idcheck = currentItems[i].SP_id;
-                } else {
-                    idcheck = idcheck + ',' + currentItems[i].SP_id;
-                }
-            } else {
-                checkedId.checked = false;
-                idcheck = '';
-                // console.log(checkAll.checked);
-            }
-            setCheckBox(idcheck);
-        }
-        console.log(checkAll.checked);
-    }
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('shopee-tabs')}>
@@ -184,7 +121,7 @@ function ManageCustomer() {
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=all"
+                                    to="/admin/manage/seller=all"
                                     id="tabs__tab1"
                                     className={cx('tabs__tab1')}
                                     onClick={handlerClickAll}
@@ -194,7 +131,7 @@ function ManageCustomer() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=action"
+                                    to="/admin/manage/seller=action"
                                     id="tabs__tab2"
                                     className={cx('tabs__tab2')}
                                     onClick={handlerClickAllAction}
@@ -207,7 +144,7 @@ function ManageCustomer() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=limit"
+                                    to="/admin/manage/seller=limit"
                                     id="tabs__tab3"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
@@ -230,7 +167,7 @@ function ManageCustomer() {
                         <div data-v-3cbfdb84="" className={cx('title-box')}>
                             <div data-v-3cbfdb84="" className={cx('page-title-box')}>
                                 <div data-v-3cbfdb84="" className={cx('page-title')}>
-                                    {number !== '' ? number : '0'} Người dùng
+                                    {number !== '' ? number : '0'} Người bán
                                 </div>{' '}
                             </div>
                         </div>
@@ -292,120 +229,8 @@ function ManageCustomer() {
                 </div>
             </div>
             {/* <ProductSeller data={product} /> */}
-            <div className={cx('product-list-setion')}>
-                {/* <div id="delete-modal__container" className={cx('delete-modal__container')}>
-                <div id="delete-modal__box" className={cx('delete-modal__box')}>
-                    <div className={cx('delete-modal__content')}>
-                        <div className={cx('delete-modal__header')}>
-                            <div className={cx('delete-modal__header-inner-confirm')}>
-                                <div className={cx('delete-modal__title')}>Xác nhận</div>
-                            </div>
-                            <div className={cx('delete-modal__header-inner-title')}>
-                                <div className={cx('delete-modal__title')}>Bạn có muốn xóa sản phẩm?</div>
-                            </div>
-                        </div>
-                        <div className={cx('delete-modal__footer')}>
-                            <div className={cx('delete-modal__footer-buttons')}>
-                                <button type="button" className={cx('delete-button--normal')} onClick={handleDeleteHuy}>
-                                    <span>Hủy</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    className={cx('delete-button--primary')}
-                                    onClick={handleDeleteAgree}
-                                >
-                                    <span>Đồng ý</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-                <div className={cx('product-list-container')}>
-                    <div className={cx('product-list-table')}>
-                        <div className={cx('shopee-table__header-container')}>
-                            <table className={cx('shopee-table__header')}>
-                                <thead>
-                                    <tr className={cx('table__header')}>
-                                        <td width="30">
-                                            <input
-                                                type="checkbox"
-                                                name="check"
-                                                id="checkAll"
-                                                className="checkbox"
-                                                onChange={() => handleCheckAll()}
-                                            />
-                                        </td>
-                                        <td className={cx('td_table-name')}>Tên sản phẩm</td>
-                                        <td className={cx('td_table-name-number')}>Số lượng</td>
-                                        <td className={cx('td_table-name')}>Giá</td>
-                                        <td className={cx('td_table-name-number')}>Số lượng bán</td>
-                                        <td>Hoạt động</td>
-                                    </tr>
-                                    {currentItems.map((pro, index) => (
-                                        <tr key={index} className={cx('table__header-conten')}>
-                                            <td>
-                                                <input
-                                                    type="checkbox"
-                                                    name="id[]"
-                                                    id={`checkId${pro.SP_id}`}
-                                                    className={cx('checkbox')}
-                                                    value="<?=$bien['idsp']?>"
-                                                    onChange={() => handleChecked(pro.SP_id)}
-                                                />
-                                            </td>
-                                            <td className={cx('td_table-name-sp')}>
-                                                <img src={pro.SP_image} alt="" width="40" height="40" />
-                                                <span className={cx('name-product-sp')}>{pro.SP_ten}</span>
-                                            </td>
-                                            <td className={cx('td_table-name-number')}>{pro.SP_soluong}</td>
-                                            <td className={cx('td_table-name')}>{}₫</td>
-                                            <td className={cx('td_table-name-number')}>{pro.SP_soluongban}</td>
-                                            <td>
-                                                <a href={`update/@${pro.SP_id}`} className={cx('btn-update')}>
-                                                    Cập nhật
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                {currentItems[0] !== undefined && (
-                    <div className={cx('selected-panel')}>
-                        <div className={cx('selected')}>
-                            <div className={cx('selected-text')}>
-                                {checkBox.length === 0
-                                    ? 0
-                                    : checkBox.length === 1
-                                    ? 1
-                                    : checkBox.length === 3
-                                    ? 2
-                                    : checkBox.length === 5
-                                    ? 3
-                                    : checkBox.length === 7
-                                    ? 4
-                                    : checkBox.length === 9
-                                    ? 5
-                                    : 6}
-                                <span> sản phẩm đã được chọn</span>
-                            </div>
-                            <button type="button" className={cx('delete-button')}>
-                                <span>Xóa</span>
-                            </button>
-                        </div>
-                    </div>
-                )}
-                {currentItems[0] === undefined ? (
-                    <div className={cx('bill-title-no-product')}>Không có sản phẩm nào.</div>
-                ) : (
-                    ''
-                )}
-            </div>
         </div>
     );
 }
 
-export default ManageCustomer;
+export default ManageSeller;

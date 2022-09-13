@@ -25,6 +25,8 @@ import Cart from '~/pages/Cart';
 import HistoryBill from '~/pages/HistoryBill';
 import LoginAdmin from '~/pages/LoginAdmin';
 import ManageCustomer from '~/pages/ManageCustomer';
+import ManageSeller from '~/pages/ManageSeller';
+import SettingAdmin from '~/pages/SettingAdmin';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -40,7 +42,9 @@ const publicRoutes = [
     { path: '/cart', component: Cart, layout: HeaderOnly },
     { path: '/history/purchase', component: HistoryBill, layout: HeaderOnly },
     { path: '/login/admin', component: LoginAdmin, layout: null },
-    { path: '/manage/customer/admin', component: ManageCustomer, layout: DefaultLayoutAdmin },
+    { path: '/admin/manage/customer=:id', component: ManageCustomer, layout: DefaultLayoutAdmin },
+    { path: '/admin/manage/seller=:id', component: ManageSeller, layout: DefaultLayoutAdmin },
+    { path: '/setting/admin', component: SettingAdmin, layout: DefaultLayoutAdmin },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },

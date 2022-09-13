@@ -30,7 +30,7 @@ function LoginAdmin() {
                     console.log('Đăng nhập thành công');
                     RemoveCookie('admin');
                     SetCookie('admin', JSON.stringify(res.data.result));
-                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/manage/customer/admin`, '_self', 1);
+                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/admin/manage/customer=all`, '_self', 1);
                 }
             })
             .catch((err) => {

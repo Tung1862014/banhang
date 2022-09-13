@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import HeaderAdmin from '~/components/Layout/components/HeaderAdmin';
 import styles from './DefaultLayoutAdmin.module.scss';
-import SidebarSeller from '../components/SidebarSeller';
+import SidebarAdmin from '../components/SidebarAdmin';
 // import Navbar from '~/components/Layout/components/HeaderNav';
 //import Footer from '~/components/Layout/components/Footer';
 
@@ -12,7 +12,7 @@ function DefaultLayoutAdmin({ children }) {
         <div className={cx('wrapper')}>
             <HeaderAdmin />
             <div className={cx('container1')}>
-                <SidebarSeller />
+                <SidebarAdmin />
 
                 <div className={cx('content')}>{children}</div>
             </div>

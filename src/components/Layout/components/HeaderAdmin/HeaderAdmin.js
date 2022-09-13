@@ -6,7 +6,7 @@ import styles from './HeaderAdmin.module.scss';
 
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faEarthAsia, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faEarthAsia, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
@@ -42,6 +42,13 @@ function HeaderAdmin() {
     //const [imageValue, setImageValue] = useState('');
 
     const userMenuSeller = [
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Thông tin tài khoản',
+            to: `/setting/admin`,
+            separate: true,
+            setting: true,
+        },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
