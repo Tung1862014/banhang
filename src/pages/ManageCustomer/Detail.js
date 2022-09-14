@@ -2,7 +2,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
-import styles from './SellerProduct.module.scss';
+import styles from './ManageCustomer.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -10,14 +10,14 @@ function Detail({ currentItems, clickPageCheck }) {
     const [checkBox, setCheckBox] = useState('');
     const [checkDelete, setCheckDelete] = useState(false);
     //const rating = [`&#9733;`, '&#9733;', '&#9733;', '&#9733;', '&#9733;'];
-    console.log(checkBox);
+    console.log(checkBox.split(',').length);
 
     useEffect(() => {
         if (clickPageCheck) {
             const checkAll = document.getElementById('checkAll');
             checkAll.checked = false;
             for (let i = 0; i < currentItems.length; i++) {
-                let checkedId = document.getElementById(`checkId${currentItems[i].SP_id}`);
+                let checkedId = document.getElementById(`checkId${currentItems[i].ND_id}`);
                 //console.log(checkedId.checked);
 
                 checkedId.checked = false;
@@ -25,34 +25,25 @@ function Detail({ currentItems, clickPageCheck }) {
             setCheckBox('');
         }
     }, [clickPageCheck, currentItems]);
-    function formatCash(str) {
-        return str
-            .toString()
-            .split('')
-            .reverse()
-            .reduce((prev, next, index) => {
-                return (index % 3 ? next : next + '.') + prev;
-            });
-    }
 
     function handleDeleteAll() {
         let checkValue = checkBox.split(',');
         for (let i = 0; i < checkValue.length; i++) {
             console.log('check: ', checkValue[i]);
             axios
-                .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/delete`, {
-                    SP_id: checkValue[i],
+                .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/status/customer`, {
+                    ND_id: checkValue[i],
                 })
 
                 .then((res) => {
                     console.log(res.data);
                 })
                 .catch(() => {
-                    console.log('loi khong the delete product');
+                    console.log('loi khong the update');
                 });
         }
         setCheckDelete(false);
-        window.open('http://localhost:3000/seller/product', '_self', 1);
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/admin/manage/customer=all`, '_self', 1);
     }
 
     const handleDelete = () => {
@@ -103,7 +94,7 @@ function Detail({ currentItems, clickPageCheck }) {
             if (locationId === undefined) {
                 let idcheck = checkBox + ',' + checkid;
                 setCheckBox(idcheck);
-                if (checkAll.checked === false && idcheck.length === currentItems.length) {
+                if (checkAll.checked === false && idcheck.split(',').length === currentItems.length) {
                     checkAll.checked = true;
                 }
                 return;
@@ -125,14 +116,14 @@ function Detail({ currentItems, clickPageCheck }) {
         const checkAll = document.getElementById('checkAll');
         let idcheck;
         for (let i = 0; i < currentItems.length; i++) {
-            let checkedId = document.getElementById(`checkId${currentItems[i].SP_id}`);
+            let checkedId = document.getElementById(`checkId${currentItems[i].ND_id}`);
             //console.log(checkedId.checked);
             if (checkAll.checked) {
                 checkedId.checked = true;
                 if (idcheck === undefined) {
-                    idcheck = currentItems[i].SP_id;
+                    idcheck = currentItems[i].ND_id;
                 } else {
-                    idcheck = idcheck + ',' + currentItems[i].SP_id;
+                    idcheck = idcheck + ',' + currentItems[i].ND_id;
                 }
             } else {
                 checkedId.checked = false;
@@ -142,6 +133,25 @@ function Detail({ currentItems, clickPageCheck }) {
             setCheckBox(idcheck);
         }
         console.log(checkAll.checked);
+    }
+
+    function takeDate(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month > 10 && day < 10) {
+            return '0' + day + '-' + month + year;
+        } else if (month > 10 && day >= 10) {
+            return day + '-' + month + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
     }
 
     return (
@@ -154,7 +164,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                 <div className={cx('delete-modal__title')}>Xác nhận</div>
                             </div>
                             <div className={cx('delete-modal__header-inner-title')}>
-                                <div className={cx('delete-modal__title')}>Bạn có muốn xóa sản phẩm?</div>
+                                <div className={cx('delete-modal__title')}>Bạn có muốn thay đổi trạng thái?</div>
                             </div>
                         </div>
                         <div className={cx('delete-modal__footer')}>
@@ -189,38 +199,46 @@ function Detail({ currentItems, clickPageCheck }) {
                                             onChange={() => handleCheckAll()}
                                         />
                                     </td>
-                                    <td className={cx('td_table-name')}>Tên sản phẩm</td>
-                                    <td className={cx('td_table-name-number')}>Số lượng</td>
-                                    <td className={cx('td_table-name')}>Giá</td>
-                                    <td className={cx('td_table-name-number')}>Số lượng bán</td>
-                                    <td>Hoạt động</td>
+                                    <td className={cx('td_table-name')}>Tên người dùng</td>
+                                    <td className={cx('td_table-name-number')}>email</td>
+                                    <td className={cx('td_table-name')}>Địa chỉ</td>
+                                    <td className={cx('td_table-name-number')}>Ngày tham gia</td>
+                                    <td>Trạng thái</td>
                                 </tr>
-                                {currentItems.map((pro, index) => (
-                                    <tr key={index} className={cx('table__header-conten')}>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                name="id[]"
-                                                id={`checkId${pro.SP_id}`}
-                                                className={cx('checkbox')}
-                                                value="<?=$bien['idsp']?>"
-                                                onChange={() => handleChecked(pro.SP_id)}
-                                            />
-                                        </td>
-                                        <td className={cx('td_table-name-sp')}>
-                                            <img src={pro.SP_image} alt="" width="40" height="40" />
-                                            <span className={cx('name-product-sp')}>{pro.SP_ten}</span>
-                                        </td>
-                                        <td className={cx('td_table-name-number')}>{pro.SP_soluong}</td>
-                                        <td className={cx('td_table-name')}>{formatCash(pro.SP_gia)}₫</td>
-                                        <td className={cx('td_table-name-number')}>{pro.SP_soluongban}</td>
-                                        <td>
-                                            <a href={`update/@${pro.SP_id}`} className={cx('btn-update')}>
-                                                Cập nhật
-                                            </a>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {currentItems !== ''
+                                    ? currentItems.map((pro, index) => (
+                                          <tr key={index} className={cx('table__header-conten')}>
+                                              <td>
+                                                  <input
+                                                      type="checkbox"
+                                                      name="id[]"
+                                                      id={`checkId${pro.ND_id}`}
+                                                      className={cx('checkbox')}
+                                                      value="<?=$bien['idsp']?>"
+                                                      onChange={() => handleChecked(pro.ND_id)}
+                                                  />
+                                              </td>
+                                              <td className={cx('td_table-name-sp')}>
+                                                  <img
+                                                      src={pro.ND_image}
+                                                      alt=""
+                                                      width="40"
+                                                      height="40"
+                                                      style={{ borderRadius: '50%' }}
+                                                  />
+                                                  <span className={cx('name-product-sp')}>{pro.ND_hoten}</span>
+                                              </td>
+                                              <td className={cx('td_table-name-number')}>{pro.ND_email}</td>
+                                              <td className={cx('td_table-name')}>{pro.ND_diachi}</td>
+                                              <td className={cx('td_table-name-number')}>{takeDate(pro.ND_ngay)}</td>
+                                              <td>
+                                                  <a href={`update/@${pro.ND_id}`} className={cx('btn-update')}>
+                                                      {pro.ND_trangthai === 1 ? 'Hoạt động' : 'Hạn chế'}
+                                                  </a>
+                                              </td>
+                                          </tr>
+                                      ))
+                                    : ''}
                             </thead>
                         </table>
                     </div>
@@ -232,27 +250,27 @@ function Detail({ currentItems, clickPageCheck }) {
                         <div className={cx('selected-text')}>
                             {checkBox.length === 0
                                 ? 0
-                                : checkBox.length === 1
+                                : checkBox.split(',').length === 1
                                 ? 1
-                                : checkBox.length === 3
+                                : checkBox.split(',').length === 2
                                 ? 2
-                                : checkBox.length === 5
+                                : checkBox.split(',').length === 3
                                 ? 3
-                                : checkBox.length === 7
+                                : checkBox.split(',').length === 4
                                 ? 4
-                                : checkBox.length === 9
+                                : checkBox.split(',').length === 5
                                 ? 5
                                 : 6}
                             <span> sản phẩm đã được chọn</span>
                         </div>
                         <button type="button" className={cx('delete-button')} onClick={handleDelete}>
-                            <span>Xóa</span>
+                            <span>Cập nhật</span>
                         </button>
                     </div>
                 </div>
             )}
             {currentItems[0] === undefined ? (
-                <div className={cx('bill-title-no-product')}>Không có sản phẩm nào.</div>
+                <div className={cx('bill-title-no-product')}>Không có người dùng nào.</div>
             ) : (
                 ''
             )}

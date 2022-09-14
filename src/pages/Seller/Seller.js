@@ -35,7 +35,7 @@ function Seller() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/seller/statistical/show/all?NB_id=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }`,
             )
 
@@ -62,7 +62,7 @@ function Seller() {
     const [dateValue2, setDateValue2] = useState('2022-09-18');
     const [activeTurnover, setActiveTurnover] = useState(
         `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
-            JSON.parse(GetCookie('seller')).NB_id
+            JSON.parse(GetCookie('seller')).ND_id
         }`,
     );
     const [chartListData, setChartListData] = useState([]);

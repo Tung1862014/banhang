@@ -46,7 +46,7 @@ function SellerCategoryAndWeight() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/category?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }`,
             )
             .then((res) => {
@@ -128,7 +128,7 @@ function SellerCategoryAndWeight() {
     function handleAddCategoryDatabase() {
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/add`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DM_danhmuc: category,
             })
             .then((res) => {
@@ -143,7 +143,7 @@ function SellerCategoryAndWeight() {
     function handleUpdateCategoryDatabase() {
         axios
             .put(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/update`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DM_id: category,
                 DM_danhmuc: categoryValue,
             })
@@ -183,7 +183,7 @@ function SellerCategoryAndWeight() {
         axios
             .delete(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/delete`, {
                 data: {
-                    NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
                     DM_id: category,
                 },
             })

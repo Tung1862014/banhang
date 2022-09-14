@@ -43,7 +43,7 @@ function SellerUpdateProduct() {
         // console.log('Page path is:  ' + result);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 SP_id: result,
             })
             .then((res) => {
@@ -63,7 +63,7 @@ function SellerUpdateProduct() {
         // console.log('Page path is:  ' + result);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/describe`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 SP_id: result,
             })
             .then((res) => {
@@ -83,7 +83,7 @@ function SellerUpdateProduct() {
         // console.log('Page path is:  ' + result);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/image`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 SP_id: result,
             })
             .then((res) => {
@@ -123,7 +123,7 @@ function SellerUpdateProduct() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/category?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }`,
             )
             .then((res) => {
@@ -266,7 +266,7 @@ function SellerUpdateProduct() {
                 axios
                     .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
                         SP_id: resultId,
-                        NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                        NB_id: JSON.parse(GetCookie('seller')).ND_id,
                         SP_ten: nameProduct,
                         SP_soluong: number,
                         SP_gia: price,
@@ -285,7 +285,7 @@ function SellerUpdateProduct() {
                 const formData = new FormData();
                 formData.append('image', coverImage[0]);
                 formData.append('SP_id', resultId);
-                formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+                formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
                 formData.append('SP_ten', nameProduct);
                 formData.append('SP_soluong', number);
                 formData.append('SP_gia', price);
@@ -348,7 +348,7 @@ function SellerUpdateProduct() {
         const formData = new FormData();
         formData.append('image', image[0]);
         formData.append('SP_id', resultId);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto1`,
@@ -366,7 +366,7 @@ function SellerUpdateProduct() {
         const formData = new FormData();
         formData.append('image', imageTwo[0]);
         formData.append('SP_id', resultId);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto2`,
@@ -384,7 +384,7 @@ function SellerUpdateProduct() {
         const formData = new FormData();
         formData.append('image', imageThree[0]);
         formData.append('SP_id', resultId);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image/subphoto3`,

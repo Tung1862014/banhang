@@ -21,7 +21,7 @@ function SellerShopReviews() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/all?NB_id=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }&DG_sosao=${star || ''}`,
             )
 

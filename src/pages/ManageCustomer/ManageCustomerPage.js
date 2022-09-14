@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import classNames from 'classnames/bind';
-import styles from './SellerProduct.module.scss';
+import styles from './ManageCustomer.module.scss';
 import Detail from './Detail';
 
 const cx = classNames.bind(styles);
 
-function ProductSeller(props) {
+function ManageCustomerPage(props) {
     const { data } = props;
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -50,4 +50,4 @@ function ProductSeller(props) {
     );
 }
 
-export default ProductSeller;
+export default ManageCustomerPage;

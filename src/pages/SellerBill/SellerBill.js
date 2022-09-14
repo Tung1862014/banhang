@@ -20,7 +20,7 @@ function SellerBill() {
     useEffect(() => {
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DH_trangthai: checkStatus || '',
             })
 
@@ -141,7 +141,7 @@ function SellerBill() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/search/id?NB_id=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }&DH_id=${searchValue || ''}`,
             )
             .then((res) => {

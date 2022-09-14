@@ -34,7 +34,7 @@ function SellerSetting() {
     useEffect(() => {
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish/show`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
             })
 
             .then((res) => {

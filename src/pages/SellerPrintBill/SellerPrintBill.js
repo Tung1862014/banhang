@@ -27,7 +27,7 @@ function SellerPrintBill() {
 
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/print`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DH_id: resultId || '',
             })
 
@@ -91,7 +91,7 @@ function SellerPrintBill() {
                                             <div className={cx('name-shop')}>{print.shop[0].MTS_ten}</div>
                                             <div className={cx('address-shop')}>{print.shop[0].MTS_diachi}</div>
                                             <div className={cx('sdt-shop')}>
-                                                SĐT: <span>{JSON.parse(GetCookie('seller')).NB_sdt}</span>
+                                                SĐT: <span>{JSON.parse(GetCookie('seller')).ND_sdt}</span>
                                             </div>
                                         </div>
                                     </div>

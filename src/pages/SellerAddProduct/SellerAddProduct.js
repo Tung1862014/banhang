@@ -60,7 +60,7 @@ function SellerAddProduct() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/category?seller=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }`,
             )
             .then((res) => {
@@ -244,7 +244,7 @@ function SellerAddProduct() {
         } else {
             const formData = new FormData();
             formData.append('image', coverImage[0]);
-            formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+            formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
             formData.append('SP_ten', nameProduct);
             formData.append('SP_soluong', number);
             formData.append('SP_gia', price);
@@ -290,7 +290,7 @@ function SellerAddProduct() {
     function handleImageProduct(image) {
         const formData = new FormData();
         formData.append('image', image[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,
@@ -305,7 +305,7 @@ function SellerAddProduct() {
     function handleImageProductTwo(imageTwo) {
         const formData = new FormData();
         formData.append('image', imageTwo[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,
@@ -320,7 +320,7 @@ function SellerAddProduct() {
     function handleImageProductThree(imageThree) {
         const formData = new FormData();
         formData.append('image', imageThree[0]);
-        formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+        formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
         axios({
             method: 'POST',
             url: `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/image`,

@@ -230,7 +230,7 @@ function Detail({ evaluate }) {
                                                       className={cx('btn-evaluation-answer-button')}
                                                       onClick={() => handleAnswers(review.DG_id)}
                                                   >
-                                                      Trả lời
+                                                      {review.DG_traloi !== '' ? 'Cập nhât' : 'Trả lời'}
                                                   </button>
                                               </div>
                                           </div>

@@ -18,7 +18,7 @@ function SellerProduct() {
     useEffect(() => {
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/all`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 SP_trangthai: checkOutOfStock || '',
             })
 
@@ -98,7 +98,7 @@ function SellerProduct() {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/search/name?NB_id=${
-                    JSON.parse(GetCookie('seller')).NB_id
+                    JSON.parse(GetCookie('seller')).ND_id
                 }&SP_ten=${searchValue || ''}`,
             )
 

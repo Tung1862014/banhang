@@ -26,7 +26,7 @@ function SellerDetailBill() {
         console.log(resultId);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/show/all`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DH_id: resultId || '',
             })
 
@@ -78,7 +78,7 @@ function SellerDetailBill() {
         console.log(resultId);
         axios
             .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
-                NB_id: JSON.parse(GetCookie('seller')).NB_id,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DH_id: resultId || '',
                 DH_trangthai: '2',
             })
