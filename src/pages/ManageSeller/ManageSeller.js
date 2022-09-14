@@ -2,34 +2,35 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import GetCookie from '~/components/Hook/GetCookies';
+
 //import ProductSeller from './ProductSeller';
 import styles from './ManageSeller.module.scss';
+import ManageSellerPage from './ManageSellerPage';
 
 const cx = classNames.bind(styles);
 
 function ManageSeller() {
-    const [product, setProduct] = useState([]);
-    const [status, setStatus] = useState('');
+    // const [product, setProduct] = useState([]);
+    const [limits, setLimits] = useState('');
     const [number, setNumber] = useState('');
     const [checkOutOfStock, setCheckOutOfStock] = useState();
     const [searchValue, setSearchValue] = useState('');
 
+    const [currentItems, setCurrentItems] = useState('');
+    //const [checkDelete, setCheckDelete] = useState(false);
+
     useEffect(() => {
-        // axios
-        //     .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/all`, {
-        //         NB_id: JSON.parse(GetCookie('admin')).ND_id,
-        //         SP_trangthai: checkOutOfStock || '',
-        //     })
-        //     .then((res) => {
-        //         console.log(res.data.status[0].status);
-        //         setProduct(res.data.result);
-        //         setStatus(res.data.status[0].status);
-        //         setNumber(res.data.number[0].number);
-        //     })
-        //     .catch(() => {
-        //         console.log('loi khong the show product');
-        //     });
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/show/all/seller?ND_trangthai=${checkOutOfStock}`)
+            .then((res) => {
+                console.log('currentItems', res.data);
+                setCurrentItems(res.data.results);
+                setLimits(res.data.limits);
+                setNumber(res.data.actions);
+            })
+            .catch(() => {
+                console.log('loi khong the show product');
+            });
     }, [checkOutOfStock]);
 
     useEffect(() => {
@@ -90,22 +91,17 @@ function ManageSeller() {
         tab3.style.fontFamily = 'Helvetica';
         badge1.style.color = '#999';
         badge2.style.color = 'red';
-        setCheckOutOfStock('trangthai');
+        setCheckOutOfStock('trangthaihanche');
     };
 
     const handleSearch = () => {
         axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/search/name?NB_id=${
-                    JSON.parse(GetCookie('seller')).NB_id
-                }&SP_ten=${searchValue || ''}`,
-            )
-
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/search/seller?name=${searchValue || ''}`)
             .then((res) => {
                 console.log(res.data.result);
-                setProduct(res.data.result);
-                setStatus(res.data.status[0].status);
-                setNumber(res.data.number[0].number);
+                setCurrentItems(res.data.results);
+                setLimits(res.data.limits);
+                setNumber(res.data.actions);
             })
             .catch(() => {
                 console.log('loi khong the show product');
@@ -121,7 +117,7 @@ function ManageSeller() {
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/seller=all"
+                                    to="/admin/manage/customer=all"
                                     id="tabs__tab1"
                                     className={cx('tabs__tab1')}
                                     onClick={handlerClickAll}
@@ -131,20 +127,20 @@ function ManageSeller() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/seller=action"
+                                    to="/admin/manage/customer=action"
                                     id="tabs__tab2"
                                     className={cx('tabs__tab2')}
                                     onClick={handlerClickAllAction}
                                 >
                                     Đang hoạt động
                                     <span id="tab-badge1" className={cx('tab-badge1')}>
-                                        ( {number !== '' && status !== '' ? number - status : '0'} )
+                                        ( {number !== '' ? number : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/seller=limit"
+                                    to="/admin/manage/customer=limit"
                                     id="tabs__tab3"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
@@ -152,7 +148,7 @@ function ManageSeller() {
                                     Hạn chế
                                     <span id="tab-badge2" className={cx('tab-badge2')}>
                                         {' '}
-                                        ( {status !== '' ? status : '0'} )
+                                        ( {limits !== '' ? limits : '0'} )
                                     </span>
                                 </Link>{' '}
                             </div>
@@ -167,7 +163,7 @@ function ManageSeller() {
                         <div data-v-3cbfdb84="" className={cx('title-box')}>
                             <div data-v-3cbfdb84="" className={cx('page-title-box')}>
                                 <div data-v-3cbfdb84="" className={cx('page-title')}>
-                                    {number !== '' ? number : '0'} Người bán
+                                    {number !== '' && limits !== '' ? number + limits : '0'} Người dùng
                                 </div>{' '}
                             </div>
                         </div>
@@ -180,7 +176,7 @@ function ManageSeller() {
                                         <div className={cx('input__inner--normal')}>
                                             <input
                                                 type="text"
-                                                placeholder="Nhập tên id người dùng"
+                                                placeholder="Nhập tên người bán"
                                                 clearable="true"
                                                 resize="vertical"
                                                 rows="2"
@@ -228,7 +224,7 @@ function ManageSeller() {
                     </div> */}
                 </div>
             </div>
-            {/* <ProductSeller data={product} /> */}
+            <ManageSellerPage data={currentItems} />
         </div>
     );
 }

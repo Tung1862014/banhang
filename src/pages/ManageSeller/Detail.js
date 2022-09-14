@@ -2,7 +2,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 
-import styles from './ManageCustomer.module.scss';
+import styles from './ManageSeller.module.scss';
 
 const cx = classNames.bind(styles);
 
@@ -31,7 +31,7 @@ function Detail({ currentItems, clickPageCheck }) {
         for (let i = 0; i < checkValue.length; i++) {
             console.log('check: ', checkValue[i]);
             axios
-                .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/status/customer`, {
+                .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/status/seller`, {
                     ND_id: checkValue[i],
                 })
 
@@ -43,7 +43,7 @@ function Detail({ currentItems, clickPageCheck }) {
                 });
         }
         setCheckDelete(false);
-        window.open(`${process.env.REACT_APP_URL_FRONTEND}/admin/manage/customer=all`, '_self', 1);
+        window.open(`${process.env.REACT_APP_URL_FRONTEND}/admin/manage/seller=all`, '_self', 1);
     }
 
     const handleDelete = () => {
