@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SettingAdmin.module.scss';
 
 const cx = classNames.bind(styles);
@@ -12,8 +13,16 @@ function SettingAdmin() {
     const [addressValue, setAddressValue] = useState('');
     const [phoneValue, setPhoneValue] = useState('');
     const [imageValue, setImageValue] = useState('');
+    const [newPassVlaue, setNewPassVlaue] = useState('');
+    const [rewritePassValue, setRewritePassValue] = useState('');
+
+    //
+    const [checkPass, setCheckPass] = useState(false);
+    const [checkPassRe, setCheckPassRe] = useState(false);
 
     console.log(nameValue, emailValue, addressValue, phoneValue, imageValue);
+    console.log('newPassVlaue', newPassVlaue);
+    console.log('rewritePassValue', rewritePassValue);
 
     useEffect(() => {
         axios
@@ -26,6 +35,26 @@ function SettingAdmin() {
                 console.log('loi');
             });
     }, []);
+
+    //Submit update
+    const handleSubmitUpdate = () => {
+        axios
+            .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/account`, {
+                ND_id: JSON.parse(GetCookie('admin')).ND_id,
+                ND_hoten: nameValue,
+                ND_email: emailValue,
+                ND_password: newPassVlaue,
+                ND_diachi: addressValue,
+                ND_sdt: phoneValue,
+            })
+            .then((res) => {
+                console.log(res.data);
+                window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    };
 
     function ChooseImg(e) {
         const chooseFile = document.getElementById('LKP1ct');
@@ -45,6 +74,8 @@ function SettingAdmin() {
             setImageValue(e.target.files);
         }
     }
+
+    //password
     const handleClickChangePassword = (index) => {
         const formPass = document.getElementById('ReDGyJ');
         if (index === 'close') {
@@ -53,6 +84,87 @@ function SettingAdmin() {
             formPass.style.display = 'flex';
         }
     };
+
+    const handleCheckNewPassword = (e) => {
+        const newpass = document.getElementById('form_message-new');
+
+        if (e.length !== 0) {
+            if (e.length < 7) {
+                newpass.style.display = 'flex';
+                setCheckPass(true);
+            } else {
+                newpass.style.display = 'none';
+                setCheckPass(false);
+            }
+        }
+    };
+
+    const handleCheckPassword = (e) => {
+        const newpass = document.getElementById('ChI2Nx_92k3pl-new');
+        const pass = document.getElementById('form_message');
+        console.log('newpass', newpass.innerHTML);
+        if (e !== newpass.value) {
+            pass.style.display = 'flex';
+            setCheckPassRe(true);
+        } else {
+            pass.style.display = 'none';
+            setCheckPassRe(false);
+        }
+    };
+
+    const handleCloseCheckPass = (index) => {
+        const newpass = document.getElementById('form_message-new');
+        const pass = document.getElementById('form_message');
+        if (index === 'new') {
+            newpass.style.display = 'none';
+        } else {
+            pass.style.display = 'none';
+        }
+    };
+
+    const handleConfirmPassword = () => {
+        const newpass = document.getElementById('ChI2Nx_92k3pl-new');
+        const rewritepass = document.getElementById('ChI2Nx_92k3pl-rewrite');
+        const formPass = document.getElementById('ReDGyJ');
+        setNewPassVlaue(newpass.value);
+        setRewritePassValue(rewritepass.value);
+        formPass.style.display = 'none';
+    };
+
+    //email
+
+    const handleCheckEmail = (e) => {
+        const emailTest = document.getElementById('form_message-email');
+
+        const regexExp =
+            /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!regexExp.test(e)) {
+            emailTest.style.display = 'flex';
+        }
+    };
+    const handleCloseCheckEmail = () => {
+        const emailTest = document.getElementById('form_message-email');
+        emailTest.style.display = 'none';
+    };
+
+    //phone
+    const handleCheckPhone = (e) => {
+        const phoneTest = document.getElementById('form_message-phone');
+
+        if (e.length < 10) {
+            phoneTest.style.display = 'flex';
+            phoneTest.innerHTML = 'Độ dài số điện thoại chưa đủ';
+        } else if (e.length > 10) {
+            phoneTest.style.display = 'flex';
+            phoneTest.innerHTML = 'Độ dài số điện thoại lớn hơn 10';
+        }
+    };
+    const handleCloseCheckPhone = () => {
+        const phoneTest = document.getElementById('form_message-phone');
+        phoneTest.style.display = 'none';
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div id="ReDGyJ" className={cx('ReDGyJ')}>
@@ -71,9 +183,10 @@ function SettingAdmin() {
                                                     <input
                                                         className={cx('ChI2Nx_92k3pl')}
                                                         type="password"
-                                                        placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
+                                                        placeholder=" "
                                                         defaultValue={userValue !== '' ? userValue.ND_password : ''}
                                                         // onChange={(e) => setCtyVaule(e.target.value)}
+                                                        disabled
                                                     />
                                                 </div>
                                             </div>
@@ -85,14 +198,16 @@ function SettingAdmin() {
                                                 <div className={cx('u1wAmL')}>
                                                     <div className={cx('vEFwLK_6DXlE9')}>Mật khẩu mới</div>
                                                     <input
-                                                        className={cx('ChI2Nx_92k3pl')}
+                                                        id="ChI2Nx_92k3pl-new"
+                                                        className={cx('ChI2Nx_92k3pl-new')}
                                                         type="password"
                                                         placeholder="Mật khẩu mới"
-                                                        defaultValue={''}
-                                                        // onChange={(e) => setCtyVaule(e.target.value)}
+                                                        defaultValue={newPassVlaue}
+                                                        onBlur={(e) => handleCheckNewPassword(e.target.value)}
+                                                        onFocus={() => handleCloseCheckPass('new')}
                                                     />
                                                 </div>
-                                                <span className={cx('form_message')}>
+                                                <span id="form_message-new" className={cx('form_message-new')}>
                                                     Mật khẩu phải lớn hơn 6 ký tự
                                                 </span>
                                             </div>
@@ -104,14 +219,18 @@ function SettingAdmin() {
                                                 <div className={cx('u1wAmL')}>
                                                     <div className={cx('vEFwLK_6DXlE9')}>Nhập lại mật khẩu</div>
                                                     <input
-                                                        className={cx('ChI2Nx_92k3pl')}
+                                                        id="ChI2Nx_92k3pl-rewrite"
+                                                        className={cx('ChI2Nx_92k3pl-rewrite')}
                                                         type="password"
                                                         placeholder="Nhập lại mật khẩu"
-                                                        defaultValue={''}
-                                                        // onChange={(e) => setCtyVaule(e.target.value)}
+                                                        defaultValue={rewritePassValue}
+                                                        onBlur={(e) => handleCheckPassword(e.target.value)}
+                                                        onFocus={() => handleCloseCheckPass()}
                                                     />
                                                 </div>
-                                                <span className={cx('form_message')}>Mật khẩu không khớp</span>
+                                                <span id="form_message" className={cx('form_message')}>
+                                                    Mật khẩu không khớp
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -126,8 +245,11 @@ function SettingAdmin() {
                                         Trở Lại
                                     </button>
                                     <button
+                                        id="HtW4DS_IJ1jvV"
                                         className={cx('HtW4DS_IJ1jvV')}
-                                        // onClick={() => handleSubmitFormAddress()}
+                                        onClick={() => {
+                                            !checkPass && !checkPassRe && handleConfirmPassword();
+                                        }}
                                     >
                                         Xác nhận
                                     </button>
@@ -178,13 +300,18 @@ function SettingAdmin() {
                                 <div className={cx('input-with-validator-wrapper')}>
                                     <div className={cx('input-with-validator')}>
                                         <input
-                                            type="text"
+                                            type="email"
                                             placeholder=""
                                             maxLength="255"
                                             defaultValue={userValue !== '' ? userValue.ND_email : ''}
                                             onChange={(e) => setEmailValue(e.target.value)}
+                                            onBlur={(e) => handleCheckEmail(e.target.value)}
+                                            onFocus={() => handleCloseCheckEmail()}
                                         />
                                     </div>
+                                    <span id="form_message-email" className={cx('form_message-email')}>
+                                        Email chưa hợp lệ
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -222,8 +349,11 @@ function SettingAdmin() {
                                             placeholder=""
                                             defaultValue={userValue !== '' ? userValue.ND_sdt : ''}
                                             onChange={(e) => setPhoneValue(e.target.value)}
+                                            onBlur={(e) => handleCheckPhone(e.target.value)}
+                                            onFocus={() => handleCloseCheckPhone()}
                                         />
                                     </div>
+                                    <span id="form_message-phone" className={cx('form_message-phone')}></span>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +374,7 @@ function SettingAdmin() {
                         </div>
                     </div>
                     <div className={cx('HqWwZ8')}>
-                        <button type="button" className={cx('btn-solid-primary')}>
+                        <button type="button" className={cx('btn-solid-primary')} onClick={() => handleSubmitUpdate()}>
                             Lưu
                         </button>
                     </div>
