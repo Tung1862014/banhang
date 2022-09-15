@@ -13,6 +13,8 @@ import RemoveCookie from '~/components/Hook/RemoveCookies';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -39,7 +41,19 @@ const MENU_ITEMS = [
 ];
 
 function HeaderAdmin() {
-    //const [imageValue, setImageValue] = useState('');
+    const [userVaule, setUserValue] = useState('');
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/show/account?ND_id=${JSON.parse(GetCookie('admin')).ND_id}`)
+            .then((res) => {
+                console.log(res.data.result);
+                setUserValue(res.data.result);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, []);
 
     const userMenuSeller = [
         {
@@ -65,8 +79,8 @@ function HeaderAdmin() {
                     <div className={cx('action')}>
                         <img
                             src={
-                                JSON.parse(GetCookie('admin')).ND_image !== undefined
-                                    ? JSON.parse(GetCookie('admin')).ND_image
+                                userVaule !== ''
+                                    ? userVaule.ND_image
                                     : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
                             }
                             className={cx('account-avatar')}
@@ -79,7 +93,7 @@ function HeaderAdmin() {
                                     <div>
                                         <h3>
                                             {' '}
-                                            {'Xin chào ' + JSON.parse(GetCookie('admin')).ND_hoten}
+                                            {'Xin chào ' + userVaule.ND_hoten}
                                             <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
                                         </h3>
                                     </div>

@@ -2,11 +2,11 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import GetCookie from '~/components/Hook/GetCookies';
-import styles from './SettingAdmin.module.scss';
+import styles from './SettingSeller.module.scss';
 
 const cx = classNames.bind(styles);
 
-function SettingAdmin() {
+function SettingSeller() {
     const [userValue, setUserValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
@@ -463,4 +463,4 @@ function SettingAdmin() {
     );
 }
 
-export default SettingAdmin;
+export default SettingSeller;

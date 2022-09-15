@@ -246,12 +246,33 @@
 }
 
 .td_table-name-number {
-    width: 100px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.td_table-name-address {
+    width: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.td_table-name-date {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.td_table-name-status {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .td_table-name-sp {
     width: 200px;
     display: flex;

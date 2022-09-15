@@ -27,6 +27,7 @@ import LoginAdmin from '~/pages/LoginAdmin';
 import ManageCustomer from '~/pages/ManageCustomer';
 import ManageSeller from '~/pages/ManageSeller';
 import SettingAdmin from '~/pages/SettingAdmin';
+import SettingSeller from '~/pages/SettingSeller';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -55,6 +56,7 @@ const publicRoutes = [
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
     { path: '/seller/shop/reviews/@:id', component: SellerShopReviews, layout: DefaultLayoutSeller },
+    { path: '/seller/setting/account', component: SettingSeller, layout: DefaultLayoutAdmin },
 ];
 
 const privateRoutes = [];

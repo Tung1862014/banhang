@@ -200,10 +200,10 @@ function Detail({ currentItems, clickPageCheck }) {
                                         />
                                     </td>
                                     <td className={cx('td_table-name')}>Tên người dùng</td>
-                                    <td className={cx('td_table-name-number')}>email</td>
-                                    <td className={cx('td_table-name')}>Địa chỉ</td>
-                                    <td className={cx('td_table-name-number')}>Ngày tham gia</td>
-                                    <td>Trạng thái</td>
+                                    <td className={cx('td_table-name-number')}>Email</td>
+                                    <td className={cx('td_table-name-address')}>Địa chỉ</td>
+                                    <td className={cx('td_table-name-date')}>Ngày tham gia</td>
+                                    <td className={cx('td_table-name-status')}>Trạng thái</td>
                                 </tr>
                                 {currentItems !== ''
                                     ? currentItems.map((pro, index) => (
@@ -229,9 +229,9 @@ function Detail({ currentItems, clickPageCheck }) {
                                                   <span className={cx('name-product-sp')}>{pro.ND_hoten}</span>
                                               </td>
                                               <td className={cx('td_table-name-number')}>{pro.ND_email}</td>
-                                              <td className={cx('td_table-name')}>{pro.ND_diachi}</td>
-                                              <td className={cx('td_table-name-number')}>{takeDate(pro.ND_ngay)}</td>
-                                              <td>
+                                              <td className={cx('td_table-name-address')}>{pro.ND_diachi}</td>
+                                              <td className={cx('td_table-name-date')}>{takeDate(pro.ND_ngay)}</td>
+                                              <td className={cx('td_table-name-status')}>
                                                   <a href={`update/@${pro.ND_id}`} className={cx('btn-update')}>
                                                       {pro.ND_trangthai === 1 ? 'Hoạt động' : 'Hạn chế'}
                                                   </a>

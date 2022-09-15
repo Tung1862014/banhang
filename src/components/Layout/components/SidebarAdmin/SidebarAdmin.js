@@ -12,7 +12,7 @@ import classNames from 'classnames/bind';
 // import MenuItem from './Menu/MenuItem';
 import styles from './SidebarAdmin.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -253,11 +253,13 @@ function SidebarAdmin() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/09759afab8ae066ca5e1630bc19133a1"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faUsers} />
+
                                         <span className={cx('sidebar-menu-item-text')}>Quản lý người dùng</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
@@ -295,11 +297,12 @@ function SidebarAdmin() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/6b1ffcde1ff12621088110f419a5283a"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faUsers} />
                                         <span className={cx('sidebar-menu-item-text')}>Quản lý người bán</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
