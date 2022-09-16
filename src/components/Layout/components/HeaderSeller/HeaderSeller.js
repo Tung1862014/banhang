@@ -6,7 +6,7 @@ import styles from './HeaderSeller.module.scss';
 
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faEarthAsia, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
@@ -18,28 +18,6 @@ import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
-const MENU_ITEMS = [
-    {
-        icon: <FontAwesomeIcon icon={faEarthAsia} />,
-        title: 'English',
-        children: {
-            title: 'Languare',
-            data: [
-                {
-                    code: 'en',
-                    title: 'English',
-                    type: 'language',
-                },
-                {
-                    code: 'vn',
-                    title: 'Tiếng Việt',
-                    type: 'language',
-                },
-            ],
-        },
-    },
-];
-
 function HeaderSeller() {
     //const [imageValue, setImageValue] = useState('');
     const [establish, setEstablished] = useState('');
@@ -47,9 +25,9 @@ function HeaderSeller() {
         {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Thông tin tài khoản',
-            to: `/setting/admin`,
+            href: `/seller/setting/account`,
             separate: true,
-            setting: true,
+            settingsell: true,
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
@@ -62,20 +40,21 @@ function HeaderSeller() {
 
     useEffect(() => {
         axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish/show`, {
-                NB_id: JSON.parse(GetCookie('seller')).ND_id,
-            })
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/seller/show/account?ND_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            )
 
             .then((res) => {
                 console.log(res.data.result);
-                if (establish === '') {
-                    setEstablished(res.data.result);
-                }
+
+                setEstablished(res.data.result);
             })
             .catch(() => {
                 console.log('loi khong the show anh');
             });
-    }, [establish]);
+    }, []);
 
     return (
         <>
@@ -83,7 +62,7 @@ function HeaderSeller() {
                 <div className={cx('inner')}>
                     <div className={cx('action')}>
                         {establish !== '' && establish !== undefined ? (
-                            <img src={establish.MTS_logo} className={cx('account-avatar')} alt="" />
+                            <img src={establish.ND_image} className={cx('account-avatar')} alt="" />
                         ) : (
                             <img
                                 src={
@@ -96,13 +75,13 @@ function HeaderSeller() {
                             />
                         )}
                         {GetCookie('seller') && (
-                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : MENU_ITEMS}>
+                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
                                 {GetCookie('seller') && (
                                     <div>
                                         <h3>
                                             {' '}
                                             {establish !== '' && establish !== undefined
-                                                ? establish.MTS_ten
+                                                ? establish.ND_hoten
                                                 : 'Xin chào ' + JSON.parse(GetCookie('seller')).ND_hoten}
                                             <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
                                         </h3>

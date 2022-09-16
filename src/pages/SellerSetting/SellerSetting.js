@@ -30,76 +30,205 @@ function SellerSetting() {
         DMY = day + '-' + month + '-' + year;
     }
 
+    // function takeDate(date) {
+    //     const dateValue = new Date(date);
+    //     let day = dateValue.getDate();
+    //     let month = dateValue.getMonth() + 1;
+    //     let year = dateValue.getFullYear();
+
+    //     if (month < 10 && day >= 10) {
+    //         return day + '-0' + month + '-' + year;
+    //     } else if (month < 10 && day < 10) {
+    //         return '0' + day + '-0' + month + year;
+    //     } else if (month > 10 && day < 10) {
+    //         return '0' + day + '-' + month + year;
+    //     } else if (month > 10 && day >= 10) {
+    //         return day + '-' + month + year;
+    //     } else {
+    //         return day + '-' + month + '-' + year;
+    //     }
+    // }
+
     // console.log('Date: ' + DMY);
     useEffect(() => {
         axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish/show`, {
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/show`, {
                 NB_id: JSON.parse(GetCookie('seller')).ND_id,
             })
 
             .then((res) => {
-                console.log(res.data.result);
-                if (establish === '') {
-                    setEstablished(res.data.result);
-                }
+                console.log('result', res.data.result);
+                setEstablished(res.data.result);
             })
             .catch(() => {
                 console.log('loi khong the show anh');
             });
-    }, [establish]);
+    }, []);
 
-    function saveFileSellerLogo(imageLogo) {
-        const formDataLogo = new FormData();
-
-        formDataLogo.append('image', imageLogo[0]);
-
-        formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-        if (title === '' && establish !== '' && establish !== undefined) {
+    const handleSubmitSaveShop = () => {
+        console.log('image', image[0]);
+        if (establish === undefined) {
+            const formData = new FormData();
+            formData.append('image', image[0]);
+            formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formData.append('MTS_ten', title);
+            formData.append('MTS_diachi', address);
             axios({
                 method: 'POST',
-                url: `${process.env.REACT_APP_URL_NODEJS}/seller/establish/logo`,
-                data: formDataLogo,
+                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
+                data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             })
                 .then((res) => {
-                    toast.success('Lưu thành công', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
-                })
-                .catch(() => {
-                    toast.error('Lưu thất bại !', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
-                });
-        } else if (title !== '' && establish === undefined) {
-            axios({
-                method: 'POST',
-                url: `${process.env.REACT_APP_URL_NODEJS}/seller/establish/logo`,
-                data: formDataLogo,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((res) => {
-                    if (checkLogo) {
-                        toast.success('Lưu thành công nha', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
+                    console.log(res.data);
+                    const formDataLogo = new FormData();
+                    formDataLogo.append('image', imageLogo[0]);
+                    formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                    axios({
+                        method: 'POST',
+                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+                        data: formDataLogo,
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                        .then((res) => {
+                            console.log(res.data);
+                        })
+                        .catch((err) => {
+                            console.log('loi nha');
                         });
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        } else if (image[0] !== undefined) {
+            const formData = new FormData();
+            formData.append('image', image[0]);
+            formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formData.append('MTS_diachi', address);
+            axios({
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image`,
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    if (imageLogo !== undefined) {
+                        const formDataLogo = new FormData();
+                        formDataLogo.append('image', imageLogo[0]);
+                        formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                        formDataLogo.append('MTS_diachi', '');
+                        axios({
+                            method: 'PUT',
+                            url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
+                            data: formDataLogo,
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        })
+                            .then((res) => {
+                                console.log(res.data);
+                            })
+                            .catch((err) => {
+                                console.log('loi nha');
+                            });
                     }
                 })
-                .catch(() => {
-                    toast.error('Lưu thất bại !', {
-                        position: toast.POSITION.TOP_RIGHT,
-                        className: `${cx('toast-message')}`,
-                    });
+                .catch((err) => {
+                    console.log('loi');
+                });
+        } else if (imageLogo[0] !== undefined) {
+            const formDataLogo = new FormData();
+            formDataLogo.append('image', imageLogo[0]);
+            formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formDataLogo.append('MTS_diachi', address);
+            axios({
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
+                data: formDataLogo,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log('loi nha');
+                });
+        } else if (address !== '') {
+            axios
+                .put(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/address`, {
+                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                    MTS_diachi: address,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log('loi nha');
                 });
         }
-    }
+    };
+
+    // function saveFileSellerLogo(imageLogo) {
+    //     const formDataLogo = new FormData();
+
+    //     formDataLogo.append('image', imageLogo[0]);
+
+    //     formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+    //     if (title === '' && establish !== '' && establish !== undefined) {
+    //         axios({
+    //             method: 'POST',
+    //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+    //             data: formDataLogo,
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data',
+    //             },
+    //         })
+    //             .then((res) => {
+    //                 toast.success('Lưu thành công', {
+    //                     position: toast.POSITION.TOP_RIGHT,
+    //                     className: `${cx('toast-message')}`,
+    //                 });
+    //             })
+    //             .catch(() => {
+    //                 toast.error('Lưu thất bại !', {
+    //                     position: toast.POSITION.TOP_RIGHT,
+    //                     className: `${cx('toast-message')}`,
+    //                 });
+    //             });
+    //     } else if (title !== '' && establish === undefined) {
+    //         axios({
+    //             method: 'POST',
+    //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+    //             data: formDataLogo,
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data',
+    //             },
+    //         })
+    //             .then((res) => {
+    //                 if (checkLogo) {
+    //                     toast.success('Lưu thành công nha', {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         className: `${cx('toast-message')}`,
+    //                     });
+    //                 }
+    //             })
+    //             .catch(() => {
+    //                 toast.error('Lưu thất bại !', {
+    //                     position: toast.POSITION.TOP_RIGHT,
+    //                     className: `${cx('toast-message')}`,
+    //                 });
+    //             });
+    //     }
+    // }
 
     function ChooseImg(e) {
         const chooseFile = document.getElementById('choose-file');
@@ -135,166 +264,166 @@ function SellerSetting() {
             setImageLogo(e.target.files);
         }
     }
-    function saveFileSeller(title, image, imageLogo, address) {
-        console.log('thoong tin: ' + title, image, address);
-        const formData = new FormData();
-        console.log(image);
-        if (image !== '') {
-            formData.append('image', image[0]);
-            formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-            formData.append('MTS_ten', title);
-            formData.append('MTS_diachi', address);
-            if (title === '' && establish !== '' && establish !== undefined) {
-                axios({
-                    method: 'POST',
-                    url: `${process.env.REACT_APP_URL_NODEJS}/seller/establish/image`,
-                    data: formData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                    .then((res) => {
-                        console.log(res.data);
-                        if (res.data.seller === false) {
-                            //alert('Tên đăng nhập đã tồn tại!');
-                            toast.error('Lưu thất bại', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else {
-                            //alert('Đăng ký thành công');
-                            if (imageLogo !== '') {
-                            } else {
-                                toast.success('Lưu thành công', {
-                                    position: toast.POSITION.TOP_RIGHT,
-                                    className: `${cx('toast-message')}`,
-                                });
-                            }
-                        }
-                    })
-                    .catch((err) => {
-                        toast.error('Lưu thất bại !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    });
-            } else if (title !== '' && establish === undefined) {
-                axios({
-                    method: 'POST',
-                    url: `${process.env.REACT_APP_URL_NODEJS}/seller/establish/image`,
-                    data: formData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                    .then((res) => {
-                        console.log(res.data);
-                        if (res.data.exist === true) {
-                            setCheckLogo(false);
-                            toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else if (res.data.seller === true) {
-                            //alert('Tên đăng nhập đã tồn tại!');
-                            toast.error('Lưu thất bại', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else {
-                            //alert('Đăng ký thành công');
+    // function saveFileSeller(title, image, imageLogo, address) {
+    //     console.log('thoong tin: ' + title, image, address);
+    //     const formData = new FormData();
+    //     console.log(image);
+    //     if (image !== '') {
+    //         formData.append('image', image[0]);
+    //         formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
+    //         formData.append('MTS_ten', title);
+    //         formData.append('MTS_diachi', address);
+    //         if (title === '' && establish !== '' && establish !== undefined) {
+    //             axios({
+    //                 method: 'POST',
+    //                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/image`,
+    //                 data: formData,
+    //                 headers: {
+    //                     'Content-Type': 'multipart/form-data',
+    //                 },
+    //             })
+    //                 .then((res) => {
+    //                     console.log(res.data);
+    //                     if (res.data.seller === false) {
+    //                         //alert('Tên đăng nhập đã tồn tại!');
+    //                         toast.error('Lưu thất bại', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else {
+    //                         //alert('Đăng ký thành công');
+    //                         if (imageLogo !== '') {
+    //                         } else {
+    //                             toast.success('Lưu thành công', {
+    //                                 position: toast.POSITION.TOP_RIGHT,
+    //                                 className: `${cx('toast-message')}`,
+    //                             });
+    //                         }
+    //                     }
+    //                 })
+    //                 .catch((err) => {
+    //                     toast.error('Lưu thất bại !', {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         className: `${cx('toast-message')}`,
+    //                     });
+    //                 });
+    //         } else if (title !== '' && establish === undefined) {
+    //             axios({
+    //                 method: 'POST',
+    //                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/image`,
+    //                 data: formData,
+    //                 headers: {
+    //                     'Content-Type': 'multipart/form-data',
+    //                 },
+    //             })
+    //                 .then((res) => {
+    //                     console.log(res.data);
+    //                     if (res.data.exist === true) {
+    //                         setCheckLogo(false);
+    //                         toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else if (res.data.seller === true) {
+    //                         //alert('Tên đăng nhập đã tồn tại!');
+    //                         toast.error('Lưu thất bại', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else {
+    //                         //alert('Đăng ký thành công');
 
-                            if (imageLogo !== '') {
-                            } else {
-                                toast.success('Lưu thành công', {
-                                    position: toast.POSITION.TOP_RIGHT,
-                                    className: `${cx('toast-message')}`,
-                                });
-                            }
-                        }
-                    })
-                    .catch((err) => {
-                        toast.error('Lưu thất bại !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    });
-            } else {
-                toast.error('Tên Shop Không được bỏ trống !', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    className: `${cx('toast-message')}`,
-                });
-            }
-        }
-        if (imageLogo === '') {
-            if (title === '' && establish !== '' && establish !== undefined) {
-                axios
-                    .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish`, {
-                        NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                        MTS_ten: title,
-                        MTS_diachi: address,
-                    })
-                    .then((res) => {
-                        if (res.data.seller === true) {
-                            toast.success('Lưu thành công', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else {
-                            toast.error('Lưu thất bại !', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        toast.error('Lưu thất bại !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    });
-            } else if (title !== '' && establish === undefined) {
-                axios
-                    .post(`${process.env.REACT_APP_URL_NODEJS}/seller/establish`, {
-                        NB_id: JSON.parse(GetCookie('seller')).NB_id,
-                        MTS_ten: title,
-                        MTS_diachi: address,
-                    })
-                    .then((res) => {
-                        if (res.data.exist === true) {
-                            toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else if (res.data.seller === true) {
-                            toast.success('Lưu thành công', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        } else {
-                            toast.error('Thiết lập thất bại!', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                className: `${cx('toast-message')}`,
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        toast.error('Lưu thất bại !', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    });
-            } else {
-                toast.error('Tên Shop Không được bỏ trống !', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    className: `${cx('toast-message')}`,
-                });
-            }
-        } else if (imageLogo !== '') {
-            setCheckLogo(true);
-            setTimeout(() => saveFileSellerLogo(imageLogo), 500);
-        }
-    }
+    //                         if (imageLogo !== '') {
+    //                         } else {
+    //                             toast.success('Lưu thành công', {
+    //                                 position: toast.POSITION.TOP_RIGHT,
+    //                                 className: `${cx('toast-message')}`,
+    //                             });
+    //                         }
+    //                     }
+    //                 })
+    //                 .catch((err) => {
+    //                     toast.error('Lưu thất bại !', {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         className: `${cx('toast-message')}`,
+    //                     });
+    //                 });
+    //         } else {
+    //             toast.error('Tên Shop Không được bỏ trống !', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //                 className: `${cx('toast-message')}`,
+    //             });
+    //         }
+    //     }
+    //     if (imageLogo === '') {
+    //         if (title === '' && establish !== '' && establish !== undefined) {
+    //             axios
+    //                 .post(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish`, {
+    //                     NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //                     MTS_ten: title,
+    //                     MTS_diachi: address,
+    //                 })
+    //                 .then((res) => {
+    //                     if (res.data.seller === true) {
+    //                         toast.success('Lưu thành công', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else {
+    //                         toast.error('Lưu thất bại !', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     }
+    //                 })
+    //                 .catch((err) => {
+    //                     toast.error('Lưu thất bại !', {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         className: `${cx('toast-message')}`,
+    //                     });
+    //                 });
+    //         } else if (title !== '' && establish === undefined) {
+    //             axios
+    //                 .post(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish`, {
+    //                     NB_id: JSON.parse(GetCookie('seller')).NB_id,
+    //                     MTS_ten: title,
+    //                     MTS_diachi: address,
+    //                 })
+    //                 .then((res) => {
+    //                     if (res.data.exist === true) {
+    //                         toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else if (res.data.seller === true) {
+    //                         toast.success('Lưu thành công', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     } else {
+    //                         toast.error('Thiết lập thất bại!', {
+    //                             position: toast.POSITION.TOP_RIGHT,
+    //                             className: `${cx('toast-message')}`,
+    //                         });
+    //                     }
+    //                 })
+    //                 .catch((err) => {
+    //                     toast.error('Lưu thất bại !', {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         className: `${cx('toast-message')}`,
+    //                     });
+    //                 });
+    //         } else {
+    //             toast.error('Tên Shop Không được bỏ trống !', {
+    //                 position: toast.POSITION.TOP_RIGHT,
+    //                 className: `${cx('toast-message')}`,
+    //             });
+    //         }
+    //     } else if (imageLogo !== '') {
+    //         setCheckLogo(true);
+    //         setTimeout(() => saveFileSellerLogo(imageLogo), 500);
+    //     }
+    // }
 
     return (
         <div className={cx('wrapper')}>
@@ -405,13 +534,13 @@ function SellerSetting() {
                     </div>
                 </div>
             </div>
-            <div className={cx('btn-submit-update')}>
-                <Button primary onClick={() => saveFileSeller(title, image, imageLogo, address)}>
-                    Lưu
-                </Button>
+            <div className={cx('btn-submit-update')} onClick={handleSubmitSaveShop}>
+                <Button primary>Lưu</Button>
             </div>
             <ToastContainer />
         </div>
+
+        // onClick={() => saveFileSeller(title, image, imageLogo, address)}
     );
 }
 

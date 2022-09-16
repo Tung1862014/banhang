@@ -27,7 +27,11 @@ function SettingSeller() {
 
     useEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/show/account?ND_id=${JSON.parse(GetCookie('admin')).ND_id}`)
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/seller/show/account?ND_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            )
             .then((res) => {
                 console.log(res.data.result);
                 setUserValue(res.data.result);
@@ -42,7 +46,7 @@ function SettingSeller() {
         if (imageValue[0] !== undefined) {
             const formData = new FormData();
             formData.append('image', imageValue[0]);
-            formData.append('ND_id', JSON.parse(GetCookie('admin')).ND_id);
+            formData.append('ND_id', JSON.parse(GetCookie('seller')).ND_id);
             formData.append('ND_hoten', nameValue);
             formData.append('ND_password', newPassVlaue);
             formData.append('ND_email', emailValue);
@@ -51,7 +55,7 @@ function SettingSeller() {
 
             axios({
                 method: 'PUT',
-                url: `${process.env.REACT_APP_URL_NODEJS}/admin/update/account/image`,
+                url: `${process.env.REACT_APP_URL_NODEJS}/seller/update/account/image`,
                 data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -66,8 +70,8 @@ function SettingSeller() {
                 });
         } else {
             axios
-                .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/account`, {
-                    ND_id: JSON.parse(GetCookie('admin')).ND_id,
+                .put(`${process.env.REACT_APP_URL_NODEJS}/seller/update/account`, {
+                    ND_id: JSON.parse(GetCookie('seller')).ND_id,
                     ND_hoten: nameValue,
                     ND_email: emailValue,
                     ND_password: newPassVlaue,
@@ -76,7 +80,7 @@ function SettingSeller() {
                 })
                 .then((res) => {
                     console.log(res.data);
-                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1);
+                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting/account`, '_self', 1);
                 })
                 .catch((err) => {
                     console.log('loi');

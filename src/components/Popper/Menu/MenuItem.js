@@ -29,6 +29,10 @@ function MenuItem({ data, onClick }) {
                 <Button className={classes} leftIcon={data.icon} to={data.to} onClick={onClick}>
                     {data.title}
                 </Button>
+            ) : data.settingsell ? (
+                <Button className={classes} leftIcon={data.icon} href={data.href} onClick={onClick}>
+                    {data.title}
+                </Button>
             ) : (
                 <Button className={classes} leftIcon={data.icon} to={data.to} onClick={onClick}>
                     {data.title}

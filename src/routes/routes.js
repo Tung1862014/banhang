@@ -56,7 +56,7 @@ const publicRoutes = [
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
     { path: '/seller/shop/reviews/@:id', component: SellerShopReviews, layout: DefaultLayoutSeller },
-    { path: '/seller/setting/account', component: SettingSeller, layout: DefaultLayoutAdmin },
+    { path: '/seller/setting/account', component: SettingSeller, layout: DefaultLayoutSeller },
 ];
 
 const privateRoutes = [];
