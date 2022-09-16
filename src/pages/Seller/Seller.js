@@ -80,22 +80,22 @@ function Seller() {
         axios
             .get(`${activeTurnover}`)
             .then((res) => {
-                console.log(res.data.result);
+                console.log('chart', res.data.results);
                 let chartListDate = [];
                 let chartListNumber = [];
                 let chartListTurnover = [];
-                for (let i = 0; i < res.data.length; i++) {
-                    let DateChart = new Date(res.data[i].TK_ngay);
-                    let day = DateChart.getDate();
-                    let month = DateChart.getMonth() + 1;
-                    let year = DateChart.getFullYear();
-                    chartListDate = [...chartListDate, day + '-' + month + '-' + year];
-                    chartListNumber = [...chartListNumber, res.data[i].TK_soluong];
-                    chartListTurnover = [...chartListTurnover, res.data[i].TK_doanhthu];
-                }
+                // for (let i = 0; i < res.data.length; i++) {
+                //     let DateChart = new Date(res.data[i].TK_ngay);
+                //     let day = DateChart.getDate();
+                //     let month = DateChart.getMonth() + 1;
+                //     let year = DateChart.getFullYear();
+                //     chartListDate = [...chartListDate, day + '-' + month + '-' + year];
+                //     chartListNumber = [...chartListNumber, res.data[i].TK_soluong];
+                //     chartListTurnover = [...chartListTurnover, res.data[i].TK_doanhthu];
+                // }
                 handleChart(chartListDate, chartListNumber, chartListTurnover);
                 //setChartListData(() => [...chartListDate]);
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch(() => {
                 console.log('loi chart');
