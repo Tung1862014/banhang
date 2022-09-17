@@ -121,25 +121,29 @@ function Detail() {
 
     //mua hang
     function handleAddToCart() {
-        setCheckAddOfCart(true);
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(22);
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/productdetail/add/product/customer`, {
-                ND_id: JSON.parse(GetCookie('usrin')).ND_id,
-                NB_id: product.NB_id,
-                TTDH_soluong: numberValue,
-                SP_id: resultId,
-            })
-            .then((res) => {
-                //console.log(res.data);
-                setTimeout(() => {
-                    setCheckAddOfCart(false);
-                }, 1200);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
+        if (GetCookie('usrin') !== undefined) {
+            setCheckAddOfCart(true);
+            const pathId = window.location.pathname.toString();
+            const resultId = pathId.slice(22);
+            axios
+                .post(`${process.env.REACT_APP_URL_NODEJS}/productdetail/add/product/customer`, {
+                    ND_id: JSON.parse(GetCookie('usrin')).ND_id,
+                    NB_id: product.NB_id,
+                    TTDH_soluong: numberValue,
+                    SP_id: resultId,
+                })
+                .then((res) => {
+                    //console.log(res.data);
+                    setTimeout(() => {
+                        setCheckAddOfCart(false);
+                    }, 1200);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        } else {
+            console.log('Đăng nhập để tiến hành thao tác này!');
+        }
     }
     return (
         <div className={cx('wrapper')}>
@@ -420,7 +424,7 @@ function Detail() {
                             <div className={cx('_2N2_VN')}>MÔ TẢ SẢN PHẨM</div>
                             <div className={cx('_2jz573')}>
                                 <div className={cx('_1MqcWX')}>
-                                    <p className={cx('_2jrvqA')}>{product !== '' ? product.MTSP_noidung : ''}</p>
+                                    <p className={cx('_2jrvqA')}>{product !== '' ? product.SP_mota : ''}</p>
                                 </div>
                             </div>
                         </div>

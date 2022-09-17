@@ -34,7 +34,7 @@ const Shop = () => {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/productshop/shop/show?NB_id=${resultId}`)
             .then((res) => {
-                //console.log(res.data);
+                console.log(res.data);
                 setShopValue(res.data.results);
                 setNumProduct(res.data.numproduct.numproduct);
                 setEvaluate(res.data.evaluate.evaluate);
@@ -55,7 +55,7 @@ const Shop = () => {
                     `${process.env.REACT_APP_URL_NODEJS}/productshop/shop/product/show/all?NB_id=${resultId}&DM_id=${chooseCategory}&sort=${sortValue}&price=${priceSortValue}`,
                 )
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     setProductValue(res.data.results);
                 })
                 .catch((err) => {
@@ -70,12 +70,16 @@ const Shop = () => {
         let month = dateValue.getMonth() + 1;
         let year = dateValue.getFullYear();
 
-        if (month < 10) {
-            return +day + '-0' + month + '-' + year;
-        } else if (day < 10) {
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month > 10 && day < 10) {
             return '0' + day + '-' + month + year;
+        } else if (month > 10 && day >= 10) {
+            return day + '-' + month + year;
         } else {
-            return +day + '-' + month + '-' + year;
+            return day + '-' + month + '-' + year;
         }
     }
 
@@ -230,7 +234,7 @@ const Shop = () => {
                                     </h1>
                                     <div className={cx('section-seller-overview-horizontal__portrait-status')}>
                                         <div className={cx('section-seller-overview-horizontal__active-time')}>
-                                            Tham gia: {shopValue !== '' ? takeDate(shopValue.NB_ngay) : ''}
+                                            Tham gia: {shopValue !== '' ? takeDate(shopValue.ND_ngay) : ''}
                                         </div>
                                     </div>
                                 </div>

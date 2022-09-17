@@ -25,7 +25,7 @@ function Detail({ productValue }) {
             {productValue !== ''
                 ? productValue.map((prod, index) => (
                       <div key={index} className={cx('shop-search-result-view__item-col-xs-2-4')}>
-                          <a data-sqe="link" href="/detail/product/nameid11" className={cx('dd')}>
+                          <a data-sqe="link" href={`/detail/product/nameid${prod.SP_id}`} className={cx('dd')}>
                               <div className={cx('_3DGyGY')}>
                                   <div className={cx('_3ZU4Xu')}>
                                       <div className={cx('nHUlre_2CaWwM')}>

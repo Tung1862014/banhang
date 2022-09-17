@@ -80,10 +80,11 @@ function Seller() {
         axios
             .get(`${activeTurnover}`)
             .then((res) => {
-                console.log('chart', res.data.results);
-                let chartListDate = [];
-                let chartListNumber = [];
-                let chartListTurnover = [];
+                // console.log('chart', res.data.results);
+                console.log('chart', res.data);
+                let chartListDate = res.data.arr;
+                let chartListNumber = res.data.numbers;
+                let chartListTurnover = res.data.turnovers;
                 // for (let i = 0; i < res.data.length; i++) {
                 //     let DateChart = new Date(res.data[i].TK_ngay);
                 //     let day = DateChart.getDate();
