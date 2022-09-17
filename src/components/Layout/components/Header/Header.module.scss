@@ -166,4 +166,15 @@
         cursor: pointer;
     }
     // Toastify
+
+    //link seller
+    .link-seller {
+        position: absolute;
+        color: rgb(221, 34, 34) !important;
+        cursor: pointer;
+
+        &:hover {
+            color: #222 !important;
+        }
+    }
 }

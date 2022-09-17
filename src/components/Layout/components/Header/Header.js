@@ -8,7 +8,7 @@ import Search from '../Search';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { CartIcon, InboxIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import { useState, useEffect } from 'react';
@@ -54,7 +54,8 @@ function Header() {
     const [signUpAvtice, setSingUpAvtice] = useState(false);
     const [signUpAvticeSeller, setSingUpAvticeSeller] = useState(false);
     const [loginResult, setLoginResult] = useState([]);
-    const [userGoogle, setUserGoogle] = useState(null);
+    //const [userGoogle, setUserGoogle] = useState(null);
+    const [userValue, setUserValue] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [sumNumber, setSumNumber] = useState('');
@@ -67,27 +68,27 @@ function Header() {
     //localStorage.removeItem('product');
     // localStorage.setItem('product', JSON.stringify(siginList));
 
-    const getUser = async () => {
-        try {
-            const url = `${process.env.REACT_APP_URL_NODEJS}/auth/login/success`;
-            const { data } = await axios.get(url, { withCredentials: true });
-            console.log('gmail: ' + JSON.stringify(data.user));
-            RemoveCookie('logout');
-            SetCookie('logout', JSON.stringify(data.user));
-            setUserGoogle(data.user);
-        } catch (err) {
-            console.log(err);
-            RemoveCookie('err');
-            SetCookie('err', JSON.stringify(err));
-        }
-    };
-    useEffect(() => {
-        if (GetCookie('err')) {
-            RemoveCookie('logout');
-        } else {
-            getUser();
-        }
-    }, []);
+    // const getUser = async () => {
+    //     try {
+    //         const url = `${process.env.REACT_APP_URL_NODEJS}/auth/login/success`;
+    //         const { data } = await axios.get(url, { withCredentials: true });
+    //         console.log('gmail: ' + JSON.stringify(data.user));
+    //         RemoveCookie('logout');
+    //         SetCookie('logout', JSON.stringify(data.user));
+    //         setUserGoogle(data.user);
+    //     } catch (err) {
+    //         console.log(err);
+    //         RemoveCookie('err');
+    //         SetCookie('err', JSON.stringify(err));
+    //     }
+    // };
+    // useEffect(() => {
+    //     if (GetCookie('err')) {
+    //         RemoveCookie('logout');
+    //     } else {
+    //         getUser();
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (GetCookie('usrin') !== undefined) {
@@ -107,14 +108,32 @@ function Header() {
         }
     }, []);
 
+    useEffect(() => {
+        if (GetCookie('usrin') !== undefined) {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/customer/show/account?ND_id=${
+                        JSON.parse(GetCookie('usrin')).ND_id
+                    }`,
+                )
+                .then((res) => {
+                    console.log('resultHeader', res.data.result);
+                    setUserValue(res.data.result);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [loginResult]);
+
     const userMenu = [
         // ...MENU_ITEMS,
         {
             icon: <FontAwesomeIcon icon={faGear} />,
-            title: 'Setting',
-            to: `/user/setting`,
+            title: 'Thông tin tài khoản',
+            href: `/user/setting/account`,
             separate: true,
-            setting: true,
+            settingsell: true,
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
@@ -125,26 +144,26 @@ function Header() {
         },
     ];
 
-    const userMenuSeller = [
-        {
-            icon: <FontAwesomeIcon icon={faSignOut} />,
-            title: 'Log out',
-            href: process.env.REACT_APP_URL_FRONTEND,
-            separate: true,
-            onclick: () => RemoveCookie('seller'),
-        },
-    ];
+    // const userMenuSeller = [
+    //     {
+    //         icon: <FontAwesomeIcon icon={faSignOut} />,
+    //         title: 'Log out',
+    //         href: process.env.REACT_APP_URL_FRONTEND,
+    //         separate: true,
+    //         onclick: () => RemoveCookie('seller'),
+    //     },
+    // ];
 
-    const userMenuLogout = [
-        // ...MENU_ITEMS,
-        {
-            icon: <FontAwesomeIcon icon={faSignOut} />,
-            title: 'Log out',
-            href: process.env.REACT_APP_URL,
-            separate: true,
-            logoutuse: true,
-        },
-    ];
+    // const userMenuLogout = [
+    //     // ...MENU_ITEMS,
+    //     {
+    //         icon: <FontAwesomeIcon icon={faSignOut} />,
+    //         title: 'Log out',
+    //         href: process.env.REACT_APP_URL,
+    //         separate: true,
+    //         logoutuse: true,
+    //     },
+    // ];
 
     const handleCloseLogin = useCallback(() => {
         setLoginAvtice((prev) => !prev);
@@ -244,8 +263,9 @@ function Header() {
             .then((res) => {
                 //console.log('data: ' + JSON.stringify(res.data.result.image));
                 // handle success
+                console.log('data', res.data);
                 if (seller) {
-                    if (res.data.result && res.data.result.ND_password === pass) {
+                    if (res.data.account && res.data.pass) {
                         RemoveCookie('seller');
                         SetCookie('seller', JSON.stringify(res.data.result));
                         //alert('Đăng nhập thành công');
@@ -257,45 +277,50 @@ function Header() {
                             position: toast.POSITION.TOP_RIGHT,
                         });
                         window.open('http://localhost:3000/seller', '_self', 1);
-                    } else if (res.data.result === undefined) {
+                    } else if (!res.data.account) {
                         //alert('Tài khoản không tồn tại');
                         //const lastname = `${cx('toast-message')}`;
                         //setLoading(false);
+                        // console.log('account', res.data.account);
                         toast.error('Tài khoản không tồn tại', {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-toastify-message')}`,
                         });
-                    } else if (res.data.result.ND_password !== pass) {
+                    } else if (!res.data.pass) {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
+                        // console.log('pass', res.data.pass);
                         toast.error('Mật khẩu không đúng', {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });
                     }
                 } else {
-                    if (res.data.result && res.data.result.ND_password === pass) {
+                    if (res.data.account && res.data.pass) {
                         RemoveCookie('usrin');
                         SetCookie('usrin', JSON.stringify(res.data.result));
                         //alert('Đăng nhập thành công');
                         setLoginResult([...loginResult, res.data.result]);
                         //setLoading(false);
+                        // console.log('loginResult', res.data.result);
                         // const action = addNumberProduct(res.data.result);
                         // dispatchSignIn(action);
                         toast.success('Đăng nhập thành công', {
                             position: toast.POSITION.TOP_RIGHT,
                         });
-                    } else if (res.data.result === undefined) {
+                    } else if (!res.data.account) {
                         //alert('Tài khoản không tồn tại');
                         //const lastname = `${cx('toast-message')}`;
                         //setLoading(false);
+                        // console.log('account', res.data.account);
                         toast.error('Tài khoản không tồn tại!', {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-toastify-message')}`,
                         });
-                    } else if (res.data.result.ND_password !== pass) {
+                    } else if (!res.data.pass) {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
+                        // console.log('pass', res.data.pass);
                         toast.error('Mật khẩu không đúng', {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
@@ -415,92 +440,101 @@ function Header() {
     return (
         <>
             <header className={cx('wrapper')}>
-                <div className={cx('inner')}>
-                    {/* <div className={cx('logo')}>
-                        <iframe
-                            className={cx('video-logo')}
-                            src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
-                            title="YouTube video player"
-                            frameBorder="0"
-                            autoPlay={true}
-                            muted
-                            loop={true}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        ></iframe>
-                    </div> */}
-                    {GetCookie('seller') === undefined && <Search />}
-                    <div className={cx('action')}>
-                        {GetCookie('seller') === undefined && (
-                            <>
-                                <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                                    <Link to="/cart" className={cx('action-btn-cart')}>
-                                        <CartIcon className={cx('cart-icon')} />
-                                        <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
-                                    </Link>
-                                </Tippy>
-                                <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
-                                    <Link to="/history/purchase" className={cx('action-btn')}>
-                                        <InboxIcon className={cx('inbox-icon')} />
-                                    </Link>
-                                </Tippy>
-                            </>
-                        )}
-                        {GetCookie('usrin') !== undefined ||
-                        GetCookie('logout') ||
-                        GetCookie('seller') !== undefined ? (
-                            <></>
-                        ) : (
-                            <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
-                                Log in
-                            </Button>
-                        )}
-                        {GetCookie('usrin') && (
-                            <Menu items={GetCookie('usrin') !== undefined ? userMenu : ''}>
-                                {GetCookie('usrin') && (
+                <div>
+                    <div className={cx('inner')}>
+                        {/* <div className={cx('logo')}>
+                            <iframe
+                                className={cx('video-logo')}
+                                src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
+                                title="YouTube video player"
+                                frameBorder="0"
+                                autoPlay={true}
+                                muted
+                                loop={true}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            ></iframe>
+                        </div> */}
+                        {<Search />}
+                        <div className={cx('action')}>
+                            {
+                                <>
+                                    <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
+                                        <Link to="/cart" className={cx('action-btn-cart')}>
+                                            <CartIcon className={cx('cart-icon')} />
+                                            <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
+                                        </Link>
+                                    </Tippy>
+                                    <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
+                                        <Link to="/history/purchase" className={cx('action-btn')}>
+                                            <InboxIcon className={cx('inbox-icon')} />
+                                        </Link>
+                                    </Tippy>
+                                </>
+                            }
+                            {GetCookie('usrin') !== undefined ? (
+                                <></>
+                            ) : (
+                                <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
+                                    Log in
+                                </Button>
+                            )}
+
+                            {GetCookie('usrin') && (
+                                <Menu items={GetCookie('usrin') !== undefined ? userMenu : ''}>
+                                    {GetCookie('usrin') && (
+                                        <div>
+                                            <Image
+                                                className={cx('user-avatar')}
+                                                src={
+                                                    userValue !== ''
+                                                        ? userValue.ND_image
+                                                        : process.env.REACT_APP_URL_IMAGE_AVATAR
+                                                }
+                                                alt=""
+                                                fallback={process.env.REACT_APP_URL_IMAGE_AVATAR}
+                                            />
+                                        </div>
+                                    )}
+                                </Menu>
+                            )}
+                            {/* {GetCookie('seller') && (
+                                <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
+                                    {GetCookie('seller') && (
+                                        <div>
+                                            <h3>
+                                                Xin chào {JSON.parse(GetCookie('seller')).ND_hoten}
+                                                <FontAwesomeIcon icon={faCaretDown} />
+                                            </h3>
+                                        </div>
+                                    )}
+                                </Menu>
+                            )} */}
+                            {/* {GetCookie('logout') && userGoogle && (
+                                <Menu items={GetCookie('logout') ? userMenuLogout : ''}>
                                     <div>
                                         <Image
                                             className={cx('user-avatar')}
                                             src={
-                                                JSON.parse(GetCookie('usrin')).ND_image ||
-                                                process.env.REACT_APP_URL_IMAGE_AVATAR
+                                                GetCookie('logout') !== undefined
+                                                    ? JSON.parse(GetCookie('logout')).photos[0].value
+                                                    : ''
                                             }
-                                            alt=""
-                                            fallback={process.env.REACT_APP_URL_IMAGE_AVATAR}
+                                            alt="loi"
+                                            fallback="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/ea0854578085ab26effc2c7b8cefa270~c5_100x100.jpeg?x-expires=1652616000&x-signature=VLKoVcGNZpXSs6RZfWAFzzHsM2c%3D"
                                         />
                                     </div>
-                                )}
-                            </Menu>
-                        )}
-                        {GetCookie('seller') && (
-                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
-                                {GetCookie('seller') && (
-                                    <div>
-                                        <h3>
-                                            Xin chào {JSON.parse(GetCookie('seller')).ND_hoten}
-                                            <FontAwesomeIcon icon={faCaretDown} />
-                                        </h3>
-                                    </div>
-                                )}
-                            </Menu>
-                        )}
-                        {GetCookie('logout') && userGoogle && (
-                            <Menu items={GetCookie('logout') ? userMenuLogout : ''}>
-                                <div>
-                                    <Image
-                                        className={cx('user-avatar')}
-                                        src={
-                                            GetCookie('logout') !== undefined
-                                                ? JSON.parse(GetCookie('logout')).photos[0].value
-                                                : ''
-                                        }
-                                        alt="loi"
-                                        fallback="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/ea0854578085ab26effc2c7b8cefa270~c5_100x100.jpeg?x-expires=1652616000&x-signature=VLKoVcGNZpXSs6RZfWAFzzHsM2c%3D"
-                                    />
-                                </div>
-                            </Menu>
-                        )}
+                                </Menu>
+                            )} */}
+                        </div>
                     </div>
+                    {GetCookie('seller') !== undefined ? (
+                        <Link to="/seller" className={cx('link-seller')}>
+                            Kênh người bán
+                        </Link>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </header>
             {loginAvtice === true && GetCookie('usrin') == null && (

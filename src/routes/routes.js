@@ -37,7 +37,7 @@ const publicRoutes = [
     { path: '/shop/name=:id', component: Shop, layout: HeaderOnly },
     { path: '/cart/order', component: Order, layout: HeaderOnly },
     { path: '/detail/product/nameid:id', component: Detail, layout: HeaderOnly },
-    { path: '/user/setting', component: Setting },
+    { path: '/user/setting/account', component: Setting, layout: HeaderOnly },
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
     { path: '/cart', component: Cart, layout: HeaderOnly },

@@ -28,7 +28,7 @@
 }
 
 .stardust-tabs-header-wrapper {
-    top: 1rem;
+    top: -1px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
     margin-top: 1rem;
     background-color: #fff;
@@ -36,6 +36,7 @@
     width: 100%;
     display: block;
     line-height: 1.2;
+    z-index: 2;
 }
 
 .stardust-tabs-header {
@@ -148,6 +149,10 @@
     box-sizing: border-box;
     display: block;
     visibility: visible;
+
+    &:hover {
+        margin-top: 5px;
+    }
 }
 
 .yZLQT4 {
