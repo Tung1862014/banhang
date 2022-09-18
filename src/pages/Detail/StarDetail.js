@@ -1,6 +1,7 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+
 import styles from './Detail.module.scss';
 
 const cx = classNames.bind(styles);
@@ -13,12 +14,23 @@ function StarDetail({ evaluation }) {
         let year = dateValue.getFullYear();
         let hour = dateValue.getHours();
         let minute = dateValue.getMinutes();
-        if (month < 10) {
-            return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
-        } else if (day < 10) {
+        // if (month < 10) {
+        //     return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
+        // } else if (day < 10) {
+        //     return hour + ':' + minute + ', 0' + day + '-' + month + year;
+        // } else {
+        //     return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
+        // }
+        if (month < 10 && day >= 10) {
+            return hour + ':' + minute + ',' + day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return hour + ':' + minute + ', 0' + day + '-0' + month + year;
+        } else if (month > 10 && day < 10) {
             return hour + ':' + minute + ', 0' + day + '-' + month + year;
+        } else if (month > 10 && day >= 10) {
+            return hour + ':' + minute + ',' + day + '-' + month + year;
         } else {
-            return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
+            return hour + ':' + minute + ',' + day + '-' + month + '-' + year;
         }
     }
 
@@ -87,9 +99,16 @@ function StarDetail({ evaluation }) {
                                   </div>
                               </div>
                               <div className={cx('detail-product-rating__time')}>{takeDate(evalue.DG_ngayDG)}</div>
-                              <div className={cx('detail-product-rating__tags')}>
-                                  <span>{evalue.DG_mota || ''}</span>
-                              </div>
+                              <div className={cx('_280jKz')}>{evalue.DG_mota || ''}</div>
+
+                              {evalue.DG_traloi !== '' ? (
+                                  <div className={cx('_3lF5CE')}>
+                                      <div className={cx('_1rc11Y')}>phản hồi của Người Bán</div>
+                                      <div className={cx('_2w33Zs')}>{evalue.DG_traloi || ''}</div>
+                                  </div>
+                              ) : (
+                                  ''
+                              )}
                           </div>
                       </div>
                   ))

@@ -64,6 +64,8 @@ function SellerBill() {
             handlerClickAll();
         } else if (resultId === 'confirm') {
             handlerClickAllConfirm();
+        } else if (resultId === 'confirmed') {
+            handlerClickAllConfirmed();
         } else if (resultId === 'delivered') {
             handlerClickAllDelivered();
         } else {

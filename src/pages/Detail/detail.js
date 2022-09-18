@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './Detail.module.scss';
 import StarDetailPage from './StarDetailPage';
 import GetCookie from '~/components/Hook/GetCookies';
+import { toast, ToastContainer } from 'react-toastify';
 // import { useDispatch } from 'react-redux';
 // import { addNumberProduct } from '~/actions/NumberProduct';
 const cx = classNames.bind(styles);
@@ -143,6 +144,10 @@ function Detail() {
                 });
         } else {
             console.log('Đăng nhập để tiến hành thao tác này!');
+            toast.error('Bạn cần đăng nhập người dùng để tiến hành thao tác này!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
         }
     }
     return (
@@ -424,7 +429,10 @@ function Detail() {
                             <div className={cx('_2N2_VN')}>MÔ TẢ SẢN PHẨM</div>
                             <div className={cx('_2jz573')}>
                                 <div className={cx('_1MqcWX')}>
-                                    <p className={cx('_2jrvqA')}>{product !== '' ? product.SP_mota : ''}</p>
+                                    <div
+                                        className={cx('_2jrvqA')}
+                                        dangerouslySetInnerHTML={{ __html: product !== '' ? `${product.SP_mota}` : '' }}
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -549,6 +557,7 @@ function Detail() {
                     {/* / */}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

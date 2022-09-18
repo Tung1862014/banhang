@@ -59,7 +59,7 @@ function Order() {
         for (let i = 0; i < orderValue.length; i++) {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
                 sellerArr.push(orderValue[i].NB_id);
-                sellerName.push(orderValue[i].seller.NB_hoten);
+                sellerName.push(orderValue[i].seller.ND_hoten);
             }
 
             sumnumber += 1;

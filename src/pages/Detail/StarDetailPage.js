@@ -31,11 +31,11 @@ function StarDetailPage({ data }) {
                 <StarDetail evaluation={currentItems} />
                 <ReactPaginate
                     breakLabel="..."
-                    nextLabel="Trang kế >"
+                    nextLabel=">>"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={1}
                     pageCount={pageCount}
-                    previousLabel="< Trang trước"
+                    previousLabel="<<"
                     renderOnZeroPageCount={null}
                     containerClassName={cx('pagination')}
                     pageLinkClassName={cx('page-num')}

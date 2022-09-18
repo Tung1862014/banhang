@@ -100,7 +100,7 @@ function Header() {
                 )
                 .then((res) => {
                     console.log(res.data);
-                    setSumNumber(res.data.results.length + 1);
+                    setSumNumber(res.data.results.length);
                 })
                 .catch((err) => {
                     console.log('loi');
