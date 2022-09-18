@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from '~/components/Button';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerSetting.module.scss';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
@@ -15,39 +15,40 @@ function SellerSetting() {
     // const [field, setField] = useState('');
     const [address, setAddress] = useState('');
     const [establish, setEstablished] = useState('');
-    const [checkLogo, setCheckLogo] = useState(false);
+    const [dateValue, setDateValue] = useState('');
+    //const [checkLogo, setCheckLogo] = useState(false);
 
-    const dateValue = new Date(JSON.parse(GetCookie('seller')).ND_ngay);
-    let day = dateValue.getDate();
-    let month = dateValue.getMonth() + 1;
-    let year = dateValue.getFullYear();
-    let DMY = '';
-    if (month < 10) {
-        DMY = day + '-0' + month + '-' + year;
-    } else if (day < 10) {
-        DMY = day + '-' + month + '-0' + year;
-    } else {
-        DMY = day + '-' + month + '-' + year;
-    }
-
-    // function takeDate(date) {
-    //     const dateValue = new Date(date);
-    //     let day = dateValue.getDate();
-    //     let month = dateValue.getMonth() + 1;
-    //     let year = dateValue.getFullYear();
-
-    //     if (month < 10 && day >= 10) {
-    //         return day + '-0' + month + '-' + year;
-    //     } else if (month < 10 && day < 10) {
-    //         return '0' + day + '-0' + month + year;
-    //     } else if (month > 10 && day < 10) {
-    //         return '0' + day + '-' + month + year;
-    //     } else if (month > 10 && day >= 10) {
-    //         return day + '-' + month + year;
-    //     } else {
-    //         return day + '-' + month + '-' + year;
-    //     }
+    // const dateValue = new Date(JSON.parse(GetCookie('seller')).ND_ngay);
+    // let day = dateValue.getDate();
+    // let month = dateValue.getMonth() + 1;
+    // let year = dateValue.getFullYear();
+    // let DMY = '';
+    // if (month < 10) {
+    //     DMY = day + '-0' + month + '-' + year;
+    // } else if (day < 10) {
+    //     DMY = day + '-' + month + '-0' + year;
+    // } else {
+    //     DMY = day + '-' + month + '-' + year;
     // }
+
+    function takeDate(date) {
+        const datevalue = new Date(date);
+        let day = datevalue.getDate();
+        let month = datevalue.getMonth() + 1;
+        let year = datevalue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month > 10 && day < 10) {
+            return '0' + day + '-' + month + year;
+        } else if (month > 10 && day >= 10) {
+            return day + '-' + month + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
+    }
 
     // console.log('Date: ' + DMY);
     useEffect(() => {
@@ -57,8 +58,9 @@ function SellerSetting() {
             })
 
             .then((res) => {
-                console.log('result', res.data.result);
+                console.log('result', res.data);
                 setEstablished(res.data.result);
+                setDateValue(res.data.user);
             })
             .catch(() => {
                 console.log('loi khong the show anh');
@@ -464,7 +466,7 @@ function SellerSetting() {
                                 {establish !== undefined ? establish.MTS_ten : ''}
                             </div>{' '}
                             <div data-v-455a73b3="" className={cx('join-time')}>
-                                Đã tham gia {DMY}
+                                Đã tham gia {takeDate(dateValue !== '' ? dateValue.ND_ngay : '')}
                             </div>{' '}
                         </div>
                     </div>

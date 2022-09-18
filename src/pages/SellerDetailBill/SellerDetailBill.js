@@ -31,7 +31,7 @@ function SellerDetailBill() {
             })
 
             .then((res) => {
-                console.log(res.data.result);
+                console.log('result', res.data.result);
                 setInformation(res.data.result);
                 // setBill(res.data.result);
                 // setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
@@ -155,7 +155,7 @@ function SellerDetailBill() {
                                               <div className={cx('name-detail')}>ID Đơn hàng</div>
                                           </div>{' '}
                                           <div className={cx('body-detail')}>
-                                              <div>22080492QKCNVA{info.DH_id}</div>
+                                              <div>{info.DH_id}</div>
                                           </div>
                                       </div>{' '}
                                   </div>
@@ -175,11 +175,12 @@ function SellerDetailBill() {
                                               {info.product[0].ND_hoten}, {info.product[0].ND_sdt}
                                           </div>{' '}
                                           <div className={cx('ship-address')}>
-                                              {info.DH_diachi}, Quận {info.DH_quan}, TP. {info.DH_thanhpho}
+                                              {info.DH_diachi}
+                                              {/* , Quận {info.DH_quan}, TP. {info.DH_thanhpho} */}
                                           </div>
                                       </div>
                                   </div>
-                                  <div className={cx('section')}>
+                                  {/* <div className={cx('section')}>
                                       <div className={cx('header-detail')}>
                                           <div className={cx('icon-detail')}>
                                               <i className={cx('order-detail-title-icon')}>
@@ -219,7 +220,7 @@ function SellerDetailBill() {
                                           </div>{' '}
                                           <span className={cx('image-desc')}>Total 1 products</span>
                                       </div>
-                                  </div>
+                                  </div> */}
                                   <div className={cx('section')}>
                                       <div className={cx('header-detail')}>
                                           <div className={cx('icon-detail')}>
@@ -239,8 +240,10 @@ function SellerDetailBill() {
                                               {info.DH_trangthai === 1
                                                   ? 'Chờ xác nhận'
                                                   : info.DH_trangthai === 2
-                                                  ? 'Đã giao'
+                                                  ? 'Đã xác nhận'
                                                   : info.DH_trangthai === 3
+                                                  ? 'Đã giao'
+                                                  : info.DH_trangthai === 4
                                                   ? 'Đã hủy'
                                                   : '...'}
                                           </div>{' '}
@@ -407,12 +410,12 @@ function SellerDetailBill() {
                                                       </div>{' '}
                                                       <div className={cx('income-item-subtotal')}>
                                                           <div className={cx('income-value')}>
-                                                              ₫{formatCash(info.DH_phivanchuyen) || 0}
+                                                              ₫{formatCash(info.DH_tongtien) || 0}
                                                           </div>
                                                       </div>{' '}
                                                       <div className={cx('income-item-income-subtotal')}>
                                                           <div className={cx('income-value-big-total')}>
-                                                              ₫{formatCash(info.DH_tongtien + info.DH_phivanchuyen)}
+                                                              ₫{formatCash(info.DH_tongtien + info.DH_tongtien)}
                                                           </div>
                                                       </div>
                                                   </div>
@@ -428,7 +431,7 @@ function SellerDetailBill() {
                                       <span className={cx('shopee-add-title')}>Chuẩn bị đơn hàng</span>
                                   </button>
                               </div>
-                          ) : info.DH_trangthai !== 3 ? (
+                          ) : info.DH_trangthai === 2 ? (
                               <div className={cx('grid-right')}>
                                   <a
                                       href={`http://localhost:3000/seller/bill/detail/print/@${info.DH_id}`}

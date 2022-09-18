@@ -56,10 +56,14 @@ function SellerPrintBill() {
             let day = dateValue.getDate();
             let month = dateValue.getMonth() + 1;
             let year = dateValue.getFullYear();
-            if (month < 10) {
+            if (month < 10 && day >= 10) {
                 setDMY(day + '-0' + month + '-' + year);
-            } else if (day < 10) {
+            } else if (month < 10 && day < 10) {
+                setDMY('0' + day + '-0' + month + year);
+            } else if (month > 10 && day < 10) {
                 setDMY('0' + day + '-' + month + year);
+            } else if (month > 10 && day >= 10) {
+                setDMY(day + '-' + month + year);
             } else {
                 setDMY(day + '-' + month + '-' + year);
             }
@@ -133,7 +137,7 @@ function SellerPrintBill() {
                                     <div className={cx('money-user-details')}>
                                         <div className={cx('money-title')}>Tiền thu người nhận</div>
                                         <div className={cx('money-content')}>
-                                            {formatCash(print.DH_tongtien + print.DH_phivanchuyen)} VND
+                                            {formatCash(print.DH_tongtien + print.DH_tongtien)} VND
                                         </div>
                                     </div>
                                     <div className={cx('signature-user')}>
