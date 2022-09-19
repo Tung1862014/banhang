@@ -199,7 +199,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                             onChange={() => handleCheckAll()}
                                         />
                                     </td>
-                                    <td className={cx('td_table-name')}>Tên người dùng</td>
+                                    <td className={cx('td_table-name')}>Tên người bán</td>
                                     <td className={cx('td_table-name-number')}>Email</td>
                                     <td className={cx('td_table-name-address')}>Địa chỉ</td>
                                     <td className={cx('td_table-name-date')}>Ngày tham gia</td>

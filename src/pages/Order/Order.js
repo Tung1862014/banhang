@@ -1,4 +1,4 @@
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
@@ -12,7 +12,7 @@ function Order() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
-    const [sumNumber, setSumNumber] = useState('');
+    //const [sumNumber, setSumNumber] = useState('');
     const [price, setPrice] = useState('');
     const [userVaule, setUserVaule] = useState('');
     const [ctyVaule, setCtyVaule] = useState('');
@@ -53,7 +53,7 @@ function Order() {
     useEffect(() => {
         let sellerArr = [];
         let sellerName = [];
-        let sumnumber = 0;
+        //let sumnumber = 0;
         let price = 0;
 
         for (let i = 0; i < orderValue.length; i++) {
@@ -62,7 +62,7 @@ function Order() {
                 sellerName.push(orderValue[i].seller.ND_hoten);
             }
 
-            sumnumber += 1;
+            //sumnumber += 1;
             price +=
                 orderValue[i].product.SP_gia *
                 orderValue[i].TTDH_soluong *
@@ -80,7 +80,7 @@ function Order() {
             });
         }
 
-        setSumNumber(sumnumber);
+        //setSumNumber(sumnumber);
         setPrice(price);
     }, [orderValue]);
 
@@ -185,6 +185,42 @@ function Order() {
         }
     };
 
+    const handleOrderCustomer = () => {
+        axios
+            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
+                method: 'get',
+                headers: {
+                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                },
+            })
+            .then((res) => {
+                console.log('res', res.data.data);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    };
+
+    const handleOpenFormIcon = () => {
+        const iconDown = document.getElementById('Izrgn0');
+        const iconUp = document.getElementById('Izrgn1');
+        const formAddress = document.getElementById('H8sVZh');
+
+        iconDown.style.display = 'none';
+        iconUp.style.display = 'flex';
+        formAddress.style.display = 'flex';
+    };
+
+    const handleCloseFormIcon = () => {
+        const iconDown = document.getElementById('Izrgn0');
+        const iconUp = document.getElementById('Izrgn1');
+        const formAddress = document.getElementById('H8sVZh');
+
+        iconDown.style.display = 'flex';
+        iconUp.style.display = 'none';
+        formAddress.style.display = 'none';
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div id="ReDGyJ" className={cx('ReDGyJ')}>
@@ -212,7 +248,41 @@ function Order() {
                                                                     : ''
                                                             }
                                                             onChange={(e) => setCtyVaule(e.target.value)}
+                                                            onFocus={() => handleOpenFormIcon()}
                                                         />
+                                                        <FontAwesomeIcon
+                                                            id="Izrgn0"
+                                                            className={cx('Izrgn0')}
+                                                            icon={faSortDown}
+                                                        />
+                                                        <FontAwesomeIcon
+                                                            id="Izrgn1"
+                                                            className={cx('Izrgn1')}
+                                                            icon={faSortUp}
+                                                            onClick={() => handleCloseFormIcon()}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div id="H8sVZh" className={cx('H8sVZh')}>
+                                                    <div className={cx('qtcuwq')}>
+                                                        <div id="_1E8NDO1" className={cx('_1E8NDO1')}>
+                                                            Tỉnh/Thành phố
+                                                        </div>
+                                                        <div id="_1E8NDO2" className={cx('_1E8NDO2')}>
+                                                            Quận/Huyện
+                                                        </div>
+                                                        <div id="_1E8NDO3" className={cx('_1E8NDO3')}>
+                                                            Phường/ Xã
+                                                        </div>
+                                                    </div>
+                                                    <div id="aox-Gc1" className={cx('aox-Gc1')}>
+                                                        <div className={cx('Pcd7He')}>An Giang1</div>
+                                                    </div>
+                                                    <div id="aox-Gc2" className={cx('aox-Gc2')}>
+                                                        <div className={cx('Pcd7He')}>An Giang2</div>
+                                                    </div>
+                                                    <div id="aox-Gc3" className={cx('aox-Gc3')}>
+                                                        <div className={cx('Pcd7He')}>An Giang3</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -462,7 +532,9 @@ function Order() {
                         <div className={cx('lhwDvd_Exv9ow_A4gPS6')}>Tổng thanh toán:</div>
                         <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>₫{price !== '' ? formatCash(price) : ''}</div>
                         <div className={cx('Ql2fz0')}>
-                            <button className={cx('stardust-button--large_gG-FcK')}>Đặt hàng</button>
+                            <button className={cx('stardust-button--large_gG-FcK')} onClick={handleOrderCustomer}>
+                                Đặt hàng
+                            </button>
                         </div>
                     </div>
                 </div>

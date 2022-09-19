@@ -163,7 +163,7 @@ function ManageSeller() {
                         <div data-v-3cbfdb84="" className={cx('title-box')}>
                             <div data-v-3cbfdb84="" className={cx('page-title-box')}>
                                 <div data-v-3cbfdb84="" className={cx('page-title')}>
-                                    {number !== '' && limits !== '' ? number + limits : '0'} Người dùng
+                                    {number !== '' && limits !== '' ? number + limits : '0'} Người bán
                                 </div>{' '}
                             </div>
                         </div>
