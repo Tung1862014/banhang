@@ -23,17 +23,13 @@ function Order() {
     const [wardValue, setWardValue] = useState('');
 
     ////////////////////////////////////////////////////
-    const [provinceID, setProvinceID] = useState('217');
-    const [districtID, setDistrictID] = useState('1757');
+    const [provinceID, setProvinceID] = useState('');
+    const [districtID, setDistrictID] = useState('');
 
     //show user
     useEffect(() => {
         axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/orderproduct/user/show?ND_id=${
-                    JSON.parse(GetCookie('usrin')).ND_id
-                }`,
-            )
+            .get(`${process.env.REACT_APP_URL_NODEJS}/order/user/show?ND_id=${JSON.parse(GetCookie('usrin')).ND_id}`)
             .then((res) => {
                 console.log('data', res.data);
                 setUserVaule(res.data.results);
@@ -146,10 +142,10 @@ function Order() {
         if (ctyVaule === '' && addressVaule === '') {
         } else {
             axios
-                .put(`${process.env.REACT_APP_URL_NODEJS}/orderproduct/update/address`, {
+                .put(`${process.env.REACT_APP_URL_NODEJS}/order/update/address`, {
                     ND_id: JSON.parse(GetCookie('usrin')).ND_id,
-                    ND_ttqhpx: ctyVaule,
-                    ND_diachigiaohang: addressVaule,
+                    ND_diachiGH: ctyVaule,
+                    ND_chitiet: addressVaule,
                 })
                 .then((res) => {
                     if (res.data.update) {
@@ -211,6 +207,7 @@ function Order() {
         //     });
     };
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //take data City
     useEffect(() => {
         axios
@@ -275,16 +272,47 @@ function Order() {
         iconDown.style.display = 'none';
         iconUp.style.display = 'flex';
         formAddress.style.display = 'flex';
+        if (userVaule !== undefined && userVaule.ND_diachiGH !== undefined) {
+            const inputValue = document.getElementById('ChI2Nx_92k3pl');
+
+            inputValue.defaultValue = ctyVaule;
+        }
     };
 
-    const handleCloseFormIcon = () => {
-        const iconDown = document.getElementById('Izrgn0');
-        const iconUp = document.getElementById('Izrgn1');
-        const formAddress = document.getElementById('H8sVZh');
+    const handleCloseFormIcon = (pxValue) => {
+        if (pxValue !== undefined) {
+            const iconDown = document.getElementById('Izrgn0');
+            const iconUp = document.getElementById('Izrgn1');
+            const formAddress = document.getElementById('H8sVZh');
 
-        iconDown.style.display = 'flex';
-        iconUp.style.display = 'none';
-        formAddress.style.display = 'none';
+            iconDown.style.display = 'flex';
+            iconUp.style.display = 'none';
+            formAddress.style.display = 'none';
+            if (ctyVaule.split(',')[1] === undefined) {
+                setCtyVaule(ctyVaule + ',' + pxValue);
+            } else {
+                let arr = ctyVaule.split(',');
+                arr[2] = pxValue;
+                setCtyVaule(arr.join(','));
+            }
+        } else {
+            const iconDown = document.getElementById('Izrgn0');
+            const iconUp = document.getElementById('Izrgn1');
+            const formAddress = document.getElementById('H8sVZh');
+
+            iconDown.style.display = 'flex';
+            iconUp.style.display = 'none';
+            formAddress.style.display = 'none';
+
+            if (ctyVaule === '' && userVaule.ND_diachiGH !== undefined) {
+                const inputValue = document.getElementById('ChI2Nx_92k3pl');
+
+                inputValue.defaultValue =
+                    ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                        ? userVaule.ND_diachiGH
+                        : ctyVaule;
+            }
+        }
     };
 
     //form click city
@@ -307,7 +335,7 @@ function Order() {
         districtValue.style.display = 'none';
         wardValue.style.display = 'none';
     };
-
+    //form click district
     const handleClickDistrict = (ProvinceID, ctValue) => {
         if (ProvinceID !== undefined) {
             const inputCity = document.getElementById('_1E8NDO1');
@@ -349,9 +377,9 @@ function Order() {
             wardValue.style.display = 'none';
         }
     };
-
-    const handleClickWard = (DistrictID) => {
-        if (DistrictID !== undefined) {
+    //form click ward
+    const handleClickWard = (DistrictID, qhValue) => {
+        if (DistrictID !== undefined && ctyVaule !== '') {
             const inputCity = document.getElementById('_1E8NDO1');
             const inputDistrict = document.getElementById('_1E8NDO2');
             const inputWard = document.getElementById('_1E8NDO3');
@@ -370,7 +398,32 @@ function Order() {
             districtValue.style.display = 'none';
             wardValue.style.display = 'inline-block';
             setDistrictID(DistrictID);
-        } else {
+
+            if (ctyVaule !== '' && ctyVaule.split(',')[1] === undefined) {
+                setCtyVaule(ctyVaule + ',' + qhValue);
+            } else if (ctyVaule !== '') {
+                let arr = ctyVaule.split(',');
+                arr[1] = qhValue;
+                setCtyVaule(arr.join(','));
+            }
+        } else if (ctyVaule !== '') {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#161823';
+            inputWard.style.color = '#ee4d2d';
+
+            destinationBrick.style.transform = 'translate(200%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'none';
+            wardValue.style.display = 'inline-block';
         }
     };
 
@@ -392,12 +445,15 @@ function Order() {
                                                             Phường/Xã, Quận/Huyện,Tỉnh/ Thành phố
                                                         </div>
                                                         <input
+                                                            id="ChI2Nx_92k3pl"
                                                             className={cx('ChI2Nx_92k3pl')}
                                                             type="text"
                                                             placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
                                                             defaultValue={
-                                                                userVaule !== '' && userVaule.ND_ttqhpx !== undefined
-                                                                    ? userVaule.ND_ttqhpx
+                                                                ctyVaule === '' &&
+                                                                userVaule !== '' &&
+                                                                userVaule.ND_diachiGH !== undefined
+                                                                    ? userVaule.ND_diachiGH
                                                                     : ctyVaule
                                                             }
                                                             onChange={(e) => setCtyVaule(e.target.value)}
@@ -429,14 +485,18 @@ function Order() {
                                                         <div
                                                             id="_1E8NDO2"
                                                             className={cx('_1E8NDO2')}
-                                                            onClick={() => handleClickDistrict()}
+                                                            onClick={() => ctyVaule !== '' && handleClickDistrict()}
                                                         >
                                                             Quận/Huyện
                                                         </div>
                                                         <div
                                                             id="_1E8NDO3"
                                                             className={cx('_1E8NDO3')}
-                                                            onClick={() => handleClickWard()}
+                                                            onClick={() =>
+                                                                ctyVaule !== '' &&
+                                                                ctyVaule.split(',')[1] !== undefined &&
+                                                                handleClickWard()
+                                                            }
                                                         >
                                                             Phường/ Xã
                                                         </div>
@@ -446,6 +506,7 @@ function Order() {
                                                         {cityValue !== ''
                                                             ? cityValue.map((city, index) => (
                                                                   <div
+                                                                      key={index}
                                                                       className={cx('Pcd7He')}
                                                                       onClick={() =>
                                                                           handleClickDistrict(
@@ -463,9 +524,13 @@ function Order() {
                                                         {districtValue !== ''
                                                             ? districtValue.map((district, index) => (
                                                                   <div
+                                                                      key={index}
                                                                       className={cx('Pcd7He')}
                                                                       onClick={() =>
-                                                                          handleClickWard(district.DistrictID)
+                                                                          handleClickWard(
+                                                                              district.DistrictID,
+                                                                              district.DistrictName,
+                                                                          )
                                                                       }
                                                                   >
                                                                       {district.DistrictName}
@@ -476,7 +541,13 @@ function Order() {
                                                     <div id="aox-Gc3" className={cx('aox-Gc3')}>
                                                         {wardValue !== ''
                                                             ? wardValue.map((ward, index) => (
-                                                                  <div className={cx('Pcd7He')}>{ward.WardName}</div>
+                                                                  <div
+                                                                      key={index}
+                                                                      className={cx('Pcd7He')}
+                                                                      onClick={() => handleCloseFormIcon(ward.WardName)}
+                                                                  >
+                                                                      {ward.WardName}
+                                                                  </div>
                                                               ))
                                                             : ''}
                                                     </div>
@@ -492,8 +563,8 @@ function Order() {
                                                             className={cx('gRsrLD')}
                                                             placeholder="Địa chỉ cụ thể"
                                                             defaultValue={
-                                                                userVaule !== '' && userVaule.ND_diachigiaohang !== ''
-                                                                    ? userVaule.ND_diachigiaohang
+                                                                userVaule !== '' && userVaule.ND_chitiet !== ''
+                                                                    ? userVaule.ND_chitiet
                                                                     : ''
                                                             }
                                                             onChange={(e) => setAddressVaule(e.target.value)}
@@ -635,8 +706,8 @@ function Order() {
                                     </div>
                                     <div className={cx('iXqine')}>
                                         {userVaule !== ''
-                                            ? userVaule.ND_diachigiaohang !== ''
-                                                ? userVaule.ND_diachigiaohang + ',' + userVaule.ND_ttqhpx
+                                            ? userVaule.ND_diachiGH !== ''
+                                                ? userVaule.ND_chitiet + ',' + userVaule.ND_diachiGH
                                                 : handleShowFormAddress()
                                             : ''}
                                     </div>
