@@ -17,7 +17,16 @@ function Order() {
     const [userVaule, setUserVaule] = useState('');
     const [ctyVaule, setCtyVaule] = useState('');
     const [addressVaule, setAddressVaule] = useState('');
+    //const [sumNumber, setSumNumber] = useState('');
+    const [cityValue, setCityValue] = useState('');
+    const [districtValue, setDistrictValue] = useState('');
+    const [wardValue, setWardValue] = useState('');
 
+    ////////////////////////////////////////////////////
+    const [provinceID, setProvinceID] = useState('217');
+    const [districtID, setDistrictID] = useState('1757');
+
+    //show user
     useEffect(() => {
         axios
             .get(
@@ -34,6 +43,7 @@ function Order() {
             });
     }, []);
 
+    //show order
     useEffect(() => {
         axios
             .get(
@@ -186,6 +196,23 @@ function Order() {
     };
 
     const handleOrderCustomer = () => {
+        // axios
+        //     .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
+        //         method: 'get',
+        //         headers: {
+        //             token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+        //         },
+        //     })
+        //     .then((res) => {
+        //         console.log('res', res.data.data);
+        //     })
+        //     .catch((err) => {
+        //         console.log('loi');
+        //     });
+    };
+
+    //take data City
+    useEffect(() => {
         axios
             .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
                 method: 'get',
@@ -195,11 +222,50 @@ function Order() {
             })
             .then((res) => {
                 console.log('res', res.data.data);
+                setCityValue(res.data.data);
             })
             .catch((err) => {
                 console.log('loi');
             });
-    };
+    }, []);
+
+    //take data district
+    useEffect(() => {
+        axios
+            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceID}`, {
+                method: 'get',
+                headers: {
+                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                },
+            })
+            .then((res) => {
+                console.log('res', res.data.data);
+                setDistrictValue(res.data.data);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, [provinceID]);
+
+    //take data ward
+    useEffect(() => {
+        axios
+            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtID}`, {
+                method: 'get',
+                headers: {
+                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                },
+            })
+            .then((res) => {
+                console.log('res', res.data.data);
+                setWardValue(res.data.data);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, [districtID]);
+
+    //open/close form
 
     const handleOpenFormIcon = () => {
         const iconDown = document.getElementById('Izrgn0');
@@ -219,6 +285,93 @@ function Order() {
         iconDown.style.display = 'flex';
         iconUp.style.display = 'none';
         formAddress.style.display = 'none';
+    };
+
+    //form click city
+    const handleClickCity = () => {
+        const inputCity = document.getElementById('_1E8NDO1');
+        const inputDistrict = document.getElementById('_1E8NDO2');
+        const inputWard = document.getElementById('_1E8NDO3');
+        const cityValue = document.getElementById('aox-Gc1');
+        const districtValue = document.getElementById('aox-Gc2');
+        const wardValue = document.getElementById('aox-Gc3');
+
+        const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+        inputCity.style.color = '#ee4d2d';
+        inputDistrict.style.color = '#161823';
+        inputWard.style.color = '#161823';
+
+        destinationBrick.style.transform = 'translate(0%, 0px)';
+        cityValue.style.display = 'inline-block';
+        districtValue.style.display = 'none';
+        wardValue.style.display = 'none';
+    };
+
+    const handleClickDistrict = (ProvinceID, ctValue) => {
+        if (ProvinceID !== undefined) {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#ee4d2d';
+            inputWard.style.color = '#161823';
+
+            destinationBrick.style.transform = 'translate(100%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'inline-block';
+            wardValue.style.display = 'none';
+            setProvinceID(ProvinceID);
+            setCtyVaule(ctValue);
+        } else {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#ee4d2d';
+            inputWard.style.color = '#161823';
+
+            destinationBrick.style.transform = 'translate(100%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'inline-block';
+            wardValue.style.display = 'none';
+        }
+    };
+
+    const handleClickWard = (DistrictID) => {
+        if (DistrictID !== undefined) {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#161823';
+            inputWard.style.color = '#ee4d2d';
+
+            destinationBrick.style.transform = 'translate(200%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'none';
+            wardValue.style.display = 'inline-block';
+            setDistrictID(DistrictID);
+        } else {
+        }
     };
 
     return (
@@ -243,9 +396,9 @@ function Order() {
                                                             type="text"
                                                             placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
                                                             defaultValue={
-                                                                userVaule !== '' && userVaule.ND_ttqhpx !== ''
+                                                                userVaule !== '' && userVaule.ND_ttqhpx !== undefined
                                                                     ? userVaule.ND_ttqhpx
-                                                                    : ''
+                                                                    : ctyVaule
                                                             }
                                                             onChange={(e) => setCtyVaule(e.target.value)}
                                                             onFocus={() => handleOpenFormIcon()}
@@ -254,6 +407,7 @@ function Order() {
                                                             id="Izrgn0"
                                                             className={cx('Izrgn0')}
                                                             icon={faSortDown}
+                                                            onClick={() => handleOpenFormIcon()}
                                                         />
                                                         <FontAwesomeIcon
                                                             id="Izrgn1"
@@ -265,24 +419,66 @@ function Order() {
                                                 </div>
                                                 <div id="H8sVZh" className={cx('H8sVZh')}>
                                                     <div className={cx('qtcuwq')}>
-                                                        <div id="_1E8NDO1" className={cx('_1E8NDO1')}>
+                                                        <div
+                                                            id="_1E8NDO1"
+                                                            className={cx('_1E8NDO1')}
+                                                            onClick={() => handleClickCity()}
+                                                        >
                                                             Tỉnh/Thành phố
                                                         </div>
-                                                        <div id="_1E8NDO2" className={cx('_1E8NDO2')}>
+                                                        <div
+                                                            id="_1E8NDO2"
+                                                            className={cx('_1E8NDO2')}
+                                                            onClick={() => handleClickDistrict()}
+                                                        >
                                                             Quận/Huyện
                                                         </div>
-                                                        <div id="_1E8NDO3" className={cx('_1E8NDO3')}>
+                                                        <div
+                                                            id="_1E8NDO3"
+                                                            className={cx('_1E8NDO3')}
+                                                            onClick={() => handleClickWard()}
+                                                        >
                                                             Phường/ Xã
                                                         </div>
                                                     </div>
+                                                    <div id="_0Eu0W2_LqeTPG" className={cx('_0Eu0W2_LqeTPG')}></div>
                                                     <div id="aox-Gc1" className={cx('aox-Gc1')}>
-                                                        <div className={cx('Pcd7He')}>An Giang1</div>
+                                                        {cityValue !== ''
+                                                            ? cityValue.map((city, index) => (
+                                                                  <div
+                                                                      className={cx('Pcd7He')}
+                                                                      onClick={() =>
+                                                                          handleClickDistrict(
+                                                                              city.ProvinceID,
+                                                                              city.ProvinceName,
+                                                                          )
+                                                                      }
+                                                                  >
+                                                                      {city.ProvinceName}
+                                                                  </div>
+                                                              ))
+                                                            : ''}
                                                     </div>
                                                     <div id="aox-Gc2" className={cx('aox-Gc2')}>
-                                                        <div className={cx('Pcd7He')}>An Giang2</div>
+                                                        {districtValue !== ''
+                                                            ? districtValue.map((district, index) => (
+                                                                  <div
+                                                                      className={cx('Pcd7He')}
+                                                                      onClick={() =>
+                                                                          handleClickWard(district.DistrictID)
+                                                                      }
+                                                                  >
+                                                                      {district.DistrictName}
+                                                                  </div>
+                                                              ))
+                                                            : ''}
                                                     </div>
                                                     <div id="aox-Gc3" className={cx('aox-Gc3')}>
-                                                        <div className={cx('Pcd7He')}>An Giang3</div>
+                                                        {wardValue !== ''
+                                                            ? wardValue.map((ward, index) => (
+                                                                  <div className={cx('Pcd7He')}>{ward.WardName}</div>
+                                                              ))
+                                                            : ''}
                                                     </div>
                                                 </div>
                                             </div>
