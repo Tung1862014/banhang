@@ -77,7 +77,7 @@ function Order() {
                 orderValue[i].TTDH_soluong *
                 ((100 - orderValue[i].product.SP_khuyenmai) / 100);
         }
-        console.log('sellerArr', sellerArr);
+        //console.log('sellerArr', sellerArr);
         if (sellerArr.length > 0) {
             setSellerValue((prev) => {
                 const newSeller = [...prev, sellerArr];
@@ -109,19 +109,19 @@ function Order() {
 
     const handleSumProduct = (sell) => {
         let numbers = 0;
-        console.log('sell', sell);
+        //console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
                 numbers += 1;
             }
         }
-        console.log('index', numbers);
+        //console.log('index', numbers);
         return numbers;
     };
 
     const handlePriceSeller = (sell, index) => {
         let price = 0;
-        console.log('sell', sell);
+        //console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
                 price +=
@@ -130,7 +130,7 @@ function Order() {
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
         }
-        console.log('index', price);
+        //console.log('index', price);
         return price + serviceFee[index];
     };
 
@@ -144,8 +144,8 @@ function Order() {
     };
 
     const handleSubmitFormAddress = () => {
-        console.log('cty', ctyVaule);
-        console.log('address', addressVaule);
+        //console.log('cty', ctyVaule);
+        //console.log('address', addressVaule);
         if (ctyVaule === '' && addressVaule === '') {
         } else {
             axios
@@ -199,87 +199,115 @@ function Order() {
     };
 
     const handleOrderCustomer = () => {
-        axios
-            .post(
-                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+        // axios
+        //     .post(
+        //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
 
-                { offset: 0, limit: 50, client_phone: '' },
-                {
-                    headers: {
-                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                    },
-                },
-            )
-            .then((res) => {
-                // console.log('res', res.data.data.shops);
-                // console.log('huyen xa', districtID, wardID);
-                for (let i = 0; i < res.data.data.shops.length; i++) {
-                    if (res.data.data.shops[i].name === sellerName[i]) {
-                        console.log('res', res.data.data.shops[i].name);
-                        axios
-                            .post(
-                                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-                                {
-                                    payment_type_id: 2,
-                                    shop_id: 'Polo123',
-                                    note: 'Tintest 123',
-                                    required_note: 'KHONGCHOXEMHANG',
-                                    return_phone: '0332190158',
-                                    return_address: '39 NTT',
-                                    return_district_id: null,
-                                    return_ward_code: '',
-                                    client_order_code: '',
-                                    to_name: 'TinTest124',
-                                    to_phone: '0987654321',
-                                    to_address: '72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam',
-                                    to_ward_code: wardID.toString(),
-                                    to_district_id: districtID,
-                                    cod_amount: 200000,
-                                    content: null,
-                                    weight: 200,
-                                    length: 1,
-                                    width: 19,
-                                    height: 10,
-                                    pick_station_id: null,
-                                    insurance_value: 0,
-                                    service_id: 53321,
-                                    service_type_id: 2,
-                                    coupon: null,
-                                    pick_shift: [2],
-                                    Items: [
-                                        {
-                                            name: 'Khô Cá Lóc',
-                                            code: 'Polo123',
-                                            quantity: 1,
-                                            price: 200000,
-                                            length: 12,
-                                            width: 12,
-                                            height: 12,
-                                            category: {
-                                                level1: 'Khô',
-                                            },
-                                        },
-                                    ],
-                                },
-                                {
-                                    headers: {
-                                        Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                                        ShopId: res.data.data.shops[i]._id,
-                                    },
-                                },
-                            )
-                            .then((res) => {
-                                console.log('DH', res.data.data);
-                            })
-                            .catch((err) => {
-                                console.log('loi DH');
-                            });
-                    }
-                }
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
+        //         { offset: 0, limit: 50, client_phone: '' },
+        //         {
+        //             headers: {
+        //                 token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+        //             },
+        //         },
+        //     )
+        //     .then((res) => {
+        //         // console.log('res', res.data.data.shops);
+        //         // console.log('huyen xa', districtID, wardID);
+        //         for (let i = 0; i < res.data.data.shops.length; i++) {
+        //             if (res.data.data.shops[i].name === sellerName[i]) {
+        //                 //console.log('res', res.data.data.shops[i].name);
+        //                 axios
+        //                     .post(
+        //                         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+        //                         {
+        //                             payment_type_id: 2,
+        //                             shop_id: 'Polo123',
+        //                             note: 'Tintest 123',
+        //                             required_note: 'KHONGCHOXEMHANG',
+        //                             return_phone: '0332190158',
+        //                             return_address: '39 NTT',
+        //                             return_district_id: null,
+        //                             return_ward_code: '',
+        //                             client_order_code: '',
+        //                             to_name: 'TinTest124',
+        //                             to_phone: '0987654321',
+        //                             to_address: `${
+        //                                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+        //                                     ? userVaule.ND_diachiGH
+        //                                     : ctyVaule
+        //                             }`,
+        //                             to_ward_code: wardID.toString(),
+        //                             to_district_id: districtID,
+        //                             cod_amount: 200000,
+        //                             content: null,
+        //                             weight: 200,
+        //                             length: 1,
+        //                             width: 19,
+        //                             height: 10,
+        //                             pick_station_id: null,
+        //                             insurance_value: 0,
+        //                             service_id: 53321,
+        //                             service_type_id: 2,
+        //                             coupon: null,
+        //                             pick_shift: [2],
+        //                             Items: [
+        //                                 {
+        //                                     name: 'Khô Cá Lóc',
+        //                                     code: 'Polo123',
+        //                                     quantity: 1,
+        //                                     price: 200000,
+        //                                     length: 12,
+        //                                     width: 12,
+        //                                     height: 12,
+        //                                     category: {
+        //                                         level1: 'Khô',
+        //                                     },
+        //                                 },
+        //                             ],
+        //                         },
+        //                         {
+        //                             headers: {
+        //                                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+        //                                 ShopId: res.data.data.shops[i]._id,
+        //                             },
+        //                         },
+        //                     )
+        //                     .then((res) => {
+        //                         console.log('DH', res.data.data);
+        //                     })
+        //                     .catch((err) => {
+        //                         console.log('loi DH');
+        //                     });
+        //             }
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log('loi');
+        //     });
+
+        if (sellerValue !== undefined && sellerValue !== '') {
+            for (let k = 0; k < sellerValue.length; k++) {
+                axios
+                    .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                        ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                        NB_id: sellerValue[k],
+                        DH_tongtien: handlePriceSeller(sellerValue, k),
+                        DH_loaithanhtoan: 1,
+                        DH_diachi:
+                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                                ? userVaule.ND_diachiGH
+                                : ctyVaule,
+                        DH_phivanchuyen: serviceFee !== '' ? serviceFee[k] : '0',
+                        DH_trangthaiTT: 1,
+                    })
+                    .then((res) => {
+                        console.log('', res.data);
+                    })
+                    .catch((err) => {
+                        console.log('loi add');
+                    });
+            }
+        }
     };
 
     //Tinh phi van chuyen
@@ -297,8 +325,8 @@ function Order() {
                     },
                 )
                 .then((res) => {
-                    console.log('res', res.data.data.shops);
-                    console.log('huyen xa', districtID, wardID);
+                    //console.log('res', res.data.data.shops);
+                    //console.log('huyen xa', districtID, wardID);
                     for (let i = 0; i < res.data.data.shops.length; i++) {
                         if (res.data.data.shops[i].name === sellerName[i]) {
                             axios
@@ -326,7 +354,7 @@ function Order() {
                                     },
                                 )
                                 .then((res) => {
-                                    console.log('DV', res.data.data);
+                                    //console.log('DV', res.data.data);
                                     setServiceFee((prev) => {
                                         const newSeller = [...prev, res.data.data.service_fee];
                                         return newSeller;
@@ -367,11 +395,11 @@ function Order() {
                 setCityValue(res.data.data);
                 if (userVaule !== '' && userVaule.ND_diachiGH !== undefined) {
                     let arrValue = userVaule.ND_diachiGH.split(',');
-                    console.log('arrValue', arrValue);
+                    //console.log('arrValue', arrValue);
 
                     for (let i = 0; i < res.data.data.length; i++) {
                         if (res.data.data[i].ProvinceName === arrValue[0]) {
-                            console.log('tinh', res.data.data);
+                            //console.log('tinh', res.data.data);
                             setProvinceID(res.data.data[i].ProvinceID);
                         }
                     }
@@ -403,7 +431,7 @@ function Order() {
 
                     for (let i = 0; i < res.data.data.length; i++) {
                         if (res.data.data[i].DistrictName === arrValue[1]) {
-                            console.log('huyen', res.data.data);
+                            //console.log('huyen', res.data.data);
                             setDistrictID(res.data.data[i].DistrictID);
                         }
                     }
@@ -428,11 +456,11 @@ function Order() {
                     //console.log('xa', res.data.data);
                     setWardValue(res.data.data);
                     let arrValue = userVaule.ND_diachiGH.split(',');
-                    console.log('arrValue', arrValue);
+                    //console.log('arrValue', arrValue);
 
                     for (let i = 0; i < res.data.data.length; i++) {
                         if (res.data.data[i].WardName === arrValue[2]) {
-                            console.log('xa', res.data.data[i].WardCode);
+                            //console.log('xa', res.data.data[i].WardCode);
                             setWardID(res.data.data[i].WardCode);
                         }
                     }
