@@ -25,13 +25,16 @@ function Order() {
     ////////////////////////////////////////////////////
     const [provinceID, setProvinceID] = useState('');
     const [districtID, setDistrictID] = useState('');
+    const [wardID, setWardID] = useState('');
+    ////////////////////////////////////////////////////
+    const [serviceFee, setServiceFee] = useState('');
 
     //show user
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/order/user/show?ND_id=${JSON.parse(GetCookie('usrin')).ND_id}`)
             .then((res) => {
-                console.log('data', res.data);
+                //console.log('data', res.data);
                 setUserVaule(res.data.results);
             })
             .catch((err) => {
@@ -48,7 +51,7 @@ function Order() {
                 }`,
             )
             .then((res) => {
-                //console.log(res.data);
+                console.log('data', res.data);
                 setOrderValue(res.data.results);
             })
             .catch((err) => {
@@ -65,7 +68,7 @@ function Order() {
         for (let i = 0; i < orderValue.length; i++) {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
                 sellerArr.push(orderValue[i].NB_id);
-                sellerName.push(orderValue[i].seller.ND_hoten);
+                sellerName.push(orderValue[i].seller.MTS_ten);
             }
 
             //sumnumber += 1;
@@ -99,6 +102,10 @@ function Order() {
                 return (index % 3 ? next : next + '.') + prev;
             });
     }
+    function ChangeAddress(addrValue) {
+        const newAddress = addrValue.split(',');
+        return newAddress.reverse().join();
+    }
 
     const handleSumProduct = (sell) => {
         let numbers = 0;
@@ -112,7 +119,7 @@ function Order() {
         return numbers;
     };
 
-    const handlePriceSeller = (sell) => {
+    const handlePriceSeller = (sell, index) => {
         let price = 0;
         console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
@@ -124,7 +131,7 @@ function Order() {
             }
         }
         console.log('index', price);
-        return price;
+        return price + serviceFee[index];
     };
 
     const handleShowFormAddress = (index) => {
@@ -192,19 +199,157 @@ function Order() {
     };
 
     const handleOrderCustomer = () => {
-        // axios
-        //     .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
-        //         method: 'get',
-        //         headers: {
-        //             token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-        //         },
-        //     })
-        //     .then((res) => {
-        //         console.log('res', res.data.data);
-        //     })
-        //     .catch((err) => {
-        //         console.log('loi');
-        //     });
+        axios
+            .post(
+                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+
+                { offset: 0, limit: 50, client_phone: '' },
+                {
+                    headers: {
+                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                    },
+                },
+            )
+            .then((res) => {
+                // console.log('res', res.data.data.shops);
+                // console.log('huyen xa', districtID, wardID);
+                for (let i = 0; i < res.data.data.shops.length; i++) {
+                    if (res.data.data.shops[i].name === sellerName[i]) {
+                        console.log('res', res.data.data.shops[i].name);
+                        axios
+                            .post(
+                                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                                {
+                                    payment_type_id: 2,
+                                    shop_id: 'Polo123',
+                                    note: 'Tintest 123',
+                                    required_note: 'KHONGCHOXEMHANG',
+                                    return_phone: '0332190158',
+                                    return_address: '39 NTT',
+                                    return_district_id: null,
+                                    return_ward_code: '',
+                                    client_order_code: '',
+                                    to_name: 'TinTest124',
+                                    to_phone: '0987654321',
+                                    to_address: '72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam',
+                                    to_ward_code: wardID.toString(),
+                                    to_district_id: districtID,
+                                    cod_amount: 200000,
+                                    content: null,
+                                    weight: 200,
+                                    length: 1,
+                                    width: 19,
+                                    height: 10,
+                                    pick_station_id: null,
+                                    insurance_value: 0,
+                                    service_id: 53321,
+                                    service_type_id: 2,
+                                    coupon: null,
+                                    pick_shift: [2],
+                                    Items: [
+                                        {
+                                            name: 'Khô Cá Lóc',
+                                            code: 'Polo123',
+                                            quantity: 1,
+                                            price: 200000,
+                                            length: 12,
+                                            width: 12,
+                                            height: 12,
+                                            category: {
+                                                level1: 'Khô',
+                                            },
+                                        },
+                                    ],
+                                },
+                                {
+                                    headers: {
+                                        Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                        ShopId: res.data.data.shops[i]._id,
+                                    },
+                                },
+                            )
+                            .then((res) => {
+                                console.log('DH', res.data.data);
+                            })
+                            .catch((err) => {
+                                console.log('loi DH');
+                            });
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    };
+
+    //Tinh phi van chuyen
+    useEffect(() => {
+        if (districtID !== '' && wardID !== '') {
+            axios
+                .post(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+
+                    { offset: 0, limit: 50, client_phone: '' },
+                    {
+                        headers: {
+                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        },
+                    },
+                )
+                .then((res) => {
+                    console.log('res', res.data.data.shops);
+                    console.log('huyen xa', districtID, wardID);
+                    for (let i = 0; i < res.data.data.shops.length; i++) {
+                        if (res.data.data.shops[i].name === sellerName[i]) {
+                            axios
+                                .post(
+                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
+
+                                    {
+                                        from_district_id: res.data.data.shops[i].district_id,
+                                        service_id: 53321,
+                                        service_type_id: 2,
+                                        to_district_id: districtID !== '' ? districtID : '',
+                                        to_ward_code: wardID !== '' ? wardID : '',
+                                        weight: 200,
+                                        length: 1,
+                                        width: 19,
+                                        height: 10,
+                                        insurance_value: 10000,
+                                        coupon: null,
+                                    },
+                                    {
+                                        headers: {
+                                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                            ShopId: res.data.data.shops[i]._id,
+                                        },
+                                    },
+                                )
+                                .then((res) => {
+                                    console.log('DV', res.data.data);
+                                    setServiceFee((prev) => {
+                                        const newSeller = [...prev, res.data.data.service_fee];
+                                        return newSeller;
+                                    });
+                                })
+                                .catch((err) => {
+                                    console.log('loi Dv nha');
+                                });
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [sellerName, districtID, wardID]);
+
+    const handleSumService = (dataValue) => {
+        let service = 0;
+        for (let i = 0; i < dataValue.length; i++) {
+            service = service + dataValue[i];
+        }
+        return service;
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,49 +363,85 @@ function Order() {
                 },
             })
             .then((res) => {
-                console.log('res', res.data.data);
+                //console.log('res', res.data.data);
                 setCityValue(res.data.data);
+                if (userVaule !== '' && userVaule.ND_diachiGH !== undefined) {
+                    let arrValue = userVaule.ND_diachiGH.split(',');
+                    console.log('arrValue', arrValue);
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].ProvinceName === arrValue[0]) {
+                            console.log('tinh', res.data.data);
+                            setProvinceID(res.data.data[i].ProvinceID);
+                        }
+                    }
+                }
             })
             .catch((err) => {
                 console.log('loi');
             });
-    }, []);
+    }, [userVaule]);
 
     //take data district
     useEffect(() => {
-        axios
-            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceID}`, {
-                method: 'get',
-                headers: {
-                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                },
-            })
-            .then((res) => {
-                console.log('res', res.data.data);
-                setDistrictValue(res.data.data);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }, [provinceID]);
+        if (provinceID !== '') {
+            axios
+                .get(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceID}`,
+                    {
+                        method: 'get',
+                        headers: {
+                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        },
+                    },
+                )
+                .then((res) => {
+                    //console.log('huyen', res.data.data);
+                    setDistrictValue(res.data.data);
+                    let arrValue = userVaule.ND_diachiGH.split(',');
+                    console.log('arrValue', arrValue);
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].DistrictName === arrValue[1]) {
+                            console.log('huyen', res.data.data);
+                            setDistrictID(res.data.data[i].DistrictID);
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [provinceID, userVaule]);
 
     //take data ward
     useEffect(() => {
-        axios
-            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtID}`, {
-                method: 'get',
-                headers: {
-                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                },
-            })
-            .then((res) => {
-                console.log('res', res.data.data);
-                setWardValue(res.data.data);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
-    }, [districtID]);
+        if (districtID !== '') {
+            axios
+                .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtID}`, {
+                    method: 'get',
+                    headers: {
+                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                    },
+                })
+                .then((res) => {
+                    //console.log('xa', res.data.data);
+                    setWardValue(res.data.data);
+                    let arrValue = userVaule.ND_diachiGH.split(',');
+                    console.log('arrValue', arrValue);
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].WardName === arrValue[2]) {
+                            console.log('xa', res.data.data[i].WardCode);
+                            setWardID(res.data.data[i].WardCode);
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [districtID, userVaule]);
 
     //open/close form
 
@@ -426,6 +607,8 @@ function Order() {
             wardValue.style.display = 'inline-block';
         }
     };
+
+    ///tinh phi DV
 
     return (
         <div className={cx('wrapper')}>
@@ -672,13 +855,24 @@ function Order() {
                                           </div>
                                       </div>
                                       {/* / */}
+                                      <div className={cx('kfKL6K')}>
+                                          <div className={cx('wWp9Rn_GoSC7d')}>
+                                              <div className={cx('sYTSo9')}>Đơn vị vận chuyển</div>
+                                              <div className={cx('TrbqGd')}>
+                                                  <div>Tiết kiệm</div>
+                                              </div>
+                                              <div className={cx('uneQgd')}>
+                                                  ₫{formatCash(serviceFee !== '' ? serviceFee[index] : '0')}
+                                              </div>
+                                          </div>
+                                      </div>
                                       <div className={cx('BbOmi')}>
                                           <div className={cx('lYtB1r')}>
                                               <div className={cx('_4nelpz')}>
                                                   Tổng số tiền ({handleSumProduct(sell)} sản phẩm):
                                               </div>
                                               <div className={cx('_31ayp3')}>
-                                                  ₫{formatCash(handlePriceSeller(sell))}
+                                                  ₫{formatCash(handlePriceSeller(sell, index))}
                                               </div>
                                           </div>
                                       </div>
@@ -707,7 +901,7 @@ function Order() {
                                     <div className={cx('iXqine')}>
                                         {userVaule !== ''
                                             ? userVaule.ND_diachiGH !== ''
-                                                ? userVaule.ND_chitiet + ',' + userVaule.ND_diachiGH
+                                                ? userVaule.ND_chitiet + ',' + ChangeAddress(userVaule.ND_diachiGH)
                                                 : handleShowFormAddress()
                                             : ''}
                                     </div>
@@ -783,8 +977,8 @@ function Order() {
                                     <div className={cx('WHQQMV')}>Thanh toán khi nhận hàng</div>
                                     <div className={cx('g5caBa')}>
                                         <div className={cx('cOrEtX')}>
-                                            Phí thu hộ: ₫0 VNĐ. Ưu đãi về phí vận chuyển (nếu có) áp dụng cả với phí thu
-                                            hộ.
+                                            Phí thu hộ: ₫
+                                            {price !== '' ? formatCash(price + handleSumService(serviceFee)) : ''} VNĐ.
                                         </div>
                                     </div>
                                 </div>
@@ -795,9 +989,11 @@ function Order() {
                         <div className={cx('lhwDvd_Exv9ow_c5Dezq')}>Tổng tiền hàng</div>
                         <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>₫{price !== '' ? formatCash(price) : ''}</div>
                         <div className={cx('lhwDvd_Exv9ow_B6k-vE')}>Phí vận chuyển</div>
-                        <div className={cx('lhwDvd_Uu2y3K_B6k-vE')}>₫75.300</div>
+                        <div className={cx('lhwDvd_Uu2y3K_B6k-vE')}>₫{formatCash(handleSumService(serviceFee))}</div>
                         <div className={cx('lhwDvd_Exv9ow_A4gPS6')}>Tổng thanh toán:</div>
-                        <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>₫{price !== '' ? formatCash(price) : ''}</div>
+                        <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>
+                            ₫{price !== '' ? formatCash(price + handleSumService(serviceFee)) : ''}
+                        </div>
                         <div className={cx('Ql2fz0')}>
                             <button className={cx('stardust-button--large_gG-FcK')} onClick={handleOrderCustomer}>
                                 Đặt hàng
