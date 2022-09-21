@@ -308,6 +308,7 @@ function Header() {
                         toast.success('Đăng nhập thành công', {
                             position: toast.POSITION.TOP_RIGHT,
                         });
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}`, '_self', 1);
                     } else if (!res.data.account) {
                         //alert('Tài khoản không tồn tại');
                         //const lastname = `${cx('toast-message')}`;

@@ -6,6 +6,8 @@ import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerSetting.module.scss';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 function SellerSetting() {
@@ -17,6 +19,23 @@ function SellerSetting() {
     const [establish, setEstablished] = useState('');
     const [dateValue, setDateValue] = useState('');
     //const [checkLogo, setCheckLogo] = useState(false);
+
+    //const [sumNumber, setSumNumber] = useState('');
+    //const [price, setPrice] = useState('');
+    const [userVaule, setUserVaule] = useState('');
+    const [ctyVaule, setCtyVaule] = useState('');
+    //const [addressVaule, setAddressVaule] = useState('');
+    //const [sumNumber, setSumNumber] = useState('');
+    const [cityValue, setCityValue] = useState('');
+    const [districtValue, setDistrictValue] = useState('');
+    const [wardValue, setWardValue] = useState('');
+
+    ////////////////////////////////////////////////////
+    const [provinceID, setProvinceID] = useState('');
+    const [districtID, setDistrictID] = useState('');
+    const [wardID, setWardID] = useState('');
+    ////////////////////////////////////////////////////
+    // const [serviceFee, setServiceFee] = useState('');
 
     // const dateValue = new Date(JSON.parse(GetCookie('seller')).ND_ngay);
     // let day = dateValue.getDate();
@@ -30,6 +49,23 @@ function SellerSetting() {
     // } else {
     //     DMY = day + '-' + month + '-' + year;
     // }
+
+    //show user
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/show/all/shop?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            )
+            .then((res) => {
+                console.log('data', res.data.results);
+                setUserVaule(res.data.results);
+            })
+            .catch((err) => {
+                console.log('loi nha');
+            });
+    }, []);
 
     function takeDate(date) {
         const datevalue = new Date(date);
@@ -74,7 +110,8 @@ function SellerSetting() {
             formData.append('image', image[0]);
             formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
             formData.append('MTS_ten', title);
-            formData.append('MTS_diachi', address);
+            formData.append('MTS_diachi', ctyVaule);
+            formData.append('MTS_chitiet', address);
             axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
@@ -110,7 +147,7 @@ function SellerSetting() {
             const formData = new FormData();
             formData.append('image', image[0]);
             formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-            formData.append('MTS_diachi', address);
+            formData.append('MTS_chitiet', address);
             axios({
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image`,
@@ -149,7 +186,7 @@ function SellerSetting() {
             const formDataLogo = new FormData();
             formDataLogo.append('image', imageLogo[0]);
             formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-            formDataLogo.append('MTS_diachi', address);
+            formDataLogo.append('MTS_chitiet', address);
             axios({
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
@@ -168,7 +205,7 @@ function SellerSetting() {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/address`, {
                     NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                    MTS_diachi: address,
+                    MTS_chitiet: address,
                 })
                 .then((res) => {
                     console.log(res.data);
@@ -178,59 +215,6 @@ function SellerSetting() {
                 });
         }
     };
-
-    // function saveFileSellerLogo(imageLogo) {
-    //     const formDataLogo = new FormData();
-
-    //     formDataLogo.append('image', imageLogo[0]);
-
-    //     formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-    //     if (title === '' && establish !== '' && establish !== undefined) {
-    //         axios({
-    //             method: 'POST',
-    //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
-    //             data: formDataLogo,
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data',
-    //             },
-    //         })
-    //             .then((res) => {
-    //                 toast.success('Lưu thành công', {
-    //                     position: toast.POSITION.TOP_RIGHT,
-    //                     className: `${cx('toast-message')}`,
-    //                 });
-    //             })
-    //             .catch(() => {
-    //                 toast.error('Lưu thất bại !', {
-    //                     position: toast.POSITION.TOP_RIGHT,
-    //                     className: `${cx('toast-message')}`,
-    //                 });
-    //             });
-    //     } else if (title !== '' && establish === undefined) {
-    //         axios({
-    //             method: 'POST',
-    //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
-    //             data: formDataLogo,
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data',
-    //             },
-    //         })
-    //             .then((res) => {
-    //                 if (checkLogo) {
-    //                     toast.success('Lưu thành công nha', {
-    //                         position: toast.POSITION.TOP_RIGHT,
-    //                         className: `${cx('toast-message')}`,
-    //                     });
-    //                 }
-    //             })
-    //             .catch(() => {
-    //                 toast.error('Lưu thất bại !', {
-    //                     position: toast.POSITION.TOP_RIGHT,
-    //                     className: `${cx('toast-message')}`,
-    //                 });
-    //             });
-    //     }
-    // }
 
     function ChooseImg(e) {
         const chooseFile = document.getElementById('choose-file');
@@ -266,167 +250,261 @@ function SellerSetting() {
             setImageLogo(e.target.files);
         }
     }
-    // function saveFileSeller(title, image, imageLogo, address) {
-    //     console.log('thoong tin: ' + title, image, address);
-    //     const formData = new FormData();
-    //     console.log(image);
-    //     if (image !== '') {
-    //         formData.append('image', image[0]);
-    //         formData.append('NB_id', JSON.parse(GetCookie('seller')).NB_id);
-    //         formData.append('MTS_ten', title);
-    //         formData.append('MTS_diachi', address);
-    //         if (title === '' && establish !== '' && establish !== undefined) {
-    //             axios({
-    //                 method: 'POST',
-    //                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/image`,
-    //                 data: formData,
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data',
-    //                 },
-    //             })
-    //                 .then((res) => {
-    //                     console.log(res.data);
-    //                     if (res.data.seller === false) {
-    //                         //alert('Tên đăng nhập đã tồn tại!');
-    //                         toast.error('Lưu thất bại', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else {
-    //                         //alert('Đăng ký thành công');
-    //                         if (imageLogo !== '') {
-    //                         } else {
-    //                             toast.success('Lưu thành công', {
-    //                                 position: toast.POSITION.TOP_RIGHT,
-    //                                 className: `${cx('toast-message')}`,
-    //                             });
-    //                         }
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     toast.error('Lưu thất bại !', {
-    //                         position: toast.POSITION.TOP_RIGHT,
-    //                         className: `${cx('toast-message')}`,
-    //                     });
-    //                 });
-    //         } else if (title !== '' && establish === undefined) {
-    //             axios({
-    //                 method: 'POST',
-    //                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/image`,
-    //                 data: formData,
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data',
-    //                 },
-    //             })
-    //                 .then((res) => {
-    //                     console.log(res.data);
-    //                     if (res.data.exist === true) {
-    //                         setCheckLogo(false);
-    //                         toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else if (res.data.seller === true) {
-    //                         //alert('Tên đăng nhập đã tồn tại!');
-    //                         toast.error('Lưu thất bại', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else {
-    //                         //alert('Đăng ký thành công');
 
-    //                         if (imageLogo !== '') {
-    //                         } else {
-    //                             toast.success('Lưu thành công', {
-    //                                 position: toast.POSITION.TOP_RIGHT,
-    //                                 className: `${cx('toast-message')}`,
-    //                             });
-    //                         }
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     toast.error('Lưu thất bại !', {
-    //                         position: toast.POSITION.TOP_RIGHT,
-    //                         className: `${cx('toast-message')}`,
-    //                     });
-    //                 });
-    //         } else {
-    //             toast.error('Tên Shop Không được bỏ trống !', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //                 className: `${cx('toast-message')}`,
-    //             });
-    //         }
-    //     }
-    //     if (imageLogo === '') {
-    //         if (title === '' && establish !== '' && establish !== undefined) {
-    //             axios
-    //                 .post(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish`, {
-    //                     NB_id: JSON.parse(GetCookie('seller')).NB_id,
-    //                     MTS_ten: title,
-    //                     MTS_diachi: address,
-    //                 })
-    //                 .then((res) => {
-    //                     if (res.data.seller === true) {
-    //                         toast.success('Lưu thành công', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else {
-    //                         toast.error('Lưu thất bại !', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     toast.error('Lưu thất bại !', {
-    //                         position: toast.POSITION.TOP_RIGHT,
-    //                         className: `${cx('toast-message')}`,
-    //                     });
-    //                 });
-    //         } else if (title !== '' && establish === undefined) {
-    //             axios
-    //                 .post(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish`, {
-    //                     NB_id: JSON.parse(GetCookie('seller')).NB_id,
-    //                     MTS_ten: title,
-    //                     MTS_diachi: address,
-    //                 })
-    //                 .then((res) => {
-    //                     if (res.data.exist === true) {
-    //                         toast.error('Tên Shop đã tồn tại! Vui lòng chọn tên khác.', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else if (res.data.seller === true) {
-    //                         toast.success('Lưu thành công', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     } else {
-    //                         toast.error('Thiết lập thất bại!', {
-    //                             position: toast.POSITION.TOP_RIGHT,
-    //                             className: `${cx('toast-message')}`,
-    //                         });
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     toast.error('Lưu thất bại !', {
-    //                         position: toast.POSITION.TOP_RIGHT,
-    //                         className: `${cx('toast-message')}`,
-    //                     });
-    //                 });
-    //         } else {
-    //             toast.error('Tên Shop Không được bỏ trống !', {
-    //                 position: toast.POSITION.TOP_RIGHT,
-    //                 className: `${cx('toast-message')}`,
-    //             });
-    //         }
-    //     } else if (imageLogo !== '') {
-    //         setCheckLogo(true);
-    //         setTimeout(() => saveFileSellerLogo(imageLogo), 500);
-    //     }
-    // }
+    //take data City
+    useEffect(() => {
+        axios
+            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
+                method: 'get',
+                headers: {
+                    token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                },
+            })
+            .then((res) => {
+                //console.log('res', res.data.data);
+                setCityValue(res.data.data);
+                if (userVaule !== '' && userVaule.MTS_diachi !== undefined) {
+                    let arrValue = userVaule.MTS_diachi.split(',');
+                    //console.log('arrValue', arrValue);
 
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].ProvinceName === arrValue[0]) {
+                            //console.log('tinh', res.data.data);
+                            setProvinceID(res.data.data[i].ProvinceID);
+                        }
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, [userVaule]);
+
+    //take data district
+    useEffect(() => {
+        if (provinceID !== '') {
+            axios
+                .get(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${provinceID}`,
+                    {
+                        method: 'get',
+                        headers: {
+                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        },
+                    },
+                )
+                .then((res) => {
+                    //console.log('huyen', res.data.data);
+                    setDistrictValue(res.data.data);
+                    let arrValue = userVaule.MTS_diachi.split(',');
+                    console.log('arrValue', arrValue);
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].DistrictName === arrValue[1]) {
+                            //console.log('huyen', res.data.data);
+                            setDistrictID(res.data.data[i].DistrictID);
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [provinceID, userVaule]);
+
+    //take data ward
+    useEffect(() => {
+        if (districtID !== '') {
+            axios
+                .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${districtID}`, {
+                    method: 'get',
+                    headers: {
+                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                    },
+                })
+                .then((res) => {
+                    //console.log('xa', res.data.data);
+                    setWardValue(res.data.data);
+                    let arrValue = userVaule.MTS_diachi.split(',');
+                    //console.log('arrValue', arrValue);
+
+                    for (let i = 0; i < res.data.data.length; i++) {
+                        if (res.data.data[i].WardName === arrValue[2]) {
+                            //console.log('xa', res.data.data[i].WardCode);
+                            setWardID(res.data.data[i].WardCode);
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [districtID, userVaule]);
+
+    //open/close form
+
+    const handleOpenFormIcon = () => {
+        const iconDown = document.getElementById('Izrgn0');
+        const iconUp = document.getElementById('Izrgn1');
+        const formAddress = document.getElementById('H8sVZh');
+
+        iconDown.style.display = 'none';
+        iconUp.style.display = 'flex';
+        formAddress.style.display = 'flex';
+        if (userVaule !== undefined && userVaule.MTS_diachi !== undefined) {
+            const inputValue = document.getElementById('ChI2Nx_92k3pl');
+
+            inputValue.defaultValue = ctyVaule;
+        }
+    };
+
+    const handleCloseFormIcon = (pxValue) => {
+        if (pxValue !== undefined) {
+            const iconDown = document.getElementById('Izrgn0');
+            const iconUp = document.getElementById('Izrgn1');
+            const formAddress = document.getElementById('H8sVZh');
+
+            iconDown.style.display = 'flex';
+            iconUp.style.display = 'none';
+            formAddress.style.display = 'none';
+            if (ctyVaule.split(',')[1] === undefined) {
+                setCtyVaule(ctyVaule + ',' + pxValue);
+            } else {
+                let arr = ctyVaule.split(',');
+                arr[2] = pxValue;
+                setCtyVaule(arr.join(','));
+            }
+        } else {
+            const iconDown = document.getElementById('Izrgn0');
+            const iconUp = document.getElementById('Izrgn1');
+            const formAddress = document.getElementById('H8sVZh');
+
+            iconDown.style.display = 'flex';
+            iconUp.style.display = 'none';
+            formAddress.style.display = 'none';
+
+            if (ctyVaule === '' && userVaule.MTS_diachi !== undefined) {
+                const inputValue = document.getElementById('ChI2Nx_92k3pl');
+
+                inputValue.defaultValue =
+                    ctyVaule === '' && userVaule !== '' && userVaule.MTS_diachi !== undefined
+                        ? userVaule.MTS_diachi
+                        : ctyVaule;
+            }
+        }
+    };
+
+    //form click city
+    const handleClickCity = () => {
+        const inputCity = document.getElementById('_1E8NDO1');
+        const inputDistrict = document.getElementById('_1E8NDO2');
+        const inputWard = document.getElementById('_1E8NDO3');
+        const cityValue = document.getElementById('aox-Gc1');
+        const districtValue = document.getElementById('aox-Gc2');
+        const wardValue = document.getElementById('aox-Gc3');
+
+        const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+        inputCity.style.color = '#ee4d2d';
+        inputDistrict.style.color = '#161823';
+        inputWard.style.color = '#161823';
+
+        destinationBrick.style.transform = 'translate(0%, 0px)';
+        cityValue.style.display = 'inline-block';
+        districtValue.style.display = 'none';
+        wardValue.style.display = 'none';
+    };
+    //form click district
+    const handleClickDistrict = (ProvinceID, ctValue) => {
+        if (ProvinceID !== undefined) {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#ee4d2d';
+            inputWard.style.color = '#161823';
+
+            destinationBrick.style.transform = 'translate(100%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'inline-block';
+            wardValue.style.display = 'none';
+            setProvinceID(ProvinceID);
+            setCtyVaule(ctValue);
+        } else {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#ee4d2d';
+            inputWard.style.color = '#161823';
+
+            destinationBrick.style.transform = 'translate(100%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'inline-block';
+            wardValue.style.display = 'none';
+        }
+    };
+    //form click ward
+    const handleClickWard = (DistrictID, qhValue) => {
+        if (DistrictID !== undefined && ctyVaule !== '') {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#161823';
+            inputWard.style.color = '#ee4d2d';
+
+            destinationBrick.style.transform = 'translate(200%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'none';
+            wardValue.style.display = 'inline-block';
+            setDistrictID(DistrictID);
+
+            if (ctyVaule !== '' && ctyVaule.split(',')[1] === undefined) {
+                setCtyVaule(ctyVaule + ',' + qhValue);
+            } else if (ctyVaule !== '') {
+                let arr = ctyVaule.split(',');
+                arr[1] = qhValue;
+                setCtyVaule(arr.join(','));
+            }
+        } else if (ctyVaule !== '') {
+            const inputCity = document.getElementById('_1E8NDO1');
+            const inputDistrict = document.getElementById('_1E8NDO2');
+            const inputWard = document.getElementById('_1E8NDO3');
+            const cityValue = document.getElementById('aox-Gc1');
+            const districtValue = document.getElementById('aox-Gc2');
+            const wardValue = document.getElementById('aox-Gc3');
+
+            const destinationBrick = document.getElementById('_0Eu0W2_LqeTPG');
+
+            inputCity.style.color = '#161823';
+            inputDistrict.style.color = '#161823';
+            inputWard.style.color = '#ee4d2d';
+
+            destinationBrick.style.transform = 'translate(200%, 0px)';
+            cityValue.style.display = 'none';
+            districtValue.style.display = 'none';
+            wardValue.style.display = 'inline-block';
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('file-shop')}>
@@ -505,7 +583,7 @@ function SellerSetting() {
                     </div> */}
 
                     <div className={cx('form-section')}>
-                        <div className={cx('form-title')}>Mô tả Shop</div>{' '}
+                        <div className={cx('form-title')}>Địa chỉ cụ thể</div>{' '}
                         <div className={cx('form-content')}>
                             <div className={cx('description-form-item')}>
                                 <label htmlFor="description" className={cx('shopee-form-item__label')}>
@@ -525,7 +603,7 @@ function SellerSetting() {
                                                 max="Infinity"
                                                 min="-Infinity"
                                                 className={cx('shopee-input__inner--normal')}
-                                                defaultValue={establish !== undefined ? establish.MTS_diachi : ''}
+                                                defaultValue={establish !== undefined ? establish.MTS_chitiet : ''}
                                                 onChange={(e) => setAddress(e.target.value)}
                                             ></textarea>
                                         </div>
@@ -533,6 +611,159 @@ function SellerSetting() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className={cx('lHCVqO')}>
+                        <div className={cx('iWBSHn')}>
+                            <div className={cx('_0fHnjY')}>
+                                <div className={cx('XjHkd3')}>
+                                    <div className={cx('T1souv')}>
+                                        <div className={cx('u1wAmL')}>
+                                            <div className={cx('vEFwLK_6DXlE9')}>
+                                                Phường/Xã, Quận/Huyện,Tỉnh/ Thành phố
+                                            </div>
+                                            <input
+                                                id="ChI2Nx_92k3pl"
+                                                className={cx('ChI2Nx_92k3pl')}
+                                                type="text"
+                                                placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
+                                                defaultValue={
+                                                    ctyVaule === '' &&
+                                                    userVaule !== '' &&
+                                                    userVaule.MTS_diachi !== undefined
+                                                        ? userVaule.MTS_diachi
+                                                        : ctyVaule
+                                                }
+                                                onChange={(e) => setCtyVaule(e.target.value)}
+                                                onFocus={() => handleOpenFormIcon()}
+                                            />
+                                            <FontAwesomeIcon
+                                                id="Izrgn0"
+                                                className={cx('Izrgn0')}
+                                                icon={faSortDown}
+                                                onClick={() => handleOpenFormIcon()}
+                                            />
+                                            <FontAwesomeIcon
+                                                id="Izrgn1"
+                                                className={cx('Izrgn1')}
+                                                icon={faSortUp}
+                                                onClick={() => handleCloseFormIcon()}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div id="H8sVZh" className={cx('H8sVZh')}>
+                                        <div className={cx('qtcuwq')}>
+                                            <div
+                                                id="_1E8NDO1"
+                                                className={cx('_1E8NDO1')}
+                                                onClick={() => handleClickCity()}
+                                            >
+                                                Tỉnh/Thành phố
+                                            </div>
+                                            <div
+                                                id="_1E8NDO2"
+                                                className={cx('_1E8NDO2')}
+                                                onClick={() => ctyVaule !== '' && handleClickDistrict()}
+                                            >
+                                                Quận/Huyện
+                                            </div>
+                                            <div
+                                                id="_1E8NDO3"
+                                                className={cx('_1E8NDO3')}
+                                                onClick={() =>
+                                                    ctyVaule !== '' &&
+                                                    ctyVaule.split(',')[1] !== undefined &&
+                                                    handleClickWard()
+                                                }
+                                            >
+                                                Phường/ Xã
+                                            </div>
+                                        </div>
+                                        <div id="_0Eu0W2_LqeTPG" className={cx('_0Eu0W2_LqeTPG')}></div>
+                                        <div id="aox-Gc1" className={cx('aox-Gc1')}>
+                                            {cityValue !== ''
+                                                ? cityValue.map((city, index) => (
+                                                      <div
+                                                          key={index}
+                                                          className={cx('Pcd7He')}
+                                                          onClick={() =>
+                                                              handleClickDistrict(city.ProvinceID, city.ProvinceName)
+                                                          }
+                                                      >
+                                                          {city.ProvinceName}
+                                                      </div>
+                                                  ))
+                                                : ''}
+                                        </div>
+                                        <div id="aox-Gc2" className={cx('aox-Gc2')}>
+                                            {districtValue !== ''
+                                                ? districtValue.map((district, index) => (
+                                                      <div
+                                                          key={index}
+                                                          className={cx('Pcd7He')}
+                                                          onClick={() =>
+                                                              handleClickWard(
+                                                                  district.DistrictID,
+                                                                  district.DistrictName,
+                                                              )
+                                                          }
+                                                      >
+                                                          {district.DistrictName}
+                                                      </div>
+                                                  ))
+                                                : ''}
+                                        </div>
+                                        <div id="aox-Gc3" className={cx('aox-Gc3')}>
+                                            {wardValue !== ''
+                                                ? wardValue.map((ward, index) => (
+                                                      <div
+                                                          key={index}
+                                                          className={cx('Pcd7He')}
+                                                          onClick={() => handleCloseFormIcon(ward.WardName)}
+                                                      >
+                                                          {ward.WardName}
+                                                      </div>
+                                                  ))
+                                                : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className={cx('_0fHnjY')}>
+                                            <div className={cx('SnzDoF')}>
+                                                <div className={cx('QbqEj_tyikTg_RYXN7V')}>
+                                                    <div className={cx('M9JCAS')}>
+                                                        <div className={cx('oaCSZH_bG1pWU')}>Địa chỉ cụ thể</div>
+                                                        <textarea
+                                                            className={cx('gRsrLD')}
+                                                            placeholder="Địa chỉ cụ thể"
+                                                            defaultValue={
+                                                                userVaule !== '' && userVaule.ND_chitiet !== ''
+                                                                    ? userVaule.ND_chitiet
+                                                                    : ''
+                                                            }
+                                                            onChange={(e) => setAddressVaule(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> */}
+                        </div>
+
+                        {/* / */}
+                        {/* <div className={cx('GixP1t')}>
+                                        <button
+                                            className={cx('HtW4DS_x4AEET')}
+                                            onClick={() => handleShowFormAddress('back')}
+                                        >
+                                            Trở Lại
+                                        </button>
+                                        <button
+                                            className={cx('HtW4DS_IJ1jvV')}
+                                            onClick={() => handleSubmitFormAddress()}
+                                        >
+                                            Hoàn thành
+                                        </button>
+                                    </div> */}
                     </div>
                 </div>
             </div>

@@ -129,9 +129,11 @@ function Order() {
                     orderValue[i].TTDH_soluong *
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
+            if (i === orderValue.length - 1) {
+                return price + serviceFee[index];
+            }
         }
         //console.log('index', price);
-        return price + serviceFee[index];
     };
 
     const handleShowFormAddress = (index) => {
@@ -287,11 +289,12 @@ function Order() {
 
         if (sellerValue !== undefined && sellerValue !== '') {
             for (let k = 0; k < sellerValue.length; k++) {
+                console.log('sellerValue', sellerValue[k]);
                 axios
                     .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                         ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
                         NB_id: sellerValue[k],
-                        DH_tongtien: handlePriceSeller(sellerValue, k),
+                        DH_tongtien: handlePriceSeller(sellerValue[k], k),
                         DH_loaithanhtoan: 1,
                         DH_diachi:
                             ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
@@ -325,44 +328,48 @@ function Order() {
                     },
                 )
                 .then((res) => {
-                    //console.log('res', res.data.data.shops);
+                    console.log('shop', res.data.data.shops);
                     //console.log('huyen xa', districtID, wardID);
                     for (let i = 0; i < res.data.data.shops.length; i++) {
-                        if (res.data.data.shops[i].name === sellerName[i]) {
-                            axios
-                                .post(
-                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
+                        for (let j = 0; j < sellerName.length; j++) {
+                            if (res.data.data.shops[i].name === sellerName[j]) {
+                                //console.log('district_id', res.data.data.shops[i].district_id);
+                                console.log('huyen xa', districtID, wardID);
+                                axios
+                                    .post(
+                                        `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
 
-                                    {
-                                        from_district_id: res.data.data.shops[i].district_id,
-                                        service_id: 53321,
-                                        service_type_id: 2,
-                                        to_district_id: districtID !== '' ? districtID : '',
-                                        to_ward_code: wardID !== '' ? wardID : '',
-                                        weight: 200,
-                                        length: 1,
-                                        width: 19,
-                                        height: 10,
-                                        insurance_value: 10000,
-                                        coupon: null,
-                                    },
-                                    {
-                                        headers: {
-                                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                                            ShopId: res.data.data.shops[i]._id,
+                                        {
+                                            from_district_id: res.data.data.shops[i].district_id,
+                                            service_id: 53321,
+                                            service_type_id: 2,
+                                            to_district_id: districtID !== '' ? districtID : districtID,
+                                            to_ward_code: wardID !== '' ? wardID : wardID,
+                                            weight: 200,
+                                            length: 1,
+                                            width: 19,
+                                            height: 10,
+                                            insurance_value: 10000,
+                                            coupon: null,
                                         },
-                                    },
-                                )
-                                .then((res) => {
-                                    //console.log('DV', res.data.data);
-                                    setServiceFee((prev) => {
-                                        const newSeller = [...prev, res.data.data.service_fee];
-                                        return newSeller;
+                                        {
+                                            headers: {
+                                                token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                                ShopId: res.data.data.shops[i]._id,
+                                            },
+                                        },
+                                    )
+                                    .then((res) => {
+                                        //console.log('DV', res.data.data);
+                                        setServiceFee((prev) => {
+                                            const newSeller = [...prev, res.data.data.service_fee];
+                                            return newSeller;
+                                        });
+                                    })
+                                    .catch((err) => {
+                                        console.log('loi Dv nha');
                                     });
-                                })
-                                .catch((err) => {
-                                    console.log('loi Dv nha');
-                                });
+                            }
                         }
                     }
                 })
@@ -890,7 +897,12 @@ function Order() {
                                                   <div>Tiết kiệm</div>
                                               </div>
                                               <div className={cx('uneQgd')}>
-                                                  ₫{formatCash(serviceFee !== '' ? serviceFee[index] : '0')}
+                                                  ₫
+                                                  {formatCash(
+                                                      serviceFee !== '' && serviceFee[index] !== undefined
+                                                          ? serviceFee[index]
+                                                          : '0',
+                                                  )}
                                               </div>
                                           </div>
                                       </div>
