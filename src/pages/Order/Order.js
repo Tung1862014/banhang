@@ -200,92 +200,185 @@ function Order() {
         }
     };
 
-    const handleOrderCustomer = () => {
-        // axios
-        //     .post(
-        //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+    const handleCountWeight = (prodValue) => {
+        let weight = 0;
+        //let phone = 0;
+        for (let i = 0; i < orderValue.length; i++) {
+            if (orderValue[i].NB_id === prodValue) {
+                //console.log('weight', orderValue[i].product.SP_trongluong);
+                //console.log('number', orderValue[i].TTDH_soluong);
+                weight += orderValue[i].product.SP_trongluong;
+                //phone = orderValue[i].seller.ND_sdt;
+            }
+        }
+        //console.log('weight', weight);
+        //console.log('phone', phone);
+        return weight;
+    };
 
-        //         { offset: 0, limit: 50, client_phone: '' },
-        //         {
-        //             headers: {
-        //                 token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-        //             },
-        //         },
-        //     )
-        //     .then((res) => {
-        //         // console.log('res', res.data.data.shops);
-        //         // console.log('huyen xa', districtID, wardID);
-        //         for (let i = 0; i < res.data.data.shops.length; i++) {
-        //             if (res.data.data.shops[i].name === sellerName[i]) {
-        //                 //console.log('res', res.data.data.shops[i].name);
-        //                 axios
-        //                     .post(
-        //                         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-        //                         {
-        //                             payment_type_id: 2,
-        //                             shop_id: 'Polo123',
-        //                             note: 'Tintest 123',
-        //                             required_note: 'KHONGCHOXEMHANG',
-        //                             return_phone: '0332190158',
-        //                             return_address: '39 NTT',
-        //                             return_district_id: null,
-        //                             return_ward_code: '',
-        //                             client_order_code: '',
-        //                             to_name: 'TinTest124',
-        //                             to_phone: '0987654321',
-        //                             to_address: `${
-        //                                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-        //                                     ? userVaule.ND_diachiGH
-        //                                     : ctyVaule
-        //                             }`,
-        //                             to_ward_code: wardID.toString(),
-        //                             to_district_id: districtID,
-        //                             cod_amount: 200000,
-        //                             content: null,
-        //                             weight: 200,
-        //                             length: 1,
-        //                             width: 19,
-        //                             height: 10,
-        //                             pick_station_id: null,
-        //                             insurance_value: 0,
-        //                             service_id: 53321,
-        //                             service_type_id: 2,
-        //                             coupon: null,
-        //                             pick_shift: [2],
-        //                             Items: [
-        //                                 {
-        //                                     name: 'Khô Cá Lóc',
-        //                                     code: 'Polo123',
-        //                                     quantity: 1,
-        //                                     price: 200000,
-        //                                     length: 12,
-        //                                     width: 12,
-        //                                     height: 12,
-        //                                     category: {
-        //                                         level1: 'Khô',
-        //                                     },
-        //                                 },
-        //                             ],
-        //                         },
-        //                         {
-        //                             headers: {
-        //                                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-        //                                 ShopId: res.data.data.shops[i]._id,
-        //                             },
-        //                         },
-        //                     )
-        //                     .then((res) => {
-        //                         console.log('DH', res.data.data);
-        //                     })
-        //                     .catch((err) => {
-        //                         console.log('loi DH');
-        //                     });
-        //             }
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log('loi');
-        //     });
+    const handleTakePhone = (prodValue) => {
+        let phone = 0;
+        for (let i = 0; i < orderValue.length; i++) {
+            if (orderValue[i].NB_id === prodValue) {
+                //console.log('weight', orderValue[i].product.SP_trongluong);
+                //console.log('number', orderValue[i].TTDH_soluong);
+
+                phone = orderValue[i].seller.ND_sdt;
+            }
+        }
+
+        //console.log('phone', phone);
+        return phone;
+    };
+
+    const handleTakeAddressSeller = (prodValue) => {
+        let addr = 0;
+        for (let i = 0; i < orderValue.length; i++) {
+            if (orderValue[i].NB_id === prodValue) {
+                //console.log('weight', orderValue[i].product.SP_trongluong);
+                //console.log('number', orderValue[i].TTDH_soluong);
+
+                addr = orderValue[i].seller.MTS_diachi;
+            }
+        }
+
+        //console.log('addr', addr);
+        return addr;
+    };
+
+    const handleInfoProoduct = (prodValue) => {
+        //console.log('prodValue', prodValue);
+        let arr = [];
+        for (let i = 0; i < orderValue.length; i++) {
+            if (orderValue[i].NB_id === prodValue) {
+                //console.log('orderValue', orderValue[i].product.SP_ten);
+                // console.log('prodValue', prodValue);
+                // if (arr === undefined) {
+                //     arr = {
+                //         name: orderValue[i].product.SP_ten.toString(),
+                //         code: orderValue[i].product.SP_id.toString(),
+                //         quantity: orderValue[i].TTDH_soluong,
+                //         price: 200000,
+                //         length: 12,
+                //         width: 12,
+                //         height: 12,
+                //     };
+                // } else {
+                //     arr =
+                //         arr +
+                //         ',' +
+                //         {
+                //             name: orderValue[i].product.SP_ten.toString(),
+                //             code: orderValue[i].product.SP_id.toString(),
+                //             quantity: orderValue[i].TTDH_soluong,
+                //             price: 200000,
+                //             length: 12,
+                //             width: 12,
+                //             height: 12,
+                //         };
+                // }
+                arr = [
+                    ...arr,
+                    {
+                        name: orderValue[i].product.SP_ten.toString(),
+                        code: orderValue[i].product.SP_id.toString(),
+                        quantity: orderValue[i].TTDH_soluong,
+                        price: 200000,
+                        length: 12,
+                        width: 12,
+                        height: 12,
+                    },
+                ];
+            }
+        }
+        return arr;
+    };
+
+    const handleOrderCustomer = () => {
+        axios
+            .post(
+                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+
+                { offset: 0, limit: 50, client_phone: '' },
+                {
+                    headers: {
+                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                    },
+                },
+            )
+            .then((res) => {
+                // console.log('res', res.data.data.shops);
+                // console.log('huyen xa', districtID, wardID);
+                for (let i = 0; i < res.data.data.shops.length; i++) {
+                    for (let j = 0; j < sellerName.length; j++) {
+                        // if (res.data.data.shops[i].name === sellerName[j]) {
+                        //     console.log(handleInfoProoduct(sellerValue[j]));
+                        //     //console.log('arr', arr);
+                        //     // console.log(handleCountWeight(sellerValue[j]));
+                        //     // console.log(handleTakePhone(sellerValue[j]));
+                        // }
+
+                        if (res.data.data.shops[i].name === sellerName[j]) {
+                            console.log('res', res.data.data.shops[i].name);
+                            console.log([handleInfoProoduct(sellerValue[j])]);
+                            axios
+                                .post(
+                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                                    {
+                                        payment_type_id: 2,
+                                        shop_id: 'Polo123',
+                                        required_note: 'KHONGCHOXEMHANG',
+                                        return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
+                                        return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
+                                        return_district_id: null,
+                                        return_ward_code: '',
+                                        client_order_code: '',
+                                        to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
+                                        to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                                        to_address: `${
+                                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                                                ? userVaule.ND_diachiGH
+                                                : ctyVaule
+                                        }`,
+                                        to_district_id: districtID !== '' ? districtID : districtID,
+                                        to_ward_code: wardID !== '' ? wardID : wardID,
+                                        cod_amount: 200000,
+                                        content: null,
+                                        weight: handleCountWeight(sellerValue[j]),
+                                        length: 1,
+                                        width: 15,
+                                        height: 5,
+                                        pick_station_id: null,
+                                        insurance_value: 0,
+                                        service_id: 53321,
+                                        service_type_id: 2,
+                                        coupon: null,
+                                        pick_shift: [2],
+                                        items: handleInfoProoduct(sellerValue[j]),
+                                    },
+                                    {
+                                        headers: {
+                                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                            ShopId: res.data.data.shops[i]._id,
+                                        },
+                                    },
+                                )
+                                .then((res) => {
+                                    console.log('DH', res.data.data);
+                                })
+                                .catch((err) => {
+                                    console.log('loi DH');
+                                });
+                        }
+                    }
+                    if (i === res.data.data.shops.length - 1) {
+                        window.open('/cart/order', '_self', 1);
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
 
         if (sellerValue !== undefined && sellerValue !== '') {
             for (let k = 0; k < sellerValue.length; k++) {
@@ -333,7 +426,7 @@ function Order() {
                     for (let i = 0; i < res.data.data.shops.length; i++) {
                         for (let j = 0; j < sellerName.length; j++) {
                             if (res.data.data.shops[i].name === sellerName[j]) {
-                                //console.log('district_id', res.data.data.shops[i].district_id);
+                                console.log('district_id', res.data.data.shops[i]);
                                 console.log('huyen xa', districtID, wardID);
                                 axios
                                     .post(
@@ -345,10 +438,10 @@ function Order() {
                                             service_type_id: 2,
                                             to_district_id: districtID !== '' ? districtID : districtID,
                                             to_ward_code: wardID !== '' ? wardID : wardID,
-                                            weight: 200,
+                                            weight: handleCountWeight(sellerValue[j]),
                                             length: 1,
-                                            width: 19,
-                                            height: 10,
+                                            width: 15,
+                                            height: 5,
                                             insurance_value: 10000,
                                             coupon: null,
                                         },
@@ -360,7 +453,7 @@ function Order() {
                                         },
                                     )
                                     .then((res) => {
-                                        //console.log('DV', res.data.data);
+                                        console.log('DV', res.data.data);
                                         setServiceFee((prev) => {
                                             const newSeller = [...prev, res.data.data.service_fee];
                                             return newSeller;

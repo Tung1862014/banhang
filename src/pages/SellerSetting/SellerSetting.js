@@ -106,43 +106,103 @@ function SellerSetting() {
     const handleSubmitSaveShop = () => {
         console.log('image', image[0]);
         if (establish === undefined) {
-            const formData = new FormData();
-            formData.append('image', image[0]);
-            formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-            formData.append('MTS_ten', title);
-            formData.append('MTS_diachi', ctyVaule);
-            formData.append('MTS_chitiet', address);
-            axios({
-                method: 'POST',
-                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
-                data: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((res) => {
-                    console.log(res.data);
-                    const formDataLogo = new FormData();
-                    formDataLogo.append('image', imageLogo[0]);
-                    formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                    axios({
-                        method: 'POST',
-                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
-                        data: formDataLogo,
+            console.log('districtID', districtID);
+            console.log('wardID', wardID);
+            console.log('ctyVaule', ctyVaule);
+            console.log('title', title);
+            console.log('phone', '0' + dateValue.ND_sdt.toString());
+            // axios
+            //     .post(
+            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/update`,
+
+            //         {
+            //             district_id: districtID,
+            //             ward_code: wardID,
+            //             name: title,
+            //             phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+            //             address: ctyVaule,
+            //         },
+            //         {
+            //             headers: {
+            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+            //                 ShopId: 119407,
+            //             },
+            //         },
+            //     )
+            //     .then((res) => {
+            //         console.log('DV', res.data);
+            //         // setServiceFee((prev) => {
+            //         //     const newSeller = [...prev, res.data.data.service_fee];
+            //         //     return newSeller;
+            //         // });
+            //     })
+            //     .catch((err) => {
+            //         console.log('loi Dv nha');
+            //     });
+            axios
+                .post(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
+
+                    {
+                        district_id: districtID,
+                        ward_code: wardID,
+                        name: title,
+                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+                        address: ctyVaule,
+                    },
+                    {
                         headers: {
-                            'Content-Type': 'multipart/form-data',
+                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
                         },
-                    })
-                        .then((res) => {
-                            console.log(res.data);
-                        })
-                        .catch((err) => {
-                            console.log('loi nha');
-                        });
+                    },
+                )
+                .then((res) => {
+                    console.log('DV', res.data);
+                    // setServiceFee((prev) => {
+                    //     const newSeller = [...prev, res.data.data.service_fee];
+                    //     return newSeller;
+                    // });
                 })
                 .catch((err) => {
-                    console.log('loi');
+                    console.log('loi Dv nha');
                 });
+            // const formData = new FormData();
+            // formData.append('image', image[0]);
+            // formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            // formData.append('MTS_ten', title);
+            // formData.append('MTS_diachi', ctyVaule);
+            // formData.append('MTS_chitiet', address);
+            // axios({
+            //     method: 'POST',
+            //     url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
+            //     data: formData,
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            // })
+            //     .then((res) => {
+            //         console.log(res.data);
+            //         const formDataLogo = new FormData();
+            //         formDataLogo.append('image', imageLogo[0]);
+            //         formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            //         axios({
+            //             method: 'POST',
+            //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+            //             data: formDataLogo,
+            //             headers: {
+            //                 'Content-Type': 'multipart/form-data',
+            //             },
+            //         })
+            //             .then((res) => {
+            //                 console.log(res.data);
+            //             })
+            //             .catch((err) => {
+            //                 console.log('loi nha');
+            //             });
+            //     })
+            //     .catch((err) => {
+            //         console.log('loi');
+            //     });
         } else if (image[0] !== undefined) {
             const formData = new FormData();
             formData.append('image', image[0]);
@@ -294,8 +354,9 @@ function SellerSetting() {
                     },
                 )
                 .then((res) => {
-                    //console.log('huyen', res.data.data);
+                    console.log('huyen', res.data.data);
                     setDistrictValue(res.data.data);
+                    //setDistrictID(res.data.data.DistrictID);
                     let arrValue = userVaule.MTS_diachi.split(',');
                     console.log('arrValue', arrValue);
 
@@ -323,8 +384,9 @@ function SellerSetting() {
                     },
                 })
                 .then((res) => {
-                    //console.log('xa', res.data.data);
+                    console.log('xa', res.data.data);
                     setWardValue(res.data.data);
+                    //setWardID(res.data.data.WardCode);
                     let arrValue = userVaule.MTS_diachi.split(',');
                     //console.log('arrValue', arrValue);
 
@@ -358,7 +420,7 @@ function SellerSetting() {
         }
     };
 
-    const handleCloseFormIcon = (pxValue) => {
+    const handleCloseFormIcon = (WardID, pxValue) => {
         if (pxValue !== undefined) {
             const iconDown = document.getElementById('Izrgn0');
             const iconUp = document.getElementById('Izrgn1');
@@ -374,6 +436,7 @@ function SellerSetting() {
                 arr[2] = pxValue;
                 setCtyVaule(arr.join(','));
             }
+            setWardID(WardID);
         } else {
             const iconDown = document.getElementById('Izrgn0');
             const iconUp = document.getElementById('Izrgn1');
@@ -383,7 +446,7 @@ function SellerSetting() {
             iconUp.style.display = 'none';
             formAddress.style.display = 'none';
 
-            if (ctyVaule === '' && userVaule.MTS_diachi !== undefined) {
+            if (ctyVaule === '' && userVaule !== undefined) {
                 const inputValue = document.getElementById('ChI2Nx_92k3pl');
 
                 inputValue.defaultValue =
@@ -627,9 +690,7 @@ function SellerSetting() {
                                                 type="text"
                                                 placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
                                                 defaultValue={
-                                                    ctyVaule === '' &&
-                                                    userVaule !== '' &&
-                                                    userVaule.MTS_diachi !== undefined
+                                                    ctyVaule === '' && userVaule !== '' && userVaule !== undefined
                                                         ? userVaule.MTS_diachi
                                                         : ctyVaule
                                                 }
@@ -718,7 +779,9 @@ function SellerSetting() {
                                                       <div
                                                           key={index}
                                                           className={cx('Pcd7He')}
-                                                          onClick={() => handleCloseFormIcon(ward.WardName)}
+                                                          onClick={() =>
+                                                              handleCloseFormIcon(ward.WardCode, ward.WardName)
+                                                          }
                                                       >
                                                           {ward.WardName}
                                                       </div>
