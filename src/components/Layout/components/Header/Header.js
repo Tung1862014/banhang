@@ -467,7 +467,7 @@ function Header() {
                                         </Link>
                                     </Tippy>
                                     <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
-                                        <Link to="/history/purchase" className={cx('action-btn')}>
+                                        <Link to="/history/purchase/type=all" className={cx('action-btn')}>
                                             <InboxIcon className={cx('inbox-icon')} />
                                         </Link>
                                     </Tippy>

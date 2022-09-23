@@ -12,16 +12,36 @@ function HistoryBill() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
-    const [price, setPrice] = useState('');
+    //const [price, setPrice] = useState('');
     const [transportFee, setTransportFee] = useState('');
     const [statusBill, setStatusBill] = useState('');
+    const [statusClick, setStatusClick] = useState('');
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(23);
+        console.log('resultId', resultId);
+        if (resultId === 'all') {
+            handlerClickAll();
+        } else if (resultId === '1') {
+            handlerClickType1();
+        } else if (resultId === '2') {
+            handlerClickType2();
+        } else if (resultId === '3') {
+            handlerClickType3();
+        } else if (resultId === '4') {
+            handlerClickType4();
+        } else {
+            handlerClickType5();
+        }
+    }, []);
 
     useEffect(() => {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/historybill/cart/show/all?ND_id=${
                     JSON.parse(GetCookie('usrin')).ND_id
-                }`,
+                }&DH_trangthai=${statusClick}`,
             )
             .then((res) => {
                 console.log('data', res.data);
@@ -30,7 +50,7 @@ function HistoryBill() {
             .catch((err) => {
                 console.log('loi');
             });
-    }, []);
+    }, [statusClick]);
 
     useEffect(() => {
         let sellerArr = [];
@@ -38,7 +58,7 @@ function HistoryBill() {
         let transportFees = [];
         let statusBills = [];
         //let sumnumber = 0;
-        let price = 0;
+        //let price = 0;
 
         for (let i = 0; i < orderValue.length; i++) {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
@@ -49,10 +69,10 @@ function HistoryBill() {
             }
 
             //sumnumber += 1;
-            price +=
-                orderValue[i].product.SP_gia *
-                orderValue[i].TTDH_soluong *
-                ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+            // price +=
+            //     orderValue[i].product.SP_gia *
+            //     orderValue[i].TTDH_soluong *
+            //     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
         }
         //console.log('sellerArr', sellerArr);
         if (sellerArr.length > 0) {
@@ -75,7 +95,7 @@ function HistoryBill() {
         }
 
         //setSumNumber(sumnumber);
-        setPrice(price);
+        //setPrice(price);
     }, [orderValue]);
 
     function formatCash(str) {
@@ -104,6 +124,157 @@ function HistoryBill() {
         }
         //console.log('index', price);
     };
+
+    //handle click status
+    const handlerClickAll = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#ee4d2d';
+        type1.style.color = '#161823';
+        type2.style.color = '#161823';
+        type3.style.color = '#161823';
+        type4.style.color = '#161823';
+        type5.style.color = '#161823';
+        typeAll.style.borderColor = '#ee4d2d';
+        type1.style.borderColor = '';
+        type2.style.borderColor = '';
+        type3.style.borderColor = '';
+        type4.style.borderColor = '';
+        type5.style.borderColor = '';
+        setStatusClick('all');
+    };
+
+    const handlerClickType1 = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#161823';
+        type1.style.color = '#ee4d2d';
+        type2.style.color = '#161823';
+        type3.style.color = '#161823';
+        type4.style.color = '#161823';
+        type5.style.color = '#161823';
+        typeAll.style.borderColor = '';
+        type1.style.borderColor = '#ee4d2d';
+        type2.style.borderColor = '';
+        type3.style.borderColor = '';
+        type4.style.borderColor = '';
+        type5.style.borderColor = '';
+        setStatusClick('waitForConfirmation');
+    };
+
+    const handlerClickType2 = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#161823';
+        type1.style.color = '#161823';
+        type2.style.color = '#ee4d2d';
+        type3.style.color = '#161823';
+        type4.style.color = '#161823';
+        type5.style.color = '#161823';
+        typeAll.style.borderColor = '';
+        type1.style.borderColor = '';
+        type2.style.borderColor = '#ee4d2d';
+        type3.style.borderColor = '';
+        type4.style.borderColor = '';
+        type5.style.borderColor = '';
+        setStatusClick('waitInLine');
+    };
+
+    const handlerClickType3 = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#161823';
+        type1.style.color = '#161823';
+        type2.style.color = '#161823';
+        type3.style.color = '#ee4d2d';
+        type4.style.color = '#161823';
+        type5.style.color = '#161823';
+        typeAll.style.borderColor = '';
+        type1.style.borderColor = '';
+        type2.style.borderColor = '';
+        type3.style.borderColor = '#ee4d2d';
+        type4.style.borderColor = '';
+        type5.style.borderColor = '';
+        setStatusClick('deliveryInProgress');
+    };
+
+    const handlerClickType4 = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#161823';
+        type1.style.color = '#161823';
+        type2.style.color = '#161823';
+        type3.style.color = '#161823';
+        type4.style.color = '#ee4d2d';
+        type5.style.color = '#161823';
+        typeAll.style.borderColor = '';
+        type1.style.borderColor = '';
+        type2.style.borderColor = '';
+        type3.style.borderColor = '';
+        type4.style.borderColor = '#ee4d2d';
+        type5.style.borderColor = '';
+        setStatusClick('delivered');
+    };
+
+    const handlerClickType5 = () => {
+        const typeAll = document.getElementById('vAkdD0all');
+        const type1 = document.getElementById('vAkdD01');
+        const type2 = document.getElementById('vAkdD02');
+        const type3 = document.getElementById('vAkdD03');
+        const type4 = document.getElementById('vAkdD04');
+        const type5 = document.getElementById('vAkdD05');
+
+        typeAll.style.color = '#161823';
+        type1.style.color = '#161823';
+        type2.style.color = '#161823';
+        type3.style.color = '#161823';
+        type4.style.color = '#161823';
+        type5.style.color = '#ee4d2d';
+        typeAll.style.borderColor = '';
+        type1.style.borderColor = '';
+        type2.style.borderColor = '';
+        type3.style.borderColor = '';
+        type4.style.borderColor = '';
+        type5.style.borderColor = '#ee4d2d';
+        setStatusClick('cancelled');
+    };
+
+    //open form danh gia
+    const handleOpenFormEvaluate = () => {
+        const formeValuate = document.getElementById('shop-modal__transition');
+        formeValuate.style.display = 'flex';
+    };
+
+    //close form danh gia
+    const handleCloseFormEvaluate = () => {
+        const formeValuate = document.getElementById('shop-modal__transition');
+        formeValuate.style.display = 'none';
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('GBcYbK')}>
@@ -117,22 +288,22 @@ function HistoryBill() {
                     ></input>
                 </div>
                 <div className={cx('_0obGFe')}>
-                    <a className={cx('vAkdD01')} href="/user/purchase/?type=6">
+                    <a id="vAkdD0all" className={cx('vAkdD0all')} href="/history/purchase/type=all">
                         <span className={cx('_0rjE9m')}>Tất cả</span>
                     </a>
-                    <a className={cx('vAkdD02')} href="/user/purchase/?type=9">
+                    <a id="vAkdD01" className={cx('vAkdD01')} href="/history/purchase/type=1">
                         <span className={cx('_0rjE9m')}>Chờ xác nhận</span>
                     </a>
-                    <a className={cx('vAkdD02')} href="/user/purchase/?type=9">
+                    <a id="vAkdD02" className={cx('vAkdD02')} href="/history/purchase/type=2">
                         <span className={cx('_0rjE9m')}>Chờ lấy hàng</span>
                     </a>
-                    <a className={cx('vAkdD02')} href="/user/purchase/?type=9">
+                    <a id="vAkdD03" className={cx('vAkdD03')} href="/history/purchase/type=3">
                         <span className={cx('_0rjE9m')}>Đang giao</span>
                     </a>
-                    <a className={cx('vAkdD03')} href="/user/purchase/?type=8">
+                    <a id="vAkdD04" className={cx('vAkdD04')} href="/history/purchase/type=4">
                         <span className={cx('_0rjE9m')}>Đã giao</span>
                     </a>
-                    <a className={cx('vAkdD04')} href="/user/purchase/?type=4">
+                    <a id="vAkdD05" className={cx('vAkdD05')} href="/history/purchase/type=5">
                         <span className={cx('_0rjE9m')}>Đã Hủy</span>
                     </a>
                 </div>
@@ -317,7 +488,10 @@ function HistoryBill() {
                                               </button>
                                           </div>
                                           <div className={cx('VN6h8')}>
-                                              <button className={cx('stardust-button--secondary_Kz9HeM')}>
+                                              <button
+                                                  className={cx('stardust-button--secondary_Kz9HeM')}
+                                                  onClick={handleOpenFormEvaluate}
+                                              >
                                                   Xem đánh giá Shop
                                               </button>
                                           </div>
@@ -329,7 +503,7 @@ function HistoryBill() {
                       ))
                     : ''}
             </div>
-            <div>
+            <div id="shop-modal__transition" className={cx('shop-modal__transition')}>
                 <div className={cx('shop-modal__transition-enter-done')}>
                     <div className={cx('shop-popup__overlay')}></div>
                     <div className={cx('shop-popup__container')}>
@@ -421,13 +595,14 @@ function HistoryBill() {
                                                     ></textarea>
                                                 </div>
                                             </div>
-                                            {/* / */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className={cx('shop-popup-form__footer')}>
-                                <button className={cx('cancel-btn')}>Trở Lại</button>
+                                <button className={cx('cancel-btn')} onClick={handleCloseFormEvaluate}>
+                                    Trở Lại
+                                </button>
                                 <button type="button" className={cx('btn-solid-primary_wxJWI8')}>
                                     Hoàn thành
                                 </button>

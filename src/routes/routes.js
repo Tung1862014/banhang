@@ -41,7 +41,7 @@ const publicRoutes = [
     { path: '/@:nickname', component: Search, layout: null },
     { path: '/login', component: Login, layout: HeaderOnly },
     { path: '/cart', component: Cart, layout: HeaderOnly },
-    { path: '/history/purchase', component: HistoryBill, layout: HeaderOnly },
+    { path: '/history/purchase/type:id', component: HistoryBill, layout: HeaderOnly },
     { path: '/login/admin', component: LoginAdmin, layout: null },
     { path: '/admin/manage/customer=:id', component: ManageCustomer, layout: DefaultLayoutAdmin },
     { path: '/admin/manage/seller=:id', component: ManageSeller, layout: DefaultLayoutAdmin },
