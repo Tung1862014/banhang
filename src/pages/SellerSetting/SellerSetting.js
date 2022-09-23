@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from '~/components/Button';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerSetting.module.scss';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
@@ -139,70 +139,74 @@ function SellerSetting() {
             //     .catch((err) => {
             //         console.log('loi Dv nha');
             //     });
-            axios
-                .post(
-                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
+            // axios
+            //     .post(
+            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
 
-                    {
-                        district_id: districtID,
-                        ward_code: wardID,
-                        name: title,
-                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
-                        address: ctyVaule,
-                    },
-                    {
-                        headers: {
-                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                        },
-                    },
-                )
-                .then((res) => {
-                    console.log('DV', res.data);
-                    // setServiceFee((prev) => {
-                    //     const newSeller = [...prev, res.data.data.service_fee];
-                    //     return newSeller;
-                    // });
-                })
-                .catch((err) => {
-                    console.log('loi Dv nha');
-                });
-            // const formData = new FormData();
-            // formData.append('image', image[0]);
-            // formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-            // formData.append('MTS_ten', title);
-            // formData.append('MTS_diachi', ctyVaule);
-            // formData.append('MTS_chitiet', address);
-            // axios({
-            //     method: 'POST',
-            //     url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
-            //     data: formData,
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data',
-            //     },
-            // })
-            //     .then((res) => {
-            //         console.log(res.data);
-            //         const formDataLogo = new FormData();
-            //         formDataLogo.append('image', imageLogo[0]);
-            //         formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-            //         axios({
-            //             method: 'POST',
-            //             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
-            //             data: formDataLogo,
+            //         {
+            //             district_id: districtID,
+            //             ward_code: wardID,
+            //             name: title,
+            //             phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+            //             address: ctyVaule,
+            //         },
+            //         {
             //             headers: {
-            //                 'Content-Type': 'multipart/form-data',
+            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
             //             },
-            //         })
-            //             .then((res) => {
-            //                 console.log(res.data);
-            //             })
-            //             .catch((err) => {
-            //                 console.log('loi nha');
-            //             });
+            //         },
+            //     )
+            //     .then((res) => {
+            //         console.log('DV', res.data);
+            //         // setServiceFee((prev) => {
+            //         //     const newSeller = [...prev, res.data.data.service_fee];
+            //         //     return newSeller;
+            //         // });
             //     })
             //     .catch((err) => {
-            //         console.log('loi');
+            //         console.log('loi Dv nha');
             //     });
+            const formData = new FormData();
+            formData.append('image', image[0]);
+            formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formData.append('MTS_ten', title);
+            formData.append('MTS_diachi', ctyVaule);
+            formData.append('MTS_chitiet', address);
+            axios({
+                method: 'POST',
+                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    const formDataLogo = new FormData();
+                    formDataLogo.append('image', imageLogo[0]);
+                    formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                    axios({
+                        method: 'POST',
+                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+                        data: formDataLogo,
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                        .then((res) => {
+                            console.log(res.data);
+                            toast.success('Dữ liệu lưu thành công', {
+                                position: toast.POSITION.TOP_CENTER,
+                            });
+                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
+                        })
+                        .catch((err) => {
+                            console.log('loi nha');
+                        });
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
         } else if (image[0] !== undefined) {
             const formData = new FormData();
             formData.append('image', image[0]);
@@ -218,11 +222,11 @@ function SellerSetting() {
             })
                 .then((res) => {
                     console.log(res.data);
-                    if (imageLogo !== undefined) {
+                    if (imageLogo[0] !== undefined) {
                         const formDataLogo = new FormData();
                         formDataLogo.append('image', imageLogo[0]);
                         formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                        formDataLogo.append('MTS_diachi', '');
+                        formDataLogo.append('MTS_chitiet', '');
                         axios({
                             method: 'PUT',
                             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
@@ -233,10 +237,19 @@ function SellerSetting() {
                         })
                             .then((res) => {
                                 console.log(res.data);
+                                toast.success('Dữ liệu lưu thành công', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                });
+                                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
                             })
                             .catch((err) => {
                                 console.log('loi nha');
                             });
+                    } else {
+                        toast.success('Dữ liệu lưu thành công', {
+                            position: toast.POSITION.TOP_CENTER,
+                        });
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
                     }
                 })
                 .catch((err) => {
@@ -257,6 +270,10 @@ function SellerSetting() {
             })
                 .then((res) => {
                     console.log(res.data);
+                    toast.success('Dữ liệu lưu thành công', {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
                 })
                 .catch((err) => {
                     console.log('loi nha');
@@ -269,6 +286,10 @@ function SellerSetting() {
                 })
                 .then((res) => {
                     console.log(res.data);
+                    toast.success('Dữ liệu lưu thành công', {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
+                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
                 })
                 .catch((err) => {
                     console.log('loi nha');
