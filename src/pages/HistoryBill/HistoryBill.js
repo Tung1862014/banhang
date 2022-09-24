@@ -12,11 +12,21 @@ function HistoryBill() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
+    const [evaluateValue, setEvaluateValue] = useState('');
     //const [price, setPrice] = useState('');
     const [transportFee, setTransportFee] = useState('');
     const [statusBill, setStatusBill] = useState('');
     const [statusClick, setStatusClick] = useState('');
+    const [billId, setBillId] = useState('');
+    const [billEvaluate, setBillEvaluate] = useState('');
 
+    ///////////////////////////////////////////////
+    const [IdValue, setIdValue] = useState('');
+    const [idProduct, setIdProduct] = useState('');
+    const [takeStar, setTakeStar] = useState('');
+    const [textValue, setTextValue] = useState('');
+
+    console.log('takeStar', takeStar);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(23);
@@ -57,6 +67,7 @@ function HistoryBill() {
         let sellerName = [];
         let transportFees = [];
         let statusBills = [];
+        let billIdValue = [];
         //let sumnumber = 0;
         //let price = 0;
 
@@ -66,6 +77,7 @@ function HistoryBill() {
                 sellerName.push(orderValue[i].seller.MTS_ten);
                 transportFees.push(orderValue[i].DH_phivanchuyen);
                 statusBills.push(orderValue[i].DH_trangthai);
+                billIdValue.push(orderValue[i].DH_id);
             }
 
             //sumnumber += 1;
@@ -92,12 +104,75 @@ function HistoryBill() {
                 const newSeller = [...prev, statusBills];
                 return newSeller[0];
             });
+
+            setBillId((prev) => {
+                const newSeller = [...prev, billIdValue];
+                return newSeller[0];
+            });
         }
 
         //setSumNumber(sumnumber);
         //setPrice(price);
     }, [orderValue]);
 
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/historybill/cart/show/evaluate?ND_id=${
+                    JSON.parse(GetCookie('usrin')).ND_id
+                }`,
+            )
+            .then((res) => {
+                console.log('evaluate', res.data);
+                setEvaluateValue(res.data.result);
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, []);
+
+    useEffect(() => {
+        let evaluateArr = [];
+        // let sellerName = [];
+        // let transportFees = [];
+        // let statusBills = [];
+        // let billIdValue = [];
+        //let sumnumber = 0;
+        //let price = 0;
+
+        for (let i = 0; i < evaluateValue.length; i++) {
+            if (!evaluateArr.includes(evaluateValue[i].DH_id)) {
+                evaluateArr.push(evaluateValue[i].DH_id);
+            }
+
+            //sumnumber += 1;
+            // price +=
+            //     orderValue[i].product.SP_gia *
+            //     orderValue[i].TTDH_soluong *
+            //     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+        }
+        //console.log('sellerArr', sellerArr);
+        if (evaluateArr.length > 0) {
+            setBillEvaluate((prev) => {
+                const newSeller = [...prev, evaluateArr];
+                return newSeller[0];
+            });
+        }
+
+        //setSumNumber(sumnumber);
+        //setPrice(price);
+    }, [evaluateValue]);
+
+    function handleStatusEvaluate(evalue) {
+        for (let i = 0; i < billEvaluate.length; i++) {
+            if (evalue.toString() === billEvaluate[i].toString()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //tinh tien
     function formatCash(str) {
         return str
             .toString()
@@ -106,6 +181,26 @@ function HistoryBill() {
             .reduce((prev, next, index) => {
                 return (index % 3 ? next : next + '.') + prev;
             });
+    }
+
+    //tinh ngay
+    function takeDate(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month > 10 && day < 10) {
+            return '0' + day + '-' + month + year;
+        } else if (month > 10 && day >= 10) {
+            return day + '-' + month + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
     }
 
     const handlePriceSeller = (sell, index) => {
@@ -265,16 +360,70 @@ function HistoryBill() {
     };
 
     //open form danh gia
-    const handleOpenFormEvaluate = () => {
+    const handleOpenFormEvaluate = (value) => {
         const formeValuate = document.getElementById('shop-modal__transition');
         formeValuate.style.display = 'flex';
+        setIdValue(value);
     };
 
     //close form danh gia
     const handleCloseFormEvaluate = () => {
         const formeValuate = document.getElementById('shop-modal__transition');
+        const nostar = document.getElementById('shop-popup-form__main-container');
+        const star = document.getElementById('shop-popup-form__main-container-star');
+
         formeValuate.style.display = 'none';
+        nostar.style.display = 'inline-block';
+        star.style.display = 'none';
     };
+
+    //take id product
+    const handleTakeIdProduct = (idproduct) => {
+        const nostar = document.getElementById('shop-popup-form__main-container');
+        const star = document.getElementById('shop-popup-form__main-container-star');
+
+        nostar.style.display = 'none';
+        star.style.display = 'inline-block';
+        setIdProduct(idproduct);
+    };
+
+    //take star evaluate
+    const handleEvaluateStar = (star) => {
+        setTakeStar(star);
+    };
+
+    //Save/Update evaluate
+    function handleSubmitEvaluate(star) {
+        // IdValue
+        // idProduct
+        // takeStar
+        // textValue
+        let url;
+        for (let i = 0; i < billEvaluate.length; i++) {
+            if (IdValue.toString() === billEvaluate[i].toString()) {
+                url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/update/star/text`;
+            }
+            if (i === billEvaluate.length - 1) {
+                if (url === undefined) {
+                    url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/star/text`;
+                }
+            }
+        }
+        axios
+            .post(url, {
+                ND_id: JSON.parse(GetCookie('usrin')).ND_id,
+                DH_id: IdValue,
+                SP_id: idProduct,
+                DG_sosao: takeStar,
+                DG_mota: textValue,
+            })
+            .then((res) => {
+                console.log('data', res.data);
+            })
+            .catch((err) => {
+                console.log('loi evaluate');
+            });
+    }
     return (
         <div className={cx('wrapper')}>
             <div className={cx('GBcYbK')}>
@@ -365,7 +514,11 @@ function HistoryBill() {
                                                           </span>
                                                       </a>
                                                   </div>
-                                                  <div className={cx('l4WFo0')}>Đã đánh giá</div>
+                                                  <div className={cx('l4WFo0')}>
+                                                      {handleStatusEvaluate(billId[index])
+                                                          ? 'Đã đánh giá'
+                                                          : 'Chưa đánh giá'}
+                                                  </div>
                                               </div>
                                           </div>
                                           <div className={cx('_60q_NM')}></div>
@@ -490,7 +643,7 @@ function HistoryBill() {
                                           <div className={cx('VN6h8')}>
                                               <button
                                                   className={cx('stardust-button--secondary_Kz9HeM')}
-                                                  onClick={handleOpenFormEvaluate}
+                                                  onClick={() => handleOpenFormEvaluate(billId[index])}
                                               >
                                                   Xem đánh giá Shop
                                               </button>
@@ -503,6 +656,8 @@ function HistoryBill() {
                       ))
                     : ''}
             </div>
+
+            {/* ////////////////////////////////////////////////////////////// */}
             <div id="shop-modal__transition" className={cx('shop-modal__transition')}>
                 <div className={cx('shop-modal__transition-enter-done')}>
                     <div className={cx('shop-popup__overlay')}></div>
@@ -511,35 +666,201 @@ function HistoryBill() {
                             <div className={cx('shop-popup-form__header')}>
                                 <div className={cx('shop-popup-form__title')}>Đánh giá sản phẩm</div>
                             </div>
+
                             <div className={cx('shop-popup-form__main')}>
-                                <div className={cx('shop-popup-form__main-container')}>
+                                <div
+                                    id="shop-popup-form__main-container"
+                                    className={cx('shop-popup-form__main-container')}
+                                >
+                                    {orderValue !== ''
+                                        ? orderValue.map((order, index) =>
+                                              IdValue === order.DH_id ? (
+                                                  <div key={index} className={cx('rating-modal-edit-item__container')}>
+                                                      <div className={cx('OeeSb')}>
+                                                          <a
+                                                              className={cx('_4dmaxT_H5b3yv')}
+                                                              href="/-Mã-99FMCG1-giảm-8-đơn-250K-Combo-bánh-tráng-phơi-sương-MUỐI-RUỐC-HÀNH-PHI-i.60853163.17904188796"
+                                                              target="_blank"
+                                                              rel="noopener noreferrer"
+                                                          >
+                                                              <div className={cx('shop-image__wrapper_Uh')}>
+                                                                  <div className={cx('shop-image__content')}>
+                                                                      <div className={cx('shop-image__content--blur')}>
+                                                                          <img
+                                                                              src={order.product.SP_image || ''}
+                                                                              alt=""
+                                                                          />{' '}
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className={cx('_3qB3N8')}>
+                                                                  <div className={cx('YbNw-v')}>
+                                                                      {order.product.SP_ten}
+                                                                  </div>
+                                                              </div>
+                                                          </a>
+                                                          <button
+                                                              className={cx('shop-button-outline')}
+                                                              onClick={() => handleTakeIdProduct(order.product.SP_id)}
+                                                          >
+                                                              <span> Đánh giá </span>
+                                                          </button>
+                                                      </div>
+                                                      {evaluateValue !== ''
+                                                          ? evaluateValue.map((evalua, index) =>
+                                                                order.DH_id === evalua.DH_id &&
+                                                                order.product.SP_id === evalua.SP_id ? (
+                                                                    <div key={index} className={cx('tRi-ot')}>
+                                                                        <div className={cx('DfB_wQ')}>
+                                                                            <div
+                                                                                className={cx(
+                                                                                    'rating-stars__container',
+                                                                                )}
+                                                                            >
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'rating-stars__star_ytO7le',
+                                                                                    )}
+                                                                                >
+                                                                                    <FontAwesomeIcon
+                                                                                        className={cx(
+                                                                                            evalua.DG_sosao === 5 ||
+                                                                                                evalua.DG_sosao === 4 ||
+                                                                                                evalua.DG_sosao === 3 ||
+                                                                                                evalua.DG_sosao === 2 ||
+                                                                                                evalua.DG_sosao === 1
+                                                                                                ? '_9MGQf1'
+                                                                                                : '_9MGQf',
+                                                                                        )}
+                                                                                        icon={faStar}
+                                                                                    />
+                                                                                </div>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'rating-stars__star_ytO7le',
+                                                                                    )}
+                                                                                >
+                                                                                    <FontAwesomeIcon
+                                                                                        className={cx(
+                                                                                            evalua.DG_sosao === 5 ||
+                                                                                                evalua.DG_sosao === 4 ||
+                                                                                                evalua.DG_sosao === 3 ||
+                                                                                                evalua.DG_sosao === 2
+                                                                                                ? '_9MGQf1'
+                                                                                                : '_9MGQf',
+                                                                                        )}
+                                                                                        icon={faStar}
+                                                                                    />
+                                                                                </div>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'rating-stars__star_ytO7le',
+                                                                                    )}
+                                                                                >
+                                                                                    <FontAwesomeIcon
+                                                                                        className={cx(
+                                                                                            evalua.DG_sosao === 5 ||
+                                                                                                evalua.DG_sosao === 4 ||
+                                                                                                evalua.DG_sosao === 3
+                                                                                                ? '_9MGQf1'
+                                                                                                : '_9MGQf',
+                                                                                        )}
+                                                                                        icon={faStar}
+                                                                                    />
+                                                                                </div>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'rating-stars__star_ytO7le',
+                                                                                    )}
+                                                                                >
+                                                                                    <FontAwesomeIcon
+                                                                                        className={cx(
+                                                                                            evalua.DG_sosao === 5 ||
+                                                                                                evalua.DG_sosao === 4
+                                                                                                ? '_9MGQf1'
+                                                                                                : '_9MGQf',
+                                                                                        )}
+                                                                                        icon={faStar}
+                                                                                    />
+                                                                                </div>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'rating-stars__star_ytO7le',
+                                                                                    )}
+                                                                                >
+                                                                                    <FontAwesomeIcon
+                                                                                        className={cx(
+                                                                                            evalua.DG_sosao === 5
+                                                                                                ? '_9MGQf1'
+                                                                                                : '_9MGQf',
+                                                                                        )}
+                                                                                        icon={faStar}
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className={cx('iSbtQg')}>
+                                                                                {evalua.DG_mota}
+                                                                            </div>
+                                                                            <div className={cx('qyTV2S')}>
+                                                                                {takeDate(evalua.DG_ngayDG)}
+                                                                            </div>
+                                                                            <div className={cx('DLPrlG_exFBM')}>
+                                                                                <div className={cx('qCsf4o')}>
+                                                                                    phản hồi của Người Bán
+                                                                                </div>
+                                                                                <div className={cx('_4I27Dz')}>
+                                                                                    {evalua.DG_traloi}❣️
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    ''
+                                                                ),
+                                                            )
+                                                          : ''}
+                                                  </div>
+                                              ) : (
+                                                  ''
+                                              ),
+                                          )
+                                        : ''}
+                                </div>
+                                <div
+                                    id="shop-popup-form__main-container-star"
+                                    className={cx('shop-popup-form__main-container-star')}
+                                >
                                     <div className={cx('rating-modal-edit-item__container')}>
                                         <div className={cx('rating-modal-handler__container--last')}>
-                                            <a
-                                                className={cx('_4dmaxT_9EbMRg')}
-                                                href="/-Mã-99FMCG1-giảm-8-đơn-250K-Combo-bánh-tráng-phơi-sương-MUỐI-RUỐC-HÀNH-PHI-i.60853163.17904188796"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <div className={cx('shop-image__wrapper_Uh')}>
-                                                    <div className={cx('shop-image__content')}>
-                                                        <div className={cx('shop-image__content--blur')}>
-                                                            <img
-                                                                src={
-                                                                    'https://cf.shopee.vn/file/27d849ca5cd1fe66281025a2a0bb2df1_tn'
-                                                                }
-                                                                alt=""
-                                                            />{' '}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className={cx('_3qB3N8')}>
-                                                    <div className={cx('YbNw-v')}>
-                                                        [Mã 99FMCG1 giảm 8% đơn 250K] Combo bánh tráng phơi sương MUỐI
-                                                        RUỐC HÀNH PHI
-                                                    </div>
-                                                </div>
-                                            </a>
+                                            {orderValue !== ''
+                                                ? orderValue.map((order, index) =>
+                                                      idProduct === order.product.SP_id ? (
+                                                          <a
+                                                              key={index}
+                                                              className={cx('_4dmaxT_9EbMRg')}
+                                                              href="/-Mã-99FMCG1-giảm-8-đơn-250K-Combo-bánh-tráng-phơi-sương-MUỐI-RUỐC-HÀNH-PHI-i.60853163.17904188796"
+                                                              target="_blank"
+                                                              rel="noopener noreferrer"
+                                                          >
+                                                              <div className={cx('shop-image__wrapper_Uh')}>
+                                                                  <div className={cx('shop-image__content')}>
+                                                                      <div className={cx('shop-image__content--blur')}>
+                                                                          <img src={order.product.SP_image} alt="" />{' '}
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div className={cx('_3qB3N8')}>
+                                                                  <div className={cx('YbNw-v')}>
+                                                                      {order.product.SP_ten}
+                                                                  </div>
+                                                              </div>
+                                                          </a>
+                                                      ) : (
+                                                          ''
+                                                      ),
+                                                  )
+                                                : ''}
+
                                             <div style={{ margin: '20px 0px' }}>
                                                 <div className={cx('uuEQZS')}>
                                                     <div className={cx('OU7Gr2')}>
@@ -548,40 +869,74 @@ function HistoryBill() {
                                                     <div style={{ paddingLeft: '5px' }}>
                                                         <div className={cx('rating-stars__star--clickable_ytO7le')}>
                                                             <FontAwesomeIcon
-                                                                className={cx('rating-stars__star-rewiew1')}
+                                                                className={cx(
+                                                                    takeStar === '5' ||
+                                                                        takeStar === '4' ||
+                                                                        takeStar === '3' ||
+                                                                        takeStar === '2' ||
+                                                                        takeStar === '1'
+                                                                        ? 'rating-stars__star-rewiew'
+                                                                        : 'rating-stars__star-rewiew1',
+                                                                )}
                                                                 icon={faStar}
+                                                                onClick={() => handleEvaluateStar('1')}
                                                             />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <div className={cx('rating-stars__star--clickable_ytO7le')}>
                                                             <FontAwesomeIcon
-                                                                className={cx('rating-stars__star-rewiew2')}
+                                                                className={cx(
+                                                                    takeStar === '5' ||
+                                                                        takeStar === '4' ||
+                                                                        takeStar === '3' ||
+                                                                        takeStar === '2'
+                                                                        ? 'rating-stars__star-rewiew'
+                                                                        : 'rating-stars__star-rewiew1',
+                                                                )}
                                                                 icon={faStar}
+                                                                onClick={() => handleEvaluateStar('2')}
                                                             />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <div className={cx('rating-stars__star--clickable_ytO7le')}>
                                                             <FontAwesomeIcon
-                                                                className={cx('rating-stars__star-rewiew3')}
+                                                                className={cx(
+                                                                    takeStar === '5' ||
+                                                                        takeStar === '4' ||
+                                                                        takeStar === '3'
+                                                                        ? 'rating-stars__star-rewiew'
+                                                                        : 'rating-stars__star-rewiew1',
+                                                                )}
                                                                 icon={faStar}
+                                                                onClick={() => handleEvaluateStar('3')}
                                                             />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <div className={cx('rating-stars__star--clickable_ytO7le')}>
                                                             <FontAwesomeIcon
-                                                                className={cx('rating-stars__star-rewiew4')}
+                                                                className={cx(
+                                                                    takeStar === '5' || takeStar === '4'
+                                                                        ? 'rating-stars__star-rewiew'
+                                                                        : 'rating-stars__star-rewiew1',
+                                                                )}
                                                                 icon={faStar}
+                                                                onClick={() => handleEvaluateStar('4')}
                                                             />
                                                         </div>
                                                     </div>
                                                     <div>
                                                         <div className={cx('rating-stars__star--clickable_ytO7le')}>
                                                             <FontAwesomeIcon
-                                                                className={cx('rating-stars__star-rewiew5')}
+                                                                className={cx(
+                                                                    takeStar === '5'
+                                                                        ? 'rating-stars__star-rewiew'
+                                                                        : 'rating-stars__star-rewiew1',
+                                                                )}
                                                                 icon={faStar}
+                                                                onClick={() => handleEvaluateStar('5')}
                                                             />
                                                         </div>
                                                     </div>
@@ -592,6 +947,7 @@ function HistoryBill() {
                                                     <textarea
                                                         className={cx('plAxjc')}
                                                         placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé."
+                                                        onChange={(e) => setTextValue(e.target.value)}
                                                     ></textarea>
                                                 </div>
                                             </div>
@@ -603,7 +959,11 @@ function HistoryBill() {
                                 <button className={cx('cancel-btn')} onClick={handleCloseFormEvaluate}>
                                     Trở Lại
                                 </button>
-                                <button type="button" className={cx('btn-solid-primary_wxJWI8')}>
+                                <button
+                                    type="button"
+                                    className={cx('btn-solid-primary_wxJWI8')}
+                                    onClick={() => handleSubmitEvaluate()}
+                                >
                                     Hoàn thành
                                 </button>
                             </div>

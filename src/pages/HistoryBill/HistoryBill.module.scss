@@ -607,10 +607,17 @@
     margin-right: -50px;
     padding-left: 50px;
     margin-left: -50px;
+    margin-bottom: 100px;
     position: relative;
 }
 
 .shop-popup-form__main-container {
+    display: inline-block;
+    margin-bottom: 84px;
+}
+
+.shop-popup-form__main-container-star {
+    display: none;
     margin-bottom: 84px;
 }
 
@@ -668,6 +675,12 @@
     color: rgba(0, 0, 0, 0.8);
     font-weight: 700;
     word-break: break-word;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    line-height: 22px;
 }
 
 //star
@@ -692,7 +705,10 @@
     user-select: none;
     stroke: currentColor;
 }
-
+.rating-stars__star-rewiew {
+    font-size: 2.3rem;
+    color: #ee4d2d;
+}
 .rating-stars__star-rewiew1 {
     font-size: 2.3rem;
     color: #cccccc;
@@ -804,4 +820,103 @@
     &:hover {
         background: #f05d40;
     }
+}
+
+///show evauluate
+.OeeSb {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+._4dmaxT_H5b3yv {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex: 1;
+    font-size: 1.5rem;
+    line-height: 10px;
+}
+
+.shop-button-outline {
+    flex-shrink: 0;
+    height: 32px;
+    width: 45px;
+    border: 1px solid #ee4d2d;
+    color: #ee4d2d;
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.tRi-ot {
+    display: flex;
+    margin: 28px 0px 10px 16px;
+}
+
+.DfB_wQ {
+    flex: 1;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 22px;
+}
+
+.rating-stars__container {
+    display: flex;
+}
+
+.rating-stars__star_ytO7le {
+    width: 14px;
+    height: 14px;
+    margin-right: 2px;
+}
+
+._9MGQf {
+    width: 100%;
+    height: 100%;
+    color: #bbb;
+}
+
+._9MGQf1 {
+    width: 100%;
+    height: 100%;
+    color: #ee4d2d;
+}
+
+.iSbtQg {
+    margin-top: 15px;
+    font-size: 1.5rem;
+}
+
+.qyTV2S {
+    margin-top: 7px;
+    color: #bbb;
+    font-size: 1.4rem;
+}
+
+.DLPrlG_exFBM {
+    background-color: #f5f5f5;
+    position: relative;
+    margin-top: 11px;
+    padding: 14px 12px;
+}
+
+.qCsf4o {
+    color: #8b572a;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+._4I27Dz {
+    color: rgba(0, 0, 0, 0.87);
+    white-space: pre-wrap;
+    margin-top: 1.5rem;
+    word-break: break-word;
 }
