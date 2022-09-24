@@ -172,6 +172,18 @@ function HistoryBill() {
         return false;
     }
 
+    function handleButtonEvaluate(productid) {
+        console.log('IdVaproductidlue', typeof productid);
+        for (let i = 0; i < evaluateValue.length; i++) {
+            if (IdValue === evaluateValue[i].DH_id) {
+                if (productid === evaluateValue[i].SP_id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     //tinh tien
     function formatCash(str) {
         return str
@@ -362,7 +374,9 @@ function HistoryBill() {
     //open form danh gia
     const handleOpenFormEvaluate = (value) => {
         const formeValuate = document.getElementById('shop-modal__transition');
+        const btnFinish = document.getElementById('btn-solid-primary_wxJWI8');
         formeValuate.style.display = 'flex';
+        btnFinish.style.display = 'none';
         setIdValue(value);
     };
 
@@ -371,19 +385,23 @@ function HistoryBill() {
         const formeValuate = document.getElementById('shop-modal__transition');
         const nostar = document.getElementById('shop-popup-form__main-container');
         const star = document.getElementById('shop-popup-form__main-container-star');
+        const btnFinish = document.getElementById('btn-solid-primary_wxJWI8');
 
         formeValuate.style.display = 'none';
         nostar.style.display = 'inline-block';
         star.style.display = 'none';
+        btnFinish.style.display = 'none';
     };
 
     //take id product
     const handleTakeIdProduct = (idproduct) => {
         const nostar = document.getElementById('shop-popup-form__main-container');
         const star = document.getElementById('shop-popup-form__main-container-star');
+        const btnFinish = document.getElementById('btn-solid-primary_wxJWI8');
 
         nostar.style.display = 'none';
         star.style.display = 'inline-block';
+        btnFinish.style.display = 'inline-block';
         setIdProduct(idproduct);
     };
 
@@ -424,8 +442,66 @@ function HistoryBill() {
                 console.log('loi evaluate');
             });
     }
+
+    //handle delete form
+    function handleOpenDelete(index) {
+        console.log('handleDelete', index);
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        // if (!checkDelete && checkBox !== '') {
+        deleteModalContainer.style.display = 'flex';
+        // deleteModalContainer.style.position = 'fixed';
+        // deleteModalBox.style.display = 'flex';
+        // }
+    }
+
+    const handleDeleteHuy = () => {
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        // deleteModalBox.style.display = 'none';
+    };
+
+    const handleDeleteAgree = () => {
+        const deleteModalContainer = document.getElementById('delete-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        //setCheckDelete(true);
+        // deleteModalBox.style.display = 'none';
+        //handleDeleteAll();
+    };
     return (
         <div className={cx('wrapper')}>
+            <div id="delete-modal__container" className={cx('delete-modal__container')}>
+                <div id="delete-modal__box" className={cx('delete-modal__box')}>
+                    <div className={cx('delete-modal__content')}>
+                        <div className={cx('delete-modal__header')}>
+                            <div className={cx('delete-modal__header-inner-confirm')}>
+                                <div className={cx('delete-modal__title')}>Xác nhận</div>
+                            </div>
+                            <div className={cx('delete-modal__header-inner-title')}>
+                                <div className={cx('delete-modal__title')}>Bạn có muốn Hủy đơn hàng này?</div>
+                            </div>
+                        </div>
+                        <div className={cx('delete-modal__footer')}>
+                            <div className={cx('delete-modal__footer-buttons')}>
+                                <button type="button" className={cx('delete-button--normal')} onClick={handleDeleteHuy}>
+                                    <span>Hủy</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--primary')}
+                                    onClick={handleDeleteAgree}
+                                >
+                                    <span>Đồng ý</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className={cx('GBcYbK')}>
                 <div className={cx('Tfo7DW')}>
                     <button className={cx('Tfo7DW-btn')}>
@@ -632,22 +708,49 @@ function HistoryBill() {
                                   </div>
                                   <div className={cx('_1ERzqw')}>
                                       <div className={cx('NIZAp8')}>
-                                          <div className={cx('_8vTqu9')}>
-                                              <button className={cx('stardust-button--primary_Kz9HeM')}>Hủy</button>
-                                          </div>
-                                          <div className={cx('VN6h8')}>
-                                              <button className={cx('stardust-button--secondary_Kz9HeM')}>
-                                                  Đánh Giá sản phẩm
-                                              </button>
-                                          </div>
-                                          <div className={cx('VN6h8')}>
-                                              <button
-                                                  className={cx('stardust-button--secondary_Kz9HeM')}
-                                                  onClick={() => handleOpenFormEvaluate(billId[index])}
-                                              >
-                                                  Xem đánh giá Shop
-                                              </button>
-                                          </div>
+                                          {statusBill[index] === 1 ? (
+                                              <div className={cx('_8vTqu9')}>
+                                                  <button
+                                                      className={cx('stardust-button--primary_Kz9HeM')}
+                                                      onClick={() => handleOpenDelete(billId[index])}
+                                                  >
+                                                      Hủy
+                                                  </button>
+                                              </div>
+                                          ) : statusBill[index] === 2 ? (
+                                              <div className={cx('_8vTqu9')}>
+                                                  <button
+                                                      className={cx('stardust-button--primary_Kz9HeM')}
+                                                      onClick={() => handleOpenDelete(billId[index])}
+                                                  >
+                                                      Hủy
+                                                  </button>
+                                              </div>
+                                          ) : statusBill[index] === 3 ? (
+                                              ''
+                                          ) : statusBill[index] === 4 ? (
+                                              handleStatusEvaluate(billId[index]) ? (
+                                                  <div className={cx('VN6h8')}>
+                                                      <button
+                                                          className={cx('stardust-button--secondary_Kz9HeM')}
+                                                          onClick={() => handleOpenFormEvaluate(billId[index])}
+                                                      >
+                                                          Xem đánh giá Shop
+                                                      </button>
+                                                  </div>
+                                              ) : (
+                                                  <div className={cx('VN6h8')}>
+                                                      <button
+                                                          className={cx('stardust-button--secondary_Kz9HeM')}
+                                                          onClick={() => handleOpenFormEvaluate(billId[index])}
+                                                      >
+                                                          Đánh Giá sản phẩm
+                                                      </button>
+                                                  </div>
+                                              )
+                                          ) : (
+                                              ''
+                                          )}
                                       </div>
                                   </div>
                                   {/* / */}
@@ -703,7 +806,11 @@ function HistoryBill() {
                                                               className={cx('shop-button-outline')}
                                                               onClick={() => handleTakeIdProduct(order.product.SP_id)}
                                                           >
-                                                              <span> Đánh giá </span>
+                                                              <span>
+                                                                  {handleButtonEvaluate(order.product.SP_id)
+                                                                      ? 'Cập nhật'
+                                                                      : 'Đánh giá'}
+                                                              </span>
                                                           </button>
                                                       </div>
                                                       {evaluateValue !== ''
@@ -957,9 +1064,10 @@ function HistoryBill() {
                             </div>
                             <div className={cx('shop-popup-form__footer')}>
                                 <button className={cx('cancel-btn')} onClick={handleCloseFormEvaluate}>
-                                    Trở Lại
+                                    Thoát
                                 </button>
                                 <button
+                                    id="btn-solid-primary_wxJWI8"
                                     type="button"
                                     className={cx('btn-solid-primary_wxJWI8')}
                                     onClick={() => handleSubmitEvaluate()}
