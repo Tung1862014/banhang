@@ -12,6 +12,7 @@ function SellerBill() {
     const [bill, setBill] = useState([]);
     const [statusConfirm, setStatusConfirm] = useState('');
     const [statusConfirmed, setStatusConfirmed] = useState('');
+    const [statusTransport, setStatusTransport] = useState('');
     const [statusDelivered, setStatusDelivered] = useState('');
     const [statusCancelOrder, setStatusCancelOrder] = useState('');
     const [number, setNumber] = useState('');
@@ -48,6 +49,7 @@ function SellerBill() {
             .then((res) => {
                 setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
                 setStatusConfirmed(res.data.statusconfirmed[0].statusconfirmed);
+                setStatusTransport(res.data.statustransport[0].statustransport);
                 setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
                 setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
                 setNumber(res.data.number[0].number);
@@ -66,6 +68,8 @@ function SellerBill() {
             handlerClickAllConfirm();
         } else if (resultId === 'confirmed') {
             handlerClickAllConfirmed();
+        } else if (resultId === 'transport') {
+            handlerClickAllTransport();
         } else if (resultId === 'delivered') {
             handlerClickAllDelivered();
         } else {
@@ -79,14 +83,17 @@ function SellerBill() {
         const tab3 = document.getElementById('tabs__tab3');
         const tab4 = document.getElementById('tabs__tab4');
         const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
         const badge3 = document.getElementById('tab-badge3');
         const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
         tab2.style.color = '';
         tab3.style.color = '';
         tab4.style.color = '';
         tab5.style.color = '';
+        tab6.style.color = '';
         tab1.style.color = 'red';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
@@ -96,6 +103,7 @@ function SellerBill() {
         badge2.style.color = '#999';
         badge3.style.color = '#999';
         badge4.style.color = '#999';
+        badge5.style.color = '#999';
         setCheckStatus('');
     };
     const handlerClickAllConfirm = () => {
@@ -104,15 +112,18 @@ function SellerBill() {
         const tab3 = document.getElementById('tabs__tab3');
         const tab4 = document.getElementById('tabs__tab4');
         const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
         const badge3 = document.getElementById('tab-badge3');
         const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
         tab2.style.color = 'red';
         tab3.style.color = '';
         tab1.style.color = '';
         tab4.style.color = '';
         tab5.style.color = '';
+        tab6.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
@@ -121,7 +132,8 @@ function SellerBill() {
         badge2.style.color = '#999';
         badge3.style.color = '#999';
         badge4.style.color = '#999';
-        setCheckStatus('trangthaixacnhan');
+        badge5.style.color = '#999';
+        setCheckStatus('WaitConfirm');
     };
     const handlerClickAllConfirmed = () => {
         const tab1 = document.getElementById('tabs__tab1');
@@ -129,15 +141,18 @@ function SellerBill() {
         const tab3 = document.getElementById('tabs__tab3');
         const tab4 = document.getElementById('tabs__tab4');
         const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
         const badge3 = document.getElementById('tab-badge3');
         const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
         tab2.style.color = '';
         tab3.style.color = 'red';
         tab1.style.color = '';
         tab4.style.color = '';
         tab5.style.color = '';
+        tab6.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
@@ -146,23 +161,28 @@ function SellerBill() {
         badge2.style.color = 'red';
         badge3.style.color = '#999';
         badge4.style.color = '#999';
-        setCheckStatus('trangthaidaxacnhan');
+        badge5.style.color = '#999';
+        setCheckStatus('Confirmed');
     };
-    const handlerClickAllDelivered = () => {
+
+    const handlerClickAllTransport = () => {
         const tab1 = document.getElementById('tabs__tab1');
         const tab2 = document.getElementById('tabs__tab2');
         const tab3 = document.getElementById('tabs__tab3');
         const tab4 = document.getElementById('tabs__tab4');
         const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
         const badge3 = document.getElementById('tab-badge3');
         const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
         tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = '';
         tab4.style.color = 'red';
         tab5.style.color = '';
+        tab6.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
@@ -171,24 +191,27 @@ function SellerBill() {
         badge2.style.color = '#999';
         badge3.style.color = 'red';
         badge4.style.color = '#999';
-        setCheckStatus('trangthaidagiao');
+        badge5.style.color = '#999';
+        setCheckStatus('Transport');
     };
-
-    const handlerClickAllCancelOrder = () => {
+    const handlerClickAllDelivered = () => {
         const tab1 = document.getElementById('tabs__tab1');
         const tab2 = document.getElementById('tabs__tab2');
         const tab3 = document.getElementById('tabs__tab3');
         const tab4 = document.getElementById('tabs__tab4');
         const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
         const badge3 = document.getElementById('tab-badge3');
         const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
         tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = '';
         tab4.style.color = '';
         tab5.style.color = 'red';
+        tab6.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
         tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
@@ -197,7 +220,38 @@ function SellerBill() {
         badge2.style.color = '#999';
         badge3.style.color = '#999';
         badge4.style.color = 'red';
-        setCheckStatus('trangthaihuy');
+        badge5.style.color = '#999';
+        setCheckStatus('Delivered');
+    };
+
+    const handlerClickAllCancelOrder = () => {
+        const tab1 = document.getElementById('tabs__tab1');
+        const tab2 = document.getElementById('tabs__tab2');
+        const tab3 = document.getElementById('tabs__tab3');
+        const tab4 = document.getElementById('tabs__tab4');
+        const tab5 = document.getElementById('tabs__tab5');
+        const tab6 = document.getElementById('tabs__tab6');
+        const badge1 = document.getElementById('tab-badge1');
+        const badge2 = document.getElementById('tab-badge2');
+        const badge3 = document.getElementById('tab-badge3');
+        const badge4 = document.getElementById('tab-badge4');
+        const badge5 = document.getElementById('tab-badge5');
+        tab2.style.color = '';
+        tab3.style.color = '';
+        tab1.style.color = '';
+        tab4.style.color = '';
+        tab5.style.color = '';
+        tab6.style.color = 'red';
+        tab1.style.fontFamily = 'Helvetica';
+        tab2.style.fontFamily = 'Helvetica';
+        tab3.style.fontFamily = 'Helvetica';
+        tab4.style.fontFamily = 'Helvetica';
+        badge1.style.color = '#999';
+        badge2.style.color = '#999';
+        badge3.style.color = '#999';
+        badge4.style.color = '#999';
+        badge5.style.color = 'red';
+        setCheckStatus('CancelOrder');
     };
 
     const handleSearch = () => {
@@ -256,7 +310,7 @@ function SellerBill() {
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllConfirmed}
                                 >
-                                    Đã xác nhận
+                                    Chờ lấy hàng
                                     <span id="tab-badge2" className={cx('tab-badge2')}>
                                         ( {statusConfirmed !== '' ? statusConfirmed : '0'} )
                                     </span>
@@ -264,13 +318,26 @@ function SellerBill() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/seller/bill/@delivered"
+                                    to="/seller/bill/@transport"
                                     id="tabs__tab4"
                                     className={cx('tabs__tab4')}
+                                    onClick={handlerClickAllTransport}
+                                >
+                                    Đang giao
+                                    <span id="tab-badge3" className={cx('tab-badge3')}>
+                                        ( {statusTransport !== '' ? statusTransport : '0'} )
+                                    </span>
+                                </Link>{' '}
+                            </div>
+                            <div className={cx('shopee-tabs__nav-tab')}>
+                                <Link
+                                    to="/seller/bill/@delivered"
+                                    id="tabs__tab5"
+                                    className={cx('tabs__tab5')}
                                     onClick={handlerClickAllDelivered}
                                 >
                                     Đã giao
-                                    <span id="tab-badge3" className={cx('tab-badge3')}>
+                                    <span id="tab-badge4" className={cx('tab-badge4')}>
                                         {' '}
                                         ( {statusDelivered !== '' ? statusDelivered : '0'} )
                                     </span>
@@ -279,12 +346,12 @@ function SellerBill() {
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/seller/bill/@canceloder"
-                                    id="tabs__tab5"
-                                    className={cx('tabs__tab5')}
+                                    id="tabs__tab6"
+                                    className={cx('tabs__tab6')}
                                     onClick={handlerClickAllCancelOrder}
                                 >
                                     Đơn hủy
-                                    <span id="tab-badge4" className={cx('tab-badge4')}>
+                                    <span id="tab-badge5" className={cx('tab-badge5')}>
                                         {' '}
                                         ( {statusCancelOrder !== '' ? statusCancelOrder : '0'} )
                                     </span>

@@ -25,8 +25,11 @@ function HistoryBill() {
     const [idProduct, setIdProduct] = useState('');
     const [takeStar, setTakeStar] = useState('');
     const [textValue, setTextValue] = useState('');
+    ////////////////////////////////////////////////
+    const [cancelIdBill, setCancelIdBill] = useState('');
+    const [idMTSValue, setIdMTSValue] = useState('');
 
-    console.log('takeStar', takeStar);
+    console.log('cancelIdBill', cancelIdBill);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(23);
@@ -437,6 +440,8 @@ function HistoryBill() {
             })
             .then((res) => {
                 console.log('data', res.data);
+                const pathId = window.location.pathname.toString();
+                window.open(pathId, '_self', 1);
             })
             .catch((err) => {
                 console.log('loi evaluate');
@@ -444,7 +449,7 @@ function HistoryBill() {
     }
 
     //handle delete form
-    function handleOpenDelete(index) {
+    function handleOpenDelete(billValue, index) {
         console.log('handleDelete', index);
         const deleteModalContainer = document.getElementById('delete-modal__container');
         //const deleteModalBox = document.getElementById('delete-modal__box');
@@ -453,6 +458,9 @@ function HistoryBill() {
         // deleteModalContainer.style.position = 'fixed';
         // deleteModalBox.style.display = 'flex';
         // }
+        setIdMTSValue(Number(orderValue[index].seller.MTS_id));
+        console.log('index', typeof Number(orderValue[index].seller.MTS_id));
+        setCancelIdBill(billValue);
     }
 
     const handleDeleteHuy = () => {
@@ -470,8 +478,37 @@ function HistoryBill() {
         deleteModalContainer.style.display = 'none';
         //setCheckDelete(true);
         // deleteModalBox.style.display = 'none';
-        //handleDeleteAll();
+        handleCancelBill();
     };
+    //huy don hang
+    function handleCancelBill() {
+        axios
+            .get(
+                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/switch-status/cancel?order_codes=${cancelIdBill}`,
+                {
+                    headers: {
+                        Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        ShopId: idMTSValue,
+                    },
+                },
+            )
+            .then((res) => {
+                console.log('cancel', res.data);
+                axios
+                    .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
+                        DH_id: cancelIdBill,
+                    })
+                    .then((res) => {
+                        console.log('DH', res.data);
+                    })
+                    .catch((err) => {
+                        console.log('loi update bill');
+                    });
+            })
+            .catch((err) => {
+                console.log('loi cancel');
+            });
+    }
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -570,6 +607,7 @@ function HistoryBill() {
                                                           <span>xem gian hàng</span>
                                                       </button>
                                                   </a>
+                                                  <div className={cx('mzsqa67')}>ID đơn hàng: {billId[index]}</div>
                                               </div>
                                               <div className={cx('WPNwG4')}>
                                                   <div className={cx('RcKSvW')}>
@@ -712,7 +750,7 @@ function HistoryBill() {
                                               <div className={cx('_8vTqu9')}>
                                                   <button
                                                       className={cx('stardust-button--primary_Kz9HeM')}
-                                                      onClick={() => handleOpenDelete(billId[index])}
+                                                      onClick={() => handleOpenDelete(billId[index], index)}
                                                   >
                                                       Hủy
                                                   </button>

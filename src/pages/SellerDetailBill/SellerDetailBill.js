@@ -406,7 +406,9 @@ function SellerDetailBill() {
                                                       </div>{' '}
                                                       <div className={cx('income-group')}> </div>{' '}
                                                       <div className={cx('income-item-subtotal')}>
-                                                          <div className={cx('income-value')}>₫0</div>{' '}
+                                                          <div className={cx('income-value')}>
+                                                              ₫{formatCash(info.DH_phivanchuyen) || 0}
+                                                          </div>{' '}
                                                       </div>{' '}
                                                       <div className={cx('income-item-subtotal')}>
                                                           <div className={cx('income-value')}>

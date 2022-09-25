@@ -119,6 +119,7 @@ function Order() {
         return numbers;
     };
 
+    //tong tien
     const handlePriceSeller = (sell, index) => {
         let price = 0;
         //console.log('sell', sell);
@@ -131,6 +132,24 @@ function Order() {
             }
             if (i === orderValue.length - 1) {
                 return price + serviceFee[index];
+            }
+        }
+        //console.log('index', price);
+    };
+
+    //tong tien khong phi van chuyen
+    const handlePriceSellerNoTransport = (sell, index) => {
+        let price = 0;
+        //console.log('sell', sell);
+        for (let i = 0; i < orderValue.length; i++) {
+            if (sell === orderValue[i].NB_id) {
+                price +=
+                    orderValue[i].product.SP_gia *
+                    orderValue[i].TTDH_soluong *
+                    ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+            }
+            if (i === orderValue.length - 1) {
+                return price;
             }
         }
         //console.log('index', price);
@@ -321,6 +340,7 @@ function Order() {
                         if (res.data.data.shops[i].name === sellerName[j]) {
                             console.log('res', res.data.data.shops[i].name);
                             console.log([handleInfoProoduct(sellerValue[j])]);
+                            console.log('sellerValue[k]', sellerValue[j]);
                             axios
                                 .post(
                                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
@@ -342,7 +362,7 @@ function Order() {
                                         }`,
                                         to_district_id: districtID !== '' ? districtID : districtID,
                                         to_ward_code: wardID !== '' ? wardID : wardID,
-                                        cod_amount: 200000,
+                                        cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
                                         content: null,
                                         weight: handleCountWeight(sellerValue[j]),
                                         length: 1,
@@ -364,46 +384,71 @@ function Order() {
                                     },
                                 )
                                 .then((res) => {
-                                    console.log('DH', res.data.data);
+                                    //console.log('DH', res.data.data.order_code);
+                                    if (res.data.data.order_code !== undefined) {
+                                        axios
+                                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                                DH_id: res.data.data.order_code,
+                                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                                NB_id: sellerValue[j],
+                                                DH_tongtien: handlePriceSeller(sellerValue[j], j),
+                                                DH_loaithanhtoan: 1,
+                                                DH_diachi:
+                                                    ctyVaule === '' &&
+                                                    userVaule !== '' &&
+                                                    userVaule.ND_diachiGH !== undefined
+                                                        ? userVaule.ND_diachiGH
+                                                        : ctyVaule,
+                                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                                DH_trangthaiTT: 1,
+                                            })
+                                            .then((res) => {
+                                                console.log('', res.data);
+                                            })
+                                            .catch((err) => {
+                                                console.log('loi add');
+                                            });
+                                    }
                                 })
                                 .catch((err) => {
                                     console.log('loi DH');
                                 });
                         }
                     }
-                    if (i === res.data.data.shops.length - 1) {
-                        window.open('/cart/order', '_self', 1);
-                    }
+                    // if (i === res.data.data.shops.length - 1) {
+                    //     window.open('/cart/order', '_self', 1);
+                    // }
                 }
             })
             .catch((err) => {
                 console.log('loi');
             });
 
-        if (sellerValue !== undefined && sellerValue !== '') {
-            for (let k = 0; k < sellerValue.length; k++) {
-                console.log('sellerValue', sellerValue[k]);
-                axios
-                    .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                        ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                        NB_id: sellerValue[k],
-                        DH_tongtien: handlePriceSeller(sellerValue[k], k),
-                        DH_loaithanhtoan: 1,
-                        DH_diachi:
-                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                                ? userVaule.ND_diachiGH
-                                : ctyVaule,
-                        DH_phivanchuyen: serviceFee !== '' ? serviceFee[k] : '0',
-                        DH_trangthaiTT: 1,
-                    })
-                    .then((res) => {
-                        console.log('', res.data);
-                    })
-                    .catch((err) => {
-                        console.log('loi add');
-                    });
-            }
-        }
+        // if (sellerValue !== undefined && sellerValue !== '') {
+        //     for (let k = 0; k < sellerValue.length; k++) {
+        //         console.log('sellerValue', sellerValue[k]);
+        //         axios
+        //             .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+        //                 DH_id: `LLGLUN${k}`,
+        //                 ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+        //                 NB_id: sellerValue[k],
+        //                 DH_tongtien: handlePriceSeller(sellerValue[k], k),
+        //                 DH_loaithanhtoan: 1,
+        //                 DH_diachi:
+        //                     ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+        //                         ? userVaule.ND_diachiGH
+        //                         : ctyVaule,
+        //                 DH_phivanchuyen: serviceFee !== '' ? serviceFee[k] : '0',
+        //                 DH_trangthaiTT: 1,
+        //             })
+        //             .then((res) => {
+        //                 console.log('', res.data);
+        //             })
+        //             .catch((err) => {
+        //                 console.log('loi add');
+        //             });
+        //     }
+        // }
     };
 
     //Tinh phi van chuyen
