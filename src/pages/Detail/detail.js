@@ -10,6 +10,8 @@ import styles from './Detail.module.scss';
 import StarDetailPage from './StarDetailPage';
 import GetCookie from '~/components/Hook/GetCookies';
 import { toast, ToastContainer } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addNumberProduct } from '~/actions/NumberProduct';
 // import { useDispatch } from 'react-redux';
 // import { addNumberProduct } from '~/actions/NumberProduct';
 const cx = classNames.bind(styles);
@@ -32,6 +34,8 @@ function Detail() {
     // if (localStorage.getItem('product') !== '') {
     //     console.log('local: ', JSON.parse(localStorage.getItem('product')));
     // }
+
+    const dispatchSignIn = useDispatch();
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -137,6 +141,21 @@ function Detail() {
                     //console.log(res.data);
                     setTimeout(() => {
                         setCheckAddOfCart(false);
+                        axios
+                            .get(
+                                `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
+                                    JSON.parse(GetCookie('usrin')).ND_id
+                                }`,
+                            )
+                            .then((res) => {
+                                //console.log(res.data);
+                                //setSumNumber(res.data.results.length);
+                                const action = addNumberProduct(res.data.results.length);
+                                dispatchSignIn(action);
+                            })
+                            .catch((err) => {
+                                console.log('loi');
+                            });
                     }, 1200);
                 })
                 .catch((err) => {

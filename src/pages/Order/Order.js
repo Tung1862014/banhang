@@ -131,7 +131,7 @@ function Order() {
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
             if (i === orderValue.length - 1) {
-                return price + serviceFee[index];
+                return price;
             }
         }
         //console.log('index', price);
@@ -226,7 +226,7 @@ function Order() {
             if (orderValue[i].NB_id === prodValue) {
                 //console.log('weight', orderValue[i].product.SP_trongluong);
                 //console.log('number', orderValue[i].TTDH_soluong);
-                weight += orderValue[i].product.SP_trongluong;
+                weight += orderValue[i].product.SP_trongluong * orderValue[i].TTDH_soluong;
                 //phone = orderValue[i].seller.ND_sdt;
             }
         }
@@ -346,7 +346,7 @@ function Order() {
                                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
                                     {
                                         payment_type_id: 2,
-                                        shop_id: 'Polo123',
+
                                         required_note: 'KHONGCHOXEMHANG',
                                         return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
                                         return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
@@ -365,9 +365,9 @@ function Order() {
                                         cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
                                         content: null,
                                         weight: handleCountWeight(sellerValue[j]),
-                                        length: 1,
-                                        width: 15,
-                                        height: 5,
+                                        length: 19,
+                                        width: 14,
+                                        height: 10,
                                         pick_station_id: null,
                                         insurance_value: 0,
                                         service_id: 53321,
@@ -453,6 +453,22 @@ function Order() {
 
     //Tinh phi van chuyen
     useEffect(() => {
+        const handleCountWeightt = (prodValue) => {
+            let weight = 0;
+            //let phone = 0;
+            for (let i = 0; i < orderValue.length; i++) {
+                if (orderValue[i].NB_id === prodValue) {
+                    console.log('SP_trongluong', orderValue[i]);
+                    //console.log('weight', orderValue[i].product.SP_trongluong);
+                    //console.log('number', orderValue[i].TTDH_soluong);
+                    weight += orderValue[i].product.SP_trongluong * orderValue[i].TTDH_soluong;
+                    //phone = orderValue[i].seller.ND_sdt;
+                }
+            }
+            console.log('weight', weight);
+            //console.log('phone', phone);
+            return weight;
+        };
         if (districtID !== '' && wardID !== '') {
             axios
                 .post(
@@ -483,10 +499,10 @@ function Order() {
                                             service_type_id: 2,
                                             to_district_id: districtID !== '' ? districtID : districtID,
                                             to_ward_code: wardID !== '' ? wardID : wardID,
-                                            weight: handleCountWeight(sellerValue[j]),
-                                            length: 1,
-                                            width: 15,
-                                            height: 5,
+                                            weight: handleCountWeightt(sellerValue[j]),
+                                            length: 19,
+                                            width: 14,
+                                            height: 10,
                                             insurance_value: 10000,
                                             coupon: null,
                                         },
@@ -515,7 +531,7 @@ function Order() {
                     console.log('loi');
                 });
         }
-    }, [sellerName, districtID, wardID]);
+    }, [sellerName, districtID, wardID, sellerValue, orderValue]);
 
     const handleSumService = (dataValue) => {
         let service = 0;

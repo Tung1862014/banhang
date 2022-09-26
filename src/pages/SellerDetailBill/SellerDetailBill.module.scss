@@ -311,6 +311,22 @@
     -webkit-box-pack: end;
     position: relative;
     margin-bottom: 20px;
+    width: 325px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.grid-right-print {
+    display: flex;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    align-content: flex-start;
+    -webkit-box-pack: end;
+    position: relative;
+    margin-bottom: 20px;
     width: 180px;
 
     &:hover {
@@ -363,6 +379,20 @@
     right: 0px;
     z-index: 10;
 }
+
+.cancel-modal__container {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 10;
+}
+
 .delete-modal__box {
     display: flex;
     width: 400px;

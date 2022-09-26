@@ -1,4 +1,4 @@
-import { faMagnifyingGlass, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
@@ -28,6 +28,8 @@ function HistoryBill() {
     ////////////////////////////////////////////////
     const [cancelIdBill, setCancelIdBill] = useState('');
     const [idMTSValue, setIdMTSValue] = useState('');
+    ///////////////////////////////////////////////////search
+    //const [searchValue, setSearchValue] = useState('');
 
     console.log('cancelIdBill', cancelIdBill);
     useEffect(() => {
@@ -509,6 +511,23 @@ function HistoryBill() {
                 console.log('loi cancel');
             });
     }
+
+    ///seach bill following id bill
+    // const handleSearchBill = () => {
+    //     axios
+    //         .get(
+    //             `${process.env.REACT_APP_URL_NODEJS}/historybill/search/show/all?ND_id=${
+    //                 JSON.parse(GetCookie('usrin')).ND_id
+    //             }&DH_trangthai=${statusClick}&search=${searchValue}`,
+    //         )
+    //         .then((res) => {
+    //             console.log('search', res.data);
+    //             setOrderValue(res.data.results);
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // };
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -540,15 +559,16 @@ function HistoryBill() {
                 </div>
             </div>
             <div className={cx('GBcYbK')}>
-                <div className={cx('Tfo7DW')}>
-                    <button className={cx('Tfo7DW-btn')}>
+                {/* <div className={cx('Tfo7DW')}>
+                    <button className={cx('Tfo7DW-btn')} onClick={handleSearchBill}>
                         <FontAwesomeIcon className={cx('Tfo7DW-icon')} icon={faMagnifyingGlass} />
                     </button>
                     <input
                         autoComplete="off"
-                        placeholder="Tìm kiếm theo Tên Shop, ID đơn hàng hoặc Tên Sản phẩm"
+                        placeholder="Tìm kiếm theo ID đơn hàng "
+                        onChange={(e) => setSearchValue(e.target.value)}
                     ></input>
-                </div>
+                </div> */}
                 <div className={cx('_0obGFe')}>
                     <a id="vAkdD0all" className={cx('vAkdD0all')} href="/history/purchase/type=all">
                         <span className={cx('_0rjE9m')}>Tất cả</span>

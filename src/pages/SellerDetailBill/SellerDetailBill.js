@@ -9,6 +9,9 @@ const cx = classNames.bind(styles);
 
 function SellerDetailBill() {
     const [information, setInformation] = useState('');
+    const [tokenValue, setTokenValue] = useState('');
+
+    console.log('tokenValue', tokenValue);
 
     function formatCash(str) {
         return str
@@ -33,14 +36,30 @@ function SellerDetailBill() {
             .then((res) => {
                 console.log('result', res.data.result);
                 setInformation(res.data.result);
-                // setBill(res.data.result);
-                // setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
-                // setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
-                // setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
-                // setNumber(res.data.number[0].number);
             })
             .catch(() => {
                 console.log('loi khong the show bill');
+            });
+    }, []);
+
+    //take token do print
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(21);
+        console.log(resultId);
+        axios
+            .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/v2/a5/gen-token?order_codes=${resultId}`, {
+                headers: {
+                    Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                },
+            })
+
+            .then((res) => {
+                console.log('token', res.data.data.token);
+                setTokenValue(res.data.data.token);
+            })
+            .catch(() => {
+                console.log('loi khong lay token');
             });
     }, []);
 
@@ -89,6 +108,9 @@ function SellerDetailBill() {
                         position: toast.POSITION.TOP_CENTER,
                         className: `${cx('toast-message')}`,
                     });
+                    setTimeout(() => {
+                        window.open(`/seller/bill/detail/@${resultId}`, '_self', 1);
+                    }, 3000);
                 }
             })
             .catch(() => {
@@ -96,50 +118,148 @@ function SellerDetailBill() {
             });
     }
 
-    // const handlePrintBill = () => {
-    //     const pathId = window.location.pathname.toString();
-    //     const resultId = pathId.slice(21);
-    //     window.open(`http://localhost:3000/seller/bill/detail/print/@${resultId}`, '_blank', 1);
-    // };
+    //Cancel Bill
+    const handleCancelBill = () => {
+        const deleteModalContainer = document.getElementById('cancel-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'flex';
+        // deleteModalBox.style.display = 'none';
+    };
+
+    const handleCancelBillHuy = () => {
+        const deleteModalContainer = document.getElementById('cancel-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        // deleteModalBox.style.display = 'none';
+    };
+
+    const handleCancelBillAgree = () => {
+        const deleteModalContainer = document.getElementById('cancel-modal__container');
+        //const deleteModalBox = document.getElementById('delete-modal__box');
+        //deleteModalContainer.style.position = 'none';
+        deleteModalContainer.style.display = 'none';
+        // setCheckDelete(true);
+        // // deleteModalBox.style.display = 'none';
+        handleUpdateCancelBill();
+    };
+
+    function handleUpdateCancelBill() {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(21);
+        //console.log('information Cancel', information[0].MTS_id);
+        if (information[0].MTS_id !== undefined) {
+            axios
+                .get(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/switch-status/cancel?order_codes=${resultId}`,
+                    {
+                        headers: {
+                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            ShopId: information[0].MTS_id,
+                        },
+                    },
+                )
+                .then((res) => {
+                    console.log('cancel', res.data);
+                    axios
+                        .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
+                            NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                            DH_id: resultId || '',
+                            DH_trangthai: '5',
+                        })
+
+                        .then((res) => {
+                            if (res.data.update) {
+                                toast.success('Hủy thành công đơn hàng', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    className: `${cx('toast-message')}`,
+                                });
+                                setTimeout(() => {
+                                    window.open(`/seller/bill/@all`, '_self', 1);
+                                }, 3000);
+                            }
+                        })
+                        .catch(() => {
+                            console.log('loi khong the show bill');
+                        });
+                })
+                .catch((err) => {
+                    console.log('loi cancel');
+                });
+        }
+    }
+
     return (
         <>
+            <div id="delete-modal__container" className={cx('delete-modal__container')}>
+                <div className={cx('delete-modal__box')}>
+                    <div className={cx('delete-modal__content')}>
+                        <div className={cx('delete-modal__header')}>
+                            <div className={cx('delete-modal__header-inner-confirm')}>
+                                <div className={cx('delete-modal__title')}>Xác nhận</div>
+                            </div>
+                            <div className={cx('delete-modal__header-inner-title')}>
+                                <div className={cx('delete-modal__title')}>Bạn có muốn xác nhận đơn hàng?</div>
+                            </div>
+                        </div>
+                        <div className={cx('delete-modal__footer')}>
+                            <div className={cx('delete-modal__footer-buttons')}>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--normal')}
+                                    onClick={handlePrepareHuy}
+                                >
+                                    <span>Hủy</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--primary')}
+                                    onClick={handlePrepareAgree}
+                                >
+                                    <span>Đồng ý</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/*  */}
+            <div id="cancel-modal__container" className={cx('cancel-modal__container')}>
+                <div className={cx('delete-modal__box')}>
+                    <div className={cx('delete-modal__content')}>
+                        <div className={cx('delete-modal__header')}>
+                            <div className={cx('delete-modal__header-inner-confirm')}>
+                                <div className={cx('delete-modal__title')}>Xác nhận</div>
+                            </div>
+                            <div className={cx('delete-modal__header-inner-title')}>
+                                <div className={cx('delete-modal__title')}>Bạn có muốn hủy đơn hàng?</div>
+                            </div>
+                        </div>
+                        <div className={cx('delete-modal__footer')}>
+                            <div className={cx('delete-modal__footer-buttons')}>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--normal')}
+                                    onClick={handleCancelBillHuy}
+                                >
+                                    <span>Hủy</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className={cx('delete-button--primary')}
+                                    onClick={handleCancelBillAgree}
+                                >
+                                    <span>Đồng ý</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {information !== ''
                 ? information.map((info, index) => (
                       <div key={index} className={cx('wrapper')}>
-                          <div id="delete-modal__container" className={cx('delete-modal__container')}>
-                              <div id="delete-modal__box" className={cx('delete-modal__box')}>
-                                  <div className={cx('delete-modal__content')}>
-                                      <div className={cx('delete-modal__header')}>
-                                          <div className={cx('delete-modal__header-inner-confirm')}>
-                                              <div className={cx('delete-modal__title')}>Xác nhận</div>
-                                          </div>
-                                          <div className={cx('delete-modal__header-inner-title')}>
-                                              <div className={cx('delete-modal__title')}>
-                                                  Bạn có muốn xác nhận đơn hàng?
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div className={cx('delete-modal__footer')}>
-                                          <div className={cx('delete-modal__footer-buttons')}>
-                                              <button
-                                                  type="button"
-                                                  className={cx('delete-button--normal')}
-                                                  onClick={handlePrepareHuy}
-                                              >
-                                                  <span>Hủy</span>
-                                              </button>
-                                              <button
-                                                  type="button"
-                                                  className={cx('delete-button--primary')}
-                                                  onClick={handlePrepareAgree}
-                                              >
-                                                  <span>Đồng ý</span>
-                                              </button>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
                           <div className={cx('card-style')}>
                               <div className={cx('detail-card__content')}>
                                   <div className={cx('row-grid-section')}>
@@ -240,10 +360,12 @@ function SellerDetailBill() {
                                               {info.DH_trangthai === 1
                                                   ? 'Chờ xác nhận'
                                                   : info.DH_trangthai === 2
-                                                  ? 'Đã xác nhận'
+                                                  ? 'Chờ lấy hàng'
                                                   : info.DH_trangthai === 3
-                                                  ? 'Đã giao'
+                                                  ? 'Đang giao'
                                                   : info.DH_trangthai === 4
+                                                  ? 'Đã giao'
+                                                  : info.DH_trangthai === 5
                                                   ? 'Đã hủy'
                                                   : '...'}
                                           </div>{' '}
@@ -432,17 +554,28 @@ function SellerDetailBill() {
                                   <button className={cx('add-action')} onClick={handlePrepare}>
                                       <span className={cx('shopee-add-title')}>Chuẩn bị đơn hàng</span>
                                   </button>
+                                  <button className={cx('add-action')} onClick={handleCancelBill}>
+                                      <span className={cx('shopee-add-title')}>Hủy đơn hàng</span>
+                                  </button>
                               </div>
                           ) : info.DH_trangthai === 2 ? (
-                              <div className={cx('grid-right')}>
+                              <div className={cx('grid-right-print')}>
                                   <a
-                                      href={`http://localhost:3000/seller/bill/detail/print/@${info.DH_id}`}
+                                      href={`https://dev-online-gateway.ghn.vn/a5/public-api/printA5?token=${tokenValue}`}
                                       target={'_blank'}
                                       rel="noreferrer"
                                       className={cx('add-action')}
                                   >
                                       <span className={cx('shopee-add-title')}>In hóa đơn</span>
                                   </a>
+                                  {/* <a
+                                      href={`http://localhost:3000/seller/bill/detail/print/@${info.DH_id}`}
+                                      target={'_blank'}
+                                      rel="noreferrer"
+                                      className={cx('add-action')}
+                                  >
+                                      <span className={cx('shopee-add-title')}>In hóa đơn</span>
+                                  </a> */}
                               </div>
                           ) : (
                               ''

@@ -1,6 +1,6 @@
 // import axios from 'axios';
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPrint } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 //import { Link } from 'react-router-dom';
 // import { useState } from 'react';
@@ -100,7 +100,13 @@ function Detail({ bill }) {
                                   </div>{' '}
                                   <div className={cx('item-total')}>
                                       <div className={cx('price')}>₫{formatCash(bill.DH_tongtien)}</div>{' '}
-                                      <div className={cx('payment-method')}>Thanh toán {bill.DH_loaithanhtoan}</div>
+                                      <div className={cx('payment-method')}>
+                                          {bill.DH_loaithanhtoan === 1
+                                              ? 'Thanh toán khi nhận hàng'
+                                              : bill.DH_loaithanhtoan === 2
+                                              ? 'Đã thanh toán'
+                                              : ''}
+                                      </div>
                                   </div>{' '}
                                   <div className={cx('item-status')}>
                                       <div className={cx('status')}>
@@ -108,17 +114,19 @@ function Detail({ bill }) {
                                               {bill.DH_trangthai === 1
                                                   ? 'Chờ xác nhận'
                                                   : bill.DH_trangthai === 2
-                                                  ? 'Đã xác nhận'
-                                                  : bill.DH_trangthai === 2
-                                                  ? 'Đã giao'
+                                                  ? 'Chờ lấy hàng'
                                                   : bill.DH_trangthai === 3
+                                                  ? 'Đang giao'
+                                                  : bill.DH_trangthai === 4
+                                                  ? 'Đã giao'
+                                                  : bill.DH_trangthai === 5
                                                   ? 'Đã hủy'
                                                   : '...'}
                                           </span>{' '}
                                       </div>{' '}
                                       <div className={cx('substatus')}></div>
                                   </div>{' '}
-                                  <div className={cx('item-channel')}></div>{' '}
+                                  <div className={cx('item-channel')}>₫{formatCash(bill.DH_phivanchuyen)}</div>{' '}
                                   <div className={cx('item-action')}>
                                       <div className={cx('shopee-popover--light')}>
                                           <div className={cx('shopee-popover__ref')}>
@@ -142,7 +150,7 @@ function Detail({ bill }) {
                                               <div className={cx('shopee-popover__content')}></div>
                                           </div>
                                       </div>{' '}
-                                      {bill.DH_trangthai === 2 && (
+                                      {/* {bill.DH_trangthai === 2 && (
                                           <div className={cx('shopee-popover--light')}>
                                               <div className={cx('shopee-popover__ref')}>
                                                   <a
@@ -163,7 +171,7 @@ function Detail({ bill }) {
                                                   <div className={cx('shopee-popover__content')}></div>
                                               </div>
                                           </div>
-                                      )}
+                                      )} */}
                                   </div>
                               </div>
                           </div>

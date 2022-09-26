@@ -264,10 +264,10 @@ function SellerBill() {
             .then((res) => {
                 console.log('image ', res.data.result);
                 setBill(res.data.result);
-                setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
-                setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
-                setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
-                setNumber(res.data.number[0].number);
+                // setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
+                // setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
+                // setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
+                // setNumber(res.data.number[0].number);
             })
             .catch(() => {
                 console.log('loi khong the show bill');

@@ -18,7 +18,7 @@ import { useCallback } from 'react';
 import SetCookie from '~/components/Hook/SetCookies';
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
-//import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { addNumberProduct } from '~/actions/NumberProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -62,9 +62,10 @@ function Header() {
 
     //console.log('Google: ' + GetCookie('logout'));
 
-    // const siginList = useSelector((state) => state.numberProduct.list);
-    // // const dispatchSignIn = useDispatch();
-    // console.log('product: ', siginList);
+    const siginList = useSelector((state) => state.numberProduct.list);
+    //const dispatchSignIn = useDispatch();
+
+    console.log('product: ', siginList[0]);
     //localStorage.removeItem('product');
     // localStorage.setItem('product', JSON.stringify(siginList));
 
@@ -101,12 +102,14 @@ function Header() {
                 .then((res) => {
                     console.log(res.data);
                     setSumNumber(res.data.results.length);
+                    //const action = addNumberProduct(res.data.results.length);
+                    //dispatchSignIn(action);
                 })
                 .catch((err) => {
                     console.log('loi');
                 });
         }
-    }, []);
+    }, [siginList]);
 
     useEffect(() => {
         if (GetCookie('usrin') !== undefined) {
@@ -466,7 +469,7 @@ function Header() {
                                             <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
                                         </Link>
                                     </Tippy>
-                                    <Tippy delay={[0, 50]} content="Lịch sử" placement="bottom">
+                                    <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
                                         <Link to="/history/purchase/type=all" className={cx('action-btn')}>
                                             <InboxIcon className={cx('inbox-icon')} />
                                         </Link>
