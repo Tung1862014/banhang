@@ -393,9 +393,9 @@ function Detail() {
                                         />
                                         <span>Thêm vào giỏ hàng</span>
                                     </button>
-                                    <button type="button" className={cx('btn-solid-primary_3f7_YI')}>
+                                    {/* <button type="button" className={cx('btn-solid-primary_3f7_YI')}>
                                         Mua ngay
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>

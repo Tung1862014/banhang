@@ -3,7 +3,7 @@ import { DefaultLayoutSeller } from '~/components/Layout';
 import { DefaultLayoutAdmin } from '~/components/Layout';
 
 import Home from '~/pages/Home';
-import SanPham from '~/pages/SanPham';
+// import SanPham from '~/pages/SanPham';
 import Shop from '~/pages/Shop';
 import Order from '~/pages/Order';
 import Search from '~/pages/Search';
@@ -11,7 +11,7 @@ import Detail from '~/pages/Detail';
 import Setting from '~/pages/Setting';
 import Login from '~/pages/Login';
 import Seller from '~/pages/Seller';
-import config from '~/config';
+// import config from '~/config';
 import SellerSetting from '~/pages/SellerSetting';
 import SellerProduct from '~/pages/SellerProduct';
 import SellerAddProduct from '~/pages/SellerAddProduct';
@@ -31,9 +31,9 @@ import SettingSeller from '~/pages/SettingSeller';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
-    { path: '/search', component: Search },
-    { path: '/search/@:idSP', component: Detail, layout: HeaderOnly },
-    { path: config.routes.sanpham, component: SanPham },
+    //{ path: '/search', component: Search, layout: HeaderOnly },
+    { path: '/search/keyword:id', component: Search, layout: HeaderOnly },
+    // { path: config.routes.sanpham, component: SanPham },
     { path: '/shop/name=:id', component: Shop, layout: HeaderOnly },
     { path: '/cart/order', component: Order, layout: HeaderOnly },
     { path: '/detail/product/nameid:id', component: Detail, layout: HeaderOnly },

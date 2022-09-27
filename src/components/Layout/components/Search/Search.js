@@ -13,6 +13,7 @@ import { SearchIcon, VoiceActiveIcon, VoiceIcon } from '~/components/Icons';
 import VoiceSearchBox from './VoiceSearchBox';
 import SetCookie from '~/components/Hook/SetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
+import { Link } from 'react-router-dom';
 //import { useReactMediaRecorder } from 'react-media-recorder';
 
 const cx = classNames.bind(styles);
@@ -91,7 +92,7 @@ function Search() {
         }
 
         axios
-            .get(`${process.env.REACT_APP_URL_NODEJS}/home?q=${debounced}`)
+            .get(`${process.env.REACT_APP_URL_NODEJS}/home?keyword=${debounced}`)
             .then((res) => {
                 // handle success
 
@@ -135,9 +136,11 @@ function Search() {
     const handleButtonSearch = () => {
         console.log('value: ' + JSON.stringify(searchValue));
         setShowResult(false);
-        RemoveCookie('search');
-        SetCookie('search', JSON.stringify(searchValue));
-        window.open(`${process.env.REACT_APP_URL_FRONTEND}/search?name=${searchValue}`, '_self', 1);
+        // RemoveCookie('search');
+        // SetCookie('search', JSON.stringify(searchValue));
+        // if (searchValue !== '') {
+        //     window.open(`${process.env.REACT_APP_URL_FRONTEND}/search/keyword=${searchValue}`, '_self', 1);
+        // }
     };
 
     return (
@@ -210,9 +213,13 @@ function Search() {
                     )}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                    <button className={cx('search-btn')} onClick={handleButtonSearch}>
+                    <Link
+                        to={searchValue !== '' ? `/search/keyword=${searchValue.replace(/ /g, '-')}` : ''}
+                        className={cx('search-btn')}
+                        onClick={handleButtonSearch}
+                    >
                         <SearchIcon />
-                    </button>
+                    </Link>
                 </div>
             </HeadlessTippy>
         </div>
