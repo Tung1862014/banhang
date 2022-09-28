@@ -352,7 +352,7 @@
     width: 16px;
     height: 22px;
     margin: 0px 12px 0px 0px;
-    color: #555;
+    color: rgb(254, 254, 43);
 }
 
 .shop-search-result-header__text {
@@ -444,6 +444,13 @@
     border-radius: 2px;
     user-select: none;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.09);
+}
+
+.shop-price-range-filter__error {
+    display: none;
+    text-align: center;
+    color: #ff424f;
+    font-size: 1.5rem;
 }
 
 //product
@@ -595,7 +602,7 @@
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    line-height: 14px;
+    line-height: 21px;
     font-size: 1.6rem;
 }
 
@@ -733,4 +740,11 @@
     .active {
         background-color: #5ab1bb;
     }
+}
+
+.shop-search-empty-result-section__hint {
+    font-size: 1.8rem;
+    color: rgba(0, 0, 0, 0.54);
+    width: 100%;
+    text-align: center;
 }

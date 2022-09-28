@@ -8,13 +8,16 @@ function AccountItem({ toLink, data, onClick }) {
     return (
         <>
             {toLink === false ? (
-                <a href={`${process.env.REACT_APP_URL_FRONTEND}/sanpham/@${data.idSP}`} className={cx('wrapper')}>
+                <a
+                    href={`${process.env.REACT_APP_URL_FRONTEND}/search/keyword=${data.SP_ten}`}
+                    className={cx('wrapper')}
+                >
                     <div className={cx('info')} onClick={onClick}>
                         <h4 className={cx('name')}>{data.SP_ten}</h4>
                     </div>
                 </a>
             ) : (
-                <Link to={`sanpham/@${data.idSP}`} className={cx('wrapper')}>
+                <Link to={`/search/keyword=${data.SP_ten}`} className={cx('wrapper')}>
                     <div className={cx('info')} onClick={onClick}>
                         <h4 className={cx('name')}>{data.SP_ten}</h4>
                     </div>

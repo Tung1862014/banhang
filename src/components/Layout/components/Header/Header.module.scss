@@ -98,7 +98,7 @@
         --search-button-width: 52px;
 
         width: 100%;
-        height: var(--default-layout-header-height, 60px);
+        height: 70px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
@@ -110,6 +110,40 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .home-page-zytl {
+        position: absolute;
+        top: 1px;
+        margin-left: 100px;
+    }
+
+    .home-page-zytlt1 {
+        color: #fe2c55 !important;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    }
+
+    .introduce-page-zytl {
+        position: absolute;
+        top: 1px;
+        margin-left: 200px;
+    }
+
+    .introduce-page-zytlt1 {
+        color: #fe2c55 !important;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
     }
     .video-logo {
         width: 60px;

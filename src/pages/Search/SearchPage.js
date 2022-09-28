@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import classNames from 'classnames/bind';
-import styles from './sampham.module.scss';
-import Detail from './detail';
+import styles from './Search.module.scss';
+import Detail from './Detail';
 
 const cx = classNames.bind(styles);
 
-function Image(props) {
+function SearchPage(props) {
     const { data } = props;
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-
-    const itemsPerPage = 4;
+    const itemsPerPage = 10;
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -27,19 +26,16 @@ function Image(props) {
     };
 
     return (
-        <div className={cx('wapper')}>
+        <div className={cx('wrapper')}>
             <div className={cx('info-product')}>
-                <strong>
-                    <h3>Danh Sách Nổi Bật</h3>
-                </strong>
-                <Detail currentItems={currentItems} />
+                <Detail productValue={currentItems} />
                 <ReactPaginate
                     breakLabel="..."
-                    nextLabel="Trang kế >"
+                    nextLabel=">>"
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={1}
                     pageCount={pageCount}
-                    previousLabel="< Trang trước"
+                    previousLabel="<<"
                     renderOnZeroPageCount={null}
                     containerClassName={cx('pagination')}
                     pageLinkClassName={cx('page-num')}
@@ -52,4 +48,4 @@ function Image(props) {
     );
 }
 
-export default Image;
+export default SearchPage;

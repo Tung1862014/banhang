@@ -446,7 +446,7 @@ function Header() {
             <header className={cx('wrapper')}>
                 <div>
                     <div className={cx('inner')}>
-                        {/* <div className={cx('logo')}>
+                        <div className={cx('logo')}>
                             <iframe
                                 className={cx('video-logo')}
                                 src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
@@ -458,16 +458,27 @@ function Header() {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe>
-                        </div> */}
+                        </div>
+
+                        <div className={cx('home-page-zytl')}>
+                            <Link to="/" className={cx('home-page-zytlt1')}>
+                                Trang chủ
+                            </Link>
+                        </div>
+                        <div className={cx('introduce-page-zytl')}>
+                            <Link to="/introduce" className={cx('introduce-page-zytlt1')}>
+                                Giới thiệu
+                            </Link>
+                        </div>
                         {<Search />}
                         <div className={cx('action')}>
                             {
                                 <>
                                     <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                                        <Link to="/cart" className={cx('action-btn-cart')}>
+                                        <a href="/cart" className={cx('action-btn-cart')}>
                                             <CartIcon className={cx('cart-icon')} />
                                             <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
-                                        </Link>
+                                        </a>
                                     </Tippy>
                                     <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
                                         <Link to="/history/purchase/type=all" className={cx('action-btn')}>

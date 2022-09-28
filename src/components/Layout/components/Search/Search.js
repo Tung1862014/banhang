@@ -214,7 +214,7 @@ function Search() {
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                     <Link
-                        to={searchValue !== '' ? `/search/keyword=${searchValue.replace(/ /g, '-')}` : ''}
+                        to={searchValue !== '' ? `/search/keyword=${searchValue}` : ''}
                         className={cx('search-btn')}
                         onClick={handleButtonSearch}
                     >

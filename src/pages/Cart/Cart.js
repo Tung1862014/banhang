@@ -19,22 +19,24 @@ function Cart() {
     const [price, setPrice] = useState('');
 
     // console.log('sellerValue', sellerValue);
-    // console.log('sellerName', sellerName);
+    console.log('cokkk', GetCookie('usrin'));
 
     useEffect(() => {
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
-                    JSON.parse(GetCookie('usrin')).ND_id
-                }`,
-            )
-            .then((res) => {
-                console.log(res.data);
-                setOrderValue(res.data.results);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
+        if (GetCookie('usrin') !== undefined) {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
+                        JSON.parse(GetCookie('usrin')).ND_id
+                    }`,
+                )
+                .then((res) => {
+                    console.log(res.data);
+                    setOrderValue(res.data.results);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
     }, []);
 
     useEffect(() => {
@@ -163,205 +165,216 @@ function Cart() {
 
     return (
         <div className={cx('wrapper')}>
-            <div id="cart-popup-modal__transition-enter-done" className={cx('cart-popup-modal__transition-enter-done')}>
-                <div className={cx('cart-popup__overlay')}></div>
-                <div className={cx('cart-popup__container')}>
-                    <div className={cx('cart-alert-popup_card')}>
-                        <div className={cx('cart-alert-popup__message')}>
-                            Rất tiếc, bạn chỉ có thể mua tối đa 10 sản phẩm của chương trình giảm giá này.
-                            <div className={cx('cart-alert-popup__message-list')}>
-                                <div></div>
+            {GetCookie('usrin') !== undefined ? (
+                <>
+                    <div
+                        id="cart-popup-modal__transition-enter-done"
+                        className={cx('cart-popup-modal__transition-enter-done')}
+                    >
+                        <div className={cx('cart-popup__overlay')}></div>
+                        <div className={cx('cart-popup__container')}>
+                            <div className={cx('cart-alert-popup_card')}>
+                                <div className={cx('cart-alert-popup__message')}>
+                                    Rất tiếc, bạn chỉ có thể mua tối đa 10 sản phẩm của chương trình giảm giá này.
+                                    <div className={cx('cart-alert-popup__message-list')}>
+                                        <div></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className={cx('_1nrPtQ')}>
-                <div className={cx('_27GGo9')}>Sản Phẩm</div>
-                <div className={cx('_3hJbyz')}>Đơn Giá</div>
-                <div className={cx('_155Uu2')}>Số Lượng</div>
-                <div className={cx('_10ZkNr')}>Số Tiền</div>
-                <div className={cx('_1coJFb')}>Hành động</div>
-            </div>
-            {/* / */}
-            {sellerValue !== ''
-                ? sellerValue.map((sell, index) => (
-                      <div key={index} className={cx('aCSbhb')}>
-                          <div key={index} className={cx('_3ApheT')}>
-                              <div className={cx('_2zUYwP')}>
-                                  <a className={cx('eQP4g3')} href="/">
-                                      <span>{sellerName !== '' ? sellerName[index] : ''}</span>
-                                  </a>
-                              </div>
-                          </div>
+                    <div className={cx('_1nrPtQ')}>
+                        <div className={cx('_27GGo9')}>Sản Phẩm</div>
+                        <div className={cx('_3hJbyz')}>Đơn Giá</div>
+                        <div className={cx('_155Uu2')}>Số Lượng</div>
+                        <div className={cx('_10ZkNr')}>Số Tiền</div>
+                        <div className={cx('_1coJFb')}>Hành động</div>
+                    </div>
+                    {/* / */}
+                    {sellerValue !== ''
+                        ? sellerValue.map((sell, index) => (
+                              <div key={index} className={cx('aCSbhb')}>
+                                  <div key={index} className={cx('_3ApheT')}>
+                                      <div className={cx('_2zUYwP')}>
+                                          <a className={cx('eQP4g3')} href="/">
+                                              <span>{sellerName !== '' ? sellerName[index] : ''}</span>
+                                          </a>
+                                      </div>
+                                  </div>
 
-                          {orderValue !== ''
-                              ? orderValue.map((order, index) =>
-                                    sell === order.NB_id ? (
-                                        <div key={index} className={cx('_2qN5oG')}>
-                                            <div className={cx('_216OLk')}>
-                                                <div className={cx('_1GcTXp')}>
-                                                    <div className={cx('_2pPbjQ')}>
-                                                        <div className={cx('YxpsCR')}>
-                                                            <a
-                                                                title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
-                                                                href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
-                                                            >
-                                                                <div className={cx('_3SWf-5')}>
-                                                                    <img
-                                                                        src={
-                                                                            order.product.SP_image ||
-                                                                            process.env.REACT_APP_URL_NODEJS_IMAGE +
-                                                                                '/default-ui-image.webp'
-                                                                        }
-                                                                        alt=""
-                                                                    />
+                                  {orderValue !== ''
+                                      ? orderValue.map((order, index) =>
+                                            sell === order.NB_id ? (
+                                                <div key={index} className={cx('_2qN5oG')}>
+                                                    <div className={cx('_216OLk')}>
+                                                        <div className={cx('_1GcTXp')}>
+                                                            <div className={cx('_2pPbjQ')}>
+                                                                <div className={cx('YxpsCR')}>
+                                                                    <a
+                                                                        title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
+                                                                        href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
+                                                                    >
+                                                                        <div className={cx('_3SWf-5')}>
+                                                                            <img
+                                                                                src={
+                                                                                    order.product.SP_image ||
+                                                                                    process.env
+                                                                                        .REACT_APP_URL_NODEJS_IMAGE +
+                                                                                        '/default-ui-image.webp'
+                                                                                }
+                                                                                alt=""
+                                                                            />
+                                                                        </div>
+                                                                    </a>
+                                                                    <div className={cx('_3OrWGt')}>
+                                                                        <a
+                                                                            className={cx('_2fQT1K')}
+                                                                            title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
+                                                                            href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
+                                                                        >
+                                                                            {order.product.SP_ten}
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </a>
-                                                            <div className={cx('_3OrWGt')}>
+                                                            </div>
+                                                            {/* / */}
+                                                            <div className={cx('Ra8lP2')}>
+                                                                <div>
+                                                                    {order.product.SP_khuyenmai !== 0 && (
+                                                                        <span className={cx('_1CXksa_1k1Vcm')}>
+                                                                            ₫{formatCash(order.product.SP_gia)}
+                                                                        </span>
+                                                                    )}
+                                                                    <span className={cx('_1CXksa')}>
+                                                                        ₫
+                                                                        {formatCash(
+                                                                            order.product.SP_gia *
+                                                                                ((100 - order.product.SP_khuyenmai) /
+                                                                                    100),
+                                                                        )}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {/* / */}
+                                                            <div className={cx('_2ZUrV7')}>
+                                                                <div className={cx('_36kVQQ-input-quantity')}>
+                                                                    <button
+                                                                        className={cx('EcPhjV')}
+                                                                        onClick={() =>
+                                                                            handlePlusNumber(
+                                                                                order.TTDH_id,
+                                                                                index,
+                                                                                order.product.SP_gia,
+                                                                                order.product.SP_khuyenmai,
+                                                                                order.product.SP_soluong,
+                                                                                order.product.SP_soluongban,
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <svg
+                                                                            enableBackground="new 0 0 10 10"
+                                                                            viewBox="0 0 10 10"
+                                                                            x="0"
+                                                                            y="0"
+                                                                            className={cx('shop-svg-icon')}
+                                                                        >
+                                                                            <polygon points="4.5 4.5 3.5 4.5 0 4.5 0 5.5 3.5 5.5 4.5 5.5 10 5.5 10 4.5"></polygon>
+                                                                        </svg>
+                                                                    </button>
+
+                                                                    <input
+                                                                        key={index}
+                                                                        id={`EcPhjV_3cj9Np${index}`}
+                                                                        className={cx('EcPhjV_3cj9Np')}
+                                                                        type="text"
+                                                                        role="spinbutton"
+                                                                        aria-valuenow="1"
+                                                                        defaultValue={
+                                                                            numberValue !== ''
+                                                                                ? numberValue[index]
+                                                                                : order.TTDH_soluong
+                                                                        }
+                                                                        //onChange={() => handleChangeNumber(order.TTDH_id)}
+                                                                    />
+
+                                                                    <button
+                                                                        className={cx('EcPhjV')}
+                                                                        onClick={() =>
+                                                                            handleAddNumber(
+                                                                                order.TTDH_id,
+                                                                                index,
+                                                                                order.product.SP_gia,
+                                                                                order.product.SP_khuyenmai,
+                                                                                order.product.SP_soluong,
+                                                                                order.product.SP_soluongban,
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <svg
+                                                                            enableBackground="new 0 0 10 10"
+                                                                            viewBox="0 0 10 10"
+                                                                            x="0"
+                                                                            y="0"
+                                                                            className={cx('shop-svg-icon')}
+                                                                        >
+                                                                            <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon>
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            {/* / */}
+                                                            <div id={`dn3H7Y${index}`} className={cx('dn3H7Y')}>
+                                                                <span>
+                                                                    ₫
+                                                                    {formatCash(
+                                                                        order.product.SP_gia *
+                                                                            order.TTDH_soluong *
+                                                                            ((100 - order.product.SP_khuyenmai) / 100),
+                                                                    )}
+                                                                </span>
+                                                            </div>
+                                                            {/* / */}
+                                                            <div className={cx('_2y8iJi_2qPRqW')}>
                                                                 <a
-                                                                    className={cx('_2fQT1K')}
-                                                                    title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
-                                                                    href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
+                                                                    href="/cart"
+                                                                    className={cx('RCd1Gx')}
+                                                                    onClick={() => handleDeleteProduct(order.TTDH_id)}
                                                                 >
-                                                                    {order.product.SP_ten}
+                                                                    Xóa
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {/* / */}
-                                                    <div className={cx('Ra8lP2')}>
-                                                        <div>
-                                                            {order.product.SP_khuyenmai !== 0 && (
-                                                                <span className={cx('_1CXksa_1k1Vcm')}>
-                                                                    ₫{formatCash(order.product.SP_gia)}
-                                                                </span>
-                                                            )}
-                                                            <span className={cx('_1CXksa')}>
-                                                                ₫
-                                                                {formatCash(
-                                                                    order.product.SP_gia *
-                                                                        ((100 - order.product.SP_khuyenmai) / 100),
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    {/* / */}
-                                                    <div className={cx('_2ZUrV7')}>
-                                                        <div className={cx('_36kVQQ-input-quantity')}>
-                                                            <button
-                                                                className={cx('EcPhjV')}
-                                                                onClick={() =>
-                                                                    handlePlusNumber(
-                                                                        order.TTDH_id,
-                                                                        index,
-                                                                        order.product.SP_gia,
-                                                                        order.product.SP_khuyenmai,
-                                                                        order.product.SP_soluong,
-                                                                        order.product.SP_soluongban,
-                                                                    )
-                                                                }
-                                                            >
-                                                                <svg
-                                                                    enableBackground="new 0 0 10 10"
-                                                                    viewBox="0 0 10 10"
-                                                                    x="0"
-                                                                    y="0"
-                                                                    className={cx('shop-svg-icon')}
-                                                                >
-                                                                    <polygon points="4.5 4.5 3.5 4.5 0 4.5 0 5.5 3.5 5.5 4.5 5.5 10 5.5 10 4.5"></polygon>
-                                                                </svg>
-                                                            </button>
-
-                                                            <input
-                                                                key={index}
-                                                                id={`EcPhjV_3cj9Np${index}`}
-                                                                className={cx('EcPhjV_3cj9Np')}
-                                                                type="text"
-                                                                role="spinbutton"
-                                                                aria-valuenow="1"
-                                                                defaultValue={
-                                                                    numberValue !== ''
-                                                                        ? numberValue[index]
-                                                                        : order.TTDH_soluong
-                                                                }
-                                                                //onChange={() => handleChangeNumber(order.TTDH_id)}
-                                                            />
-
-                                                            <button
-                                                                className={cx('EcPhjV')}
-                                                                onClick={() =>
-                                                                    handleAddNumber(
-                                                                        order.TTDH_id,
-                                                                        index,
-                                                                        order.product.SP_gia,
-                                                                        order.product.SP_khuyenmai,
-                                                                        order.product.SP_soluong,
-                                                                        order.product.SP_soluongban,
-                                                                    )
-                                                                }
-                                                            >
-                                                                <svg
-                                                                    enableBackground="new 0 0 10 10"
-                                                                    viewBox="0 0 10 10"
-                                                                    x="0"
-                                                                    y="0"
-                                                                    className={cx('shop-svg-icon')}
-                                                                >
-                                                                    <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5"></polygon>
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    {/* / */}
-                                                    <div id={`dn3H7Y${index}`} className={cx('dn3H7Y')}>
-                                                        <span>
-                                                            ₫
-                                                            {formatCash(
-                                                                order.product.SP_gia *
-                                                                    order.TTDH_soluong *
-                                                                    ((100 - order.product.SP_khuyenmai) / 100),
-                                                            )}
-                                                        </span>
-                                                    </div>
-                                                    {/* / */}
-                                                    <div className={cx('_2y8iJi_2qPRqW')}>
-                                                        <a
-                                                            href="/cart"
-                                                            className={cx('RCd1Gx')}
-                                                            onClick={() => handleDeleteProduct(order.TTDH_id)}
-                                                        >
-                                                            Xóa
-                                                        </a>
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        ''
-                                    ),
-                                )
-                              : ''}
-                      </div>
-                  ))
-                : ''}
-            {/* / */}
-            <div className={cx('W2HjBQ_zzOmij')}>
-                <div className={cx('_2BT_es')}>
-                    <div className={cx('_3BPMNN')}>
-                        <div className={cx('_2LMWss')}>
-                            <div className={cx('_10A7e2')}>
-                                Tổng thanh toán ({sumNumber !== '' ? sumNumber : ''} Sản phẩm):
+                                            ) : (
+                                                ''
+                                            ),
+                                        )
+                                      : ''}
+                              </div>
+                          ))
+                        : ''}
+                    {/* / */}
+                    <div className={cx('W2HjBQ_zzOmij')}>
+                        <div className={cx('_2BT_es')}>
+                            <div className={cx('_3BPMNN')}>
+                                <div className={cx('_2LMWss')}>
+                                    <div className={cx('_10A7e2')}>
+                                        Tổng thanh toán ({sumNumber !== '' ? sumNumber : ''} Sản phẩm):
+                                    </div>
+                                    <div className={cx('nBHs8H')}>₫{price !== '' ? formatCash(price) : ''}</div>
+                                </div>
                             </div>
-                            <div className={cx('nBHs8H')}>₫{price !== '' ? formatCash(price) : ''}</div>
+                            <div className={cx('_1TwgPm')}></div>
                         </div>
+                        <Link to={'/cart/order'} className={cx('-button-solid--primary')}>
+                            <span className={cx('kcsswk')}>Mua hàng</span>
+                        </Link>
                     </div>
-                    <div className={cx('_1TwgPm')}></div>
-                </div>
-                <Link to={'/cart/order'} className={cx('-button-solid--primary')}>
-                    <span className={cx('kcsswk')}>Mua hàng</span>
-                </Link>
-            </div>
+                </>
+            ) : (
+                <div className={cx('')}>Bạn cần đăng nhập để thực hiện thao tác này</div>
+            )}
         </div>
     );
 }

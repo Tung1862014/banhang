@@ -117,7 +117,7 @@ function ManageSeller() {
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=all"
+                                    to="/admin/manage/seller=all"
                                     id="tabs__tab1"
                                     className={cx('tabs__tab1')}
                                     onClick={handlerClickAll}
@@ -127,7 +127,7 @@ function ManageSeller() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=action"
+                                    to="/admin/manage/seller=action"
                                     id="tabs__tab2"
                                     className={cx('tabs__tab2')}
                                     onClick={handlerClickAllAction}
@@ -140,7 +140,7 @@ function ManageSeller() {
                             </div>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/manage/customer=limit"
+                                    to="/admin/manage/seller=limit"
                                     id="tabs__tab3"
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}

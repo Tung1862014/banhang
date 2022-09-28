@@ -138,25 +138,24 @@ function Detail() {
                     SP_id: resultId,
                 })
                 .then((res) => {
-                    //console.log(res.data);
                     setTimeout(() => {
                         setCheckAddOfCart(false);
-                        axios
-                            .get(
-                                `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
-                                    JSON.parse(GetCookie('usrin')).ND_id
-                                }`,
-                            )
-                            .then((res) => {
-                                //console.log(res.data);
-                                //setSumNumber(res.data.results.length);
-                                const action = addNumberProduct(res.data.results.length);
-                                dispatchSignIn(action);
-                            })
-                            .catch((err) => {
-                                console.log('loi');
-                            });
                     }, 1200);
+                    axios
+                        .get(
+                            `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
+                                JSON.parse(GetCookie('usrin')).ND_id
+                            }`,
+                        )
+                        .then((res) => {
+                            console.log('reduxt', res.data.results.length);
+                            //setSumNumber(res.data.results.length);
+                            const action = addNumberProduct(res.data.results.length);
+                            dispatchSignIn(action);
+                        })
+                        .catch((err) => {
+                            console.log('loi');
+                        });
                 })
                 .catch((err) => {
                     console.log('loi');
@@ -400,14 +399,14 @@ function Detail() {
                             </div>
                         </div>
                         <div className={cx('_1YY3XU')}>
-                            <a className={cx('_2O_CHG')} href="/haisanmekong?categoryId=100629&amp;itemId=10515661050">
+                            <a className={cx('_2O_CHG')} href={`/shop/name=${product.NB_id}`}>
                                 <div className={cx('avatar_3q1-OA')}>
                                     <img
                                         className={cx('avatar__img')}
                                         alt=""
                                         src={
                                             product !== ''
-                                                ? product.shop[0].MTS_image
+                                                ? product.shop[0].MTS_logo
                                                 : process.env.REACT_APP_URL_NODEJS_IMAGE + '/default-ui-image.webp'
                                         }
                                     />
@@ -421,7 +420,7 @@ function Detail() {
                                     <a
                                         data-sqe="link"
                                         className={cx('btn-light--link_1CglVM')}
-                                        href={product !== '' ? `/shop/name=${product.NB_id}?page=${0}` : ''}
+                                        href={product !== '' ? `/shop/name=${product.NB_id}` : ''}
                                     >
                                         <svg
                                             enableBackground="new 0 0 15 15"
