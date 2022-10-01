@@ -1,5 +1,6 @@
 import { faLocationDot, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ function Order() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
+    const [sellerClientId, setSellerClientId] = useState('');
     //const [sumNumber, setSumNumber] = useState('');
     const [price, setPrice] = useState('');
     const [userVaule, setUserVaule] = useState('');
@@ -62,6 +64,7 @@ function Order() {
     useEffect(() => {
         let sellerArr = [];
         let sellerName = [];
+        let ClientId = [];
         //let sumnumber = 0;
         let price = 0;
 
@@ -69,6 +72,7 @@ function Order() {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
                 sellerArr.push(orderValue[i].NB_id);
                 sellerName.push(orderValue[i].seller.MTS_ten);
+                ClientId.push(orderValue[i].seller.MTS_clientId);
             }
 
             //sumnumber += 1;
@@ -85,6 +89,10 @@ function Order() {
             });
             setSellerName((prev) => {
                 const newSeller = [...prev, sellerName];
+                return newSeller[0];
+            });
+            setSellerClientId((prev) => {
+                const newSeller = [...prev, ClientId];
                 return newSeller[0];
             });
         }
@@ -302,7 +310,7 @@ function Order() {
                         name: orderValue[i].product.SP_ten.toString(),
                         code: orderValue[i].product.SP_id.toString(),
                         quantity: orderValue[i].TTDH_soluong,
-                        price: 200000,
+                        price: orderValue[i].product.SP_gia.toString(),
                         length: 12,
                         width: 12,
                         height: 12,
@@ -450,6 +458,115 @@ function Order() {
         //     }
         // }
     };
+
+    //paypal
+    function handleOrderCustomerPaypal(status, index) {
+        console.log('handleOrderCustomerPaypal', status, sellerName[index]);
+        axios
+            .post(
+                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+
+                { offset: 0, limit: 50, client_phone: '' },
+                {
+                    headers: {
+                        token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                    },
+                },
+            )
+            .then((res) => {
+                // console.log('res', res.data.data.shops);
+                // console.log('huyen xa', districtID, wardID);
+                for (let i = 0; i < res.data.data.shops.length; i++) {
+                    //for (let j = 0; j < sellerName.length; j++) {
+                    // if (res.data.data.shops[i].name === sellerName[j]) {
+                    //     console.log(handleInfoProoduct(sellerValue[j]));
+                    //     //console.log('arr', arr);
+                    //     // console.log(handleCountWeight(sellerValue[j]));
+                    //     // console.log(handleTakePhone(sellerValue[j]));
+                    // }
+
+                    if (res.data.data.shops[i].name === sellerName[index]) {
+                        console.log('res', res.data.data.shops[i].name);
+                        console.log([handleInfoProoduct(sellerValue[index])]);
+                        console.log('sellerValue[k]', sellerValue[index]);
+                        // axios
+                        //     .post(
+                        //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                        //         {
+                        //             payment_type_id: 2,
+
+                        //             required_note: 'KHONGCHOXEMHANG',
+                        //             return_phone: `${handleTakePhone(sellerValue[index]).toString()}`,
+                        //             return_address: `${handleTakeAddressSeller(sellerValue[index]).toString()}`,
+                        //             return_district_id: null,
+                        //             return_ward_code: '',
+                        //             client_order_code: '',
+                        //             to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
+                        //             to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                        //             to_address: `${
+                        //                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                        //                     ? userVaule.ND_diachiGH
+                        //                     : ctyVaule
+                        //             }`,
+                        //             to_district_id: districtID !== '' ? districtID : districtID,
+                        //             to_ward_code: wardID !== '' ? wardID : wardID,
+                        //             cod_amount: handlePriceSellerNoTransport(sellerValue[index], index),
+                        //             content: null,
+                        //             weight: handleCountWeight(sellerValue[index]),
+                        //             length: 19,
+                        //             width: 14,
+                        //             height: 10,
+                        //             pick_station_id: null,
+                        //             insurance_value: 0,
+                        //             service_id: 53321,
+                        //             service_type_id: 2,
+                        //             coupon: null,
+                        //             pick_shift: [2],
+                        //             items: handleInfoProoduct(sellerValue[index]),
+                        //         },
+                        //         {
+                        //             headers: {
+                        //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        //                 ShopId: res.data.data.shops[i]._id,
+                        //             },
+                        //         },
+                        //     )
+                        //     .then((res) => {
+                        //         //console.log('DH', res.data.data.order_code);
+                        //         if (res.data.data.order_code !== undefined) {
+                        axios
+                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                DH_id: res.data.data.order_code,
+                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                NB_id: sellerValue[index],
+                                DH_tongtien: handlePriceSeller(sellerValue[index], index),
+                                DH_loaithanhtoan: 1,
+                                DH_diachi:
+                                    ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                                        ? userVaule.ND_diachiGH
+                                        : ctyVaule,
+                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[index] : '0',
+                                DH_trangthaiTT: 1,
+                            })
+                            .then((res) => {
+                                console.log('', res.data);
+                                window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                            })
+                            .catch((err) => {
+                                console.log('loi add');
+                            });
+                        //}
+                        // })
+                        // .catch((err) => {
+                        //     console.log('loi DH');
+                        // });
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }
 
     //Tinh phi van chuyen
     useEffect(() => {
@@ -1070,6 +1187,44 @@ function Order() {
                                               </div>
                                           </div>
                                       </div>
+                                      <div id={`paypal-btn${sellerValue[index]}`} className={cx('paypal-btn')}>
+                                          <span>
+                                              {/* <Paypal
+                                                  data={
+                                                      'AZY_gbaNy42bD9QJXm68vc8CzQWEITTe851DAwfZiBxXE__nO12kTTnnAPx9vaTxgxGV4NCcCDLQrvKZ'
+                                                  }
+                                                  handleOrderCustomerPaypal={() =>handleOrderCustomerPaypal()}
+                                              /> */}
+                                              <PayPalScriptProvider
+                                                  options={{
+                                                      'client-id': sellerClientId[index],
+                                                  }}
+                                              >
+                                                  <PayPalButtons
+                                                      createOrder={(data, actions) => {
+                                                          return actions.order.create({
+                                                              purchase_units: [
+                                                                  {
+                                                                      amount: {
+                                                                          value: '1',
+                                                                      },
+                                                                  },
+                                                              ],
+                                                          });
+                                                      }}
+                                                      onApprove={async (data, actions) => {
+                                                          const details = await actions.order.capture();
+                                                          const name = details.payer.name.given_name;
+                                                          console.log('details', details);
+                                                          if (details.status === 'COMPLETED') {
+                                                              handleOrderCustomerPaypal(details.status, index);
+                                                          }
+                                                          alert('Transaction completed by ' + name);
+                                                      }}
+                                                  />
+                                              </PayPalScriptProvider>
+                                          </span>
+                                      </div>
                                   </div>
                               </div>
                           ))
@@ -1164,6 +1319,13 @@ function Order() {
                                             </div>
                                         </button>
                                     </span>
+                                    {/* <span>
+                                        <Paypal
+                                            data={
+                                                'AZY_gbaNy42bD9QJXm68vc8CzQWEITTe851DAwfZiBxXE__nO12kTTnnAPx9vaTxgxGV4NCcCDLQrvKZ'
+                                            }
+                                        />
+                                    </span> */}
                                 </div>
                             </div>
                             <div id="_3hU2wO" className={cx('_3hU2wO')}>

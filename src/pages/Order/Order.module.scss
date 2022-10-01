@@ -323,7 +323,7 @@
 
 //
 .ZrE0do {
-    margin-top: 10px;
+    margin-top: 3px;
     width: var(--default-layout-width);
     box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.05);
     border-radius: 3px;
@@ -553,6 +553,16 @@
     margin-left: 20px;
     font-size: 20px;
     color: #ee4d2d;
+}
+
+.paypal-btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    span {
+        width: 200px;
+    }
 }
 
 //
