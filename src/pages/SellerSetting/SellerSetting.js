@@ -113,100 +113,144 @@ function SellerSetting() {
             console.log('title', title);
             console.log('phone', '0' + dateValue.ND_sdt.toString());
 
-            axios
-                .post(
-                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/update`,
-
-                    {
-                        district_id: districtID,
-                        ward_code: wardID,
-                        name: title,
-                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
-                        address: ctyVaule,
-                    },
-                    {
-                        headers: {
-                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                            ShopId: 119407,
-                        },
-                    },
-                )
-                .then((res) => {
-                    console.log('DV', res.data);
-                    // setServiceFee((prev) => {
-                    //     const newSeller = [...prev, res.data.data.service_fee];
-                    //     return newSeller;
-                    // });
-                })
-                .catch((err) => {
-                    console.log('loi Dv nha');
+            if (title === '') {
+                toast.warning('Tên gian hàng không được bỏ trống.', {
+                    position: toast.POSITION.TOP_CENTER,
                 });
-            axios
-                .post(
-                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
+            } else if (image[0] === undefined) {
+                toast.warning('Ảnh bìa không được bỏ trông.', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (imageLogo[0] === undefined) {
+                toast.warning('Ảnh đại diện không được bỏ trông.', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (address === '') {
+                toast.warning('Địa chỉ cụ thể không được bỏ trông.', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (ctyVaule === '') {
+                toast.warning('Địa chỉ không được bỏ trông.', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else {
+                axios
+                    .get(
+                        `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/check/name/shop?MTS_ten=${title}`,
+                    )
+                    .then((res) => {
+                        console.log('name title', res.data);
+                        if (res.data.result) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // axios
+                            //     .post(
+                            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/update`,
 
-                    {
-                        district_id: districtID,
-                        ward_code: wardID,
-                        name: title,
-                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
-                        address: ctyVaule,
-                    },
-                    {
-                        headers: {
-                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                        },
-                    },
-                )
-                .then((res) => {
-                    console.log('DV', res.data.data.shop_id);
-                    const formData = new FormData();
-                    formData.append('image', image[0]);
-                    formData.append('MTS_id', res.data.data.shop_id);
-                    formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                    formData.append('MTS_ten', title);
-                    formData.append('MTS_diachi', ctyVaule);
-                    formData.append('MTS_chitiet', address);
-                    formData.append('MTS_clientId', idPay);
-                    axios({
-                        method: 'POST',
-                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
-                        data: formData,
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                    })
-                        .then((res) => {
-                            console.log(res.data);
-                            const formDataLogo = new FormData();
-                            formDataLogo.append('image', imageLogo[0]);
-                            formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                            axios({
-                                method: 'POST',
-                                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
-                                data: formDataLogo,
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',
-                                },
-                            })
+                            //         {
+                            //             district_id: districtID,
+                            //             ward_code: wardID,
+                            //             name: title,
+                            //             phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+                            //             address: ctyVaule,
+                            //         },
+                            //         {
+                            //             headers: {
+                            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            //                 ShopId: 119407,
+                            //             },
+                            //         },
+                            //     )
+                            //     .then((res) => {
+                            //         console.log('DV', res.data);
+                            //         // setServiceFee((prev) => {
+                            //         //     const newSeller = [...prev, res.data.data.service_fee];
+                            //         //     return newSeller;
+                            //         // });
+                            //     })
+                            //     .catch((err) => {
+                            //         console.log('loi Dv nha');
+                            //     });
+                            ///////////////////////////////////////////////////////////////////////////////
+                            axios
+                                .post(
+                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
+
+                                    {
+                                        district_id: districtID,
+                                        ward_code: wardID,
+                                        name: title,
+                                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+                                        address: ctyVaule,
+                                    },
+                                    {
+                                        headers: {
+                                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                        },
+                                    },
+                                )
                                 .then((res) => {
-                                    console.log(res.data);
-                                    toast.success('Dữ liệu lưu thành công', {
-                                        position: toast.POSITION.TOP_CENTER,
-                                    });
-                                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/setting`, '_self', 1);
+                                    console.log('DV', res.data.data.shop_id);
+                                    const formData = new FormData();
+                                    formData.append('image', image[0]);
+                                    formData.append('MTS_id', res.data.data.shop_id);
+                                    formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                                    formData.append('MTS_ten', title);
+                                    formData.append('MTS_diachi', ctyVaule);
+                                    formData.append('MTS_chitiet', address);
+                                    formData.append('MTS_clientId', idPay);
+                                    axios({
+                                        method: 'POST',
+                                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
+                                        data: formData,
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
+                                    })
+                                        .then((res) => {
+                                            console.log(res.data);
+                                            const formDataLogo = new FormData();
+                                            formDataLogo.append('image', imageLogo[0]);
+                                            formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                                            axios({
+                                                method: 'POST',
+                                                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+                                                data: formDataLogo,
+                                                headers: {
+                                                    'Content-Type': 'multipart/form-data',
+                                                },
+                                            })
+                                                .then((res) => {
+                                                    console.log(res.data);
+                                                    toast.success('Dữ liệu lưu thành công', {
+                                                        position: toast.POSITION.TOP_CENTER,
+                                                    });
+                                                    window.open(
+                                                        `${process.env.REACT_APP_URL_FRONTEND}/seller/setting`,
+                                                        '_self',
+                                                        1,
+                                                    );
+                                                })
+                                                .catch((err) => {
+                                                    console.log('loi nha');
+                                                });
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi');
+                                        });
                                 })
                                 .catch((err) => {
-                                    console.log('loi nha');
+                                    console.log('loi Dv nha');
                                 });
-                        })
-                        .catch((err) => {
-                            console.log('loi');
-                        });
-                })
-                .catch((err) => {
-                    console.log('loi Dv nha');
-                });
+                        } else {
+                            toast.warning('Tên gian hàng đã tồn tại. Bạn hãy lấy tên khác.', {
+                                position: toast.POSITION.TOP_CENTER,
+                            });
+                        }
+                    })
+                    .catch(() => {
+                        console.log('loi check');
+                    });
+            }
         } else if (image[0] !== undefined) {
             const formData = new FormData();
             formData.append('image', image[0]);
@@ -636,6 +680,9 @@ function SellerSetting() {
                             </div>{' '}
                         </div>
                     </div>
+                    <div className={cx('btn-submit-update')} onClick={handleSubmitSaveShop}>
+                        <Button primary>Lưu</Button>
+                    </div>
                 </div>
                 <div className={cx('info')}>
                     {establish === undefined ? (
@@ -648,7 +695,7 @@ function SellerSetting() {
                     )}
                     <div className={cx('image-shop')}>
                         <label htmlFor="choose-file" className={cx('image-shop-label')}>
-                            Hình ảnh shop
+                            Ảnh bìa
                         </label>
                         <input type="file" id="choose-file" onChange={(e) => ChooseImg(e)} hidden />
                     </div>
@@ -863,9 +910,7 @@ function SellerSetting() {
                     </div>
                 </div>
             </div>
-            <div className={cx('btn-submit-update')} onClick={handleSubmitSaveShop}>
-                <Button primary>Lưu</Button>
-            </div>
+
             <ToastContainer />
         </div>
 

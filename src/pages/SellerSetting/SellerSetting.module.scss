@@ -106,10 +106,11 @@
 .id-pay-shop {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 
     input {
-        height: 30px;
-        padding: 3px 3px 3px 10px;
+        height: 45px;
+        padding: 3px 10px 3px 10px;
         outline: none;
         border-radius: 6px;
         box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.1);

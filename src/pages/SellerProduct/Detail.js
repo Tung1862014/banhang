@@ -103,7 +103,7 @@ function Detail({ currentItems, clickPageCheck }) {
             if (locationId === undefined) {
                 let idcheck = checkBox + ',' + checkid;
                 setCheckBox(idcheck);
-                if (checkAll.checked === false && idcheck.length === currentItems.length) {
+                if (checkAll.checked === false && idcheck.split(',').length === currentItems.length) {
                     checkAll.checked = true;
                 }
                 return;
