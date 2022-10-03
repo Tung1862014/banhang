@@ -12,6 +12,7 @@ import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 function SellerSetting() {
     const [title, setTitle] = useState('');
+    const [idPay, setIdPay] = useState('');
     const [image, setImage] = useState('');
     const [imageLogo, setImageLogo] = useState('');
     // const [field, setField] = useState('');
@@ -112,34 +113,34 @@ function SellerSetting() {
             console.log('title', title);
             console.log('phone', '0' + dateValue.ND_sdt.toString());
 
-            // axios
-            //     .post(
-            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/update`,
+            axios
+                .post(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/update`,
 
-            //         {
-            //             district_id: districtID,
-            //             ward_code: wardID,
-            //             name: title,
-            //             phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
-            //             address: ctyVaule,
-            //         },
-            //         {
-            //             headers: {
-            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-            //                 ShopId: 119407,
-            //             },
-            //         },
-            //     )
-            //     .then((res) => {
-            //         console.log('DV', res.data);
-            //         // setServiceFee((prev) => {
-            //         //     const newSeller = [...prev, res.data.data.service_fee];
-            //         //     return newSeller;
-            //         // });
-            //     })
-            //     .catch((err) => {
-            //         console.log('loi Dv nha');
-            //     });
+                    {
+                        district_id: districtID,
+                        ward_code: wardID,
+                        name: title,
+                        phone: dateValue !== '' ? '0' + dateValue.ND_sdt.toString() : '091882456',
+                        address: ctyVaule,
+                    },
+                    {
+                        headers: {
+                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            ShopId: 119407,
+                        },
+                    },
+                )
+                .then((res) => {
+                    console.log('DV', res.data);
+                    // setServiceFee((prev) => {
+                    //     const newSeller = [...prev, res.data.data.service_fee];
+                    //     return newSeller;
+                    // });
+                })
+                .catch((err) => {
+                    console.log('loi Dv nha');
+                });
             axios
                 .post(
                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/register`,
@@ -166,6 +167,7 @@ function SellerSetting() {
                     formData.append('MTS_ten', title);
                     formData.append('MTS_diachi', ctyVaule);
                     formData.append('MTS_chitiet', address);
+                    formData.append('MTS_clientId', idPay);
                     axios({
                         method: 'POST',
                         url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
@@ -210,6 +212,7 @@ function SellerSetting() {
             formData.append('image', image[0]);
             formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
             formData.append('MTS_chitiet', address);
+            formData.append('MTS_clientId', idPay);
             axios({
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image`,
@@ -225,6 +228,7 @@ function SellerSetting() {
                         formDataLogo.append('image', imageLogo[0]);
                         formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
                         formDataLogo.append('MTS_chitiet', '');
+                        formDataLogo.append('MTS_clientId', '');
                         axios({
                             method: 'PUT',
                             url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
@@ -258,6 +262,7 @@ function SellerSetting() {
             formDataLogo.append('image', imageLogo[0]);
             formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
             formDataLogo.append('MTS_chitiet', address);
+            formDataLogo.append('MTS_clientId', idPay);
             axios({
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/image/logo`,
@@ -276,11 +281,12 @@ function SellerSetting() {
                 .catch((err) => {
                     console.log('loi nha');
                 });
-        } else if (address !== '') {
+        } else if (address !== '' || idPay !== '') {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/address`, {
                     NB_id: JSON.parse(GetCookie('seller')).ND_id,
                     MTS_chitiet: address,
+                    MTS_clientId: idPay,
                 })
                 .then((res) => {
                     console.log(res.data);
@@ -663,7 +669,15 @@ function SellerSetting() {
                             </option>
                         </select>
                     </div> */}
-
+                    <div className={cx('id-pay-shop')}>
+                        <label htmlFor="payShop">ID tài khoản PayPal</label>
+                        <input
+                            type="text"
+                            placeholder="vi du"
+                            defaultValue={establish !== undefined ? establish.MTS_clientId : ''}
+                            onChange={(e) => setIdPay(e.target.value)}
+                        />
+                    </div>
                     <div className={cx('form-section')}>
                         <div className={cx('form-title')}>Địa chỉ cụ thể</div>{' '}
                         <div className={cx('form-content')}>

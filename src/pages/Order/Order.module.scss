@@ -555,9 +555,25 @@
     color: #ee4d2d;
 }
 
+._31ayp33 {
+    margin-left: 2px;
+    font-size: 20px;
+    color: #ee4d2d;
+}
+
 .paypal-btn {
     width: 100%;
     display: flex;
+    justify-content: flex-end;
+
+    span {
+        width: 200px;
+    }
+}
+
+.payment-btn-none {
+    width: 100%;
+    display: none;
     justify-content: flex-end;
 
     span {

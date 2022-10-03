@@ -446,7 +446,7 @@ function Header() {
             <header className={cx('wrapper')}>
                 <div>
                     <div className={cx('inner')}>
-                        <div className={cx('logo')}>
+                        {/* <div className={cx('logo')}>
                             <iframe
                                 className={cx('video-logo')}
                                 src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
@@ -458,7 +458,7 @@ function Header() {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe>
-                        </div>
+                        </div> */}
 
                         <div className={cx('home-page-zytl')}>
                             <Link to="/" className={cx('home-page-zytlt1')}>

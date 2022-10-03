@@ -28,13 +28,27 @@ function SellerShopReviews() {
             .then((res) => {
                 console.log(res.data.result);
                 setEvaluate(res.data.result);
-                if (res.data.result[0] !== undefined) {
-                    setStar5Value(res.data.star5[0].star5);
-                    setStar4Value(res.data.star4[0].star4);
-                    setStar3Value(res.data.star3[0].star3);
-                    setStar2Value(res.data.star2[0].star2);
-                    setStar1Value(res.data.star1[0].star1);
-                }
+            })
+            .catch(() => {
+                console.log('loi khong the show product');
+            });
+    }, [star]);
+
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/star?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DG_sosao=${star || ''}`,
+            )
+
+            .then((res) => {
+                console.log('star', res.data);
+                setStar5Value(res.data.star5[0].star5);
+                setStar4Value(res.data.star4[0].star4);
+                setStar3Value(res.data.star3[0].star3);
+                setStar2Value(res.data.star2[0].star2);
+                setStar1Value(res.data.star1[0].star1);
             })
             .catch(() => {
                 console.log('loi khong the show product');

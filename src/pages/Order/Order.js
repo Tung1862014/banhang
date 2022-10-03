@@ -5,6 +5,8 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import GetCookie from '~/components/Hook/GetCookies';
+import RemoveCookie from '~/components/Hook/RemoveCookies';
+import SetCookie from '~/components/Hook/SetCookies';
 import styles from './Order.module.scss';
 
 const cx = classNames.bind(styles);
@@ -13,7 +15,7 @@ function Order() {
     const [sellerValue, setSellerValue] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [orderValue, setOrderValue] = useState('');
-    const [sellerClientId, setSellerClientId] = useState('');
+    const [sellerClientId, setSellerClientId] = useState(''); //id client paypal
     //const [sumNumber, setSumNumber] = useState('');
     const [price, setPrice] = useState('');
     const [userVaule, setUserVaule] = useState('');
@@ -25,11 +27,13 @@ function Order() {
     const [wardValue, setWardValue] = useState('');
 
     ////////////////////////////////////////////////////
-    const [provinceID, setProvinceID] = useState('');
-    const [districtID, setDistrictID] = useState('');
-    const [wardID, setWardID] = useState('');
+    const [provinceID, setProvinceID] = useState(''); //id thành phố/ tỉnh
+    const [districtID, setDistrictID] = useState(''); // id quận/huyên
+    const [wardID, setWardID] = useState(''); //id phường/xã
     ////////////////////////////////////////////////////
-    const [serviceFee, setServiceFee] = useState('');
+    const [serviceFee, setServiceFee] = useState(''); //phivan chuyen
+    //const [namePaypal, setNamePaypal] = useState(''); //Tên Paypal
+    const [checkPaypal, setCheckPaypal] = useState(false);
 
     //show user
     useEffect(() => {
@@ -54,52 +58,97 @@ function Order() {
             )
             .then((res) => {
                 console.log('data', res.data);
-                setOrderValue(res.data.results);
+
+                let sellerArr = [];
+                let sellerName = [];
+                let ClientId = [];
+
+                //let sumnumber = 0;
+                let price = 0;
+
+                for (let i = 0; i < res.data.results.length; i++) {
+                    if (!sellerArr.includes(res.data.results[i].NB_id)) {
+                        ClientId.push(res.data.results[i].seller.MTS_clientId);
+                        sellerArr.push(res.data.results[i].NB_id);
+                        sellerName.push(res.data.results[i].seller.MTS_ten);
+                    }
+
+                    //sumnumber += 1;
+                    price +=
+                        res.data.results[i].product.SP_gia *
+                        res.data.results[i].TTDH_soluong *
+                        ((100 - res.data.results[i].product.SP_khuyenmai) / 100);
+                }
+                //console.log('sellerArr', sellerArr);
+                if (sellerArr.length > 0) {
+                    setSellerClientId((prev) => {
+                        const newSeller = [...prev, ClientId];
+                        return newSeller[0];
+                    });
+                    setSellerValue((prev) => {
+                        const newSeller = [...prev, sellerArr];
+                        return newSeller[0];
+                    });
+                    setSellerName((prev) => {
+                        const newSeller = [...prev, sellerName];
+                        return newSeller[0];
+                    });
+                    setOrderValue(res.data.results);
+                }
+
+                //setSumNumber(sumnumber);
+                setPrice(price);
             })
             .catch((err) => {
                 console.log('loi');
             });
     }, []);
 
-    useEffect(() => {
-        let sellerArr = [];
-        let sellerName = [];
-        let ClientId = [];
-        //let sumnumber = 0;
-        let price = 0;
+    // useEffect(() => {
+    //     let sellerArr = [];
+    //     let sellerName = [];
+    //     let ClientId = [];
+    //     let namepay = [];
+    //     //let sumnumber = 0;
+    //     let price = 0;
 
-        for (let i = 0; i < orderValue.length; i++) {
-            if (!sellerArr.includes(orderValue[i].NB_id)) {
-                sellerArr.push(orderValue[i].NB_id);
-                sellerName.push(orderValue[i].seller.MTS_ten);
-                ClientId.push(orderValue[i].seller.MTS_clientId);
-            }
+    //     for (let i = 0; i < orderValue.length; i++) {
+    //         if (!sellerArr.includes(orderValue[i].NB_id)) {
+    //             ClientId.push(orderValue[i].seller.MTS_clientId);
+    //             sellerArr.push(orderValue[i].NB_id);
+    //             sellerName.push(orderValue[i].seller.MTS_ten);
+    //             namepay.push('Pay' + i);
+    //         }
 
-            //sumnumber += 1;
-            price +=
-                orderValue[i].product.SP_gia *
-                orderValue[i].TTDH_soluong *
-                ((100 - orderValue[i].product.SP_khuyenmai) / 100);
-        }
-        //console.log('sellerArr', sellerArr);
-        if (sellerArr.length > 0) {
-            setSellerValue((prev) => {
-                const newSeller = [...prev, sellerArr];
-                return newSeller[0];
-            });
-            setSellerName((prev) => {
-                const newSeller = [...prev, sellerName];
-                return newSeller[0];
-            });
-            setSellerClientId((prev) => {
-                const newSeller = [...prev, ClientId];
-                return newSeller[0];
-            });
-        }
+    //         //sumnumber += 1;
+    //         price +=
+    //             orderValue[i].product.SP_gia *
+    //             orderValue[i].TTDH_soluong *
+    //             ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+    //     }
+    //     //console.log('sellerArr', sellerArr);
+    //     if (sellerArr.length > 0) {
+    //         setSellerClientId((prev) => {
+    //             const newSeller = [...prev, ClientId];
+    //             return newSeller[0];
+    //         });
+    //         setSellerValue((prev) => {
+    //             const newSeller = [...prev, sellerArr];
+    //             return newSeller[0];
+    //         });
+    //         setSellerName((prev) => {
+    //             const newSeller = [...prev, sellerName];
+    //             return newSeller[0];
+    //         });
+    //         setNamePaypal((prev) => {
+    //             const newSeller = [...prev, namepay];
+    //             return newSeller[0];
+    //         });
+    //     }
 
-        //setSumNumber(sumnumber);
-        setPrice(price);
-    }, [orderValue]);
+    //     //setSumNumber(sumnumber);
+    //     setPrice(price);
+    // }, [orderValue]);
 
     function formatCash(str) {
         return str
@@ -139,7 +188,7 @@ function Order() {
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
             if (i === orderValue.length - 1) {
-                return price;
+                return price + serviceFee[index];
             }
         }
         //console.log('index', price);
@@ -213,6 +262,10 @@ function Order() {
             iconTick2.style.display = 'inline-block';
             payID.style.display = 'none';
             orderId.style.display = 'none';
+            // for (let i = 0; i < sellerValue.length; i++) {
+            //     console.log('sellerValue[i]', sellerValue[i]);
+            setCheckPaypal(true);
+            // }
         } else {
             buttonTick2.style.color = '#222';
             buttonTick2.style.border = '1px solid #222';
@@ -224,6 +277,7 @@ function Order() {
             iconTick1.style.display = 'inline-block';
             payID.style.display = 'flex';
             orderId.style.display = 'grid';
+            setCheckPaypal(false);
         }
     };
 
@@ -250,7 +304,7 @@ function Order() {
                 //console.log('weight', orderValue[i].product.SP_trongluong);
                 //console.log('number', orderValue[i].TTDH_soluong);
 
-                phone = orderValue[i].seller.ND_sdt;
+                phone += orderValue[i].seller.ND_sdt;
             }
         }
 
@@ -310,7 +364,7 @@ function Order() {
                         name: orderValue[i].product.SP_ten.toString(),
                         code: orderValue[i].product.SP_id.toString(),
                         quantity: orderValue[i].TTDH_soluong,
-                        price: orderValue[i].product.SP_gia.toString(),
+                        price: orderValue[i].product.SP_gia,
                         length: 12,
                         width: 12,
                         height: 12,
@@ -346,7 +400,7 @@ function Order() {
                         // }
 
                         if (res.data.data.shops[i].name === sellerName[j]) {
-                            console.log('res', res.data.data.shops[i].name);
+                            console.log('res', res.data.data.shops[i]._id);
                             console.log([handleInfoProoduct(sellerValue[j])]);
                             console.log('sellerValue[k]', sellerValue[j]);
                             axios
@@ -392,14 +446,14 @@ function Order() {
                                     },
                                 )
                                 .then((res) => {
-                                    //console.log('DH', res.data.data.order_code);
+                                    console.log('DH', res.data.data);
                                     if (res.data.data.order_code !== undefined) {
                                         axios
                                             .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                                                 DH_id: res.data.data.order_code,
                                                 ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
                                                 NB_id: sellerValue[j],
-                                                DH_tongtien: handlePriceSeller(sellerValue[j], j),
+                                                DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
                                                 DH_loaithanhtoan: 1,
                                                 DH_diachi:
                                                     ctyVaule === '' &&
@@ -460,8 +514,8 @@ function Order() {
     };
 
     //paypal
-    function handleOrderCustomerPaypal(status, index) {
-        console.log('handleOrderCustomerPaypal', status, sellerName[index]);
+    function handleOrderCustomerPaypal(index, districtID, wardID) {
+        //console.log('handleOrderCustomerPaypal', status, sellerName[index]);
         axios
             .post(
                 `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
@@ -486,80 +540,105 @@ function Order() {
                     // }
 
                     if (res.data.data.shops[i].name === sellerName[index]) {
-                        console.log('res', res.data.data.shops[i].name);
-                        console.log([handleInfoProoduct(sellerValue[index])]);
-                        console.log('sellerValue[k]', sellerValue[index]);
-                        // axios
-                        //     .post(
-                        //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-                        //         {
-                        //             payment_type_id: 2,
+                        // console.log('res', res.data.data.shops[i]._id);
+                        // console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[index]));
+                        // console.log('sellerValue[k]', sellerValue[index], sellerName[index]);
+                        // console.log('handleTakePhone', handleTakePhone(sellerValue[index]).toString());
+                        // console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[index]).toString());
+                        // console.log(
+                        //     'handlePriceSellerNoTransport',
+                        //     handlePriceSellerNoTransport(sellerValue[index], index),
+                        // );
+                        // console.log('handleCountWeight', handleCountWeight(sellerValue[index]));
+                        console.log('districtID', JSON.parse(GetCookie('district')));
+                        console.log('wardID', JSON.parse(GetCookie('ward')));
 
-                        //             required_note: 'KHONGCHOXEMHANG',
-                        //             return_phone: `${handleTakePhone(sellerValue[index]).toString()}`,
-                        //             return_address: `${handleTakeAddressSeller(sellerValue[index]).toString()}`,
-                        //             return_district_id: null,
-                        //             return_ward_code: '',
-                        //             client_order_code: '',
-                        //             to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
-                        //             to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
-                        //             to_address: `${
-                        //                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                        //                     ? userVaule.ND_diachiGH
-                        //                     : ctyVaule
-                        //             }`,
-                        //             to_district_id: districtID !== '' ? districtID : districtID,
-                        //             to_ward_code: wardID !== '' ? wardID : wardID,
-                        //             cod_amount: handlePriceSellerNoTransport(sellerValue[index], index),
-                        //             content: null,
-                        //             weight: handleCountWeight(sellerValue[index]),
-                        //             length: 19,
-                        //             width: 14,
-                        //             height: 10,
-                        //             pick_station_id: null,
-                        //             insurance_value: 0,
-                        //             service_id: 53321,
-                        //             service_type_id: 2,
-                        //             coupon: null,
-                        //             pick_shift: [2],
-                        //             items: handleInfoProoduct(sellerValue[index]),
-                        //         },
-                        //         {
-                        //             headers: {
-                        //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                        //                 ShopId: res.data.data.shops[i]._id,
-                        //             },
-                        //         },
-                        //     )
-                        //     .then((res) => {
-                        //         //console.log('DH', res.data.data.order_code);
-                        //         if (res.data.data.order_code !== undefined) {
+                        const resultPhone = `${handleTakePhone(sellerValue[index]).toString()}`;
+                        const resultAdress = `${handleTakeAddressSeller(sellerValue[index]).toString()}`;
+                        const resultWeight = handleCountWeight(sellerValue[index]);
+                        const resultItems = handleInfoProoduct(sellerValue[index]);
                         axios
-                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                                DH_id: res.data.data.order_code,
-                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                                NB_id: sellerValue[index],
-                                DH_tongtien: handlePriceSeller(sellerValue[index], index),
-                                DH_loaithanhtoan: 1,
-                                DH_diachi:
-                                    ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                                        ? userVaule.ND_diachiGH
-                                        : ctyVaule,
-                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[index] : '0',
-                                DH_trangthaiTT: 1,
-                            })
+                            .post(
+                                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                                {
+                                    payment_type_id: 1,
+
+                                    required_note: 'KHONGCHOXEMHANG',
+                                    return_phone: resultPhone,
+                                    return_address: resultAdress,
+                                    return_district_id: null,
+                                    return_ward_code: '',
+                                    client_order_code: '',
+                                    to_name: `${userVaule !== '' ? userVaule.ND_hoten.toString() : 'TinTest124'}`,
+                                    to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                                    to_address: `${
+                                        ctyVaule === '' &&
+                                        userVaule !== '' &&
+                                        userVaule.ND_diachiGH.toString() !== undefined
+                                            ? userVaule.ND_diachiGH
+                                            : ctyVaule
+                                    }`,
+                                    to_district_id:
+                                        GetCookie('ward') !== undefined
+                                            ? JSON.parse(GetCookie('district'))
+                                            : districtID,
+                                    to_ward_code:
+                                        GetCookie('ward') !== undefined ? JSON.parse(GetCookie('ward')) : wardID,
+
+                                    content: null,
+                                    weight: resultWeight,
+                                    length: 19,
+                                    width: 14,
+                                    height: 10,
+                                    pick_station_id: null,
+                                    insurance_value: 0,
+                                    service_id: 53321,
+                                    service_type_id: 2,
+                                    coupon: null,
+                                    pick_shift: [2],
+                                    items: resultItems,
+                                },
+                                {
+                                    headers: {
+                                        Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                        ShopId: res.data.data.shops[i]._id,
+                                    },
+                                },
+                            )
                             .then((res) => {
-                                console.log('', res.data);
-                                window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                                console.log('DH', res.data.data.order_code);
+                                if (res.data.data.order_code !== undefined) {
+                                    axios
+                                        .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                            DH_id: res.data.data.order_code,
+                                            ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                            NB_id: sellerValue[index],
+                                            DH_tongtien: handlePriceSellerNoTransport(sellerValue[index], index),
+                                            DH_loaithanhtoan: 2,
+                                            DH_diachi:
+                                                ctyVaule === '' &&
+                                                userVaule !== '' &&
+                                                userVaule.ND_diachiGH !== undefined
+                                                    ? userVaule.ND_diachiGH
+                                                    : ctyVaule,
+                                            DH_phivanchuyen:
+                                                GetCookie('servicefee') !== undefined
+                                                    ? JSON.parse(GetCookie('servicefee'))
+                                                    : '0',
+                                            DH_trangthaiTT: 1,
+                                        })
+                                        .then((res) => {
+                                            console.log('', res.data);
+                                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi add');
+                                        });
+                                }
                             })
                             .catch((err) => {
-                                console.log('loi add');
+                                console.log('loi DH');
                             });
-                        //}
-                        // })
-                        // .catch((err) => {
-                        //     console.log('loi DH');
-                        // });
                     }
                 }
             })
@@ -606,6 +685,7 @@ function Order() {
                             if (res.data.data.shops[i].name === sellerName[j]) {
                                 console.log('district_id', res.data.data.shops[i]);
                                 console.log('huyen xa', districtID, wardID);
+                                console.log('weight', handleCountWeightt(sellerValue[j]));
                                 axios
                                     .post(
                                         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
@@ -613,14 +693,14 @@ function Order() {
                                         {
                                             from_district_id: res.data.data.shops[i].district_id,
                                             service_id: 53321,
-                                            service_type_id: 2,
+                                            service_type_id: null,
                                             to_district_id: districtID !== '' ? districtID : districtID,
                                             to_ward_code: wardID !== '' ? wardID : wardID,
                                             weight: handleCountWeightt(sellerValue[j]),
                                             length: 19,
                                             width: 14,
                                             height: 10,
-                                            insurance_value: 10000,
+                                            insurance_value: handlePriceSellerNoTransport(sellerValue[j], j),
                                             coupon: null,
                                         },
                                         {
@@ -632,6 +712,8 @@ function Order() {
                                     )
                                     .then((res) => {
                                         console.log('DV', res.data.data);
+                                        RemoveCookie('servicefee');
+                                        SetCookie('servicefee', JSON.stringify(res.data.data.service_fee));
                                         setServiceFee((prev) => {
                                             const newSeller = [...prev, res.data.data.service_fee];
                                             return newSeller;
@@ -711,6 +793,8 @@ function Order() {
                         if (res.data.data[i].DistrictName === arrValue[1]) {
                             //console.log('huyen', res.data.data);
                             setDistrictID(res.data.data[i].DistrictID);
+                            RemoveCookie('district');
+                            SetCookie('district', JSON.stringify(res.data.data[i].DistrictID));
                         }
                     }
                 })
@@ -740,6 +824,8 @@ function Order() {
                         if (res.data.data[i].WardName === arrValue[2]) {
                             //console.log('xa', res.data.data[i].WardCode);
                             setWardID(res.data.data[i].WardCode);
+                            RemoveCookie('ward');
+                            SetCookie('ward', JSON.stringify(res.data.data[i].WardCode));
                         }
                     }
                 })
@@ -914,7 +1000,16 @@ function Order() {
         }
     };
 
-    ///tinh phi DV
+    ///take client id paypal
+    // function takeClientId(index) {
+    //     let ClientId = [];
+
+    //     for (let i = 0; i < orderValue.length; i++) {
+    //         if (orderValue[i].NB_id === index) {
+    //             return ClientId.push(orderValue[i].seller.MTS_clientId);
+    //         }
+    //     }
+    // }
 
     return (
         <div className={cx('wrapper')}>
@@ -1182,48 +1277,63 @@ function Order() {
                                               <div className={cx('_4nelpz')}>
                                                   Tổng số tiền ({handleSumProduct(sell)} sản phẩm):
                                               </div>
-                                              <div className={cx('_31ayp3')}>
-                                                  ₫{formatCash(handlePriceSeller(sell, index))}
-                                              </div>
+                                              <span className={cx('_31ayp3')}>₫</span>
+                                              <span id={`_31ayp3${index}`} className={cx('_31ayp33')}>
+                                                  {formatCash(handlePriceSeller(sell, index))}
+                                              </span>
                                           </div>
                                       </div>
-                                      <div id={`paypal-btn${sellerValue[index]}`} className={cx('paypal-btn')}>
-                                          <span>
-                                              {/* <Paypal
-                                                  data={
-                                                      'AZY_gbaNy42bD9QJXm68vc8CzQWEITTe851DAwfZiBxXE__nO12kTTnnAPx9vaTxgxGV4NCcCDLQrvKZ'
-                                                  }
-                                                  handleOrderCustomerPaypal={() =>handleOrderCustomerPaypal()}
-                                              /> */}
-                                              <PayPalScriptProvider
-                                                  options={{
-                                                      'client-id': sellerClientId[index],
-                                                  }}
-                                              >
-                                                  <PayPalButtons
-                                                      createOrder={(data, actions) => {
-                                                          return actions.order.create({
-                                                              purchase_units: [
-                                                                  {
-                                                                      amount: {
-                                                                          value: '1',
-                                                                      },
-                                                                  },
-                                                              ],
-                                                          });
-                                                      }}
-                                                      onApprove={async (data, actions) => {
-                                                          const details = await actions.order.capture();
-                                                          const name = details.payer.name.given_name;
-                                                          console.log('details', details);
-                                                          if (details.status === 'COMPLETED') {
-                                                              handleOrderCustomerPaypal(details.status, index);
-                                                          }
-                                                          alert('Transaction completed by ' + name);
-                                                      }}
-                                                  />
-                                              </PayPalScriptProvider>
-                                          </span>
+
+                                      <div className={cx(checkPaypal ? 'paypal-btn' : 'payment-btn-none')}>
+                                          {sellerClientId !== ''
+                                              ? sellerClientId.map((clientId, inde) =>
+                                                    sellerClientId[index] === clientId ? (
+                                                        <span key={inde}>
+                                                            <PayPalScriptProvider
+                                                                options={{
+                                                                    'client-id': clientId,
+                                                                }}
+                                                            >
+                                                                <PayPalButtons
+                                                                    createOrder={(data, actions) => {
+                                                                        const iddc = document.getElementById(
+                                                                            `_31ayp3${index}`,
+                                                                        );
+                                                                        const usd = (
+                                                                            iddc.innerHTML.replace('.', '') / 23865
+                                                                        ).toFixed(2);
+                                                                        //console.log('iddc', iddc.innerHTML.replace('.', ''));
+                                                                        return actions.order.create({
+                                                                            purchase_units: [
+                                                                                {
+                                                                                    amount: {
+                                                                                        value: usd,
+                                                                                    },
+                                                                                },
+                                                                            ],
+                                                                        });
+                                                                    }}
+                                                                    onApprove={async (data, actions) => {
+                                                                        const details = await actions.order.capture();
+                                                                        //const name = details.payer.name.given_name;
+                                                                        console.log('details', details);
+                                                                        if (details.status === 'COMPLETED') {
+                                                                            handleOrderCustomerPaypal(
+                                                                                inde,
+                                                                                districtID,
+                                                                                wardID,
+                                                                            );
+                                                                        }
+                                                                        //   alert('Transaction completed by ' + name);
+                                                                    }}
+                                                                />
+                                                            </PayPalScriptProvider>
+                                                        </span>
+                                                    ) : (
+                                                        ''
+                                                    ),
+                                                )
+                                              : ''}
                                       </div>
                                   </div>
                               </div>

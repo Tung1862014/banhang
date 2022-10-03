@@ -77,7 +77,7 @@ function HistoryBill() {
         //let price = 0;
 
         for (let i = 0; i < orderValue.length; i++) {
-            if (!sellerArr.includes(orderValue[i].NB_id)) {
+            if (!billIdValue.includes(orderValue[i].DH_id)) {
                 sellerArr.push(orderValue[i].NB_id);
                 sellerName.push(orderValue[i].seller.MTS_ten);
                 transportFees.push(orderValue[i].DH_phivanchuyen);
@@ -220,11 +220,11 @@ function HistoryBill() {
         }
     }
 
-    const handlePriceSeller = (sell, index) => {
+    const handlePriceSeller = (bill, index) => {
         let price = 0;
-        //console.log('sell', sell);
+        //console.log('bill', bill);
         for (let i = 0; i < orderValue.length; i++) {
-            if (sell === orderValue[i].NB_id) {
+            if (bill === orderValue[i].DH_id) {
                 price +=
                     orderValue[i].product.SP_gia *
                     orderValue[i].TTDH_soluong *
@@ -604,8 +604,8 @@ function HistoryBill() {
                         <div className={cx('hKbGrP')}>Chưa có đơn hàng</div>
                     </div>
                 </div> */}
-                {sellerValue !== ''
-                    ? sellerValue.map((sell, index) => (
+                {billId !== ''
+                    ? billId.map((bill, index) => (
                           <div key={index}>
                               <div className={cx('tF2pJg')}>
                                   <div>
@@ -613,7 +613,7 @@ function HistoryBill() {
                                           <div className={cx('_1ox39j')}>
                                               <div className={cx('_9bLyA')}>
                                                   <div className={cx('mzsqa6')}>{sellerName[index]}</div>
-                                                  <a className={cx('aYsWZ')} href={`/shop/name=${sell}`}>
+                                                  <a className={cx('aYsWZ')} href={`/shop/name=${sellerValue[index]}`}>
                                                       <button className={cx('stardust-button')}>
                                                           <svg
                                                               enableBackground="new 0 0 15 15"
@@ -658,7 +658,7 @@ function HistoryBill() {
                                           <div className={cx('_60q_NM')}></div>
                                           {orderValue !== ''
                                               ? orderValue.map((order, index) =>
-                                                    sell === order.NB_id ? (
+                                                    bill === order.DH_id ? (
                                                         <a
                                                             key={index}
                                                             href="/user/purchase/order/116358025246170?type=6"
@@ -760,7 +760,7 @@ function HistoryBill() {
                                       <div className={cx('BAMNqz')}>
                                           <div className={cx('Ge6yU5')}>Tổng số tiền:</div>
                                           <div className={cx('TDMlX1')}>
-                                              ₫{formatCash(handlePriceSeller(sell, index))}
+                                              ₫{formatCash(handlePriceSeller(bill, index))}
                                           </div>
                                       </div>
                                   </div>
