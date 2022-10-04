@@ -446,8 +446,9 @@ function Header() {
             <header className={cx('wrapper')}>
                 <div>
                     <div className={cx('inner')}>
-                        {/* <div className={cx('logo')}>
-                            <iframe
+                        <div className={cx('logo')}>
+                            <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
+                            {/* <iframe
                                 className={cx('video-logo')}
                                 src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
                                 title="YouTube video player"
@@ -457,8 +458,8 @@ function Header() {
                                 loop={true}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
-                            ></iframe>
-                        </div> */}
+                            ></iframe> */}
+                        </div>
 
                         <div className={cx('home-page-zytl')}>
                             <Link to="/" className={cx('home-page-zytlt1')}>
@@ -470,6 +471,13 @@ function Header() {
                                 Giới thiệu
                             </Link>
                         </div>
+                        {GetCookie('seller') !== undefined ? (
+                            <Link to="/seller" className={cx('link-seller')}>
+                                Kênh người bán
+                            </Link>
+                        ) : (
+                            ''
+                        )}
                         {<Search />}
                         <div className={cx('action')}>
                             {
@@ -543,13 +551,6 @@ function Header() {
                             )} */}
                         </div>
                     </div>
-                    {GetCookie('seller') !== undefined ? (
-                        <Link to="/seller" className={cx('link-seller')}>
-                            Kênh người bán
-                        </Link>
-                    ) : (
-                        ''
-                    )}
                 </div>
             </header>
             {loginAvtice === true && GetCookie('usrin') == null && (

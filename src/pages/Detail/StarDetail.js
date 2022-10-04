@@ -12,8 +12,8 @@ function StarDetail({ evaluation }) {
         let day = dateValue.getDate();
         let month = dateValue.getMonth() + 1;
         let year = dateValue.getFullYear();
-        let hour = dateValue.getHours();
-        let minute = dateValue.getMinutes();
+        // let hour = dateValue.getHours();
+        // let minute = dateValue.getMinutes();
         // if (month < 10) {
         //     return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
         // } else if (day < 10) {
@@ -21,16 +21,27 @@ function StarDetail({ evaluation }) {
         // } else {
         //     return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
         // }
+        // if (month < 10 && day >= 10) {
+        //     return hour + ':' + minute + ',' + day + '-0' + month + '-' + year;
+        // } else if (month < 10 && day < 10) {
+        //     return hour + ':' + minute + ', 0' + day + '-0' + month + year;
+        // } else if (month > 10 && day < 10) {
+        //     return hour + ':' + minute + ', 0' + day + '-' + month + year;
+        // } else if (month > 10 && day >= 10) {
+        //     return hour + ':' + minute + ',' + day + '-' + month + year;
+        // } else {
+        //     return hour + ':' + minute + ',' + day + '-' + month + '-' + year;
+        // }
         if (month < 10 && day >= 10) {
-            return hour + ':' + minute + ',' + day + '-0' + month + '-' + year;
+            return day + '-0' + month + '-' + year;
         } else if (month < 10 && day < 10) {
-            return hour + ':' + minute + ', 0' + day + '-0' + month + year;
-        } else if (month > 10 && day < 10) {
-            return hour + ':' + minute + ', 0' + day + '-' + month + year;
-        } else if (month > 10 && day >= 10) {
-            return hour + ':' + minute + ',' + day + '-' + month + year;
+            return '0' + day + '-0' + month + '-' + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + year;
         } else {
-            return hour + ':' + minute + ',' + day + '-' + month + '-' + year;
+            return day + '-' + month + '-' + year;
         }
     }
 

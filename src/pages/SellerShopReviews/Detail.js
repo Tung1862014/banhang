@@ -15,22 +15,28 @@ function Detail({ evaluate }) {
         let day = dateValue.getDate();
         let month = dateValue.getMonth() + 1;
         let year = dateValue.getFullYear();
-        let hour = dateValue.getHours();
-        let minute = dateValue.getMinutes();
-        if (month < 10) {
-            return hour + ':' + minute + ', ' + day + '-0' + month + '-' + year;
-        } else if (day < 10) {
-            return hour + ':' + minute + ', 0' + day + '-' + month + year;
+        // let hour = dateValue.getHours();
+        // let minute = dateValue.getMinutes();
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + '-' + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + year;
         } else {
-            return hour + ':' + minute + ', ' + day + '-' + month + '-' + year;
+            return day + '-' + month + '-' + year;
         }
     }
 
-    const handleAnswers = (review) => {
+    const handleAnswers = (review, index) => {
         const form = document.getElementById('ReDGyJ');
         const btnSave = document.getElementById('HtW4DS_IJ1jvV');
+        const text = document.getElementById('ChI2Nx_92k3pl');
 
         form.style.display = 'flex';
+        text.defaultValue = evaluate[index].DG_traloi;
 
         btnSave.addEventListener('click', function () {
             const text = document.getElementById('ChI2Nx_92k3pl');
@@ -228,9 +234,9 @@ function Detail({ evaluate }) {
                                               <div className={cx('btn-evaluation-answer')}>
                                                   <button
                                                       className={cx('btn-evaluation-answer-button')}
-                                                      onClick={() => handleAnswers(review.DG_id)}
+                                                      onClick={() => handleAnswers(review.DG_id, index)}
                                                   >
-                                                      {review.DG_traloi !== '' ? 'Cập nhât' : 'Trả lời'}
+                                                      {review.DG_traloi !== '' ? 'Cập nhật' : 'Trả lời'}
                                                   </button>
                                               </div>
                                           </div>

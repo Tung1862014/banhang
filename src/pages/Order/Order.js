@@ -1260,7 +1260,13 @@ function Order() {
                                           <div className={cx('wWp9Rn_GoSC7d')}>
                                               <div className={cx('sYTSo9')}>Đơn vị vận chuyển</div>
                                               <div className={cx('TrbqGd')}>
-                                                  <div>Tiết kiệm</div>
+                                                  <div>
+                                                      <img
+                                                          src={'https://api.ghn.vn/themes/angulr/img/logo-ghn-new.png'}
+                                                          alt=""
+                                                      />{' '}
+                                                      (Tiết kiệm)
+                                                  </div>
                                               </div>
                                               <div className={cx('uneQgd')}>
                                                   ₫

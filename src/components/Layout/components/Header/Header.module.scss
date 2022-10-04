@@ -6,7 +6,7 @@
         --search-button-width: 30px;
 
         width: 100%;
-        height: var(--default-layout-header-height, 50px);
+        height: 80px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
@@ -98,7 +98,7 @@
         --search-button-width: 52px;
 
         width: 100%;
-        height: 70px;
+        height: 80px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
@@ -204,6 +204,8 @@
     //link seller
     .link-seller {
         position: absolute;
+        top: 1px;
+        margin-left: 300px;
         color: rgb(221, 34, 34) !important;
         cursor: pointer;
 

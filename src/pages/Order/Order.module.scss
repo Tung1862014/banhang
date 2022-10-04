@@ -507,7 +507,7 @@
     flex: 0 0 auto;
     color: #00bfa5;
     grid-column-start: 3;
-    grid-column-end: 2;
+    grid-column-end: 3;
 }
 
 .TrbqGd {
@@ -517,6 +517,11 @@
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+
+    div {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .uneQgd {
@@ -880,6 +885,7 @@
     grid-column-end: 4;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .lhwDvd_Exv9ow_A4gPS6 {

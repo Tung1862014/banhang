@@ -45,12 +45,12 @@ function SellerCategoryAndWeight() {
         // setCheckWeight(false);
         axios
             .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/show/category?seller=${
+                `${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/product/show/category?seller=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             )
             .then((res) => {
-                //console.log(res.data.result);
+                console.log('data', res.data.result);
                 if (checkCategory === '') {
                     handleCategory(res.data.result);
                     setCheckCategory('category');
@@ -158,8 +158,8 @@ function SellerCategoryAndWeight() {
 
     function handleDeleteCategory() {
         if (category !== '') {
-            const clicShowForm = document.getElementById('delete-modal__container');
-            clicShowForm.style.display = 'flex';
+            const clickShowForm = document.getElementById('delete-modal__container');
+            clickShowForm.style.display = 'flex';
         } else {
             toast.error('Bạn cần chọn một danh mục!', {
                 position: toast.POSITION.TOP_CENTER,
@@ -180,20 +180,32 @@ function SellerCategoryAndWeight() {
     }
 
     function handleDeleteCategoryDatabase() {
-        axios
-            .delete(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/delete`, {
-                data: {
-                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                    DM_id: category,
-                },
-            })
-            .then((res) => {
-                console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
-            })
-            .catch((err) => {
-                console.log('loi');
-            });
+        for (let i = 0; i < takeCategory.length; i++) {
+            if (category === takeCategory[i].DM_id.toString()) {
+                if (takeCategory[i].product !== 0) {
+                    console.log('Danh mục không thể xóa. Sản phẩm thuộc danh mục đang tồn tại.');
+                    toast.warning('Danh mục không thể xóa. Sản phẩm thuộc danh mục đang tồn tại.', {
+                        position: toast.POSITION.TOP_CENTER,
+                        className: `${cx('toast-message')}`,
+                    });
+                } else {
+                    axios
+                        .delete(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/delete`, {
+                            data: {
+                                NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                                DM_id: category,
+                            },
+                        })
+                        .then((res) => {
+                            console.log(res.data);
+                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+                        })
+                        .catch((err) => {
+                            console.log('loi');
+                        });
+                }
+            }
+        }
     }
 
     ///Weight
@@ -411,6 +423,7 @@ function SellerCategoryAndWeight() {
                             <tr className={cx('table__header-tr')}>
                                 <td className={cx('td_table-name')}>Mã danh mục</td>
                                 <td className={cx('td_table-name')}>Tên danh mục</td>
+                                <td className={cx('td_table-name')}>Tổng sản phẩm</td>
                             </tr>
 
                             {takeCategory !== ''
@@ -418,6 +431,7 @@ function SellerCategoryAndWeight() {
                                       <tr key={index} className={cx('table__header-conten')}>
                                           <td className={cx('td_table-name')}>{pro.DM_id}</td>
                                           <td className={cx('td_table-name')}>{pro.DM_danhmuc}</td>
+                                          <td className={cx('td_table-name')}>{pro.product}</td>
                                       </tr>
                                   ))
                                 : ''}
