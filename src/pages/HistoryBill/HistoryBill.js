@@ -210,10 +210,10 @@ function HistoryBill() {
         if (month < 10 && day >= 10) {
             return day + '-0' + month + '-' + year;
         } else if (month < 10 && day < 10) {
-            return '0' + day + '-0' + month + year;
-        } else if (month > 10 && day < 10) {
-            return '0' + day + '-' + month + year;
-        } else if (month > 10 && day >= 10) {
+            return '0' + day + '-0' + month + '-' + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + '-' + year;
+        } else if (month >= 10 && day >= 10) {
             return day + '-' + month + year;
         } else {
             return day + '-' + month + '-' + year;
@@ -225,10 +225,10 @@ function HistoryBill() {
         //console.log('bill', bill);
         for (let i = 0; i < orderValue.length; i++) {
             if (bill === orderValue[i].DH_id) {
-                price +=
-                    orderValue[i].product.SP_gia *
-                    orderValue[i].TTDH_soluong *
-                    ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                price += orderValue[i].DH_tongtien;
+                // orderValue[i].product.SP_gia *
+                // orderValue[i].TTDH_soluong *
+                // ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
             if (i === orderValue.length - 1) {
                 return price + transportFee[index];
@@ -421,6 +421,23 @@ function HistoryBill() {
         // idProduct
         // takeStar
         // textValue
+        const dateValue = new Date();
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+        let YMD;
+
+        if (month < 10 && day >= 10) {
+            YMD = year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            YMD = year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            YMD = year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            YMD = year + '-' + month + '-' + day;
+        } else {
+            YMD = year + '-' + month + '-' + day;
+        }
         let url;
         for (let i = 0; i < billEvaluate.length; i++) {
             if (IdValue.toString() === billEvaluate[i].toString()) {
@@ -439,6 +456,7 @@ function HistoryBill() {
                 SP_id: idProduct,
                 DG_sosao: takeStar,
                 DG_mota: textValue,
+                DG_ngayDG: YMD,
             })
             .then((res) => {
                 console.log('data', res.data);
@@ -967,7 +985,14 @@ function HistoryBill() {
                                                                                 {evalua.DG_mota}
                                                                             </div>
                                                                             <div className={cx('qyTV2S')}>
-                                                                                {takeDate(evalua.DG_ngayDG)}
+                                                                                {evalua.DG_ngayCN !== '0000-00-00' ? (
+                                                                                    <span>
+                                                                                        Cập nhật mới nhất:
+                                                                                        {takeDate(evalua.DG_ngayCN)}
+                                                                                    </span>
+                                                                                ) : (
+                                                                                    takeDate(evalua.DG_ngayDG)
+                                                                                )}
                                                                             </div>
                                                                             <div className={cx('DLPrlG_exFBM')}>
                                                                                 <div className={cx('qCsf4o')}>
