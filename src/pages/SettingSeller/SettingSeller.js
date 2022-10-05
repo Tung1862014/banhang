@@ -445,13 +445,7 @@ function SettingSeller() {
                                 />
                             </div>
                         </div>
-                        <input
-                            id="LKP1ct"
-                            className={cx('LKP1ct')}
-                            type="file"
-                            accept=".jpg,.jpeg,.png"
-                            onChange={(e) => ChooseImg(e)}
-                        />
+                        <input id="LKP1ct" className={cx('LKP1ct')} type="file" onChange={(e) => ChooseImg(e)} />
                         <label htmlFor="LKP1ct" type="button" className={cx('btn-light-btn--m')}>
                             Chọn ảnh
                         </label>

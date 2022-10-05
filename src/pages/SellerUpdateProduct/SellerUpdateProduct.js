@@ -5,7 +5,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerUpdateProduct.module.scss';
 
@@ -184,7 +184,7 @@ function SellerUpdateProduct() {
 
     function ChooseImgDetails(e) {
         const chooseFile = document.getElementById('choose-file-details');
-        const imgPreview = document.getElementById('img-preview-setting-show-details');
+        // const imgPreview = document.getElementById('img-preview-setting-show-details');
         const closeImage = document.getElementById('img-preview-setting-show__image1');
 
         const files = chooseFile.files[0];
@@ -193,12 +193,12 @@ function SellerUpdateProduct() {
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('imageString: ' + typeof this.result);
-                imgPreview.style.display = 'flex';
-                closeImage.style.display = 'none';
-                imgPreview.innerHTML =
-                    '<img src="' +
-                    this.result +
-                    '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
+                // imgPreview.style.display = 'flex';
+                //closeImage.style.display = 'none';
+                closeImage.src = this.result;
+                // '<img id src="' +
+                // this.result +
+                // '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
             });
             setImage(e.target.files);
         }
@@ -206,20 +206,20 @@ function SellerUpdateProduct() {
 
     function ChooseImgDetailsTwo(e) {
         const chooseFile = document.getElementById('choose-file-details-two');
-        const imgPreview = document.getElementById('img-preview-setting-show-details-two');
+        //const imgPreview = document.getElementById('img-preview-setting-show-details-two');
         const closeImage = document.getElementById('img-preview-setting-show__image2');
         const files = chooseFile.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
-                console.log('imageString: ' + typeof this.result);
-                closeImage.style.display = 'none';
-                imgPreview.style.display = 'flex';
-                imgPreview.innerHTML =
-                    '<img src="' +
-                    this.result +
-                    '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
+                console.log('imageString: ' + this.result);
+                //closeImage.style.display = 'none';
+                //imgPreview.style.display = 'flex';
+                closeImage.src = this.result;
+                // '<img src="' +
+                // this.result +
+                // '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
             });
             setImageTwo(e.target.files);
         }
@@ -227,7 +227,7 @@ function SellerUpdateProduct() {
 
     function ChooseImgDetailsThree(e) {
         const chooseFile = document.getElementById('choose-file-details-three');
-        const imgPreview = document.getElementById('img-preview-setting-show-details-three');
+        //const imgPreview = document.getElementById('img-preview-setting-show-details-three');
         const closeImage = document.getElementById('img-preview-setting-show__image3');
         const files = chooseFile.files[0];
         if (files) {
@@ -235,12 +235,12 @@ function SellerUpdateProduct() {
             fileReader.readAsDataURL(files);
             fileReader.addEventListener('load', function () {
                 console.log('imageString: ' + typeof this.result);
-                imgPreview.style.display = 'flex';
-                closeImage.style.display = 'none';
-                imgPreview.innerHTML =
-                    '<img src="' +
-                    this.result +
-                    '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
+                //imgPreview.style.display = 'flex';
+                //closeImage.style.display = 'none';
+                closeImage.src = this.result;
+                // '<img src="' +
+                // this.result +
+                // '" style =" width: 80px; height: 80px; display: flex;  justify-content: center;  align-items: center;"/>';
             });
             setImageThree(e.target.files);
         }
@@ -276,7 +276,7 @@ function SellerUpdateProduct() {
                         SP_mota: describeProduct,
                     })
                     .then((res) => {
-                        console.log(res.data);
+                        console.log('data', res.data);
                     })
                     .catch((err) => {
                         console.log('loi');
@@ -302,7 +302,7 @@ function SellerUpdateProduct() {
                     },
                 })
                     .then((res) => {
-                        console.log(res.data);
+                        console.log('data image', res.data);
                     })
                     .catch((err) => {});
             }
@@ -690,7 +690,12 @@ function SellerUpdateProduct() {
                                             className={cx('img-preview-setting-show-details')}
                                         >
                                             <img
-                                                src={image1Update.HA_image || '#'}
+                                                src={
+                                                    image1Update !== undefined
+                                                        ? image1Update.HA_image
+                                                        : process.env.REACT_APP_URL_NODEJS_IMAGE +
+                                                          '/default-ui-image.webp'
+                                                }
                                                 alt=""
                                                 id="img-preview-setting-show__image1"
                                                 className={cx('img-preview-setting-show__image1')}
@@ -725,7 +730,12 @@ function SellerUpdateProduct() {
                                             className={cx('img-preview-setting-show-details-two')}
                                         >
                                             <img
-                                                src={image2Update.HA_image || '#'}
+                                                src={
+                                                    image2Update !== undefined
+                                                        ? image2Update.HA_image
+                                                        : process.env.REACT_APP_URL_NODEJS_IMAGE +
+                                                          '/default-ui-image.webp'
+                                                }
                                                 alt=""
                                                 id="img-preview-setting-show__image2"
                                                 className={cx('img-preview-setting-show__image2')}
@@ -760,7 +770,12 @@ function SellerUpdateProduct() {
                                             className={cx('img-preview-setting-show-details-three')}
                                         >
                                             <img
-                                                src={image3Update.HA_image || '#'}
+                                                src={
+                                                    image3Update !== undefined
+                                                        ? image3Update.HA_image
+                                                        : process.env.REACT_APP_URL_NODEJS_IMAGE +
+                                                          '/default-ui-image.webp'
+                                                }
                                                 alt=""
                                                 id="img-preview-setting-show__image3"
                                                 className={cx('img-preview-setting-show__image3')}
