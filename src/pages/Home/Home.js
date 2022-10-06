@@ -319,14 +319,18 @@ function Home() {
                                                                 'https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn'
                                                             }
                                                         />
-                                                        <div className={cx('vmaKHl')}>
-                                                            <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
-                                                                <span className={cx('percent')}>
-                                                                    {prod.SP_khuyenmai}%
-                                                                </span>
-                                                                <span className={cx('mXP-A3')}>giảm</span>
+                                                        {prod.SP_khuyenmai !== 0 ? (
+                                                            <div className={cx('vmaKHl')}>
+                                                                <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
+                                                                    <span className={cx('percent')}>
+                                                                        {prod.SP_khuyenmai}%
+                                                                    </span>
+                                                                    <span className={cx('mXP-A3')}>giảm</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        ) : (
+                                                            ''
+                                                        )}
                                                     </div>
                                                 </div>
                                                 <div className={cx('W3bJfG')}>

@@ -403,6 +403,12 @@ function Order() {
                             console.log('res', res.data.data.shops[i]._id);
                             console.log([handleInfoProoduct(sellerValue[j])]);
                             console.log('sellerValue[k]', sellerValue[j]);
+                            console.log('districtID, wardID', districtID, wardID);
+                            console.log('res', res.data.data.shops[i]._id);
+                            console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[j]));
+                            console.log('sellerValue[k]', sellerValue[j], sellerName[j]);
+                            console.log('handleTakePhone', handleTakePhone(sellerValue[j]).toString());
+                            console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[j]).toString());
                             axios
                                 .post(
                                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
@@ -433,7 +439,7 @@ function Order() {
                                         pick_station_id: null,
                                         insurance_value: 0,
                                         service_id: 53321,
-                                        service_type_id: 2,
+
                                         coupon: null,
                                         pick_shift: [2],
                                         items: handleInfoProoduct(sellerValue[j]),
