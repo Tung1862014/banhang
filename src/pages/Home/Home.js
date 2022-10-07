@@ -122,11 +122,12 @@
 
 //export default Home;
 
-import styles from './home.module.scss';
+import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import GetCookie from '~/components/Hook/GetCookies';
+import HomePage from './HomePage';
 //import GetCookie from '~/components/Hook/GetCookies';
 //import { useSelector } from 'react-redux';
 
@@ -233,9 +234,35 @@ function Home() {
     //     }
     // }, [billId]);
 
+    // useEffect(() => {
+    //     // let url;
+    //     // if (clickSuggestions === 'suggestions' || clickSuggestions === '') {
+    //     //     url = ;
+    //     // } else if (clickSuggestions === 'promotion') {
+    //     //     url = `${process.env.REACT_APP_URL_NODEJS}/product/show/promotion/all`;
+    //     // }
+    //     axios
+    //         .get(
+    //             `${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/user/all?ND_id=${
+    //                 JSON.parse(GetCookie('usrin')).ND_id
+    //             }`,
+    //         )
+    //         .then((res) => {
+    //             console.log('suggestions user', res.data.results);
+    //             //setProduct(res.data.results);
+    //         })
+    //         .catch((err) => {
+    //             console.log('loi');
+    //         });
+    // }, []);
+
     useEffect(() => {
         let url;
-        if (clickSuggestions === 'suggestions' || clickSuggestions === '') {
+        if (GetCookie('usrin') !== undefined && clickSuggestions === '') {
+            url = `${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/user/all?ND_id=${
+                JSON.parse(GetCookie('usrin')).ND_id
+            }`;
+        } else if (clickSuggestions === 'suggestions' || clickSuggestions === '') {
             url = `${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/all`;
         } else if (clickSuggestions === 'promotion') {
             url = `${process.env.REACT_APP_URL_NODEJS}/product/show/promotion/all`;
@@ -243,8 +270,21 @@ function Home() {
         axios
             .get(url)
             .then((res) => {
-                console.log(res.data.results);
-                setProduct(res.data.results);
+                console.log('results', res.data.results);
+                if (res.data.results.length > 0) {
+                    setProduct(res.data.results);
+                } else {
+                    axios
+                        .get(`${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/all`)
+                        .then((res) => {
+                            console.log('results', res.data.results);
+
+                            setProduct(res.data.results);
+                        })
+                        .catch((err) => {
+                            console.log('loi');
+                        });
+                }
             })
             .catch((err) => {
                 console.log('loi');
@@ -270,16 +310,6 @@ function Home() {
         setClickSuggestions('promotion');
     }
 
-    function formatCash(str) {
-        return str
-            .toString()
-            .split('')
-            .reverse()
-            .reduce((prev, next, index) => {
-                return (index % 3 ? next : next + '.') + prev;
-            });
-    }
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('stardust-tabs-header-wrapper')}>
@@ -287,7 +317,11 @@ function Home() {
                     <li className={cx('stardust-tabs-header__tab-active')} onClick={handleClickSuggestions}>
                         <div id="FA284N-N-5qHu-suggestions" className={cx('FA284N-N-5qHu-suggestions')}></div>
                         <div className={cx('FJibgJ-suggestions')}>
-                            <span>GỢI Ý HÔM NAY</span>
+                            {GetCookie('usrin') !== undefined ? (
+                                <span>GỢI Ý DÀNH CHO BẠN</span>
+                            ) : (
+                                <span>GỢI Ý HÔM NAY</span>
+                            )}
                         </div>
                     </li>
                     <li className={cx('stardust-tabs-header__tab-active')} onClick={handleClickPromotion}>
@@ -300,68 +334,7 @@ function Home() {
             </div>
             <div className={cx('stardust-tabs-panels')}>
                 <div className={cx('stardust-tabs-panels__panel')}>
-                    <div className={cx('_6wTCb6')}>
-                        {product !== '' &&
-                            product.map((prod, index) => (
-                                <div key={index} className={cx('_4beVMw')}>
-                                    <Link to={`/detail/product/nameid${prod.SP_id}`}>
-                                        <div className={cx('yZLQT4')}>
-                                            <div className={cx('uA1waf_4QQ4Ir')}>
-                                                <div className={cx('UB2waf')}>
-                                                    <div className={cx('n-CE6j-iRsxV')}>
-                                                        <img
-                                                            width="invalid-value"
-                                                            height="invalid-value"
-                                                            alt="Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng đơn giản tiện dụng giá rẻ HDS-NTK04"
-                                                            className={cx('Vz6gJ3-edy5hG')}
-                                                            src={
-                                                                prod.SP_image ||
-                                                                'https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn'
-                                                            }
-                                                        />
-                                                        {prod.SP_khuyenmai !== 0 ? (
-                                                            <div className={cx('vmaKHl')}>
-                                                                <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
-                                                                    <span className={cx('percent')}>
-                                                                        {prod.SP_khuyenmai}%
-                                                                    </span>
-                                                                    <span className={cx('mXP-A3')}>giảm</span>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            ''
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className={cx('W3bJfG')}>
-                                                    <div className={cx('qUEEG4')}>
-                                                        <div className={cx('hPc1Pf')}>
-                                                            <div className={cx('vc0PvV-AxYdVM')}>{prod.SP_ten}</div>
-                                                        </div>
-                                                    </div>
-                                                    <div className={cx('imdVqB_2fuFWg')}>
-                                                        <div className={cx('WSVId4-fepoRf')}>
-                                                            <span className={cx('Fea6JM')}>₫</span>
-                                                            <span className={cx('j0vBz2')}>
-                                                                {formatCash(
-                                                                    prod.SP_gia * ((100 - prod.SP_khuyenmai) / 100),
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                        <div className={cx('upl8wJ _82UoSS')}>
-                                                            Đã bán {prod.SP_soluongban}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* <div className={cx('shopee-item-card__hover-footer _1X2yZq')}>
-                                                Tìm sản phẩm tương tự
-                                            </div> */}
-                                            </div>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
-                    </div>
+                    <HomePage data={product} />
                 </div>
             </div>
         </div>
