@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './Cart.module.scss';
@@ -19,7 +20,8 @@ function Cart() {
     const [price, setPrice] = useState('');
 
     // console.log('sellerValue', sellerValue);
-    console.log('cokkk', GetCookie('usrin'));
+    const productValueReducer = useSelector((state) => state.numberProduct.list);
+    console.log('productValueReducer', productValueReducer);
 
     useEffect(() => {
         if (GetCookie('usrin') !== undefined) {
@@ -37,7 +39,7 @@ function Cart() {
                     console.log('loi');
                 });
         }
-    }, []);
+    }, [productValueReducer]);
 
     useEffect(() => {
         let sellerArr = [];

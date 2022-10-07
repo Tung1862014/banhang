@@ -483,10 +483,10 @@ function Header() {
                             {
                                 <>
                                     <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                                        <a href="/cart" className={cx('action-btn-cart')}>
+                                        <Link to="/cart" className={cx('action-btn-cart')}>
                                             <CartIcon className={cx('cart-icon')} />
                                             <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
-                                        </a>
+                                        </Link>
                                     </Tippy>
                                     <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
                                         <Link to="/history/purchase/type=all" className={cx('action-btn')}>

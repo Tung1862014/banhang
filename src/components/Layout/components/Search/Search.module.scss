@@ -155,13 +155,20 @@
     .clear,
     .loading {
         position: absolute;
-        right: calc(var(--search-button-width) + 35px);
+        right: calc(var(--search-button-width) + 5px);
         top: 50%;
         transform: translateY(-50%);
         color: rgba(22, 24, 35, 0.34);
     }
 
+    .clearing {
+        width: 14px;
+        height: 14px;
+    }
+
     .loading {
+        width: 14px;
+        height: 14px;
         animation: spinners 0.9s linear infinite;
     }
 

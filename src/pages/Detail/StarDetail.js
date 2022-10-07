@@ -37,9 +37,9 @@ function StarDetail({ evaluation }) {
         } else if (month < 10 && day < 10) {
             return '0' + day + '-0' + month + '-' + year;
         } else if (month >= 10 && day < 10) {
-            return '0' + day + '-' + month + year;
+            return '0' + day + '-' + month + '-' + year;
         } else if (month >= 10 && day >= 10) {
-            return day + '-' + month + year;
+            return day + '-' + month + '-' + year;
         } else {
             return day + '-' + month + '-' + year;
         }

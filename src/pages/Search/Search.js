@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './Search.module.scss';
 import SearchPage from './SearchPage';
 
@@ -13,6 +14,11 @@ function Search() {
     const [priceFrom, setPriceFrom] = useState('');
     const [priceTo, setPriceTo] = useState('');
 
+    const pathId = window.location.pathname;
+    const resultId = decodeURIComponent(pathId.slice(16));
+    // console.log('resultId', pathId.slice(0, 16));
+    const searchValueReducer = useSelector((state) => state.searchProduct.list);
+    console.log('searchValueReducer', searchValueReducer);
     function TakeKeyWord() {
         const pathId = window.location.pathname;
         const resultId = pathId.slice(16);
@@ -21,9 +27,7 @@ function Search() {
     }
 
     useEffect(() => {
-        const pathId = window.location.pathname;
-        const resultId = decodeURIComponent(pathId.slice(16));
-        console.log(resultId);
+        // console.log(resultId);
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/search/product/show/all?keyword=${resultId}&pricefrom=${priceFrom}&priceto=${priceTo}`,
@@ -35,7 +39,7 @@ function Search() {
             .catch((err) => {
                 console.error('loi');
             });
-    }, [priceFrom, priceTo]);
+    }, [priceFrom, priceTo, resultId, searchValueReducer]);
 
     const handlePrice = () => {
         const price_from = document.getElementById('shop-price-range-filter__input-from');

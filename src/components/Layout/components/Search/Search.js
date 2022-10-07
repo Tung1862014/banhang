@@ -9,63 +9,66 @@ import { useDebounce } from '~/hooks';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
-import { SearchIcon, VoiceActiveIcon, VoiceIcon } from '~/components/Icons';
-import VoiceSearchBox from './VoiceSearchBox';
+import { SearchIcon } from '~/components/Icons';
+// import VoiceSearchBox from './VoiceSearchBox';
 import SetCookie from '~/components/Hook/SetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SearchProduct } from '~/actions/SearchProduct';
 //import { useReactMediaRecorder } from 'react-media-recorder';
 
 const cx = classNames.bind(styles);
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const mic = new SpeechRecognition();
+// const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+// const mic = new SpeechRecognition();
 
-mic.continuous = true;
-mic.interimResults = true;
-mic.lang = 'vi';
+// mic.continuous = true;
+// mic.interimResults = true;
+// mic.lang = 'vi';
 
 function Search() {
     const [searchResult, setSearchResult] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [isListening, setIsListening] = useState(false);
+    //const [isListening, setIsListening] = useState(false);
     //const [toLink, setToLink] = useState(false);
     const [check, setCheck] = useState(false);
 
     //const { startRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
 
-    useEffect(() => {
-        if (isListening) {
-            mic.start();
-            mic.onend = () => {
-                console.log('continue..');
-                mic.start();
-            };
-        } else {
-            mic.stop();
-            mic.onend = () => {
-                console.log('Stopped Mic on Click');
-            };
-        }
-        mic.onstart = () => {
-            console.log('Mics on');
-        };
+    // useEffect(() => {
+    //     if (isListening) {
+    //         mic.start();
+    //         mic.onend = () => {
+    //             console.log('continue..');
+    //             mic.start();
+    //         };
+    //     } else {
+    //         mic.stop();
+    //         mic.onend = () => {
+    //             console.log('Stopped Mic on Click');
+    //         };
+    //     }
+    //     mic.onstart = () => {
+    //         console.log('Mics on');
+    //     };
 
-        mic.onresult = (event) => {
-            const transcript = Array.from(event.results)
-                .map((result) => result[0])
-                .map((result) => result.transcript)
-                .join('');
-            console.log(transcript);
+    //     mic.onresult = (event) => {
+    //         const transcript = Array.from(event.results)
+    //             .map((result) => result[0])
+    //             .map((result) => result.transcript)
+    //             .join('');
+    //         console.log(transcript);
 
-            setSearchValue(transcript);
-            mic.onerror = (event) => {
-                console.log(event.error);
-            };
-        };
-    }, [isListening]);
+    //         setSearchValue(transcript);
+    //         mic.onerror = (event) => {
+    //             console.log(event.error);
+    //         };
+    //     };
+    // }, [isListening]);
+    const dispatchSignIn = useDispatch();
 
     const debounced = useDebounce(searchValue, 500);
 
@@ -79,13 +82,13 @@ function Search() {
 
         setLoading(true);
 
-        setIsListening((prev) => {
-            if (prev === true) {
-                return !prev;
-            } else {
-                return prev;
-            }
-        });
+        // setIsListening((prev) => {
+        //     if (prev === true) {
+        //         return !prev;
+        //     } else {
+        //         return prev;
+        //     }
+        // });
 
         if (!check) {
             setShowResult(true);
@@ -95,7 +98,6 @@ function Search() {
             .get(`${process.env.REACT_APP_URL_NODEJS}/home?keyword=${debounced}`)
             .then((res) => {
                 // handle success
-
                 setSearchResult(res.data);
                 console.log(res.data);
                 setLoading(false);
@@ -105,6 +107,18 @@ function Search() {
                 setLoading(false);
             });
     }, [debounced, check]);
+
+    const pathId = window.location.pathname;
+    const resultId = decodeURIComponent(pathId.slice(16));
+    const searchValueReducer = useSelector((state) => state.searchProduct.list);
+    useEffect(() => {
+        const pathName = window.location.pathname;
+        if (pathName.slice(0, 16) === '/search/keyword=') {
+            setSearchValue(resultId);
+        } else {
+            setSearchValue('');
+        }
+    }, [resultId, searchValueReducer]);
 
     const handleClear = () => {
         setSearchValue('');
@@ -128,14 +142,16 @@ function Search() {
         setCheck(true);
     };
 
-    const handleClearVoiceSearch = () => {
-        setShowResult(true);
-        setIsListening((prevState) => !prevState);
-    };
+    // const handleClearVoiceSearch = () => {
+    //     setShowResult(true);
+    //     setIsListening((prevState) => !prevState);
+    // };
 
     const handleButtonSearch = () => {
         console.log('value: ' + JSON.stringify(searchValue));
         setShowResult(false);
+        const action = SearchProduct(searchValue);
+        dispatchSignIn(action);
         // RemoveCookie('search');
         // SetCookie('search', JSON.stringify(searchValue));
         // if (searchValue !== '') {
@@ -182,10 +198,10 @@ function Search() {
 
                     {!!searchValue && !loading && (
                         <button className={cx('clear')} onClick={handleClear}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
+                            <FontAwesomeIcon className={cx('clearing')} icon={faCircleXmark} />
                         </button>
                     )}
-                    {isListening && (
+                    {/* {isListening && (
                         <button
                             className={cx('voice')}
                             onClick={() => {
@@ -194,8 +210,8 @@ function Search() {
                         >
                             <VoiceActiveIcon />
                         </button>
-                    )}
-                    {!isListening && (
+                    )} */}
+                    {/* {!isListening && (
                         <button
                             className={cx('voice')}
                             onClick={() => {
@@ -206,11 +222,11 @@ function Search() {
                         >
                             <VoiceIcon className={cx('voiceIcon')} />
                         </button>
-                    )}
+                    )} */}
                     {/* <audio hidden src={mediaBlobUrl} controls autoPlay></audio> */}
-                    {isListening && (
+                    {/* {isListening && (
                         <VoiceSearchBox textVoice={searchValue} clearVoiceSearch={handleClearVoiceSearch} />
-                    )}
+                    )} */}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                     <Link
