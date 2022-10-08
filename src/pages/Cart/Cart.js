@@ -2,6 +2,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addNumberProduct } from '~/actions/NumberProduct';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './Cart.module.scss';
@@ -196,8 +197,10 @@ function Cart() {
                         <div className={cx('cSSbb-loading')}>
                             <div className={cx('loading-icon')}></div>
                         </div>
-                    ) : (
+                    ) : orderValue.length === 0 ? (
                         <div className={cx('empty-cart')}>Giỏ hàng của còn trống</div>
+                    ) : (
+                        ''
                     )}
                     {sellerValue !== '' && sellerValue !== undefined
                         ? sellerValue.map((sell, index) => (
@@ -378,9 +381,9 @@ function Cart() {
                                 </div>
                                 <div className={cx('_1TwgPm')}></div>
                             </div>
-                            <a href={'/cart/order'} className={cx('-button-solid--primary')}>
+                            <Link to={'/cart/order'} className={cx('-button-solid--primary')}>
                                 <span className={cx('kcsswk')}>Mua hàng</span>
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         ''

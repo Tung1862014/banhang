@@ -1,8 +1,9 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './HistoryBill.module.scss';
 
@@ -29,9 +30,9 @@ function HistoryBill() {
     const [cancelIdBill, setCancelIdBill] = useState('');
     const [idMTSValue, setIdMTSValue] = useState('');
     ///////////////////////////////////////////////////search
-    //const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState('');
 
-    console.log('cancelIdBill', cancelIdBill);
+    console.log('searchValue', searchValue);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(23);
@@ -46,8 +47,10 @@ function HistoryBill() {
             handlerClickType3();
         } else if (resultId === '4') {
             handlerClickType4();
-        } else {
+        } else if (resultId === '5') {
             handlerClickType5();
+        } else {
+            setSearchValue(resultId);
         }
     }, []);
 
@@ -56,16 +59,29 @@ function HistoryBill() {
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/historybill/cart/show/all?ND_id=${
                     JSON.parse(GetCookie('usrin')).ND_id
-                }&DH_trangthai=${statusClick}`,
+                }&DH_trangthai=${statusClick}&keyword=${searchValue}`,
             )
             .then((res) => {
                 console.log('data', res.data);
                 setOrderValue(res.data.results);
+                if (searchValue !== '') {
+                    if (res.data.results[0].DH_trangthai === 1) {
+                        handlerClickType1();
+                    } else if (res.data.results[0].DH_trangthai === 2) {
+                        handlerClickType2();
+                    } else if (res.data.results[0].DH_trangthai === 3) {
+                        handlerClickType3();
+                    } else if (res.data.results[0].DH_trangthai === 4) {
+                        handlerClickType4();
+                    } else {
+                        handlerClickType5();
+                    }
+                }
             })
             .catch((err) => {
                 console.log('loi');
             });
-    }, [statusClick]);
+    }, [statusClick, searchValue]);
 
     useEffect(() => {
         let sellerArr = [];
@@ -93,27 +109,12 @@ function HistoryBill() {
         }
         //console.log('sellerArr', sellerArr);
         if (sellerArr.length > 0) {
-            setSellerValue((prev) => {
-                const newSeller = [...prev, sellerArr];
-                return newSeller[0];
-            });
-            setSellerName((prev) => {
-                const newSeller = [...prev, sellerName];
-                return newSeller[0];
-            });
-            setTransportFee((prev) => {
-                const newSeller = [...prev, transportFees];
-                return newSeller[0];
-            });
-            setStatusBill((prev) => {
-                const newSeller = [...prev, statusBills];
-                return newSeller[0];
-            });
+            setSellerValue(sellerArr);
+            setSellerName(sellerName);
+            setTransportFee(transportFees);
+            setStatusBill(statusBills);
 
-            setBillId((prev) => {
-                const newSeller = [...prev, billIdValue];
-                return newSeller[0];
-            });
+            setBillId(billIdValue);
         }
 
         //setSumNumber(sumnumber);
@@ -238,7 +239,7 @@ function HistoryBill() {
     };
 
     //handle click status
-    const handlerClickAll = () => {
+    const handlerClickAll = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -259,9 +260,12 @@ function HistoryBill() {
         type4.style.borderColor = '';
         type5.style.borderColor = '';
         setStatusClick('all');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
-    const handlerClickType1 = () => {
+    const handlerClickType1 = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -282,9 +286,12 @@ function HistoryBill() {
         type4.style.borderColor = '';
         type5.style.borderColor = '';
         setStatusClick('waitForConfirmation');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
-    const handlerClickType2 = () => {
+    const handlerClickType2 = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -305,9 +312,12 @@ function HistoryBill() {
         type4.style.borderColor = '';
         type5.style.borderColor = '';
         setStatusClick('waitInLine');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
-    const handlerClickType3 = () => {
+    const handlerClickType3 = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -328,9 +338,12 @@ function HistoryBill() {
         type4.style.borderColor = '';
         type5.style.borderColor = '';
         setStatusClick('deliveryInProgress');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
-    const handlerClickType4 = () => {
+    const handlerClickType4 = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -351,9 +364,12 @@ function HistoryBill() {
         type4.style.borderColor = '#ee4d2d';
         type5.style.borderColor = '';
         setStatusClick('delivered');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
-    const handlerClickType5 = () => {
+    const handlerClickType5 = (search) => {
         const typeAll = document.getElementById('vAkdD0all');
         const type1 = document.getElementById('vAkdD01');
         const type2 = document.getElementById('vAkdD02');
@@ -374,6 +390,9 @@ function HistoryBill() {
         type4.style.borderColor = '';
         type5.style.borderColor = '#ee4d2d';
         setStatusClick('cancelled');
+        if (search === 'search') {
+            setSearchValue('');
+        }
     };
 
     //open form danh gia
@@ -531,21 +550,14 @@ function HistoryBill() {
     }
 
     ///seach bill following id bill
-    // const handleSearchBill = () => {
-    //     axios
-    //         .get(
-    //             `${process.env.REACT_APP_URL_NODEJS}/historybill/search/show/all?ND_id=${
-    //                 JSON.parse(GetCookie('usrin')).ND_id
-    //             }&DH_trangthai=${statusClick}&search=${searchValue}`,
-    //         )
-    //         .then((res) => {
-    //             console.log('search', res.data);
-    //             setOrderValue(res.data.results);
-    //         })
-    //         .catch((err) => {
-    //             console.log('loi');
-    //         });
-    // };
+    const handleSearchBill = () => {
+        const searchId = document.getElementById('search-value-id');
+        setSearchValue(searchId.value);
+    };
+    function returnSearchValue() {
+        const searchId = document.getElementById('search-value-id');
+        return searchId.value;
+    }
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -577,35 +589,70 @@ function HistoryBill() {
                 </div>
             </div>
             <div className={cx('GBcYbK')}>
-                {/* <div className={cx('Tfo7DW')}>
-                    <button className={cx('Tfo7DW-btn')} onClick={handleSearchBill}>
+                <div className={cx('Tfo7DW')}>
+                    <Link
+                        to={`/history/purchase/keys=` + returnSearchValue()}
+                        className={cx('Tfo7DW-btn')}
+                        onClick={() => handleSearchBill()}
+                    >
                         <FontAwesomeIcon className={cx('Tfo7DW-icon')} icon={faMagnifyingGlass} />
-                    </button>
+                    </Link>
                     <input
-                        autoComplete="off"
+                        // autoComplete="off"
+                        id="search-value-id"
                         placeholder="Tìm kiếm theo ID đơn hàng "
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        //onChange={(e) => setSearchValue(e.target.value)}
                     ></input>
-                </div> */}
+                </div>
                 <div className={cx('_0obGFe')}>
-                    <a id="vAkdD0all" className={cx('vAkdD0all')} href="/history/purchase/type=all">
+                    <Link
+                        id="vAkdD0all"
+                        className={cx('vAkdD0all')}
+                        to="/history/purchase/type=all"
+                        onClick={() => handlerClickAll('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Tất cả</span>
-                    </a>
-                    <a id="vAkdD01" className={cx('vAkdD01')} href="/history/purchase/type=1">
+                    </Link>
+                    <Link
+                        id="vAkdD01"
+                        className={cx('vAkdD01')}
+                        to="/history/purchase/type=1"
+                        onClick={() => handlerClickType1('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Chờ xác nhận</span>
-                    </a>
-                    <a id="vAkdD02" className={cx('vAkdD02')} href="/history/purchase/type=2">
+                    </Link>
+                    <Link
+                        id="vAkdD02"
+                        className={cx('vAkdD02')}
+                        to="/history/purchase/type=2"
+                        onClick={() => handlerClickType2('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Chờ lấy hàng</span>
-                    </a>
-                    <a id="vAkdD03" className={cx('vAkdD03')} href="/history/purchase/type=3">
+                    </Link>
+                    <Link
+                        id="vAkdD03"
+                        className={cx('vAkdD03')}
+                        to="/history/purchase/type=3"
+                        onClick={() => handlerClickType3('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Đang giao</span>
-                    </a>
-                    <a id="vAkdD04" className={cx('vAkdD04')} href="/history/purchase/type=4">
+                    </Link>
+                    <Link
+                        id="vAkdD04"
+                        className={cx('vAkdD04')}
+                        to="/history/purchase/type=4"
+                        onClick={() => handlerClickType4('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Đã giao</span>
-                    </a>
-                    <a id="vAkdD05" className={cx('vAkdD05')} href="/history/purchase/type=5">
+                    </Link>
+                    <Link
+                        id="vAkdD05"
+                        className={cx('vAkdD05')}
+                        to="/history/purchase/type=5"
+                        onClick={() => handlerClickType5('search')}
+                    >
                         <span className={cx('_0rjE9m')}>Đã Hủy</span>
-                    </a>
+                    </Link>
                 </div>
                 {/* / */}
                 {/* <div className={cx('LHWdmn')}>
@@ -622,7 +669,8 @@ function HistoryBill() {
                         <div className={cx('hKbGrP')}>Chưa có đơn hàng</div>
                     </div>
                 </div> */}
-                {billId !== ''
+                {orderValue.length === 0 ? <div className={cx('no-order-product')}>Không có đơn hàng nào</div> : ''}
+                {billId !== '' && orderValue.length > 0
                     ? billId.map((bill, index) => (
                           <div key={index}>
                               <div className={cx('tF2pJg')}>
@@ -631,7 +679,7 @@ function HistoryBill() {
                                           <div className={cx('_1ox39j')}>
                                               <div className={cx('_9bLyA')}>
                                                   <div className={cx('mzsqa6')}>{sellerName[index]}</div>
-                                                  <a className={cx('aYsWZ')} href={`/shop/name=${sellerValue[index]}`}>
+                                                  <Link className={cx('aYsWZ')} to={`/shop/name=${sellerValue[index]}`}>
                                                       <button className={cx('stardust-button')}>
                                                           <svg
                                                               enableBackground="new 0 0 15 15"
@@ -644,7 +692,7 @@ function HistoryBill() {
                                                           </svg>
                                                           <span>xem gian hàng</span>
                                                       </button>
-                                                  </a>
+                                                  </Link>
                                                   <div className={cx('mzsqa67')}>ID đơn hàng: {billId[index]}</div>
                                               </div>
                                               <div className={cx('WPNwG4')}>
@@ -677,10 +725,7 @@ function HistoryBill() {
                                           {orderValue !== ''
                                               ? orderValue.map((order, index) =>
                                                     bill === order.DH_id ? (
-                                                        <a
-                                                            key={index}
-                                                            href="/user/purchase/order/116358025246170?type=6"
-                                                        >
+                                                        <Link key={index} to={`/detail/product/nameid${order.SP_id}`}>
                                                             <div className={cx('giUtSy')}>
                                                                 <div className={cx('vdofqJ')}>
                                                                     <div>
@@ -760,7 +805,7 @@ function HistoryBill() {
                                                                     <div className={cx('_472J0A')}></div>
                                                                 </div>
                                                             </div>
-                                                        </a>
+                                                        </Link>
                                                     ) : (
                                                         ''
                                                     ),
