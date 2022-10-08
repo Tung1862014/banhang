@@ -108,7 +108,7 @@ function Search() {
             });
     }, [debounced, check]);
 
-    const pathId = window.location.pathname;
+    const pathId = window.location.pathname.toString();
     const resultId = decodeURIComponent(pathId.slice(16));
     const searchValueReducer = useSelector((state) => state.searchProduct.list);
     useEffect(() => {

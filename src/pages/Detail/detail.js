@@ -38,7 +38,7 @@ function Detail() {
     //     console.log('local: ', JSON.parse(localStorage.getItem('product')));
     // }
 
-    const searchValueReducer = useSelector((state) => state.detailProduct.list);
+    const detailProductValueReducer = useSelector((state) => state.detailProduct.list);
     const dispatchSignIn = useDispatch();
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -55,7 +55,7 @@ function Detail() {
             .catch((error) => {
                 console.log('loi');
             });
-    }, [searchValueReducer]);
+    }, [detailProductValueReducer]);
 
     useEffect(() => {
         if (product !== '') {
@@ -89,7 +89,7 @@ function Detail() {
         infinite: true,
         speed: 500,
         slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToScroll: 3,
     };
 
     const handlePlusNumber = () => {
@@ -107,10 +107,18 @@ function Detail() {
     const handleMouseOverImage = (index) => {
         const imageMain = document.getElementById('_3uzKon_2PWsS4-img');
         const image = document.getElementById(`X2N8Bt_2PWsS4-img-${index}`);
+        const imageMainSmall = document.getElementById(`X2N8Bt_2PWsS4-img-00`);
 
-        setImageValue(imageMain.src);
+        if (index === 'main') {
+            setImageValue(imageMain.src);
 
-        imageMain.src = image.src;
+            imageMain.src = imageMainSmall.src;
+        } else {
+            setImageValue(imageMain.src);
+
+            imageMain.src = image.src;
+        }
+
         //console.log(image.src);
     };
 
@@ -123,8 +131,14 @@ function Detail() {
     const handleClickImage = (index) => {
         const imageMain = document.getElementById('_3uzKon_2PWsS4-img');
         const image = document.getElementById(`X2N8Bt_2PWsS4-img-${index}`);
-        setImageValue(image.src);
-        imageMain.src = image.src;
+        const imageMainSmall = document.getElementById(`X2N8Bt_2PWsS4-img-00`);
+        if (index === 'main') {
+            setImageValue(imageMainSmall.src);
+            imageMain.src = imageMainSmall.src;
+        } else {
+            setImageValue(image.src);
+            imageMain.src = image.src;
+        }
     };
 
     //mua hang
@@ -141,24 +155,14 @@ function Detail() {
                     SP_id: resultId,
                 })
                 .then((res) => {
+                    console.log('info', res.data.result);
+                    if (res.data.result) {
+                        const action = addNumberProduct('true');
+                        dispatchSignIn(action);
+                    }
                     setTimeout(() => {
                         setCheckAddOfCart(false);
                     }, 1200);
-                    axios
-                        .get(
-                            `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
-                                JSON.parse(GetCookie('usrin')).ND_id
-                            }`,
-                        )
-                        .then((res) => {
-                            console.log('reduxt', res.data.results.length);
-                            //setSumNumber(res.data.results.length);
-                            const action = addNumberProduct(res.data.results.length);
-                            dispatchSignIn(action);
-                        })
-                        .catch((err) => {
-                            console.log('loi');
-                        });
                 })
                 .catch((err) => {
                     console.log('loi');
@@ -222,6 +226,24 @@ function Detail() {
                             </div>
                         </div>
                         <div className={cx('xK9doz')}>
+                            <div className={cx('jgvTec')}>
+                                <div className={cx('k1LVKF')}>
+                                    <div className={cx('_1OPdfl')}>
+                                        <div className={cx('X2N8Bt_2PWsS4')}>
+                                            <img
+                                                id={`X2N8Bt_2PWsS4-img-00`}
+                                                className={cx('X2N8Bt_2PWsS4-img')}
+                                                src={product.SP_image}
+                                                alt=""
+                                                onMouseOver={() => handleMouseOverImage('main')}
+                                                onMouseOut={() => handleMouseOutImage('main')}
+                                                onClick={() => handleClickImage('main')}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className=""></div>
+                                </div>
+                            </div>
                             {product !== ''
                                 ? product.image.map((image, index) => (
                                       <div key={index} className={cx('jgvTec')}>
@@ -409,7 +431,7 @@ function Detail() {
                             </div>
                         </div>
                         <div className={cx('_1YY3XU')}>
-                            <a className={cx('_2O_CHG')} href={`/shop/name=${product.NB_id}`}>
+                            <Link className={cx('_2O_CHG')} to={`/shop/name=${product.NB_id}`}>
                                 <div className={cx('avatar_3q1-OA')}>
                                     <img
                                         className={cx('avatar__img')}
@@ -421,7 +443,7 @@ function Detail() {
                                         }
                                     />
                                 </div>
-                            </a>
+                            </Link>
                             <div className={cx('zYQ1eS')}>
                                 <div className={cx('_3LoNDM')}>
                                     {product !== '' ? product.shop[0].MTS_ten : 'Tên Cửa Hàng'}

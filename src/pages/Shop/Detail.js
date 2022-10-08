@@ -2,6 +2,7 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 //import { Link } from 'react-router-dom';
 // import { useState } from 'react';
 // import { Link } from 'react-router-dom';
@@ -25,7 +26,7 @@ function Detail({ productValue }) {
             {productValue !== ''
                 ? productValue.map((prod, index) => (
                       <div key={index} className={cx('shop-search-result-view__item-col-xs-2-4')}>
-                          <a data-sqe="link" href={`/detail/product/nameid${prod.SP_id}`} className={cx('dd')}>
+                          <Link data-sqe="link" to={`/detail/product/nameid${prod.SP_id}`} className={cx('dd')}>
                               <div className={cx('_3DGyGY')}>
                                   <div className={cx('_3ZU4Xu')}>
                                       <div className={cx('nHUlre_2CaWwM')}>
@@ -144,7 +145,7 @@ function Detail({ productValue }) {
                                       </div>
                                   </div>
                               </div>
-                          </a>
+                          </Link>
                       </div>
                   ))
                 : ''}

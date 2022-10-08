@@ -18,12 +18,13 @@ import { useCallback } from 'react';
 import SetCookie from '~/components/Hook/SetCookies';
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { addNumberProduct } from '~/actions/NumberProduct';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignUpSeller from './SignInAndSignUp/SignUpSeller';
 import { Link } from 'react-router-dom';
+import { cartProduct } from '~/actions/CartProduct';
 
 const cx = classNames.bind(styles);
 
@@ -63,9 +64,7 @@ function Header() {
     //console.log('Google: ' + GetCookie('logout'));
 
     const siginList = useSelector((state) => state.numberProduct.list);
-    //const dispatchSignIn = useDispatch();
-
-    console.log('product: ', siginList[0]);
+    const dispatchCart = useDispatch();
     //localStorage.removeItem('product');
     // localStorage.setItem('product', JSON.stringify(siginList));
 
@@ -95,21 +94,23 @@ function Header() {
         if (GetCookie('usrin') !== undefined) {
             axios
                 .get(
-                    `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
+                    `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/number/product?ND_id=${
                         JSON.parse(GetCookie('usrin')).ND_id
                     }`,
                 )
                 .then((res) => {
-                    console.log(res.data);
-                    setSumNumber(res.data.results.length);
-                    //const action = addNumberProduct(res.data.results.length);
-                    //dispatchSignIn(action);
+                    console.log('setSumNumber', res.data.results);
+                    setSumNumber(res.data.results);
+                    if (res.data.results > 0) {
+                        const action = cartProduct(res.data.results);
+                        dispatchCart(action);
+                    }
                 })
                 .catch((err) => {
-                    console.log('loi');
+                    console.log('loi number');
                 });
         }
-    }, [siginList]);
+    }, [siginList, dispatchCart]);
 
     useEffect(() => {
         if (GetCookie('usrin') !== undefined) {

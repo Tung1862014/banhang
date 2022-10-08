@@ -1,8 +1,8 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNumberProduct } from '~/actions/NumberProduct';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './Cart.module.scss';
 
@@ -17,11 +17,15 @@ function Cart() {
     const [checkId, setCheckId] = useState('');
 
     const [sumNumber, setSumNumber] = useState('');
-    const [price, setPrice] = useState('');
+    //const [price, setPrice] = useState('');
+
+    ////////////////////////////////////////////////////
 
     // console.log('sellerValue', sellerValue);
-    const productValueReducer = useSelector((state) => state.numberProduct.list);
+    const productValueReducer = useSelector((state) => state.cartProduct.list);
+    const dispatchDelete = useDispatch();
     console.log('productValueReducer', productValueReducer);
+    console.log('sellerValue', sellerValue);
 
     useEffect(() => {
         if (GetCookie('usrin') !== undefined) {
@@ -46,7 +50,7 @@ function Cart() {
         let sellerName = [];
         let number = [];
         let sumnumber = 0;
-        let price = 0;
+        //let price = 0;
 
         for (let i = 0; i < orderValue.length; i++) {
             if (!sellerArr.includes(orderValue[i].NB_id)) {
@@ -56,30 +60,21 @@ function Cart() {
 
             number = [...number, orderValue[i].TTDH_soluong];
             sumnumber += 1;
-            price +=
-                orderValue[i].product.SP_gia *
-                orderValue[i].TTDH_soluong *
-                ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+            // price +=
+            //     orderValue[i].product.SP_gia *
+            //     orderValue[i].TTDH_soluong *
+            //     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
         }
         console.log('sellerArr', sellerArr);
         if (sellerArr.length > 0) {
-            setSellerValue((prev) => {
-                const newSeller = [...prev, sellerArr];
-                return newSeller[0];
-            });
-            setSellerName((prev) => {
-                const newSeller = [...prev, sellerName];
-                return newSeller[0];
-            });
+            setSellerValue(sellerArr);
+            setSellerName(sellerName);
         }
         if (number.length > 0) {
-            setNumberValue((prev) => {
-                const newSeller = [...prev, number];
-                return newSeller[0];
-            });
+            setNumberValue(number);
 
             setSumNumber(sumnumber);
-            setPrice(price);
+            //setPrice(price);
         }
     }, [orderValue]);
 
@@ -120,7 +115,7 @@ function Cart() {
             setCheckNumber(inpurId.value);
             setCheckId(ttdhid);
         } else {
-            console.log('số lượng đã đặt giới hạn');
+            console.log('số lượng đã đạt giới hạn');
             const notification = document.getElementById('cart-popup-modal__transition-enter-done');
             notification.style.display = 'inline-block';
 
@@ -155,6 +150,10 @@ function Cart() {
             })
             .then((res) => {
                 //console.log(res.data);
+                if (res.data.results) {
+                    const action = addNumberProduct('delete');
+                    dispatchDelete(action);
+                }
             })
             .catch((err) => {
                 console.log('loi');
@@ -193,7 +192,14 @@ function Cart() {
                         <div className={cx('_1coJFb')}>Hành động</div>
                     </div>
                     {/* / */}
-                    {sellerValue !== ''
+                    {orderValue === '' ? (
+                        <div className={cx('cSSbb-loading')}>
+                            <div className={cx('loading-icon')}></div>
+                        </div>
+                    ) : (
+                        <div className={cx('empty-cart')}>Giỏ hàng của còn trống</div>
+                    )}
+                    {sellerValue !== '' && sellerValue !== undefined
                         ? sellerValue.map((sell, index) => (
                               <div key={index} className={cx('aCSbhb')}>
                                   <div key={index} className={cx('_3ApheT')}>
@@ -357,22 +363,28 @@ function Cart() {
                           ))
                         : ''}
                     {/* / */}
-                    <div className={cx('W2HjBQ_zzOmij')}>
-                        <div className={cx('_2BT_es')}>
-                            <div className={cx('_3BPMNN')}>
-                                <div className={cx('_2LMWss')}>
-                                    <div className={cx('_10A7e2')}>
-                                        Tổng thanh toán ({sumNumber !== '' ? sumNumber : ''} Sản phẩm):
+                    {sellerValue !== '' ? (
+                        <div className={cx('W2HjBQ_zzOmij')}>
+                            <div className={cx('_2BT_es')}>
+                                <div className={cx('_3BPMNN')}>
+                                    <div className={cx('_2LMWss')}>
+                                        <div className={cx('_10A7e2')}>
+                                            Tổng số sản phẩm ({sumNumber !== '' ? sumNumber : ''} Sản phẩm):
+                                        </div>
+                                        {/* <div id="nBHs8H" className={cx('nBHs8H')}>
+                                            ₫{price !== '' ? formatCash(price) : ''}
+                                        </div> */}
                                     </div>
-                                    <div className={cx('nBHs8H')}>₫{price !== '' ? formatCash(price) : ''}</div>
                                 </div>
+                                <div className={cx('_1TwgPm')}></div>
                             </div>
-                            <div className={cx('_1TwgPm')}></div>
+                            <a href={'/cart/order'} className={cx('-button-solid--primary')}>
+                                <span className={cx('kcsswk')}>Mua hàng</span>
+                            </a>
                         </div>
-                        <Link to={'/cart/order'} className={cx('-button-solid--primary')}>
-                            <span className={cx('kcsswk')}>Mua hàng</span>
-                        </Link>
-                    </div>
+                    ) : (
+                        ''
+                    )}
                 </>
             ) : (
                 <div className={cx('')}>Bạn cần đăng nhập để thực hiện thao tác này</div>
