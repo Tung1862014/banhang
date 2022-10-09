@@ -131,20 +131,54 @@
 }
 
 .chart-date {
+    position: relative;
+    left: 0;
     display: flex;
-    justify-content: space-around;
-    width: 100%;
+    align-items: center;
+    width: 500px;
     height: 50px;
     padding: 5px;
+}
 
-    input,
-    button {
-        background-color: rgba(53, 162, 235, 0.5);
-        border-radius: 5px;
-        padding: 0px 10px;
-        cursor: pointer;
-        &:hover {
-            opacity: 0.6;
-        }
+.chart-date-input {
+    width: 360px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart- {
+    position: relative;
+    margin: 0px 10px;
+}
+
+.chart-date1 {
+    background-color: rgba(53, 162, 235, 0.5);
+    border-radius: 5px;
+    padding: 11px 10px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.chart-date2 {
+    background-color: rgba(53, 162, 235, 0.5);
+    border-radius: 5px;
+    padding: 11px 10px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.chart-btn {
+    background-color: rgba(53, 162, 235, 0.5);
+    border-radius: 5px;
+    padding: 11px 10px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.6;
     }
 }

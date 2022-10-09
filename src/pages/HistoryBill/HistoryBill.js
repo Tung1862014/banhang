@@ -31,6 +31,7 @@ function HistoryBill() {
     const [idMTSValue, setIdMTSValue] = useState('');
     ///////////////////////////////////////////////////search
     const [searchValue, setSearchValue] = useState('');
+    const [searchTextValue, setSearchTextValue] = useState('');
 
     console.log('searchValue', searchValue);
     useEffect(() => {
@@ -554,10 +555,6 @@ function HistoryBill() {
         const searchId = document.getElementById('search-value-id');
         setSearchValue(searchId.value);
     };
-    function returnSearchValue() {
-        const searchId = document.getElementById('search-value-id');
-        return searchId.value;
-    }
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -591,7 +588,8 @@ function HistoryBill() {
             <div className={cx('GBcYbK')}>
                 <div className={cx('Tfo7DW')}>
                     <Link
-                        to={`/history/purchase/keys=` + returnSearchValue()}
+                        id="link_search-value"
+                        to={`/history/purchase/keys=${searchTextValue}`}
                         className={cx('Tfo7DW-btn')}
                         onClick={() => handleSearchBill()}
                     >
@@ -601,7 +599,7 @@ function HistoryBill() {
                         // autoComplete="off"
                         id="search-value-id"
                         placeholder="Tìm kiếm theo ID đơn hàng "
-                        //onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={(e) => setSearchTextValue(e.target.value)}
                     ></input>
                 </div>
                 <div className={cx('_0obGFe')}>

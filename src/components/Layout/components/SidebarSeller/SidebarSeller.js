@@ -12,7 +12,17 @@ import classNames from 'classnames/bind';
 // import MenuItem from './Menu/MenuItem';
 import styles from './SidebarSeller.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleDown,
+    faAngleUp,
+    faClipboardList,
+    faIndustry,
+    faMoneyCheck,
+    faReceipt,
+    faShop,
+    faStar,
+    faStore,
+} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -252,11 +262,12 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/09759afab8ae066ca5e1630bc19133a1"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faIndustry} />
                                         <span className={cx('sidebar-menu-item-text')}>Thống kê</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
@@ -294,12 +305,13 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/6b1ffcde1ff12621088110f419a5283a"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
-                                        <span className={cx('sidebar-menu-item-text')}>Thiết Lập Shop</span>
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faStore} />
+                                        <span className={cx('sidebar-menu-item-text')}>Thiết Lập Gian Hàng</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
                                             id="sidebar-menu-item-collapse-down-shop"
@@ -320,7 +332,7 @@ function Sidebar() {
                                                 className={cx('sidebar-submenu-item-link1-shop')}
                                                 onClick={handleClickCategory1Shop}
                                             >
-                                                <span>Hồ Sơ Shop</span>
+                                                <span>Hồ Sơ Gian Hàng</span>
                                             </Link>
                                         </li>
                                     </ul>
@@ -336,11 +348,12 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/3fa3bdb20eb201ae3f157ee8d11a39d5"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faReceipt} />
                                         <span className={cx('sidebar-menu-item-text')}>Quản Lý Sản Phẩm</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
@@ -388,10 +401,14 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/f82f8ccb649afcdf4f07f1dd9c41bcb0"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
+                                        /> */}
+                                        <FontAwesomeIcon
+                                            className={cx('sidebar-menu-item-icon')}
+                                            icon={faClipboardList}
                                         />
                                         <span className={cx('sidebar-menu-item-text')}>Quản Lý Đơn Hàng</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
@@ -440,11 +457,12 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/9f2ae273250a1a723d7d8892c9584c6d"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faMoneyCheck} />
                                         <span className={cx('sidebar-menu-item-text')}>Quản Lý Danh Mục</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
@@ -482,14 +500,13 @@ function Sidebar() {
                                             )
                                         }
                                     >
-                                        <img
+                                        {/* <img
                                             src="https://cf.shopee.vn/file/6b1ffcde1ff12621088110f419a5283a"
                                             alt=""
                                             className={cx('sidebar-menu-item-icon')}
-                                        />
-                                        <span className={cx('sidebar-menu-item-text')}>
-                                            Quản Lý Danh Mục Và Trọng Lượng
-                                        </span>
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faStar} />
+                                        <span className={cx('sidebar-menu-item-text')}>Quản Lý Đánh Giá</span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
                                             id="sidebar-menu-item-collapse-down-evaluate"

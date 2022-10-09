@@ -53,13 +53,34 @@ function Seller() {
             });
     }, []);
 
+    function takeDate() {
+        const dateValue = new Date();
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    console.log('date', takeDate());
+
     const [chartData, setChartData] = useState({
         datasets: [],
     });
     const [chartOptions, setChartOptions] = useState({});
 
-    const [dateValue1, setDateValue1] = useState('2022-01-13');
-    const [dateValue2, setDateValue2] = useState('2022-09-18');
+    const [dateValue1, setDateValue1] = useState(takeDate());
+    const [dateValue2, setDateValue2] = useState(takeDate());
     const [activeTurnover, setActiveTurnover] = useState(
         `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
             JSON.parse(GetCookie('seller')).ND_id
@@ -75,6 +96,9 @@ function Seller() {
         setChartListNumber(() => [...listNumber]);
         setChartListTurnover(() => [...listTurnover]);
     };
+
+    console.log('dateValue1', dateValue1);
+    console.log('dateValue2', dateValue2);
 
     useEffect(() => {
         axios
@@ -140,7 +164,7 @@ function Seller() {
     const handleStatistic = () => {
         setActiveTurnover(
             `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
-                JSON.parse(GetCookie('seller')).NB_id
+                JSON.parse(GetCookie('seller')).ND_id
             }`,
         );
     };
@@ -193,8 +217,21 @@ function Seller() {
 
             <div className={cx('chart-demo')}>
                 <div className={cx('chart-date')}>
-                    <input type="date" className={cx('chart-date1')} onChange={(e) => setDateValue1(e.target.value)} />
-                    <input type="date" className={cx('chart-date2')} onChange={(e) => setDateValue2(e.target.value)} />
+                    <div className={cx('chart-date-input')}>
+                        <input
+                            type="date"
+                            className={cx('chart-date1')}
+                            defaultValue={takeDate()}
+                            onChange={(e) => setDateValue1(e.target.value)}
+                        />
+                        <span className={cx('chart-')}>-</span>
+                        <input
+                            type="date"
+                            className={cx('chart-date2')}
+                            defaultValue={'2015-05-12'}
+                            onChange={(e) => setDateValue2(e.target.value)}
+                        />
+                    </div>
                     <button className={cx('chart-btn')} onClick={handleStatistic}>
                         Liệt kê
                     </button>

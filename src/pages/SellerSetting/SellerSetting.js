@@ -640,7 +640,7 @@ function SellerSetting() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('file-shop')}>
-                <h3>Hồ sơ shop</h3>
+                <h3>Hồ sơ gian hàng</h3>
             </div>
             <div className={cx('setting-shop')}>
                 <div className={cx('image-setting-shop')}>

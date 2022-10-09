@@ -135,9 +135,9 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Thông tin tài khoản',
-            href: `/user/setting/account`,
+            to: `/user/setting/account`,
             separate: true,
-            settingsell: true,
+            // settingsell: true,
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,

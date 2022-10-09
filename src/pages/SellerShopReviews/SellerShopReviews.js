@@ -266,8 +266,8 @@ function SellerShopReviews() {
             <div className={cx('rating')}>
                 <div className={cx('header')}>
                     <div className={cx('caption')}>
-                        <div className={cx('title')}>Đánh Giá Shop</div>{' '}
-                        <div className={cx('subtitle')}>Xem đánh giá Shop của bạn</div>
+                        <div className={cx('title')}>Đánh Giá Gian Hàng</div>{' '}
+                        <div className={cx('subtitle')}>Xem đánh giá gian hàng của bạn</div>
                     </div>
                 </div>
                 <div className={cx('content')}>
@@ -344,7 +344,7 @@ function SellerShopReviews() {
                         </div>{' '}
                     </div>
                     <div className={cx('table-header')}>
-                        <div className={cx('column-information')}>Thông tin Sản phẩm</div>{' '}
+                        <div className={cx('column-information')}>Thông tin sản phẩm</div>{' '}
                         <div className={cx('column-evaluation-content')}>Đánh giá</div>{' '}
                     </div>
                     <SellerShopReviewsPage data={evaluate} />
