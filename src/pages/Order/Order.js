@@ -188,7 +188,13 @@ function Order() {
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
             if (i === orderValue.length - 1) {
-                return price + serviceFee[index];
+                let sumValue;
+                if (price.toString().length > 6) {
+                    sumValue = price + serviceFee[index];
+                } else {
+                    sumValue = Number(Math.round(formatCash(price)).toFixed(3).replace('.', '')) + serviceFee[index];
+                }
+                return sumValue;
             }
         }
         //console.log('index', price);
@@ -206,7 +212,13 @@ function Order() {
                     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
             }
             if (i === orderValue.length - 1) {
-                return price;
+                let sumValue;
+                if (price.toString().length > 6) {
+                    sumValue = price;
+                } else {
+                    sumValue = Number(Math.round(formatCash(price)).toFixed(3).replace('.', ''));
+                }
+                return sumValue;
             }
         }
         //console.log('index', price);
@@ -1234,23 +1246,50 @@ function Order() {
                                                                     </div>
                                                                     <div className={cx('_4MGXB1')}>
                                                                         ₫
-                                                                        {formatCash(
-                                                                            order.product.SP_gia *
-                                                                                ((100 - order.product.SP_khuyenmai) /
-                                                                                    100),
-                                                                        )}
+                                                                        {order.product.SP_gia !== undefined &&
+                                                                        order.product.SP_gia.toString().length > 6
+                                                                            ? formatCash(
+                                                                                  order.product.SP_gia *
+                                                                                      order.TTDH_soluong *
+                                                                                      ((100 -
+                                                                                          order.product.SP_khuyenmai) /
+                                                                                          100),
+                                                                              )
+                                                                            : Math.round(
+                                                                                  formatCash(
+                                                                                      order.product.SP_gia *
+                                                                                          order.TTDH_soluong *
+                                                                                          ((100 -
+                                                                                              order.product
+                                                                                                  .SP_khuyenmai) /
+                                                                                              100),
+                                                                                  ),
+                                                                              ).toFixed(3)}
                                                                     </div>
                                                                     <div className={cx('_4MGXB1')}>
                                                                         {order.TTDH_soluong}
                                                                     </div>
                                                                     <div className={cx('_4MGXB1_8fgmps')}>
                                                                         ₫
-                                                                        {formatCash(
-                                                                            order.product.SP_gia *
-                                                                                order.TTDH_soluong *
-                                                                                ((100 - order.product.SP_khuyenmai) /
-                                                                                    100),
-                                                                        )}
+                                                                        {order.product.SP_gia !== undefined &&
+                                                                        order.product.SP_gia.toString().length > 6
+                                                                            ? formatCash(
+                                                                                  order.product.SP_gia *
+                                                                                      order.TTDH_soluong *
+                                                                                      ((100 -
+                                                                                          order.product.SP_khuyenmai) /
+                                                                                          100),
+                                                                              )
+                                                                            : Math.round(
+                                                                                  formatCash(
+                                                                                      order.product.SP_gia *
+                                                                                          order.TTDH_soluong *
+                                                                                          ((100 -
+                                                                                              order.product
+                                                                                                  .SP_khuyenmai) /
+                                                                                              100),
+                                                                                  ),
+                                                                              ).toFixed(3)}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1465,12 +1504,20 @@ function Order() {
                     </div>
                     <div id="KqH1Px" className={cx('KqH1Px')}>
                         <div className={cx('lhwDvd_Exv9ow_c5Dezq')}>Tổng tiền hàng</div>
-                        <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>₫{price !== '' ? formatCash(price) : ''}</div>
+                        <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>
+                            ₫
+                            {price !== '' && price.toString().length > 6
+                                ? formatCash(price)
+                                : Math.round(formatCash(Number(price))).toFixed(3)}
+                        </div>
                         <div className={cx('lhwDvd_Exv9ow_B6k-vE')}>Phí vận chuyển</div>
                         <div className={cx('lhwDvd_Uu2y3K_B6k-vE')}>₫{formatCash(handleSumService(serviceFee))}</div>
                         <div className={cx('lhwDvd_Exv9ow_A4gPS6')}>Tổng thanh toán:</div>
                         <div className={cx('lhwDvd_0tdvp_Uu2y3K_A4gPS6')}>
-                            ₫{price !== '' ? formatCash(price + handleSumService(serviceFee)) : ''}
+                            ₫
+                            {price !== '' && price.toString().length > 6
+                                ? formatCash(price + handleSumService(serviceFee))
+                                : Math.round(formatCash(price + handleSumService(serviceFee))).toFixed(3)}
                         </div>
                         <div className={cx('Ql2fz0')}>
                             <button className={cx('stardust-button--large_gG-FcK')} onClick={handleOrderCustomer}>

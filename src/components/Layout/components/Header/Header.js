@@ -489,6 +489,7 @@ function Header() {
                                             <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
                                         </Link>
                                     </Tippy>
+
                                     <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
                                         <Link to="/history/purchase/type=all" className={cx('action-btn')}>
                                             <InboxIcon className={cx('inbox-icon')} />
@@ -500,7 +501,7 @@ function Header() {
                                 <></>
                             ) : (
                                 <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
-                                    Log in
+                                    Đăng Nhập
                                 </Button>
                             )}
 

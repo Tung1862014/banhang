@@ -258,11 +258,25 @@ function Cart() {
                                                                     )}
                                                                     <span className={cx('_1CXksa')}>
                                                                         ₫
-                                                                        {formatCash(
-                                                                            order.product.SP_gia *
-                                                                                ((100 - order.product.SP_khuyenmai) /
-                                                                                    100),
-                                                                        )}
+                                                                        {order.product.SP_gia !== undefined &&
+                                                                        order.product.SP_gia.toString().length > 6
+                                                                            ? formatCash(
+                                                                                  order.product.SP_gia *
+                                                                                      order.TTDH_soluong *
+                                                                                      ((100 -
+                                                                                          order.product.SP_khuyenmai) /
+                                                                                          100),
+                                                                              )
+                                                                            : Math.round(
+                                                                                  formatCash(
+                                                                                      order.product.SP_gia *
+                                                                                          order.TTDH_soluong *
+                                                                                          ((100 -
+                                                                                              order.product
+                                                                                                  .SP_khuyenmai) /
+                                                                                              100),
+                                                                                  ),
+                                                                              ).toFixed(3)}
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -337,11 +351,23 @@ function Cart() {
                                                             <div id={`dn3H7Y${index}`} className={cx('dn3H7Y')}>
                                                                 <span>
                                                                     ₫
-                                                                    {formatCash(
-                                                                        order.product.SP_gia *
-                                                                            order.TTDH_soluong *
-                                                                            ((100 - order.product.SP_khuyenmai) / 100),
-                                                                    )}
+                                                                    {order.product.SP_gia !== undefined &&
+                                                                    order.product.SP_gia.toString().length > 6
+                                                                        ? formatCash(
+                                                                              order.product.SP_gia *
+                                                                                  order.TTDH_soluong *
+                                                                                  ((100 - order.product.SP_khuyenmai) /
+                                                                                      100),
+                                                                          )
+                                                                        : Math.round(
+                                                                              formatCash(
+                                                                                  order.product.SP_gia *
+                                                                                      order.TTDH_soluong *
+                                                                                      ((100 -
+                                                                                          order.product.SP_khuyenmai) /
+                                                                                          100),
+                                                                              ),
+                                                                          ).toFixed(3)}
                                                                 </span>
                                                             </div>
                                                             {/* / */}
@@ -390,7 +416,7 @@ function Cart() {
                     )}
                 </>
             ) : (
-                <div className={cx('')}>Bạn cần đăng nhập để thực hiện thao tác này</div>
+                <div className={cx('cart-do-login')}>Bạn cần đăng nhập để thực hiện thao tác này</div>
             )}
         </div>
     );

@@ -371,9 +371,18 @@ function Detail() {
                                         )}
 
                                         <div className={cx('items-center-price')}>
-                                            {product.SP_khuyenmai !== 0 ? (
+                                            {product.SP_gia !== undefined && product.SP_gia.toString().length > 6 ? (
+                                                <div className={cx('')}>
+                                                    {formatCash(product.SP_gia * ((100 - product.SP_khuyenmai) / 100))}
+                                                </div>
+                                            ) : product.SP_khuyenmai !== 0 ? (
                                                 <div className={cx('_2Shl1j')}>
-                                                    ₫{formatCash(product.SP_gia * ((100 - product.SP_khuyenmai) / 100))}
+                                                    ₫
+                                                    {Math.round(
+                                                        formatCash(
+                                                            product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
+                                                        ),
+                                                    ).toFixed(3)}
                                                 </div>
                                             ) : (
                                                 <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
