@@ -262,7 +262,6 @@ function Cart() {
                                                                         order.product.SP_gia.toString().length > 6
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
-                                                                                      order.TTDH_soluong *
                                                                                       ((100 -
                                                                                           order.product.SP_khuyenmai) /
                                                                                           100),
@@ -270,7 +269,6 @@ function Cart() {
                                                                             : Math.round(
                                                                                   formatCash(
                                                                                       order.product.SP_gia *
-                                                                                          order.TTDH_soluong *
                                                                                           ((100 -
                                                                                               order.product
                                                                                                   .SP_khuyenmai) /
@@ -355,19 +353,25 @@ function Cart() {
                                                                     order.product.SP_gia.toString().length > 6
                                                                         ? formatCash(
                                                                               order.product.SP_gia *
-                                                                                  order.TTDH_soluong *
                                                                                   ((100 - order.product.SP_khuyenmai) /
-                                                                                      100),
+                                                                                      100) *
+                                                                                  order.TTDH_soluong,
                                                                           )
-                                                                        : Math.round(
-                                                                              formatCash(
-                                                                                  order.product.SP_gia *
-                                                                                      order.TTDH_soluong *
-                                                                                      ((100 -
-                                                                                          order.product.SP_khuyenmai) /
-                                                                                          100),
-                                                                              ),
-                                                                          ).toFixed(3)}
+                                                                        : formatCash(
+                                                                              Number(
+                                                                                  Math.round(
+                                                                                      formatCash(
+                                                                                          order.product.SP_gia *
+                                                                                              ((100 -
+                                                                                                  order.product
+                                                                                                      .SP_khuyenmai) /
+                                                                                                  100),
+                                                                                      ),
+                                                                                  )
+                                                                                      .toFixed(3)
+                                                                                      .replace('.', ''),
+                                                                              ) * order.TTDH_soluong,
+                                                                          )}
                                                                 </span>
                                                             </div>
                                                             {/* / */}

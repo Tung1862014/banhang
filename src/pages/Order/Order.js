@@ -31,10 +31,15 @@ function Order() {
     const [districtID, setDistrictID] = useState(''); // id quận/huyên
     const [wardID, setWardID] = useState(''); //id phường/xã
     ////////////////////////////////////////////////////
+    const [serviceIdValue, setServiceIdValue] = useState(''); //goi dich vu
+    const [serviceIdUser, setServiceIdUser] = useState(''); //id service user chose
     const [serviceFee, setServiceFee] = useState(''); //phivan chuyen
     //const [namePaypal, setNamePaypal] = useState(''); //Tên Paypal
     const [checkPaypal, setCheckPaypal] = useState(false);
 
+    console.log('serviceIdValue', serviceIdValue);
+    console.log('serviceIdUser', serviceIdUser);
+    console.log('serviceFee', serviceFee);
     //show user
     useEffect(() => {
         axios
@@ -402,6 +407,7 @@ function Order() {
             .then((res) => {
                 // console.log('res', res.data.data.shops);
                 // console.log('huyen xa', districtID, wardID);
+                let lenghtShop = res.data.data.shops.length - 1;
                 for (let i = 0; i < res.data.data.shops.length; i++) {
                     for (let j = 0; j < sellerName.length; j++) {
                         // if (res.data.data.shops[i].name === sellerName[j]) {
@@ -421,6 +427,7 @@ function Order() {
                             console.log('sellerValue[k]', sellerValue[j], sellerName[j]);
                             console.log('handleTakePhone', handleTakePhone(sellerValue[j]).toString());
                             console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[j]).toString());
+                            console.log('submitserviceIdUser', serviceIdUser);
                             axios
                                 .post(
                                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
@@ -450,8 +457,8 @@ function Order() {
                                         height: 10,
                                         pick_station_id: null,
                                         insurance_value: 0,
-                                        service_id: 53321,
-
+                                        service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
+                                        service_type_id: null,
                                         coupon: null,
                                         pick_shift: [2],
                                         items: handleInfoProoduct(sellerValue[j]),
@@ -484,6 +491,9 @@ function Order() {
                                             })
                                             .then((res) => {
                                                 console.log('', res.data);
+                                                if (i === lenghtShop) {
+                                                    window.open('/cart/order?', '_self', 1);
+                                                }
                                             })
                                             .catch((err) => {
                                                 console.log('loi add');
@@ -495,9 +505,6 @@ function Order() {
                                 });
                         }
                     }
-                    // if (i === res.data.data.shops.length - 1) {
-                    //     window.open('/cart/order', '_self', 1);
-                    // }
                 }
             })
             .catch((err) => {
@@ -610,7 +617,7 @@ function Order() {
                                     height: 10,
                                     pick_station_id: null,
                                     insurance_value: 0,
-                                    service_id: 53321,
+                                    service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
                                     service_type_id: 2,
                                     coupon: null,
                                     pick_shift: [2],
@@ -665,24 +672,8 @@ function Order() {
             });
     }
 
-    //Tinh phi van chuyen
+    //Take package DV
     useEffect(() => {
-        const handleCountWeightt = (prodValue) => {
-            let weight = 0;
-            //let phone = 0;
-            for (let i = 0; i < orderValue.length; i++) {
-                if (orderValue[i].NB_id === prodValue) {
-                    console.log('SP_trongluong', orderValue[i]);
-                    //console.log('weight', orderValue[i].product.SP_trongluong);
-                    //console.log('number', orderValue[i].TTDH_soluong);
-                    weight += orderValue[i].product.SP_trongluong * orderValue[i].TTDH_soluong;
-                    //phone = orderValue[i].seller.ND_sdt;
-                }
-            }
-            console.log('weight', weight);
-            //console.log('phone', phone);
-            return weight;
-        };
         if (districtID !== '' && wardID !== '') {
             axios
                 .post(
@@ -701,16 +692,123 @@ function Order() {
                     for (let i = 0; i < res.data.data.shops.length; i++) {
                         for (let j = 0; j < sellerName.length; j++) {
                             if (res.data.data.shops[i].name === sellerName[j]) {
-                                console.log('district_id', res.data.data.shops[i]);
-                                console.log('huyen xa', districtID, wardID);
-                                console.log('weight', handleCountWeightt(sellerValue[j]));
+                                axios
+                                    .post(
+                                        `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services`,
+                                        {
+                                            shop_id: res.data.data.shops[i]._id,
+                                            from_district: res.data.data.shops[i].district_id,
+                                            to_district: districtID !== '' ? districtID : districtID,
+                                        },
+                                        {
+                                            headers: {
+                                                token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                                ShopId: res.data.data.shops[i]._id,
+                                            },
+                                        },
+                                    )
+                                    .then((res) => {
+                                        console.log('goi dv', res.data.data);
+                                        let idservice = [];
+                                        for (let i = 0; i < res.data.data.length; i++) {
+                                            if (
+                                                res.data.data[i].short_name !== '' &&
+                                                res.data.data[i].service_type_id !== 0
+                                            ) {
+                                                if (!idservice.includes(res.data.data[i].service_id)) {
+                                                    idservice.push(res.data.data[i]);
+                                                }
+                                            }
+                                            if (i === res.data.data.length - 1) {
+                                                setServiceIdValue(idservice);
+                                                setServiceIdUser(idservice[0].service_id);
+                                            }
+                                        }
+                                    })
+                                    .catch((err) => {
+                                        console.log('loi goi dv');
+                                    });
+                            }
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, [sellerName, districtID, wardID]);
+
+    //Tinh phi van chuyen
+    useEffect(() => {
+        const handleCountWeightt = (prodValue) => {
+            let weight = 0;
+            //let phone = 0;
+            for (let i = 0; i < orderValue.length; i++) {
+                if (orderValue[i].NB_id === prodValue) {
+                    console.log('SP_trongluong', orderValue[i]);
+                    //console.log('weight', orderValue[i].product.SP_trongluong);
+                    //console.log('number', orderValue[i].TTDH_soluong);
+                    weight += orderValue[i].product.SP_trongluong * orderValue[i].TTDH_soluong;
+                    //phone = orderValue[i].seller.ND_sdt;
+                }
+            }
+            //console.log('weightt', weight);
+            //console.log('phone', phone);
+            return weight;
+        };
+
+        const handlePriceSellerNoTransport = (sell, index) => {
+            let price = 0;
+            //console.log('sell', sell);
+            for (let i = 0; i < orderValue.length; i++) {
+                if (sell === orderValue[i].NB_id) {
+                    price +=
+                        orderValue[i].product.SP_gia *
+                        orderValue[i].TTDH_soluong *
+                        ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                }
+                if (i === orderValue.length - 1) {
+                    let sumValue;
+                    if (price.toString().length > 6) {
+                        sumValue = price;
+                    } else {
+                        sumValue = Number(Math.round(formatCash(price)).toFixed(3).replace('.', ''));
+                    }
+                    return sumValue;
+                }
+            }
+            //console.log('index', price);
+        };
+
+        if (districtID !== '' && wardID !== '') {
+            axios
+                .post(
+                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
+
+                    { offset: 0, limit: 50, client_phone: '' },
+                    {
+                        headers: {
+                            token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                        },
+                    },
+                )
+                .then((res) => {
+                    console.log('sellerName', sellerName);
+                    //console.log('huyen xa', districtID, wardID);
+                    for (let i = 0; i < res.data.data.shops.length; i++) {
+                        for (let j = 0; j < sellerName.length; j++) {
+                            if (res.data.data.shops[i].name === sellerName[j]) {
+                                // console.log('district_id', res.data.data.shops[i]);
+                                // console.log('huyen xa', districtID, wardID);
+                                // console.log('weight', handleCountWeightt(sellerValue[j]));
+
                                 axios
                                     .post(
                                         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
 
                                         {
                                             from_district_id: res.data.data.shops[i].district_id,
-                                            service_id: 53321,
+                                            service_id: serviceIdUser !== '' ? Number(serviceIdUser) : '',
                                             service_type_id: null,
                                             to_district_id: districtID !== '' ? districtID : districtID,
                                             to_ward_code: wardID !== '' ? wardID : wardID,
@@ -729,13 +827,23 @@ function Order() {
                                         },
                                     )
                                     .then((res) => {
-                                        console.log('DV', res.data.data);
+                                        console.log('DV res.data.data', res.data.data);
                                         RemoveCookie('servicefee');
                                         SetCookie('servicefee', JSON.stringify(res.data.data.service_fee));
+                                        // let arr = [];
+                                        // arr.push(res.data.data.service_fee);
+                                        //setServiceFee()
+                                        // if (sellerName.length === serviceFee.length) {
+                                        //     setServiceFee((prev) => {
+                                        //         const newSeller = [res.data.data.service_fee];
+                                        //         return newSeller;
+                                        //     });
+                                        // } else {
                                         setServiceFee((prev) => {
                                             const newSeller = [...prev, res.data.data.service_fee];
                                             return newSeller;
                                         });
+                                        // }
                                     })
                                     .catch((err) => {
                                         console.log('loi Dv nha');
@@ -748,7 +856,7 @@ function Order() {
                     console.log('loi');
                 });
         }
-    }, [sellerName, districtID, wardID, sellerValue, orderValue]);
+    }, [sellerName, districtID, wardID, sellerValue, orderValue, serviceIdUser]);
 
     const handleSumService = (dataValue) => {
         let service = 0;
@@ -1029,6 +1137,12 @@ function Order() {
     //     }
     // }
 
+    //change đơn vị vận chuyển
+    function handleChangeShipping(e) {
+        setServiceFee('');
+        setServiceIdUser(e);
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div id="ReDGyJ" className={cx('ReDGyJ')}>
@@ -1250,7 +1364,6 @@ function Order() {
                                                                         order.product.SP_gia.toString().length > 6
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
-                                                                                      order.TTDH_soluong *
                                                                                       ((100 -
                                                                                           order.product.SP_khuyenmai) /
                                                                                           100),
@@ -1258,7 +1371,6 @@ function Order() {
                                                                             : Math.round(
                                                                                   formatCash(
                                                                                       order.product.SP_gia *
-                                                                                          order.TTDH_soluong *
                                                                                           ((100 -
                                                                                               order.product
                                                                                                   .SP_khuyenmai) /
@@ -1275,21 +1387,26 @@ function Order() {
                                                                         order.product.SP_gia.toString().length > 6
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
-                                                                                      order.TTDH_soluong *
                                                                                       ((100 -
                                                                                           order.product.SP_khuyenmai) /
-                                                                                          100),
+                                                                                          100) *
+                                                                                      order.TTDH_soluong,
                                                                               )
-                                                                            : Math.round(
-                                                                                  formatCash(
-                                                                                      order.product.SP_gia *
-                                                                                          order.TTDH_soluong *
-                                                                                          ((100 -
-                                                                                              order.product
-                                                                                                  .SP_khuyenmai) /
-                                                                                              100),
-                                                                                  ),
-                                                                              ).toFixed(3)}
+                                                                            : formatCash(
+                                                                                  Number(
+                                                                                      Math.round(
+                                                                                          formatCash(
+                                                                                              order.product.SP_gia *
+                                                                                                  ((100 -
+                                                                                                      order.product
+                                                                                                          .SP_khuyenmai) /
+                                                                                                      100),
+                                                                                          ),
+                                                                                      )
+                                                                                          .toFixed(3)
+                                                                                          .replace('.', ''),
+                                                                                  ) * order.TTDH_soluong,
+                                                                              )}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1303,16 +1420,7 @@ function Order() {
                                       {/* / */}
                                       <div className={cx('kfKL6K')}>
                                           <div className={cx('wWp9Rn_GoSC7d')}>
-                                              <div className={cx('sYTSo9')}>Đơn vị vận chuyển</div>
-                                              <div className={cx('TrbqGd')}>
-                                                  <div>
-                                                      <img
-                                                          src={'https://api.ghn.vn/themes/angulr/img/logo-ghn-new.png'}
-                                                          alt=""
-                                                      />{' '}
-                                                      (Tiết kiệm)
-                                                  </div>
-                                              </div>
+                                              <span className={cx('TrbqGd')}>Phí vận chuyển</span>
                                               <div className={cx('uneQgd')}>
                                                   ₫
                                                   {formatCash(
@@ -1390,6 +1498,30 @@ function Order() {
                               </div>
                           ))
                         : ''}
+                </div>
+                <div className={cx('kfKL6K')}>
+                    <div className={cx('wWp9Rn_GoSC7d')}>
+                        <div className={cx('sYTSo9')}>Đơn vị vận chuyển</div>
+                        <div className={cx('TrbqGd')}>
+                            <div>
+                                <img src={'https://api.ghn.vn/themes/angulr/img/logo-ghn-new.png'} alt="" />{' '}
+                            </div>
+                        </div>
+                        <div className={cx('uneQgd')}>
+                            <select
+                                className={cx('uneQgd-select')}
+                                onChange={(e) => handleChangeShipping(e.target.value)}
+                            >
+                                {serviceIdValue !== ''
+                                    ? serviceIdValue.map((service, index) => (
+                                          <option key={index} className={cx('option-dvttj')} value={service.service_id}>
+                                              {service.short_name}
+                                          </option>
+                                      ))
+                                    : ''}
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div className={cx('KbJ00X')}>
                     <div className={cx('EQBEfe')}>
@@ -1495,7 +1627,16 @@ function Order() {
                                     <div className={cx('g5caBa')}>
                                         <div className={cx('cOrEtX')}>
                                             Phí thu hộ: ₫
-                                            {price !== '' ? formatCash(price + handleSumService(serviceFee)) : ''} VNĐ.
+                                            {price !== '' && price.toString().length > 6
+                                                ? formatCash(price + handleSumService(serviceFee))
+                                                : formatCash(
+                                                      Number(
+                                                          Math.round(formatCash(Number(price)))
+                                                              .toFixed(3)
+                                                              .replace('.', ''),
+                                                      ) + handleSumService(serviceFee),
+                                                  )}{' '}
+                                            VNĐ.
                                         </div>
                                     </div>
                                 </div>
@@ -1507,7 +1648,7 @@ function Order() {
                         <div className={cx('lhwDvd_Uu2y3K_c5Dezq')}>
                             ₫
                             {price !== '' && price.toString().length > 6
-                                ? formatCash(price)
+                                ? formatCash(Number(price))
                                 : Math.round(formatCash(Number(price))).toFixed(3)}
                         </div>
                         <div className={cx('lhwDvd_Exv9ow_B6k-vE')}>Phí vận chuyển</div>
@@ -1517,7 +1658,13 @@ function Order() {
                             ₫
                             {price !== '' && price.toString().length > 6
                                 ? formatCash(price + handleSumService(serviceFee))
-                                : Math.round(formatCash(price + handleSumService(serviceFee))).toFixed(3)}
+                                : formatCash(
+                                      Number(
+                                          Math.round(formatCash(Number(price)))
+                                              .toFixed(3)
+                                              .replace('.', ''),
+                                      ) + handleSumService(serviceFee),
+                                  )}
                         </div>
                         <div className={cx('Ql2fz0')}>
                             <button className={cx('stardust-button--large_gG-FcK')} onClick={handleOrderCustomer}>
