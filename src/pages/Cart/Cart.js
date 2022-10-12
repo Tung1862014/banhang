@@ -109,9 +109,21 @@ function Cart() {
         console.log(index);
         if (number - sellnumber > Number(inpurId.value)) {
             inpurId.value = Number(inpurId.value) + 1;
+            let prices = 0;
+            if (price.toString().length > 6) {
+                prices = formatCash(Number(price * ((100 - promotion) / 100)) * Number(inpurId.value));
+            } else {
+                prices = formatCash(
+                    Number(
+                        Math.round(formatCash(price * ((100 - promotion) / 100)))
+                            .toFixed(3)
+                            .replace('.', ''),
+                    ) * Number(inpurId.value),
+                );
+            }
 
             const priceVaule = document.getElementById(`dn3H7Y${index}`);
-            priceVaule.innerHTML = '₫' + formatCash(price * Number(inpurId.value) * ((100 - promotion) / 100));
+            priceVaule.innerHTML = '₫' + prices;
 
             setCheckNumber(inpurId.value);
             setCheckId(ttdhid);
@@ -131,9 +143,21 @@ function Cart() {
         console.log(index);
         if (Number(inpurId.value) > 1) {
             inpurId.value = Number(inpurId.value) - 1;
+            let prices = 0;
+            if (price.toString().length > 6) {
+                prices = formatCash(Number(price * ((100 - promotion) / 100)) * Number(inpurId.value));
+            } else {
+                prices = formatCash(
+                    Number(
+                        Math.round(formatCash(price * ((100 - promotion) / 100)))
+                            .toFixed(3)
+                            .replace('.', ''),
+                    ) * Number(inpurId.value),
+                );
+            }
 
             const priceVaule = document.getElementById(`dn3H7Y${index}`);
-            priceVaule.innerHTML = '₫' + formatCash(price * Number(inpurId.value) * ((100 - promotion) / 100));
+            priceVaule.innerHTML = '₫' + prices;
 
             setCheckNumber(inpurId.value);
             setCheckId(ttdhid);

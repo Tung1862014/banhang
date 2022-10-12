@@ -4,6 +4,7 @@ import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
 import SetCookie from '~/components/Hook/SetCookies';
@@ -79,10 +80,24 @@ function Order() {
                     }
 
                     //sumnumber += 1;
-                    price +=
-                        res.data.results[i].product.SP_gia *
-                        res.data.results[i].TTDH_soluong *
-                        ((100 - res.data.results[i].product.SP_khuyenmai) / 100);
+                    if (res.data.results[i].product.SP_gia.toString().length > 6) {
+                        price +=
+                            res.data.results[i].product.SP_gia *
+                            res.data.results[i].TTDH_soluong *
+                            ((100 - res.data.results[i].product.SP_khuyenmai) / 100);
+                    } else {
+                        price +=
+                            Number(
+                                Math.round(
+                                    formatCash(
+                                        res.data.results[i].product.SP_gia *
+                                            ((100 - res.data.results[i].product.SP_khuyenmai) / 100),
+                                    ),
+                                )
+                                    .toFixed(3)
+                                    .replace('.', ''),
+                            ) * res.data.results[i].TTDH_soluong;
+                    }
                 }
                 //console.log('sellerArr', sellerArr);
                 if (sellerArr.length > 0) {
@@ -183,21 +198,34 @@ function Order() {
 
     //tong tien
     const handlePriceSeller = (sell, index) => {
-        let price = 0;
-        //console.log('sell', sell);
+        let prices = 0;
+        console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                price +=
-                    orderValue[i].product.SP_gia *
-                    orderValue[i].TTDH_soluong *
-                    ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                if (orderValue[i].product.SP_gia.toString().length > 6) {
+                    prices +=
+                        orderValue[i].product.SP_gia *
+                        orderValue[i].TTDH_soluong *
+                        ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                } else {
+                    prices +=
+                        Number(
+                            Math.round(
+                                formatCash(
+                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].product.SP_khuyenmai) / 100),
+                                ),
+                            )
+                                .toFixed(3)
+                                .replace('.', ''),
+                        ) * orderValue[i].TTDH_soluong;
+                }
             }
             if (i === orderValue.length - 1) {
                 let sumValue;
                 if (price.toString().length > 6) {
-                    sumValue = price + serviceFee[index];
+                    sumValue = prices + serviceFee[index];
                 } else {
-                    sumValue = Number(Math.round(formatCash(price)).toFixed(3).replace('.', '')) + serviceFee[index];
+                    sumValue = prices + serviceFee[index];
                 }
                 return sumValue;
             }
@@ -207,21 +235,34 @@ function Order() {
 
     //tong tien khong phi van chuyen
     const handlePriceSellerNoTransport = (sell, index) => {
-        let price = 0;
+        let prices = 0;
         //console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                price +=
-                    orderValue[i].product.SP_gia *
-                    orderValue[i].TTDH_soluong *
-                    ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                if (orderValue[i].product.SP_gia.toString().length > 6) {
+                    prices +=
+                        orderValue[i].product.SP_gia *
+                        orderValue[i].TTDH_soluong *
+                        ((100 - orderValue[i].product.SP_khuyenmai) / 100);
+                } else {
+                    prices +=
+                        Number(
+                            Math.round(
+                                formatCash(
+                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].product.SP_khuyenmai) / 100),
+                                ),
+                            )
+                                .toFixed(3)
+                                .replace('.', ''),
+                        ) * orderValue[i].TTDH_soluong;
+                }
             }
             if (i === orderValue.length - 1) {
                 let sumValue;
                 if (price.toString().length > 6) {
-                    sumValue = price;
+                    sumValue = prices;
                 } else {
-                    sumValue = Number(Math.round(formatCash(price)).toFixed(3).replace('.', ''));
+                    sumValue = prices;
                 }
                 return sumValue;
             }
@@ -407,7 +448,7 @@ function Order() {
             .then((res) => {
                 // console.log('res', res.data.data.shops);
                 // console.log('huyen xa', districtID, wardID);
-                let lenghtShop = res.data.data.shops.length - 1;
+                let lenghtShop = sellerName.length - 1;
                 for (let i = 0; i < res.data.data.shops.length; i++) {
                     for (let j = 0; j < sellerName.length; j++) {
                         // if (res.data.data.shops[i].name === sellerName[j]) {
@@ -473,6 +514,23 @@ function Order() {
                                 .then((res) => {
                                     console.log('DH', res.data.data);
                                     if (res.data.data.order_code !== undefined) {
+                                        const dateValue = new Date();
+                                        let day = dateValue.getDate();
+                                        let month = dateValue.getMonth() + 1;
+                                        let year = dateValue.getFullYear();
+                                        let YMD;
+
+                                        if (month < 10 && day >= 10) {
+                                            YMD = year + '-0' + month + '-' + day;
+                                        } else if (month < 10 && day < 10) {
+                                            YMD = year + '-0' + month + '-0' + day;
+                                        } else if (month >= 10 && day < 10) {
+                                            YMD = year + '-' + month + '-0' + day;
+                                        } else if (month >= 10 && day >= 10) {
+                                            YMD = year + '-' + month + '-' + day;
+                                        } else {
+                                            YMD = year + '-' + month + '-' + day;
+                                        }
                                         axios
                                             .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                                                 DH_id: res.data.data.order_code,
@@ -487,12 +545,25 @@ function Order() {
                                                         ? userVaule.ND_diachiGH
                                                         : ctyVaule,
                                                 DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                                DH_ngay: YMD,
                                                 DH_trangthaiTT: 1,
                                             })
                                             .then((res) => {
-                                                console.log('', res.data);
-                                                if (i === lenghtShop) {
-                                                    window.open('/cart/order?', '_self', 1);
+                                                console.log('insert order', res.data);
+                                                if (j === lenghtShop) {
+                                                    console.log('limit');
+                                                    toast.success('Đặt hàng thành công', {
+                                                        position: toast.POSITION.TOP_CENTER,
+                                                    });
+                                                    setTimeout(
+                                                        () =>
+                                                            window.open(
+                                                                `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                                                '_self',
+                                                                1,
+                                                            ),
+                                                        3000,
+                                                    );
                                                 }
                                             })
                                             .catch((err) => {
@@ -633,6 +704,23 @@ function Order() {
                             .then((res) => {
                                 console.log('DH', res.data.data.order_code);
                                 if (res.data.data.order_code !== undefined) {
+                                    const dateValue = new Date();
+                                    let day = dateValue.getDate();
+                                    let month = dateValue.getMonth() + 1;
+                                    let year = dateValue.getFullYear();
+                                    let YMD;
+
+                                    if (month < 10 && day >= 10) {
+                                        YMD = year + '-0' + month + '-' + day;
+                                    } else if (month < 10 && day < 10) {
+                                        YMD = year + '-0' + month + '-0' + day;
+                                    } else if (month >= 10 && day < 10) {
+                                        YMD = year + '-' + month + '-0' + day;
+                                    } else if (month >= 10 && day >= 10) {
+                                        YMD = year + '-' + month + '-' + day;
+                                    } else {
+                                        YMD = year + '-' + month + '-' + day;
+                                    }
                                     axios
                                         .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                                             DH_id: res.data.data.order_code,
@@ -650,7 +738,8 @@ function Order() {
                                                 GetCookie('servicefee') !== undefined
                                                     ? JSON.parse(GetCookie('servicefee'))
                                                     : '0',
-                                            DH_trangthaiTT: 1,
+                                            DH_ngay: YMD,
+                                            DH_trangthaiTT: 2,
                                         })
                                         .then((res) => {
                                             console.log('', res.data);
@@ -1675,6 +1764,7 @@ function Order() {
                 </div>
                 {/* / */}
             </div>
+            <ToastContainer />
         </div>
     );
 }

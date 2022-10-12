@@ -228,7 +228,7 @@ function Seller() {
                         <input
                             type="date"
                             className={cx('chart-date2')}
-                            defaultValue={'2015-05-12'}
+                            defaultValue={takeDate()}
                             onChange={(e) => setDateValue2(e.target.value)}
                         />
                     </div>
