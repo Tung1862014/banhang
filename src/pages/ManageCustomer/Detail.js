@@ -10,7 +10,7 @@ function Detail({ currentItems, clickPageCheck }) {
     const [checkBox, setCheckBox] = useState('');
     const [checkDelete, setCheckDelete] = useState(false);
     //const rating = [`&#9733;`, '&#9733;', '&#9733;', '&#9733;', '&#9733;'];
-    console.log(checkBox.split(',').length);
+    console.log('checkBox', checkBox);
 
     useEffect(() => {
         if (clickPageCheck) {
@@ -22,8 +22,9 @@ function Detail({ currentItems, clickPageCheck }) {
 
                 checkedId.checked = false;
             }
-            setCheckBox('');
+            //setCheckBox('');
         }
+        setCheckBox('');
     }, [clickPageCheck, currentItems]);
 
     function handleDeleteAll() {
@@ -121,7 +122,7 @@ function Detail({ currentItems, clickPageCheck }) {
             if (checkAll.checked) {
                 checkedId.checked = true;
                 if (idcheck === undefined) {
-                    idcheck = currentItems[i].ND_id;
+                    idcheck = currentItems[i].ND_id.toString();
                 } else {
                     idcheck = idcheck + ',' + currentItems[i].ND_id;
                 }
@@ -140,15 +141,17 @@ function Detail({ currentItems, clickPageCheck }) {
         let day = dateValue.getDate();
         let month = dateValue.getMonth() + 1;
         let year = dateValue.getFullYear();
-
+        // let hour = dateValue.getHours();
+        // let minute = dateValue.getMinutes();
+        //console.log('day', day);
         if (month < 10 && day >= 10) {
             return day + '-0' + month + '-' + year;
         } else if (month < 10 && day < 10) {
-            return '0' + day + '-0' + month + year;
-        } else if (month > 10 && day < 10) {
-            return '0' + day + '-' + month + year;
-        } else if (month > 10 && day >= 10) {
-            return day + '-' + month + year;
+            return '0' + day + '-0' + month + '-' + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + '-' + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + '-' + year;
         } else {
             return day + '-' + month + '-' + year;
         }

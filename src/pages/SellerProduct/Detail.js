@@ -130,7 +130,7 @@ function Detail({ currentItems, clickPageCheck }) {
             if (checkAll.checked) {
                 checkedId.checked = true;
                 if (idcheck === undefined) {
-                    idcheck = currentItems[i].SP_id;
+                    idcheck = currentItems[i].SP_id.toString();
                 } else {
                     idcheck = idcheck + ',' + currentItems[i].SP_id;
                 }

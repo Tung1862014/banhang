@@ -169,6 +169,101 @@ function Seller() {
         );
     };
 
+    function takeDateNow(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+    const handleDateNow = (e) => {
+        const date = new Date();
+        const dayValue = new Date();
+        const year = date.getFullYear();
+        if (Number(e) === 7) {
+            const additionOfDays = 7;
+            date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            setDateValue2(takeDateNow(dayValue));
+            setDateValue1(takeDateNow(date));
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${takeDateNow(date)}&ngde=${takeDateNow(
+                    dayValue,
+                )}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}`,
+            );
+        } else if (Number(e) === 1) {
+            let dateTo = `${year.toString()}-01-01`;
+            let dateFrom = `${year.toString()}-03-31`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 2) {
+            let dateTo = `${year.toString()}-04-01`;
+            let dateFrom = `${year.toString()}-06-30`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 3) {
+            let dateTo = `${year.toString()}-07-01`;
+            let dateFrom = `${year.toString()}-09-30`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 4) {
+            let dateTo = `${year.toString()}-10-01`;
+            let dateFrom = `${year.toString()}-12-31`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 365) {
+            const additionOfDays = 365;
+            date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            setDateValue2(takeDateNow(dayValue));
+            setDateValue1(takeDateNow(date));
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${takeDateNow(date)}&ngde=${takeDateNow(
+                    dayValue,
+                )}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}`,
+            );
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             {/* <div className={cx('inner')}>
@@ -235,6 +330,17 @@ function Seller() {
                     <button className={cx('chart-btn')} onClick={handleStatistic}>
                         Liệt kê
                     </button>
+                    <div className={cx('chart-quarter')}>
+                        <select className={cx('chart-btn-select')} onChange={(e) => handleDateNow(e.target.value)}>
+                            <option value="">...</option>
+                            <option value="7">Tuần</option>
+                            <option value="1">Quý 1 (1-3)</option>
+                            <option value="2">Quý 2 (4-6)</option>
+                            <option value="3">Quý 3 (7-9)</option>
+                            <option value="4">Quý 4 (10-12)</option>
+                            <option value="365">Năm</option>
+                        </select>
+                    </div>
                 </div>
                 <Line className={cx('chart-demo')} option={chartOptions} data={chartData} />
             </div>

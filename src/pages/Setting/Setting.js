@@ -710,7 +710,7 @@ function Setting() {
                                         <input
                                             type="text"
                                             placeholder=""
-                                            defaultValue={userValue !== '' ? userValue.ND_sdt : ''}
+                                            defaultValue={userValue !== '' ? '0' + userValue.ND_sdt.toString() : ''}
                                             onChange={(e) => setPhoneValue(e.target.value)}
                                             onBlur={(e) => handleCheckPhone(e.target.value)}
                                             onFocus={() => handleCloseCheckPhone()}

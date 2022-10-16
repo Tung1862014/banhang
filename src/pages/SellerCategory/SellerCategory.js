@@ -3,11 +3,11 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
-import styles from './SellerCategoryAndWeight.moudule.scss';
+import styles from './SellerCategory.module.scss';
 
 const cx = classNames.bind(styles);
 
-function SellerCategoryAndWeight() {
+function SellerCategory() {
     const [takeCategory, setTakeCategory] = useState('');
     //const [takeWeight, setTakeWeight] = useState('');
     //const [checkWeight, setCheckWeight] = useState('');
@@ -126,18 +126,32 @@ function SellerCategoryAndWeight() {
     }
 
     function handleAddCategoryDatabase() {
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/add`, {
-                NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                DM_danhmuc: category,
-            })
-            .then((res) => {
-                console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
-            })
-            .catch((err) => {
-                console.log('loi');
+        if (category !== '') {
+            axios
+                .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/category/add`, {
+                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                    DM_danhmuc: category,
+                })
+                .then((res) => {
+                    console.log(res.data.warning);
+                    if (res.data.warning === true) {
+                        toast.warning('Tên danh mục đã tồn tại', {
+                            position: toast.POSITION.TOP_CENTER,
+                            className: `${cx('toast-message')}`,
+                        });
+                    } else {
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/category`, '_self', 1);
+                    }
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        } else {
+            toast.warning('Nhập tên danh mục', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
             });
+        }
     }
 
     function handleUpdateCategoryDatabase() {
@@ -149,7 +163,7 @@ function SellerCategoryAndWeight() {
             })
             .then((res) => {
                 console.log(res.data);
-                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+                window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/category`, '_self', 1);
             })
             .catch((err) => {
                 console.log('loi');
@@ -198,7 +212,7 @@ function SellerCategoryAndWeight() {
                         })
                         .then((res) => {
                             console.log(res.data);
-                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/categoryandweight`, '_self', 1);
+                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller/category`, '_self', 1);
                         })
                         .catch((err) => {
                             console.log('loi');
@@ -517,4 +531,4 @@ function SellerCategoryAndWeight() {
     );
 }
 
-export default SellerCategoryAndWeight;
+export default SellerCategory;

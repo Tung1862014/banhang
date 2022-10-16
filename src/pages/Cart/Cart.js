@@ -18,11 +18,12 @@ function Cart() {
     const [checkId, setCheckId] = useState('');
 
     const [sumNumber, setSumNumber] = useState('');
+    //const [numberChangeValue, setNumberChangeValue] = useState('');
     //const [price, setPrice] = useState('');
 
     ////////////////////////////////////////////////////
 
-    // console.log('sellerValue', sellerValue);
+    //console.log('numberChangeValue', numberChangeValue);
     const productValueReducer = useSelector((state) => state.cartProduct.list);
     const dispatchDelete = useDispatch();
     console.log('productValueReducer', productValueReducer);
@@ -185,9 +186,37 @@ function Cart() {
             });
     };
 
-    // const handleChangeNumber = (number) => {
-    //     console.log('soluong', number);
-    // };
+    const handleChangeNumber = (ttdhid, index, price, promotion, number, sellnumber) => {
+        const inpurId = document.getElementById(`EcPhjV_3cj9Np${index}`);
+        // console.log('soluong', e, ttdhid, inpurId.value);
+        if (number - sellnumber > Number(inpurId.value)) {
+            inpurId.value = Number(inpurId.value);
+            let prices = 0;
+            if (price.toString().length > 6) {
+                prices = formatCash(Number(price * ((100 - promotion) / 100)) * Number(inpurId.value));
+            } else {
+                prices = formatCash(
+                    Number(
+                        Math.round(formatCash(price * ((100 - promotion) / 100)))
+                            .toFixed(3)
+                            .replace('.', ''),
+                    ) * Number(inpurId.value),
+                );
+            }
+
+            const priceVaule = document.getElementById(`dn3H7Y${index}`);
+            priceVaule.innerHTML = '₫' + prices;
+
+            setCheckNumber(inpurId.value);
+            setCheckId(ttdhid);
+        } else {
+            console.log('số lượng đã đạt giới hạn');
+            const notification = document.getElementById('cart-popup-modal__transition-enter-done');
+            notification.style.display = 'inline-block';
+
+            setTimeout(() => (notification.style.display = 'none'), 1200);
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -341,7 +370,16 @@ function Cart() {
                                                                                 ? numberValue[index]
                                                                                 : order.TTDH_soluong
                                                                         }
-                                                                        //onChange={() => handleChangeNumber(order.TTDH_id)}
+                                                                        onChange={() =>
+                                                                            handleChangeNumber(
+                                                                                order.TTDH_id,
+                                                                                index,
+                                                                                order.product.SP_gia,
+                                                                                order.product.SP_khuyenmai,
+                                                                                order.product.SP_soluong,
+                                                                                order.product.SP_soluongban,
+                                                                            )
+                                                                        }
                                                                     />
 
                                                                     <button

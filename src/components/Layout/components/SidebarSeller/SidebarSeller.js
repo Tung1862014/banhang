@@ -19,7 +19,6 @@ import {
     faIndustry,
     faMoneyCheck,
     faReceipt,
-    faShop,
     faStar,
     faStore,
 } from '@fortawesome/free-solid-svg-icons';
@@ -57,7 +56,7 @@ function Sidebar() {
             handleClickCategoryOrder1();
         } else if (resultId === '/bill/@canceloder') {
             handleClickCategoryOrder2();
-        } else if (resultId === '/categoryandweight') {
+        } else if (resultId === '/category') {
             handleClickCategory1Weight();
         } else if (resultId === '/shop/reviews/@all') {
             handleClickCategory1Evaluate();
@@ -479,7 +478,7 @@ function Sidebar() {
                                     <ul id="sidebar-submenu-weight" className={cx('sidebar-submenu-weight')}>
                                         <li className={cx('sidebar-submenu-item')}>
                                             <Link
-                                                to="/seller/categoryandweight"
+                                                to="/seller/category"
                                                 id="sidebar-submenu-item-link1-weight"
                                                 className={cx('sidebar-submenu-item-link1-weight')}
                                                 onClick={handleClickCategory1Weight}

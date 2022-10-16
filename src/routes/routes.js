@@ -17,7 +17,7 @@ import SellerSetting from '~/pages/SellerSetting';
 import SellerProduct from '~/pages/SellerProduct';
 import SellerAddProduct from '~/pages/SellerAddProduct';
 import SellerUpdateProduct from '~/pages/SellerUpdateProduct';
-import SellerCategoryAndWeight from '~/pages/SellerCategoryAndWeight';
+import SellerCategory from '~/pages/SellerCategory';
 import SellerBill from '~/pages/SellerBill';
 import SellerDetailBill from '~/pages/SellerDetailBill';
 import SellerPrintBill from '~/pages/SellerPrintBill';
@@ -54,7 +54,7 @@ const publicRoutes = [
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/insert', component: SellerAddProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/update/@:id', component: SellerUpdateProduct, layout: DefaultLayoutSeller },
-    { path: '/seller/categoryandweight', component: SellerCategoryAndWeight, layout: DefaultLayoutSeller },
+    { path: '/seller/category', component: SellerCategory, layout: DefaultLayoutSeller },
     { path: '/seller/bill/@:id', component: SellerBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
