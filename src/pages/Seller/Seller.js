@@ -106,7 +106,26 @@ function Seller() {
             .then((res) => {
                 // console.log('chart', res.data.results);
                 console.log('chart', res.data);
-                let chartListDate = res.data.arr;
+                let chartListDate = [];
+                for (let i = 0; i < res.data.arr.length; i++) {
+                    const datevalue = new Date(res.data.arr[i]);
+                    let day = datevalue.getDate();
+                    let month = datevalue.getMonth() + 1;
+                    let year = datevalue.getFullYear();
+                    let DMY;
+                    if (month < 10 && day >= 10) {
+                        DMY = day + '-0' + month + '-' + year;
+                    } else if (month < 10 && day < 10) {
+                        DMY = '0' + day + '-0' + month + year;
+                    } else if (month >= 10 && day < 10) {
+                        DMY = '0' + day + '-' + month + '-' + year;
+                    } else if (month >= 10 && day >= 10) {
+                        DMY = day + '-' + month + '-' + year;
+                    } else {
+                        DMY = day + '-' + month + '-' + year;
+                    }
+                    chartListDate = [...chartListDate, DMY];
+                }
                 let chartListNumber = res.data.numbers;
                 let chartListTurnover = res.data.turnovers;
                 // for (let i = 0; i < res.data.length; i++) {
@@ -118,6 +137,7 @@ function Seller() {
                 //     chartListNumber = [...chartListNumber, res.data[i].TK_soluong];
                 //     chartListTurnover = [...chartListTurnover, res.data[i].TK_doanhthu];
                 // }
+
                 handleChart(chartListDate, chartListNumber, chartListTurnover);
                 //setChartListData(() => [...chartListDate]);
                 // console.log(res.data);

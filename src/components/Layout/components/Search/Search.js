@@ -234,7 +234,7 @@ function Search() {
                         className={cx('search-btn')}
                         onClick={handleButtonSearch}
                     >
-                        <SearchIcon />
+                        <SearchIcon className={cx('search-icon')} />
                     </Link>
                 </div>
             </HeadlessTippy>

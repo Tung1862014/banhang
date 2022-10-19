@@ -246,6 +246,7 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
     const [testPassword, setTestPassword] = useState(false);
     const [checkPassword, setCheckPassword] = useState(false);
 
+    const [testPhone, setTestPhone] = useState(false);
     const userE = useDebounce(userEmail, 500);
     const userPass = useDebounce(userPassword, 500);
     const repeatPass = useDebounce(repeatPassword, 500);
@@ -258,10 +259,14 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
     let month = dateValue.getMonth() + 1;
     let year = dateValue.getFullYear();
     let YMD = '';
-    if (month < 10) {
+    if (month < 10 && day >= 10) {
         YMD = year + '-0' + month + '-' + day;
-    } else if (day < 10) {
+    } else if (month < 10 && day < 10) {
+        YMD = year + '-0' + month + '-0' + day;
+    } else if (month >= 10 && day < 10) {
         YMD = year + '-' + month + '-0' + day;
+    } else if (month >= 10 && day >= 10) {
+        YMD = year + '-' + month + '-' + day;
     } else {
         YMD = year + '-' + month + '-' + day;
     }
@@ -301,6 +306,16 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
         }
     };
 
+    const handlePhone = (e) => {
+        setPhone(e.target.value);
+        //console.log('lenght: ' + e.target.value.length);
+        if (e.target.value.length === 10) {
+            setTestPhone(true);
+        } else {
+            setTestPhone(false);
+        }
+    };
+
     function ChooseImg(e) {
         const chooseFile = document.getElementById('choose-file');
         const imgPreview = document.getElementById('img-preview');
@@ -318,7 +333,12 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
             setImage(e.target.files);
         }
     }
-
+    function handleAddSubmit() {
+        console.log('Bạn cần nhập đầy đủ thông tin');
+        const messageErr = document.getElementById('message-submit');
+        messageErr.style.display = 'flex';
+        // <div className={cx('form_message')}>Bạn cần nhập đầy đủ thông tin</div>
+    }
     return (
         <div className={cx('main')}>
             <div className={cx('loading-signUp')}>
@@ -329,7 +349,10 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
                     <button className={cx('btn-icon-close')} onClick={onClickSignUp}>
                         <CloseIcon className={cx('icon-close')} />
                     </button>
-                    <h3 className={cx('heading')}>Đăng ký người bán</h3>
+                    <h3 className={cx('heading')}>Đăng Ký Tài Khoản Chủ Gian Hàng</h3>
+                    <div id="message-submit" className={cx('message-submit')}>
+                        Bạn cần nhập đầy đủ thông tin (*)
+                    </div>
 
                     <div className={cx('spacer')}></div>
                     <div className={cx('form_group-sign-up')}>
@@ -454,7 +477,10 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
                                 name="phone"
                                 type="text"
                                 placeholder="VD: 0918814027"
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={(e) => handlePhone(e)}
+                                test1={phone !== ''}
+                                test2={!testPhone}
+                                titleError="Số điện thoại phải 10 số"
                             />
                         </Menu>
 
@@ -482,9 +508,17 @@ function SignUpSeller({ onClickSignUp, onClickSeller, onRegister, Loading }) {
                         className={cx('form_submit')}
                         to=""
                         onClick={() => {
-                            checkEmail &&
-                                checkPassword &&
-                                onRegister(fullName, userName, userEmail, userPassword, image, address, YMD, phone);
+                            fullName !== '' &&
+                            userName !== '' &&
+                            userPassword !== '' &&
+                            repeatPassword !== '' &&
+                            userEmail !== '' &&
+                            address !== '' &&
+                            phone !== ''
+                                ? checkEmail &&
+                                  checkPassword &&
+                                  onRegister(fullName, userName, userEmail, userPassword, image, address, YMD, phone)
+                                : handleAddSubmit();
                         }}
                     >
                         {'Đăng ký'}

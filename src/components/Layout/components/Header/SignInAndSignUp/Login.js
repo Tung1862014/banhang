@@ -104,9 +104,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         <button className={cx('btn-icon-close')} onClick={onClickLogin}>
                             <CloseIcon className={cx('icon-close')} />
                         </button>
-                        <h3 className={cx('heading')}>
-                            {checkSeller ? 'Đăng nhập người bán' : 'Thành viên đăng nhập'}
-                        </h3>
+                        <h3 className={cx('heading')}>{checkSeller ? 'Đăng nhập người bán' : 'Đăng nhập'}</h3>
 
                         <div className={cx('spacer')}></div>
 
@@ -179,7 +177,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                                 onChange={() => setCheckSeller((prev) => !prev)}
                             />
                             <label htmlFor="seller" className={cx('seller')}>
-                                Đăng nhập với tư cách người bán
+                                Đăng nhập với tư cách chủ gian hàng
                             </label>
                         </div>
 
@@ -193,12 +191,12 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             </span>
                             <span className={cx('loginLink-header-bulkhead')}>/</span>
                             <span className={cx('loginLink-header')} onClick={onClickSeller}>
-                                Người bán
+                                Chủ gian hàng
                             </span>
                         </div>
                         <div className={cx('sign-header')}>
                             <div></div>
-                            <Link to={'/login/admin'} className={cx('loginLink-header')} onClick={onClickLogin}>
+                            <Link to={'/login/admin'} className={cx('loginLink-header-admin')} onClick={onClickLogin}>
                                 Đăng nhập quản lý
                             </Link>
                         </div>

@@ -141,7 +141,7 @@ function Header() {
         },
         {
             icon: <FontAwesomeIcon icon={faSignOut} />,
-            title: 'Log out',
+            title: 'Đăng xuất',
             href: process.env.REACT_APP_URL_FRONTEND,
             separate: true,
             onclick: () => RemoveCookie('usrin'),

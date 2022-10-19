@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SettingAdmin.module.scss';
 
@@ -19,6 +20,7 @@ function SettingAdmin() {
     //
     const [checkPass, setCheckPass] = useState(false);
     const [checkPassRe, setCheckPassRe] = useState(false);
+    const [checkButton, setCheckButton] = useState(false);
 
     console.log(nameValue, emailValue, addressValue, phoneValue, imageValue);
     console.log('newPassVlaue', newPassVlaue);
@@ -39,48 +41,59 @@ function SettingAdmin() {
 
     //Submit update
     const handleSubmitUpdate = () => {
-        if (imageValue[0] !== undefined) {
-            const formData = new FormData();
-            formData.append('image', imageValue[0]);
-            formData.append('ND_id', JSON.parse(GetCookie('admin')).ND_id);
-            formData.append('ND_hoten', nameValue);
-            formData.append('ND_password', newPassVlaue);
-            formData.append('ND_email', emailValue);
-            formData.append('ND_diachi', addressValue);
-            formData.append('ND_sdt', phoneValue);
+        if (!checkButton) {
+            if (imageValue[0] !== undefined) {
+                const formData = new FormData();
+                formData.append('image', imageValue[0]);
+                formData.append('ND_id', JSON.parse(GetCookie('admin')).ND_id);
+                formData.append('ND_hoten', nameValue);
+                formData.append('ND_password', newPassVlaue);
+                formData.append('ND_email', emailValue);
+                formData.append('ND_diachi', addressValue);
+                formData.append('ND_sdt', phoneValue);
 
-            axios({
-                method: 'PUT',
-                url: `${process.env.REACT_APP_URL_NODEJS}/admin/update/account/image`,
-                data: formData,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then((res) => {
-                    console.log(res.data);
-                    //window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1);
+                axios({
+                    method: 'PUT',
+                    url: `${process.env.REACT_APP_URL_NODEJS}/admin/update/account/image`,
+                    data: formData,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 })
-                .catch((err) => {
-                    console.log('loi');
-                });
-        } else {
-            axios
-                .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/account`, {
-                    ND_id: JSON.parse(GetCookie('admin')).ND_id,
-                    ND_hoten: nameValue,
-                    ND_email: emailValue,
-                    ND_password: newPassVlaue,
-                    ND_diachi: addressValue,
-                    ND_sdt: phoneValue,
-                })
-                .then((res) => {
-                    console.log(res.data);
-                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1);
-                })
-                .catch((err) => {
-                    console.log('loi');
-                });
+                    .then((res) => {
+                        console.log(res.data);
+                        toast.success('Cập nhật thành công', {
+                            position: toast.POSITION.TOP_CENTER,
+                        });
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1);
+                    })
+                    .catch((err) => {
+                        console.log('loi');
+                    });
+            } else {
+                axios
+                    .put(`${process.env.REACT_APP_URL_NODEJS}/admin/update/account`, {
+                        ND_id: JSON.parse(GetCookie('admin')).ND_id,
+                        ND_hoten: nameValue,
+                        ND_email: emailValue,
+                        ND_password: newPassVlaue,
+                        ND_diachi: addressValue,
+                        ND_sdt: phoneValue,
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+                        toast.success('Cập nhật thành công', {
+                            position: toast.POSITION.TOP_CENTER,
+                        });
+                        setTimeout(
+                            () => window.open(`${process.env.REACT_APP_URL_FRONTEND}/setting/admin`, '_self', 1),
+                            2000,
+                        );
+                    })
+                    .catch((err) => {
+                        console.log('loi');
+                    });
+            }
         }
     };
 
@@ -169,6 +182,9 @@ function SettingAdmin() {
 
         if (!regexExp.test(e)) {
             emailTest.style.display = 'flex';
+            setCheckButton(true);
+        } else {
+            setCheckButton(false);
         }
     };
     const handleCloseCheckEmail = () => {
@@ -183,9 +199,13 @@ function SettingAdmin() {
         if (e.length < 10) {
             phoneTest.style.display = 'flex';
             phoneTest.innerHTML = 'Độ dài số điện thoại chưa đủ';
+            setCheckButton(true);
         } else if (e.length > 10) {
             phoneTest.style.display = 'flex';
             phoneTest.innerHTML = 'Độ dài số điện thoại lớn hơn 10';
+            setCheckButton(true);
+        } else {
+            setCheckButton(false);
         }
     };
     const handleCloseCheckPhone = () => {
@@ -375,7 +395,7 @@ function SettingAdmin() {
                                         <input
                                             type="text"
                                             placeholder=""
-                                            defaultValue={userValue !== '' ? userValue.ND_sdt : ''}
+                                            defaultValue={userValue !== '' ? '0' + userValue.ND_sdt.toString() : ''}
                                             onChange={(e) => setPhoneValue(e.target.value)}
                                             onBlur={(e) => handleCheckPhone(e.target.value)}
                                             onFocus={() => handleCloseCheckPhone()}
@@ -459,6 +479,7 @@ function SettingAdmin() {
                 </div>
                 {/* / */}
             </div>
+            <ToastContainer />
         </div>
     );
 }

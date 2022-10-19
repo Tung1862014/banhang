@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import RemoveCookie from '~/components/Hook/RemoveCookies';
 import SetCookie from '~/components/Hook/SetCookies';
 import styles from './LoginAdmin.module.scss';
@@ -23,14 +24,27 @@ function LoginAdmin() {
             .then((res) => {
                 console.log('success', res.data);
                 if (res.data.result === undefined && res.data.account === false) {
-                    console.log('tai khoan khong ton tai');
+                    //console.log('');
+                    toast.error('Tài khoản không tồn tại!', {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
                 } else if (res.data.result === undefined && res.data.account === true && res.data.password === false) {
-                    console.log('sai mat khau');
+                    //console.log('sai mat khau');
+                    toast.error('sai mật khẩu!', {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
                 } else {
-                    console.log('Đăng nhập thành công');
+                    console.log('');
+                    toast.success('Đăng nhập thành công', {
+                        position: toast.POSITION.TOP_CENTER,
+                    });
                     RemoveCookie('admin');
                     SetCookie('admin', JSON.stringify(res.data.result));
-                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/admin/manage/customer=all`, '_self', 1);
+                    setTimeout(
+                        () =>
+                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/admin/manage/customer=all`, '_self', 1),
+                        2000,
+                    );
                 }
             })
             .catch((err) => {
@@ -43,7 +57,9 @@ function LoginAdmin() {
                 <div className={cx('axexMF')}>
                     <div className={cx('D3jUo5')}>
                         <div className={cx('_0L93MD')}>
-                            {/* <a className={cx("UbNlH7")} href="/" alt=""></a> */}
+                            <a className={cx('UbNlH7')} href="/" alt="">
+                                <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
+                            </a>
                             <div className={cx('u9tve2')}>Đăng nhập</div>
                         </div>
                     </div>
@@ -55,8 +71,7 @@ function LoginAdmin() {
                                 'https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg'
                             }
                             alt=""
-                            width="750px"
-                            height="590px"
+                            className={cx('_3M9lzn-PeA8Gc-image')}
                         />
                         {/* <form > */}
                         <div className={cx('Gxi65y-J1i6cp-B-fiUo')}>
@@ -104,6 +119,7 @@ function LoginAdmin() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }
