@@ -5,16 +5,17 @@
         --search-top-spacer: 3px;
         --search-button-width: 30px;
 
-        width: 100%;
+        width: 390px;
         height: 50px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
-        justify-content: center;
+        //justify-content: center;
+        padding: 10px;
     }
 
     .inner {
         height: 100%;
-        width: 100%;
+        width: 370px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -67,8 +68,11 @@
     //Actions
 
     .action {
+        width: 130px;
+        padding: 0px 10px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 
     .more-btn {
@@ -80,6 +84,7 @@
 
     .action-btn {
         display: flex;
+        position: relative;
         .inbox-icon {
             width: 2.3rem;
             height: 2.3rem;
@@ -88,33 +93,27 @@
 
     .action-btn-cart {
         position: relative;
-        right: 0px;
         display: flex;
         color: #161823;
 
         font-size: 1rem;
         background: transparent;
-        padding: 4px 12px;
         cursor: pointer;
         .cart-icon {
-            width: 1.8rem;
-            height: 1.8rem;
-        }
-        .inbox-icon {
-            width: 1.8rem;
-            height: 1.8rem;
+            width: 2rem;
+            height: 2rem;
         }
     }
 
     .badge {
         position: absolute;
         top: -3px;
-        right: 3px;
+        right: -2px;
         padding: 0px 3px;
-        height: 1.7rem;
-        line-height: 1.7rem;
+        height: 14px;
+        line-height: 16px;
         border-radius: 10px;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: 600;
         color: var(--white);
         font-family: 'ProximaNova', sans-serif;
@@ -122,11 +121,11 @@
     }
 
     .user-avatar {
-        width: 25px;
-        height: 25px;
+        width: 40px;
+        height: 40px;
         object-fit: cover;
         border-radius: 50%;
-        margin-left: 12px;
+        position: relative;
         cursor: pointer;
     }
     .toast-toastify-message {

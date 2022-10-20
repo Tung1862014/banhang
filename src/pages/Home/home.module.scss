@@ -51,9 +51,10 @@
 
     .stardust-tabs-header__tab-active {
         position: relative;
-        padding: 0.9375rem 2.875rem;
+        padding: 10px 17px;
         flex: 0 0 auto;
-        height: 3.75rem;
+        height: -1px;
+        line-height: 20px;
         font-size: 1.4rem;
         font-weight: 500;
         box-sizing: border-box;

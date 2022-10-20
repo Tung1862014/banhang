@@ -82,13 +82,22 @@ function Detail() {
     }
 
     const center = cx('center-slider');
+    const centers = cx('center-sliders');
 
     var settings = {
-        className: center,
+        className: centers,
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 6,
+        slidesToScroll: 3,
+    };
+    var setting = {
+        className: center,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
         slidesToScroll: 3,
     };
 
@@ -480,6 +489,7 @@ function Detail() {
                     </div>
                 </div>
             </div>
+            {/* / */}
             <div className={cx('page-product__content')}>
                 <div className={cx('page-product__content--left')}>
                     <div className={cx('page-product__detail')}>
@@ -515,6 +525,100 @@ function Detail() {
                             <div className={cx('image-carousel_DBnDYq')}>
                                 <div className={cx('image-carousel__item-list-wrapper')}>
                                     <ul className={cx('image-carousel__item-list')}>
+                                        <Slider {...setting}>
+                                            {productValue !== ''
+                                                ? productValue.map((prodvalue, index) => (
+                                                      <li key={index} className={cx('image-carousel__item')}>
+                                                          <div className={cx('product-recommend-items__item-wrapper')}>
+                                                              <Link
+                                                                  data-sqe="link"
+                                                                  to={`/detail/product/nameid${prodvalue.SP_id}`}
+                                                                  onClick={() => handleChangeIdProduct()}
+                                                              >
+                                                                  <div className={cx('_3tGY4K')}>
+                                                                      <div className={cx('_27gjnh')}>
+                                                                          <div>
+                                                                              <div className={cx('_1OPdfl_34Bbgp')}>
+                                                                                  <img
+                                                                                      width="invalid-value"
+                                                                                      height="invalid-value"
+                                                                                      alt="Khô cá lóc Đồng Tháp đủ 3 nắng tự nhiên, ít mặn, dai thơm  ,đảm bảo vệ sinh Không dử dụng chất bảo quản"
+                                                                                      className={cx('_3DRMhT_2PWsS4')}
+                                                                                      src={prodvalue.SP_image || ''}
+                                                                                  />
+
+                                                                                  <div className={cx('_23y7qS')}>
+                                                                                      {prodvalue.SP_khuyenmai !== 0 ? (
+                                                                                          <div
+                                                                                              className={cx(
+                                                                                                  'VPfNgf_3Vf-cm_pKWQzh',
+                                                                                              )}
+                                                                                          >
+                                                                                              <span
+                                                                                                  className={cx(
+                                                                                                      'percent',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  {
+                                                                                                      prodvalue.SP_khuyenmai
+                                                                                                  }
+                                                                                                  %
+                                                                                              </span>
+                                                                                              <span
+                                                                                                  className={cx(
+                                                                                                      '_1dKOej',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  giảm
+                                                                                              </span>
+                                                                                          </div>
+                                                                                      ) : (
+                                                                                          ''
+                                                                                      )}
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                          <div className={cx('weFbbG')}>
+                                                                              <div className={cx('_3Xp1Jg')}>
+                                                                                  <div className={cx('_17eONp')}>
+                                                                                      <div
+                                                                                          className={cx(
+                                                                                              '_3KpaoK_2UGSVV',
+                                                                                          )}
+                                                                                      >
+                                                                                          {prodvalue.SP_ten}
+                                                                                      </div>
+                                                                                  </div>
+                                                                              </div>
+                                                                              <div className={cx('vMfGQW_2NzYpj')}>
+                                                                                  <div className={cx('_3NkBUm_rMbdeO')}>
+                                                                                      <span className={cx('_181cfk')}>
+                                                                                          ₫
+                                                                                      </span>
+                                                                                      <span className={cx('_2igTXp')}>
+                                                                                          {formatCash(
+                                                                                              prodvalue.SP_gia *
+                                                                                                  ((100 -
+                                                                                                      prodvalue.SP_khuyenmai) /
+                                                                                                      100),
+                                                                                          )}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div className={cx('_2J8hZZ_2For-u')}>
+                                                                                      Đã bán {prodvalue.SP_soluongban}
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </Link>
+                                                          </div>
+                                                      </li>
+                                                  ))
+                                                : ''}
+                                        </Slider>
+                                    </ul>
+                                    <ul className={cx('image-carousel__item-lists')}>
                                         <Slider {...settings}>
                                             {productValue !== ''
                                                 ? productValue.map((prodvalue, index) => (

@@ -24,6 +24,9 @@ const Shop = () => {
     const [chooseCategory, setChooseCategory] = useState('all');
     const [productValue, setProductValue] = useState('');
 
+    //
+    const [checkCategory, setCheckCategory] = useState(false);
+
     //console.log(shopValue, numProduct, evaluate, categoryValue);
     console.log(chooseCategory);
 
@@ -197,6 +200,19 @@ const Shop = () => {
         }
     };
 
+    //xu ly
+    const handleClickCategory = () => {
+        const clickCategory = document.getElementById('_2W5K6wsm-s');
+
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        } else {
+            clickCategory.style.display = 'block';
+            setCheckCategory(false);
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('shop-page__info')}>
@@ -306,6 +322,48 @@ const Shop = () => {
             </div>
             {/* / */}
             <div className={cx('shop-page__all-products-section')}>
+                <div className={cx('_2W5K6wsm')}>
+                    <FontAwesomeIcon
+                        className={cx('shop-svg-icon_3e8zgq')}
+                        icon={faBars}
+                        onClick={() => handleClickCategory()}
+                    />
+
+                    <div id="_2W5K6wsm-s" className={cx('_2W5K6wsm-s')}>
+                        <div className={cx('_3e8zgq')}>Danh Mục</div>
+                        <div>
+                            <div id="_3mieT7t" className={cx('_3mieT7t')} onClick={() => handleCategory('t', 'all')}>
+                                <svg
+                                    viewBox="0 0 4 7"
+                                    id="shop-svg-icon_3mieT7t"
+                                    className={cx('shop-svg-icon_3mieT7t')}
+                                >
+                                    <polygon points="4 3.5 0 0 0 7"></polygon>
+                                </svg>
+                                Sản Phẩm
+                            </div>
+                            {categoryValue !== ''
+                                ? categoryValue.map((category, index) => (
+                                      <div
+                                          key={index}
+                                          id={`_3mieT7${index}`}
+                                          className={cx(`_3mieT7${index}`)}
+                                          onClick={() => handleCategory(index, category.DM_id)}
+                                      >
+                                          <svg
+                                              viewBox="0 0 4 7"
+                                              id={`shop-svg-icon_3mieT7${index}`}
+                                              className={cx(`shop-svg-icon_3mieT7${index}`)}
+                                          >
+                                              <polygon points="4 3.5 0 0 0 7"></polygon>
+                                          </svg>
+                                          {category.DM_danhmuc}
+                                      </div>
+                                  ))
+                                : ''}
+                        </div>
+                    </div>
+                </div>
                 <div className={cx('_2W5K6w')}>
                     <div className={cx('_3e8zgq')}>
                         <FontAwesomeIcon className={cx('shop-svg-icon_3e8zgq')} icon={faBars} />

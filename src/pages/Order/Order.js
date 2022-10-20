@@ -1468,7 +1468,7 @@ function Order() {
                                                                               ).toFixed(3)}
                                                                     </div>
                                                                     <div className={cx('_4MGXB1')}>
-                                                                        {order.TTDH_soluong}
+                                                                        x{order.TTDH_soluong}
                                                                     </div>
                                                                     <div className={cx('_4MGXB1_8fgmps')}>
                                                                         ₫
