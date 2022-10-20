@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faAngleDown,
     faAngleUp,
+    faBars,
     faClipboardList,
     faIndustry,
     faMoneyCheck,
@@ -40,6 +41,8 @@ function Sidebar() {
     // };
 
     const [checkDownUp, setCheckDownUp] = useState(false);
+
+    const [checkCategory, setCheckCategory] = useState(false);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -92,6 +95,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -101,6 +105,8 @@ function Sidebar() {
         itemLink2Order.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategory2 = () => {
@@ -112,6 +118,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -121,6 +128,8 @@ function Sidebar() {
         itemLink2Order.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategoryOrder1 = () => {
@@ -132,6 +141,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -141,6 +151,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategoryOrder2 = () => {
@@ -152,6 +164,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -161,6 +174,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategory1Shop = () => {
@@ -172,6 +187,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'red';
@@ -181,6 +197,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategory1Statistical = () => {
@@ -192,6 +210,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'red';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -201,6 +220,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategory1Weight = () => {
@@ -212,6 +233,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -221,6 +243,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'red';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
     };
 
     const handleClickCategory1Evaluate = () => {
@@ -232,6 +256,7 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -241,13 +266,32 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'red';
+        clickCategory.style.display = 'none';
+        setCheckCategory(true);
+    };
+
+    const handleClickCategory = () => {
+        const clickCategory = document.getElementById('sidebar-container');
+
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        } else {
+            clickCategory.style.display = 'flex';
+            setCheckCategory(false);
+        }
     };
 
     return (
         <aside className={cx('wrapper')}>
             <div className={cx('app-container')}>
-                <div className={cx('sidebar-container')}>
-                    <div className={cx('sidebar-container')}>
+                <div className={cx('sidebar-containerx')}>
+                    <FontAwesomeIcon
+                        className={cx('sidebar-svg-icon_3e8zgq')}
+                        icon={faBars}
+                        onClick={() => handleClickCategory()}
+                    />
+                    <div id="sidebar-container" className={cx('sidebar-container')}>
                         <div className={cx('sidebar')}>
                             <ul className={cx('sidebar-menu')}>
                                 <li id="statistical" className={cx('sidebar-menu-box')}>
