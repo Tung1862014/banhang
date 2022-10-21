@@ -613,15 +613,11 @@
 
     .sidebar-svg-icon_3e8zgq {
         display: none;
-        position: fixed;
-        width: 25px;
-        height: 25px;
-        z-index: 11;
     }
 
     .sidebar-container {
         position: fixed;
-        z-index: 10;
+        z-index: 14;
         width: 225px;
         height: calc(100% - 56px);
         overflow-y: auto;

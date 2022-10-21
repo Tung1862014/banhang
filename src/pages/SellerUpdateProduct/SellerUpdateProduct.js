@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 
 function SellerUpdateProduct() {
     const [productUpdate, setProductUpdate] = useState('');
-    const [describeUpdate, setDescribeUpdate] = useState('');
+    //const [describeUpdate, setDescribeUpdate] = useState('');
     const [describeWeightUpdate, setDescribeWeightUpdate] = useState('');
     const [productCategoryUpdate, setProductCategoryUpdate] = useState('');
     const [image1Update, setImage1Update] = useState('');
@@ -67,9 +67,9 @@ function SellerUpdateProduct() {
                 SP_id: result,
             })
             .then((res) => {
-                // console.log(res.data.result[0]);
+                console.log(res.data.result[0]);
                 if (productUpdate === '') {
-                    setDescribeUpdate(res.data.result[0]);
+                    //setDescribeUpdate(res.data.result[0]);
                     setDescribeWeightUpdate(res.data.weight[0]);
                 }
             })
@@ -87,7 +87,7 @@ function SellerUpdateProduct() {
                 SP_id: result,
             })
             .then((res) => {
-                // console.log(res.data.result[0]);
+                console.log('image', res.data);
                 if (image1Update === '') {
                     setImage1Update(res.data.image1);
                     setImage2Update(res.data.image2);
@@ -657,7 +657,7 @@ function SellerUpdateProduct() {
                                 </select>
                             </div>
                         </div>
-                        <div className={cx('grid-detail')}>
+                        <div className={cx('grid-detail-image')}>
                             <div className={cx('edit-label')}>
                                 <div className={cx('mandatory')}>
                                     <span className={cx('mandatory-icon')}>*</span>

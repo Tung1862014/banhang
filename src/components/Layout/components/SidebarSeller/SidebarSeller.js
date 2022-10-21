@@ -42,29 +42,31 @@ function Sidebar() {
 
     const [checkDownUp, setCheckDownUp] = useState(false);
 
-    const [checkCategory, setCheckCategory] = useState(false);
+    const [checkCategory, setCheckCategory] = useState(true);
 
     useEffect(() => {
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(7);
-        if (resultId === '') {
-            handleClickCategory1Statistical();
-        } else if (resultId === '/setting') {
-            handleClickCategory1Shop();
-        } else if (resultId === '/product/@all') {
-            handleClickCategory1();
-        } else if (resultId === '/product/insert') {
-            handleClickCategory2();
-        } else if (resultId === '/bill/@all') {
-            handleClickCategoryOrder1();
-        } else if (resultId === '/bill/@canceloder') {
-            handleClickCategoryOrder2();
-        } else if (resultId === '/category') {
-            handleClickCategory1Weight();
-        } else if (resultId === '/shop/reviews/@all') {
-            handleClickCategory1Evaluate();
+        if (checkCategory === true) {
+            const pathId = window.location.pathname.toString();
+            const resultId = pathId.slice(7);
+            if (resultId === '') {
+                handleClickCategory1Statistical(checkCategory);
+            } else if (resultId === '/setting') {
+                handleClickCategory1Shop(checkCategory);
+            } else if (resultId === '/product/@all') {
+                handleClickCategory1(checkCategory);
+            } else if (resultId === '/product/insert') {
+                handleClickCategory2(checkCategory);
+            } else if (resultId === '/bill/@all') {
+                handleClickCategoryOrder1(checkCategory);
+            } else if (resultId === '/bill/@canceloder') {
+                handleClickCategoryOrder2(checkCategory);
+            } else if (resultId === '/category') {
+                handleClickCategory1Weight(checkCategory);
+            } else if (resultId === '/shop/reviews/@all') {
+                handleClickCategory1Evaluate(checkCategory);
+            }
         }
-    }, []);
+    }, [checkCategory]);
 
     const handleClickDownUpIcon = (idIcon1, idIcon2, sidebarIcon) => {
         const downIcon = document.getElementById(idIcon1);
@@ -86,7 +88,7 @@ function Sidebar() {
         handleClickDownUpIcon(idIcon1, idIcon2, sidebarIcon);
     };
 
-    const handleClickCategory1 = () => {
+    function handleClickCategory1(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -95,7 +97,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -105,11 +106,15 @@ function Sidebar() {
         itemLink2Order.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
 
-    const handleClickCategory2 = () => {
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
+
+    function handleClickCategory2(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -118,7 +123,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -128,11 +132,14 @@ function Sidebar() {
         itemLink2Order.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategoryOrder1 = () => {
+    function handleClickCategoryOrder1(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -141,7 +148,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -151,11 +157,14 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategoryOrder2 = () => {
+    function handleClickCategoryOrder2(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -164,7 +173,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -174,11 +182,14 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategory1Shop = () => {
+    function handleClickCategory1Shop(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -187,7 +198,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'red';
@@ -197,11 +207,14 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategory1Statistical = () => {
+    function handleClickCategory1Statistical(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -210,7 +223,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'red';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -220,11 +232,14 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategory1Weight = () => {
+    function handleClickCategory1Weight(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -233,7 +248,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -243,11 +257,14 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'red';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
-    const handleClickCategory1Evaluate = () => {
+    function handleClickCategory1Evaluate(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
@@ -256,7 +273,6 @@ function Sidebar() {
         const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
         const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-        const clickCategory = document.getElementById('sidebar-container');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
@@ -266,13 +282,17 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'red';
-        clickCategory.style.display = 'none';
-        setCheckCategory(true);
-    };
+        if (checkCategory.altKey === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
 
     const handleClickCategory = () => {
         const clickCategory = document.getElementById('sidebar-container');
-
+        console.log('checkCategory', checkCategory);
+        //console.log('clickCategory', clickCategory);
         if (checkCategory === false) {
             clickCategory.style.display = 'none';
             setCheckCategory(true);

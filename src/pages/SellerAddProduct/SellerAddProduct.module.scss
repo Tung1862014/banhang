@@ -1,327 +1,695 @@
-.product-edit__section {
-    padding: 32px 40px;
-    box-shadow: 0 0.2rem 0.4rem rgba(45, 44, 44, 0.09);
-    z-index: 0;
-}
-
-.product-err {
-    color: red;
-}
-
-//name product
-.grid {
-    display: flex;
-    flex-flow: row;
-    position: relative;
-    margin-top: 10px;
-}
-
-.edit-label {
-    display: flex;
-    align-items: center;
-    font-weight: 400;
-    padding-right: 24px;
-    position: relative;
-    min-height: 40px;
-    text-align: right;
-    color: #666;
-}
-
-.mandatory {
-    display: inline-block;
-    font-size: 14px;
-}
-.mandatory-icon {
-    margin-right: 3px;
-    vertical-align: middle;
-    color: red;
-}
-
-.edit-input {
-    flex-basis: 701px;
-    width: 701px;
-    max-width: 770px;
-}
-
-.shopee-input {
-    position: relative;
-    line-height: 22px;
-}
-
-.shopee-input__inner {
-    height: 40px;
-    padding: 0 12px;
-    position: relative;
-    display: inline-table;
-    width: 100%;
-    font-size: 14px;
-    background-color: #fff;
-    border-collapse: separate;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    outline: none;
-    transition: border 0.2s ease-in-out;
-}
-
-.shopee-input__input {
-    color: #333;
-    height: 38px;
-    font-size: 14px;
-    border-radius: 4px;
-    display: table-cell;
-    width: 100%;
-    padding: 0;
-    vertical-align: middle;
-    background-color: inherit;
-    border: 0;
-    outline: none;
-    box-sizing: border-box;
-    padding-left: 5px;
-}
-
-//image
-.shopee-upload_image {
-    display: flex;
-}
-.img-preview-setting-show {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    display: none;
-}
-
-.shopee-image-manager__upload__content {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    padding: 32px;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    cursor: pointer;
-    z-index: 10;
-}
-
-//chitiet
-//trongluong
-.grid-detail {
-    display: flex;
-    flex-flow: row;
-    position: relative;
-    margin-top: 30px;
-}
-.input-Weight {
-    padding: 11px 12px;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    outline: none;
-    transition: border 0.2s ease-in-out;
-    position: relative;
-    display: inline-table;
-    width: 300px;
-    font-size: 14px;
-    line-height: 16px;
-    color: #333;
-    cursor: pointer;
-    background-color: #fff;
-    border-collapse: separate;
-    border-spacing: 0;
-    box-sizing: border-box;
-}
-
-.edit-label-detail {
-    display: flex;
-    align-items: center;
-    font-weight: 400;
-    padding-right: 24px;
-    position: relative;
-    min-height: 40px;
-    text-align: right;
-    color: #666;
-    position: relative;
-    margin-left: 20px;
-}
-
-.edit-input-detail {
-    flex-basis: 300px;
-    width: 300px;
-    max-width: 770px;
-}
-
-.edit-input-detail-money-promotion {
-    flex-basis: 320px;
-    width: 320px;
-    max-width: 770px;
-}
-
-.shopee-input__prefix {
-    position: relative;
-    display: table-cell;
-    width: 1px;
-    height: 100%;
-    line-height: 0;
-    color: #999;
-    white-space: nowrap;
-    vertical-align: middle;
-}
-
-.shopee-input__prefix-split {
-    display: inline-block;
-    width: 1px;
-    height: calc(100% - 14px);
-    margin-left: 8px;
-    vertical-align: middle;
-    background: #eee;
-}
-
-//image detail
-.img-preview-setting-show-details {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    display: none;
-}
-
-.shopee-image-manager__upload__content-details {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    padding: 32px;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.img-preview-setting-show-details-two {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    display: none;
-}
-
-.shopee-image-manager__upload__content-details-two {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    padding: 32px;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.img-preview-setting-show-details-three {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    display: none;
-}
-
-.shopee-image-manager__upload__content-details-three {
-    width: 80px;
-    max-width: 80px;
-    min-height: 80px;
-    max-height: 80px;
-    margin: 0 16px 40px 0;
-    position: relative;
-    padding: 32px;
-    overflow: hidden;
-    background-color: #fafafa;
-    border: 1px dashed #d8d8d8;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-    cursor: pointer;
-    z-index: 10;
-}
-
-//button
-.btn-save-product {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-right: 30px;
-    background-color: #fafafa;
-    border-radius: 4px;
-    -webkit-transition: border-color 0.2s ease-in-out;
-    transition: border-color 0.2s ease-in-out;
-}
-.btn-save {
-    width: 100px;
-    height: 40px;
-    background-color: var(--primary);
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    .btn-save-text {
-        color: #fafafa;
+@media only screen and (max-width: 46.1875em) {
+    .warpper {
+        width: var(--default-layout-width-mobile);
+    }
+    .product-edit__section {
+        padding: 32px 5px;
+        box-shadow: 0 0.2rem 0.4rem rgba(45, 44, 44, 0.09);
+        z-index: 0;
     }
 
-    &:hover {
-        opacity: 0.9;
+    .product-err {
+        color: red;
+    }
+
+    //name product
+    .grid {
+        display: flex;
+        flex-flow: row;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    .edit-label {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        //padding-right: 24px;
+        position: relative;
+        min-height: 40px;
+        text-align: right;
+        color: #666;
+    }
+
+    .mandatory {
+        display: inline-block;
+        font-size: 14px;
+    }
+    .mandatory-icon {
+        vertical-align: middle;
+        color: red;
+    }
+
+    .edit-input {
+        //flex-basis: 200px;
+        width: 250px;
+        //max-width: 770px;
+        padding: 0px 5px;
+    }
+
+    .shopee-input {
+        position: relative;
+        line-height: 22px;
+    }
+
+    .shopee-input__inner {
+        height: 40px;
+        padding: 0 12px;
+        position: relative;
+        display: inline-table;
+        width: 100%;
+        font-size: 14px;
+        background-color: #fff;
+        border-collapse: separate;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        outline: none;
+        transition: border 0.2s ease-in-out;
+    }
+
+    .shopee-input__input {
+        color: #333;
+        height: 38px;
+        font-size: 14px;
+        border-radius: 4px;
+        display: table-cell;
+        width: 100%;
+        padding: 0;
+        vertical-align: middle;
+        background-color: inherit;
+        border: 0;
+        outline: none;
+        box-sizing: border-box;
+        padding-left: 5px;
+    }
+
+    //image
+    .shopee-upload_image {
+        display: flex;
+    }
+    .img-preview-setting-show {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .product-edit-form-item-content {
+        width: 380px;
+    }
+
+    //chitiet
+    //trongluong
+    .attribute-select-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 25px;
+    }
+    .grid-detail {
+        display: flex;
+        flex-direction: column;
+        //justify-content: center;
+        //align-items: center;
+        //flex-flow: row;
+        position: relative;
+        margin-top: 30px;
+        width: var(--grid-detail-width-mobile);
+    }
+
+    .grid-detail-image {
+        display: flex;
+        //flex-direction: column;
+        //justify-content: center;
+        //align-items: center;
+        flex-flow: row;
+        position: relative;
+        margin-top: 30px;
+        width: var(--grid-detail-width-mobile);
+    }
+    .input-Weight {
+        padding: 11px 12px;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        outline: none;
+        transition: border 0.2s ease-in-out;
+        position: relative;
+        display: inline-table;
+        width: 300px;
+        font-size: 14px;
+        line-height: 16px;
+        color: #333;
+        cursor: pointer;
+        background-color: #fff;
+        border-collapse: separate;
+        border-spacing: 0;
+        box-sizing: border-box;
+    }
+
+    .edit-label-detail {
+        display: flex;
+        //justify-content: flex-start;
+        align-items: center;
+        font-weight: 400;
+        //padding-right: 24px;
+        position: relative;
+        min-height: 40px;
+        text-align: right;
+        color: #666;
+        position: relative;
+        //margin-left: 20px;
+    }
+
+    .edit-input-detail {
+        //flex-basis: 300px;
+        width: 320px;
+        //max-width: 770px;
+    }
+
+    .edit-input-detail-money-promotion {
+        //flex-basis: 320px;
+        width: 320px;
+        //max-width: 770px;
+    }
+
+    .shopee-input__prefix {
+        position: relative;
+        display: table-cell;
+        width: 1px;
+        height: 100%;
+        line-height: 0;
+        color: #999;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .shopee-input__prefix-split {
+        display: inline-block;
+        width: 1px;
+        height: calc(100% - 14px);
+        margin-left: 8px;
+        vertical-align: middle;
+        background: #eee;
+    }
+
+    //image detail
+    .img-preview-setting-show-details {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .img-preview-setting-show-details-two {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details-two {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .img-preview-setting-show-details-three {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details-three {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    //button
+    .btn-save-product {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 30px;
+        background-color: #fafafa;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+    }
+    .btn-save {
+        width: 100px;
+        height: 40px;
+        background-color: var(--primary);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .btn-save-text {
+            color: #fafafa;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+}
+
+@media only screen and (min-width: 46.1875em) {
+    .product-edit__section {
+        padding: 32px 40px;
+        box-shadow: 0 0.2rem 0.4rem rgba(45, 44, 44, 0.09);
+        z-index: 0;
+    }
+
+    .product-err {
+        color: red;
+    }
+
+    //name product
+    .grid {
+        display: flex;
+        flex-flow: row;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    .edit-label {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        padding-right: 24px;
+        position: relative;
+        min-height: 40px;
+        text-align: right;
+        color: #666;
+    }
+
+    .mandatory {
+        display: inline-block;
+        font-size: 14px;
+    }
+    .mandatory-icon {
+        margin-right: 3px;
+        vertical-align: middle;
+        color: red;
+    }
+
+    .edit-input {
+        flex-basis: 701px;
+        width: 701px;
+        max-width: 770px;
+    }
+
+    .shopee-input {
+        position: relative;
+        line-height: 22px;
+    }
+
+    .shopee-input__inner {
+        height: 40px;
+        padding: 0 12px;
+        position: relative;
+        display: inline-table;
+        width: 100%;
+        font-size: 14px;
+        background-color: #fff;
+        border-collapse: separate;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        outline: none;
+        transition: border 0.2s ease-in-out;
+    }
+
+    .shopee-input__input {
+        color: #333;
+        height: 38px;
+        font-size: 14px;
+        border-radius: 4px;
+        display: table-cell;
+        width: 100%;
+        padding: 0;
+        vertical-align: middle;
+        background-color: inherit;
+        border: 0;
+        outline: none;
+        box-sizing: border-box;
+        padding-left: 5px;
+    }
+
+    //image
+    .shopee-upload_image {
+        display: flex;
+    }
+    .img-preview-setting-show {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    //chitiet
+    //trongluong
+    .grid-detail {
+        display: flex;
+        flex-flow: row;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    .grid-detail-image {
+        display: flex;
+        flex-flow: row;
+        position: relative;
+        margin-top: 30px;
+    }
+    .input-Weight {
+        padding: 11px 12px;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        outline: none;
+        transition: border 0.2s ease-in-out;
+        position: relative;
+        display: inline-table;
+        width: 300px;
+        font-size: 14px;
+        line-height: 16px;
+        color: #333;
+        cursor: pointer;
+        background-color: #fff;
+        border-collapse: separate;
+        border-spacing: 0;
+        box-sizing: border-box;
+    }
+
+    .edit-label-detail {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        padding-right: 24px;
+        position: relative;
+        min-height: 40px;
+        text-align: right;
+        color: #666;
+        position: relative;
+        margin-left: 20px;
+    }
+
+    .edit-input-detail {
+        flex-basis: 300px;
+        width: 300px;
+        max-width: 770px;
+    }
+
+    .edit-input-detail-money-promotion {
+        flex-basis: 320px;
+        width: 320px;
+        max-width: 770px;
+    }
+
+    .shopee-input__prefix {
+        position: relative;
+        display: table-cell;
+        width: 1px;
+        height: 100%;
+        line-height: 0;
+        color: #999;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .shopee-input__prefix-split {
+        display: inline-block;
+        width: 1px;
+        height: calc(100% - 14px);
+        margin-left: 8px;
+        vertical-align: middle;
+        background: #eee;
+    }
+
+    //image detail
+    .img-preview-setting-show-details {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .img-preview-setting-show-details-two {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details-two {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .img-preview-setting-show-details-three {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        display: none;
+    }
+
+    .shopee-image-manager__upload__content-details-three {
+        width: 80px;
+        max-width: 80px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 0 16px 40px 0;
+        position: relative;
+        padding: 32px;
+        overflow: hidden;
+        background-color: #fafafa;
+        border: 1px dashed #d8d8d8;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    //button
+    .btn-save-product {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: 30px;
+        background-color: #fafafa;
+        border-radius: 4px;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+    }
+    .btn-save {
+        width: 100px;
+        height: 40px;
+        background-color: var(--primary);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .btn-save-text {
+            color: #fafafa;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
     }
 }

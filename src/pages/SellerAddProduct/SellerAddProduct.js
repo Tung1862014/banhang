@@ -606,7 +606,7 @@ function SellerAddProduct() {
                                         </select>
                                     </div>
                                 </div>
-                                <div className={cx('grid-detail')}>
+                                <div className={cx('grid-detail-image')}>
                                     <div className={cx('edit-label')}>
                                         <div className={cx('mandatory')}>
                                             <span className={cx('mandatory-icon')}>*</span>
