@@ -191,7 +191,7 @@ function SellerDetailBill() {
     }
 
     return (
-        <>
+        <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
                 <div className={cx('delete-modal__box')}>
                     <div className={cx('delete-modal__content')}>
@@ -584,7 +584,7 @@ function SellerDetailBill() {
                       </div>
                   ))
                 : ''}
-        </>
+        </div>
     );
 }
 
