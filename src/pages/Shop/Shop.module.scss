@@ -273,12 +273,30 @@
         z-index: 10;
     }
 
+    .shop-svg-icon_3e8zgq {
+        stroke: #000;
+        overflow: hidden;
+        width: 25px;
+        height: 25px;
+        fill: currentColor;
+        position: fixed;
+
+        margin-right: 10px;
+        z-index: 12;
+    }
     ._2W5K6wsm-s {
         display: none;
         overflow: hidden;
+        position: fixed;
+        z-index: 10;
+        width: 200px;
+        max-width: 300px;
         color: rgba(0, 0, 0, 0.8);
         background-color: #fff;
-        margin-top: 15px;
+        //margin-top: 15px;
+        top: 440px;
+        border: 1px solid rgb(208, 207, 207);
+        padding-bottom: 15px;
     }
     ._2W5K6w {
         //flex: 0 0 200px;
@@ -300,17 +318,9 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         margin-bottom: 10px;
         display: flex;
+        justify-content: space-between;
+        padding: 5px 15px;
         align-items: center;
-    }
-
-    .shop-svg-icon_3e8zgq {
-        stroke: #000;
-        overflow: hidden;
-        width: 25px;
-        height: 25px;
-        fill: currentColor;
-        position: fixed;
-        margin-right: 10px;
     }
 
     ._3mieT7t {
@@ -328,6 +338,7 @@
         text-decoration: none;
         display: block;
         color: #ee4d2d;
+
         //color: rgba(0, 0, 0, 0.87);
     }
 
@@ -870,8 +881,8 @@
     }
 
     .select-with-status__holder-select-with-status__box-shadow {
-        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.02);
-        height: 34px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.4);
+        height: 50px;
         line-height: 34px;
         border-radius: 2px;
         border: 0;
@@ -888,7 +899,7 @@
         text-align: left;
         cursor: pointer;
         align-items: center;
-        display: block;
+        display: flex;
         font-size: 1.5rem;
         line-height: 34px;
         padding: 0px 0px 0px 10px;
@@ -911,7 +922,7 @@
     .select-with-status__dropdown-shop-modal__transition-enter-done {
         box-shadow: 0 0.3125rem 10px 0 rgba(0, 0, 0, 0.05);
         margin: 0;
-        padding: 10px 0px;
+        padding: 30px 0px;
         border: 0;
         visibility: visible;
         position: absolute;
@@ -920,7 +931,7 @@
         background: #fff;
         max-height: 16.875rem;
         z-index: 10000;
-        width: 370px;
+        width: var(--default-layout-width-mobile);
         display: none;
         flex-direction: column;
         justify-content: center;
@@ -964,6 +975,9 @@
         flex: 0 1 auto;
         flex-direction: row;
         flex-wrap: wrap;
+        //justify-content: center;
+        //align-items: center;
+        padding: 0px 15px;
         margin-right: -5px;
         margin-left: -5px;
     }

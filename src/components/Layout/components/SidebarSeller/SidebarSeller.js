@@ -22,6 +22,7 @@ import {
     faReceipt,
     faStar,
     faStore,
+    faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -107,7 +108,7 @@ function Sidebar() {
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
 
-        if (checkCategory.altKey === false) {
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -132,7 +133,8 @@ function Sidebar() {
         itemLink2Order.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -157,7 +159,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -182,7 +185,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -207,7 +211,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -232,7 +237,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -257,7 +263,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'red';
         itemLink1evaluate.style.color = 'var(--text-color)';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -282,7 +289,8 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'red';
-        if (checkCategory.altKey === false) {
+
+        if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
             clickCategory.style.display = 'none';
             setCheckCategory(true);
@@ -302,6 +310,22 @@ function Sidebar() {
         }
     };
 
+    const handleClickCloseCategory = () => {
+        const clickCategory = document.getElementById('sidebar-container');
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    };
+
+    // const handleClickCloseCategoryWhenClick = () => {
+    //     if (checkCategory === false) {
+    //         const clickCategory = document.getElementById('sidebar-container');
+    //         clickCategory.style.display = 'none';
+    //         setCheckCategory(true);
+    //     }
+    // };
+
     return (
         <aside className={cx('wrapper')}>
             <div className={cx('app-container')}>
@@ -313,6 +337,9 @@ function Sidebar() {
                     />
                     <div id="sidebar-container" className={cx('sidebar-container')}>
                         <div className={cx('sidebar')}>
+                            <div className={cx('sidebar-icon_close')}>
+                                <FontAwesomeIcon icon={faXmark} onClick={() => handleClickCloseCategory()} />
+                            </div>
                             <ul className={cx('sidebar-menu')}>
                                 <li id="statistical" className={cx('sidebar-menu-box')}>
                                     <div
@@ -350,7 +377,7 @@ function Sidebar() {
                                                 to="/seller"
                                                 id="sidebar-submenu-item-link1-statistical"
                                                 className={cx('sidebar-submenu-item-link1-statistical')}
-                                                onClick={handleClickCategory1Statistical}
+                                                onClick={() => handleClickCategory1Statistical(checkCategory)}
                                             >
                                                 <span>Dữ Liệu</span>
                                             </Link>
@@ -393,7 +420,7 @@ function Sidebar() {
                                                 to="/seller/setting"
                                                 id="sidebar-submenu-item-link1-shop"
                                                 className={cx('sidebar-submenu-item-link1-shop')}
-                                                onClick={handleClickCategory1Shop}
+                                                onClick={() => handleClickCategory1Shop(checkCategory)}
                                             >
                                                 <span>Hồ Sơ Gian Hàng</span>
                                             </Link>
@@ -436,7 +463,7 @@ function Sidebar() {
                                                 to="/seller/product/@all"
                                                 id="sidebar-submenu-item-link1"
                                                 className={cx('sidebar-submenu-item-link1')}
-                                                onClick={handleClickCategory1}
+                                                onClick={() => handleClickCategory1(checkCategory)}
                                             >
                                                 <span>Tất Cả Sản Phẩm</span>
                                             </Link>
@@ -446,7 +473,7 @@ function Sidebar() {
                                                 to="/seller/product/insert"
                                                 id="sidebar-submenu-item-link2"
                                                 className={cx('sidebar-submenu-item-link2')}
-                                                onClick={handleClickCategory2}
+                                                onClick={() => handleClickCategory2(checkCategory)}
                                             >
                                                 <span>Thêm Sản Phẩm</span>
                                             </Link>
@@ -492,7 +519,7 @@ function Sidebar() {
                                                 to="/seller/bill/@all"
                                                 id="sidebar-submenu-item-link1-order"
                                                 className={cx('sidebar-submenu-item-link1-order')}
-                                                onClick={handleClickCategoryOrder1}
+                                                onClick={() => handleClickCategoryOrder1(checkCategory)}
                                             >
                                                 <span>Tất Cả</span>
                                             </Link>
@@ -502,7 +529,7 @@ function Sidebar() {
                                                 to="/seller/bill/@canceloder"
                                                 id="sidebar-submenu-item-link2-order"
                                                 className={cx('sidebar-submenu-item-link2-order')}
-                                                onClick={handleClickCategoryOrder2}
+                                                onClick={() => handleClickCategoryOrder2(checkCategory)}
                                             >
                                                 <span>Hủy Đơn</span>
                                             </Link>
@@ -545,7 +572,7 @@ function Sidebar() {
                                                 to="/seller/category"
                                                 id="sidebar-submenu-item-link1-weight"
                                                 className={cx('sidebar-submenu-item-link1-weight')}
-                                                onClick={handleClickCategory1Weight}
+                                                onClick={() => handleClickCategory1Weight(checkCategory)}
                                             >
                                                 <span>Danh Mục</span>
                                             </Link>
@@ -588,7 +615,7 @@ function Sidebar() {
                                                 to="/seller/shop/reviews/@all"
                                                 id="sidebar-submenu-item-link1-evaluate"
                                                 className={cx('sidebar-submenu-item-link1-evaluate')}
-                                                onClick={handleClickCategory1Evaluate}
+                                                onClick={() => handleClickCategory1Evaluate(checkCategory)}
                                             >
                                                 <span>Đánh giá</span>
                                             </Link>

@@ -1,4 +1,4 @@
-import { faBars, faStar, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faStar, faStore, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
@@ -142,6 +142,13 @@ const Shop = () => {
         shortprice.style.color = '#222';
     };
 
+    //onclick close over
+    const handleClickCloseOver = () => {
+        const price = document.getElementById('select-with-status__dropdown-shop-modal__transition-enter-done');
+
+        price.style.display = 'none';
+    };
+
     const handleSelling = () => {
         const selling = document.getElementById('shop-sort-by-options__option1');
         const newproduct = document.getElementById('shop-sort-by-options__option2');
@@ -172,7 +179,7 @@ const Shop = () => {
         const newproduct = document.getElementById('shop-sort-by-options__option2');
         const price = document.getElementById('select-with-status__placeholder');
 
-        console.log(index);
+        console.log('index', index);
         category.style.display = 'inline-block';
         title.style.color = '#ee4d2d';
         selling.style.color = 'black';
@@ -210,6 +217,15 @@ const Shop = () => {
         } else {
             clickCategory.style.display = 'block';
             setCheckCategory(false);
+        }
+    };
+
+    const handleClickCloseCategory = () => {
+        const clickCategory = document.getElementById('_2W5K6wsm-s');
+
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
         }
     };
 
@@ -330,7 +346,12 @@ const Shop = () => {
                     />
 
                     <div id="_2W5K6wsm-s" className={cx('_2W5K6wsm-s')}>
-                        <div className={cx('_3e8zgq')}>Danh Mục</div>
+                        <div className={cx('_3e8zgq')}>
+                            Danh Mục{' '}
+                            <span className={cx('_3e8zgq-icon')}>
+                                <FontAwesomeIcon icon={faXmark} onClick={() => handleClickCloseCategory()} />
+                            </span>
+                        </div>
                         <div>
                             <div id="_3mieT7t" className={cx('_3mieT7t')} onClick={() => handleCategory('t', 'all')}>
                                 <svg
@@ -452,6 +473,7 @@ const Shop = () => {
                                                         )}
                                                         onMouseOver={handleMouseOverTall}
                                                         onMouseOut={handleMouseOutTall}
+                                                        onClick={() => handleClickCloseOver()}
                                                     >
                                                         Giá: Thấp đến Cao
                                                     </div>
@@ -462,6 +484,7 @@ const Shop = () => {
                                                         )}
                                                         onMouseOver={handleMouseOverShort}
                                                         onMouseOut={handleMouseOutShort}
+                                                        onClick={() => handleClickCloseOver()}
                                                     >
                                                         Giá: Cao đến Thấp
                                                     </div>
