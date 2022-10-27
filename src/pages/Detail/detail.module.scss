@@ -1097,6 +1097,16 @@
         font-size: 1.4rem;
         text-align: center;
     }
+
+    .product_unavailable {
+        width: 100%;
+        color: #ee4d2d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-top: 10px;
+    }
 }
 
 @media only screen and (min-width: 46.1875em) {
@@ -2184,5 +2194,14 @@
         color: #fff;
         font-size: 1.4rem;
         text-align: center;
+    }
+    .product_unavailable {
+        width: 100%;
+        color: #ee4d2d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-top: 10px;
     }
 }

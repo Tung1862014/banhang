@@ -5,7 +5,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerUpdateProduct.module.scss';
 
@@ -267,15 +267,21 @@ function SellerUpdateProduct() {
                     .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
                         SP_id: resultId,
                         NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                        SP_ten: nameProduct,
-                        SP_soluong: number,
-                        SP_gia: price,
-                        SP_khuyenmai: promotion,
-                        DM_id: category,
-                        SP_trongluong: weight,
-                        SP_mota: describeProduct,
+                        SP_ten: nameProduct !== '' ? nameProduct : '',
+                        SP_soluong: number !== '' ? number : '',
+                        SP_gia: price !== '' ? price : '',
+                        SP_khuyenmai: promotion !== '' ? promotion : '',
+                        DM_id: category !== '' ? category : '',
+                        SP_trongluong: weight !== '' ? Number(weight) : '',
+                        SP_mota: describeProduct !== '' ? describeProduct : '',
                     })
                     .then((res) => {
+                        if (res.data.update === true) {
+                            toast.success('Cập nhật sản phẩm thành công', {
+                                position: toast.POSITION.TOP_CENTER,
+                                className: `${cx('toast-message')}`,
+                            });
+                        }
                         console.log('data', res.data);
                     })
                     .catch((err) => {
@@ -302,6 +308,12 @@ function SellerUpdateProduct() {
                     },
                 })
                     .then((res) => {
+                        if (res.data.update === true) {
+                            toast.success('Cập nhật sản phẩm thành công', {
+                                position: toast.POSITION.TOP_CENTER,
+                                className: `${cx('toast-message')}`,
+                            });
+                        }
                         console.log('data image', res.data);
                     })
                     .catch((err) => {});

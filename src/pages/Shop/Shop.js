@@ -207,6 +207,41 @@ const Shop = () => {
         }
     };
 
+    const handleCategorys = (index, DM) => {
+        const category = document.getElementById(`shop-svg-icon_3mieT7${index}s`);
+        const title = document.getElementById(`_3mieT7${index}s`);
+        const selling = document.getElementById('shop-sort-by-options__option1');
+        const newproduct = document.getElementById('shop-sort-by-options__option2');
+        const price = document.getElementById('select-with-status__placeholder');
+
+        console.log('index', index);
+        category.style.display = 'inline-block';
+        title.style.color = '#ee4d2d';
+        selling.style.color = 'black';
+        selling.style.backgroundColor = '#fff';
+        newproduct.style.color = 'black';
+        newproduct.style.backgroundColor = '#fff';
+        price.innerHTML = 'Giá';
+        price.style.color = 'black';
+        setPriceSortValue('gia');
+        setSortValue('all');
+        setChooseCategory(DM);
+        for (let i = 0; i < categoryValue.length; i++) {
+            if (index !== 't') {
+                const categoryIdProduct = document.getElementById(`shop-svg-icon_3mieT7ts`);
+                const titleId = document.getElementById(`_3mieT7ts`);
+                categoryIdProduct.style.display = 'none';
+                titleId.style.color = 'black';
+            }
+            if (i !== index) {
+                const categoryId = document.getElementById(`shop-svg-icon_3mieT7${i}s`);
+                const titleId = document.getElementById(`_3mieT7${i}s`);
+                categoryId.style.display = 'none';
+                titleId.style.color = 'black';
+            }
+        }
+    };
+
     //xu ly
     const handleClickCategory = () => {
         const clickCategory = document.getElementById('_2W5K6wsm-s');
@@ -353,10 +388,10 @@ const Shop = () => {
                             </span>
                         </div>
                         <div>
-                            <div id="_3mieT7t" className={cx('_3mieT7t')} onClick={() => handleCategory('t', 'all')}>
+                            <div id="_3mieT7ts" className={cx('_3mieT7t')} onClick={() => handleCategorys('t', 'all')}>
                                 <svg
                                     viewBox="0 0 4 7"
-                                    id="shop-svg-icon_3mieT7t"
+                                    id="shop-svg-icon_3mieT7ts"
                                     className={cx('shop-svg-icon_3mieT7t')}
                                 >
                                     <polygon points="4 3.5 0 0 0 7"></polygon>
@@ -367,13 +402,13 @@ const Shop = () => {
                                 ? categoryValue.map((category, index) => (
                                       <div
                                           key={index}
-                                          id={`_3mieT7${index}`}
+                                          id={`_3mieT7${index}s`}
                                           className={cx(`_3mieT7${index}`)}
-                                          onClick={() => handleCategory(index, category.DM_id)}
+                                          onClick={() => handleCategorys(index, category.DM_id)}
                                       >
                                           <svg
                                               viewBox="0 0 4 7"
-                                              id={`shop-svg-icon_3mieT7${index}`}
+                                              id={`shop-svg-icon_3mieT7${index}s`}
                                               className={cx(`shop-svg-icon_3mieT7${index}`)}
                                           >
                                               <polygon points="4 3.5 0 0 0 7"></polygon>

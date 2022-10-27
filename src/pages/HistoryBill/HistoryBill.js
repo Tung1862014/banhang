@@ -1020,18 +1020,22 @@ function HistoryBill() {
                                                                           </div>
                                                                       </div>
                                                                   </a>
-                                                                  <button
-                                                                      className={cx('shop-button-outline')}
-                                                                      onClick={() =>
-                                                                          handleTakeIdProduct(order.product.SP_id)
-                                                                      }
-                                                                  >
-                                                                      <span>
-                                                                          {handleButtonEvaluate(order.product.SP_id)
-                                                                              ? 'Cập nhật'
-                                                                              : 'Đánh giá'}
-                                                                      </span>
-                                                                  </button>
+                                                                  {order.product.SP_trangthai !== 2 ? (
+                                                                      <button
+                                                                          className={cx('shop-button-outline')}
+                                                                          onClick={() =>
+                                                                              handleTakeIdProduct(order.product.SP_id)
+                                                                          }
+                                                                      >
+                                                                          <span>
+                                                                              {handleButtonEvaluate(order.product.SP_id)
+                                                                                  ? 'Cập nhật'
+                                                                                  : 'Đánh giá'}
+                                                                          </span>
+                                                                      </button>
+                                                                  ) : (
+                                                                      ''
+                                                                  )}
                                                               </div>
                                                               {evaluateValue !== ''
                                                                   ? evaluateValue.map((evalua, index) =>

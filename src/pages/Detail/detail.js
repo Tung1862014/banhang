@@ -217,302 +217,321 @@ function Detail() {
                     </div>
                 </div>
             )}
-            <div className={cx('product-briefing_2qM0Iy')}>
-                <div className={cx('jexb7x')}>
-                    <div className={cx('flex-column')}>
-                        <div className={cx('_1KdnTb')}>
-                            <div className={cx('_2fbO7Q')}>
-                                <div className={cx('_1OPdfl')}>
-                                    <div className={cx('_3uzKon_2PWsS4')}>
-                                        <img
-                                            id="_3uzKon_2PWsS4-img"
-                                            className={cx('_3uzKon_2PWsS4-img')}
-                                            src={product.SP_image}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('xK9doz')}>
-                            <div className={cx('jgvTec')}>
-                                <div className={cx('k1LVKF')}>
+            {product !== undefined && product.SP_trangthai !== 2 ? (
+                <div className={cx('product-briefing_2qM0Iy')}>
+                    <div className={cx('jexb7x')}>
+                        <div className={cx('flex-column')}>
+                            <div className={cx('_1KdnTb')}>
+                                <div className={cx('_2fbO7Q')}>
                                     <div className={cx('_1OPdfl')}>
-                                        <div className={cx('X2N8Bt_2PWsS4')}>
+                                        <div className={cx('_3uzKon_2PWsS4')}>
                                             <img
-                                                id={`X2N8Bt_2PWsS4-img-00`}
-                                                className={cx('X2N8Bt_2PWsS4-img')}
+                                                id="_3uzKon_2PWsS4-img"
+                                                className={cx('_3uzKon_2PWsS4-img')}
                                                 src={product.SP_image}
                                                 alt=""
-                                                onMouseOver={() => handleMouseOverImage('main')}
-                                                onMouseOut={() => handleMouseOutImage('main')}
-                                                onClick={() => handleClickImage('main')}
                                             />
                                         </div>
                                     </div>
-                                    <div className=""></div>
                                 </div>
                             </div>
-                            {product !== ''
-                                ? product.image.map((image, index) => (
-                                      <div key={index} className={cx('jgvTec')}>
-                                          <div className={cx('k1LVKF')}>
-                                              <div className={cx('_1OPdfl')}>
-                                                  <div className={cx('X2N8Bt_2PWsS4')}>
-                                                      <img
-                                                          id={`X2N8Bt_2PWsS4-img-${index}`}
-                                                          className={cx('X2N8Bt_2PWsS4-img')}
-                                                          src={image.HA_image}
-                                                          alt=""
-                                                          onMouseOver={() => handleMouseOverImage(index)}
-                                                          onMouseOut={() => handleMouseOutImage(index)}
-                                                          onClick={() => handleClickImage(index)}
-                                                      />
+                            <div className={cx('xK9doz')}>
+                                <div className={cx('jgvTec')}>
+                                    <div className={cx('k1LVKF')}>
+                                        <div className={cx('_1OPdfl')}>
+                                            <div className={cx('X2N8Bt_2PWsS4')}>
+                                                <img
+                                                    id={`X2N8Bt_2PWsS4-img-00`}
+                                                    className={cx('X2N8Bt_2PWsS4-img')}
+                                                    src={product.SP_image}
+                                                    alt=""
+                                                    onMouseOver={() => handleMouseOverImage('main')}
+                                                    onMouseOut={() => handleMouseOutImage('main')}
+                                                    onClick={() => handleClickImage('main')}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className=""></div>
+                                    </div>
+                                </div>
+                                {product !== ''
+                                    ? product.image.map((image, index) => (
+                                          <div key={index} className={cx('jgvTec')}>
+                                              <div className={cx('k1LVKF')}>
+                                                  <div className={cx('_1OPdfl')}>
+                                                      <div className={cx('X2N8Bt_2PWsS4')}>
+                                                          <img
+                                                              id={`X2N8Bt_2PWsS4-img-${index}`}
+                                                              className={cx('X2N8Bt_2PWsS4-img')}
+                                                              src={image.HA_image}
+                                                              alt=""
+                                                              onMouseOver={() => handleMouseOverImage(index)}
+                                                              onMouseOut={() => handleMouseOutImage(index)}
+                                                              onClick={() => handleClickImage(index)}
+                                                          />
+                                                      </div>
                                                   </div>
+                                                  <div className=""></div>
                                               </div>
-                                              <div className=""></div>
                                           </div>
-                                      </div>
-                                  ))
-                                : ''}
+                                      ))
+                                    : ''}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={cx('flex-auto-eTjGTe')}>
-                    <div className={cx('flex-auto-flex-column_1Kkkb')}>
-                        <div className={cx('_2rQP1z')}>
-                            <span>{product.SP_ten}</span>
-                        </div>
-                        <div className={cx('flex_3tkSsu')}>
-                            <div className={cx('flex_3T9OoL')}>
-                                <div className={cx('_3y5XOB_14izon')}>{evaluationStar || 0}</div>
-                                <div className={cx('_1HyS82')}>
-                                    <div className={cx('shopee-rating-stars')}>
-                                        <div className={cx('shopee-rating-stars__stars')}>
-                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
-                                                <div className={cx('shopee-rating-stars__lit')}>
-                                                    <FontAwesomeIcon
-                                                        className={cx(
-                                                            evaluationStar === 5 ||
-                                                                evaluationStar === 4 ||
-                                                                evaluationStar === 3 ||
-                                                                evaluationStar === 2 ||
-                                                                evaluationStar === 1
-                                                                ? 'shopee-svg-icon'
-                                                                : '',
-                                                        )}
-                                                        icon={faStar}
-                                                    />
+                    <div className={cx('flex-auto-eTjGTe')}>
+                        <div className={cx('flex-auto-flex-column_1Kkkb')}>
+                            <div className={cx('_2rQP1z')}>
+                                <span>{product.SP_ten}</span>
+                            </div>
+                            <div className={cx('flex_3tkSsu')}>
+                                <div className={cx('flex_3T9OoL')}>
+                                    <div className={cx('_3y5XOB_14izon')}>{evaluationStar || 0}</div>
+                                    <div className={cx('_1HyS82')}>
+                                        <div className={cx('shopee-rating-stars')}>
+                                            <div className={cx('shopee-rating-stars__stars')}>
+                                                <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                    <div className={cx('shopee-rating-stars__lit')}>
+                                                        <FontAwesomeIcon
+                                                            className={cx(
+                                                                evaluationStar === 5 ||
+                                                                    evaluationStar === 4 ||
+                                                                    evaluationStar === 3 ||
+                                                                    evaluationStar === 2 ||
+                                                                    evaluationStar === 1
+                                                                    ? 'shopee-svg-icon'
+                                                                    : '',
+                                                            )}
+                                                            icon={faStar}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
-                                                <div className={cx('shopee-rating-stars__lit')}>
-                                                    <FontAwesomeIcon
-                                                        className={cx(
-                                                            evaluationStar === 5 ||
-                                                                evaluationStar === 4 ||
-                                                                evaluationStar === 3 ||
-                                                                evaluationStar === 2
-                                                                ? 'shopee-svg-icon'
-                                                                : '',
-                                                        )}
-                                                        icon={faStar}
-                                                    />
+                                                <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                    <div className={cx('shopee-rating-stars__lit')}>
+                                                        <FontAwesomeIcon
+                                                            className={cx(
+                                                                evaluationStar === 5 ||
+                                                                    evaluationStar === 4 ||
+                                                                    evaluationStar === 3 ||
+                                                                    evaluationStar === 2
+                                                                    ? 'shopee-svg-icon'
+                                                                    : '',
+                                                            )}
+                                                            icon={faStar}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
-                                                <div className={cx('shopee-rating-stars__lit')}>
-                                                    <FontAwesomeIcon
-                                                        className={cx(
-                                                            evaluationStar === 5 ||
-                                                                evaluationStar === 4 ||
-                                                                evaluationStar === 3
-                                                                ? 'shopee-svg-icon'
-                                                                : '',
-                                                        )}
-                                                        icon={faStar}
-                                                    />
+                                                <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                    <div className={cx('shopee-rating-stars__lit')}>
+                                                        <FontAwesomeIcon
+                                                            className={cx(
+                                                                evaluationStar === 5 ||
+                                                                    evaluationStar === 4 ||
+                                                                    evaluationStar === 3
+                                                                    ? 'shopee-svg-icon'
+                                                                    : '',
+                                                            )}
+                                                            icon={faStar}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
-                                                <div className={cx('shopee-rating-stars__lit')}>
-                                                    <FontAwesomeIcon
-                                                        className={cx(
-                                                            evaluationStar === 5 || evaluationStar === 4
-                                                                ? 'shopee-svg-icon'
-                                                                : '',
-                                                        )}
-                                                        icon={faStar}
-                                                    />
+                                                <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                    <div className={cx('shopee-rating-stars__lit')}>
+                                                        <FontAwesomeIcon
+                                                            className={cx(
+                                                                evaluationStar === 5 || evaluationStar === 4
+                                                                    ? 'shopee-svg-icon'
+                                                                    : '',
+                                                            )}
+                                                            icon={faStar}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className={cx('shopee-rating-stars__star-wrapper')}>
-                                                <div className={cx('shopee-rating-stars__lit')}>
-                                                    <FontAwesomeIcon
-                                                        className={cx(evaluationStar === 5 ? 'shopee-svg-icon' : '')}
-                                                        icon={faStar}
-                                                    />
+                                                <div className={cx('shopee-rating-stars__star-wrapper')}>
+                                                    <div className={cx('shopee-rating-stars__lit')}>
+                                                        <FontAwesomeIcon
+                                                            className={cx(
+                                                                evaluationStar === 5 ? 'shopee-svg-icon' : '',
+                                                            )}
+                                                            icon={faStar}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div className={cx('flex_3T9OoL')}>
+                                    <div className={cx('_3y5XOB')}>{evaluationNum || 0}</div>
+                                    <div className={cx('_1HyS82')}>đánh giá</div>
+                                </div>
+                                <div className={cx('flex_3EOMd6')}>
+                                    <div className={cx('HmRxgn')}>{product.SP_soluongban || 0}</div>
+                                    <div className={cx('qBnNRR')}>đã bán</div>
+                                </div>
                             </div>
-                            <div className={cx('flex_3T9OoL')}>
-                                <div className={cx('_3y5XOB')}>{evaluationNum || 0}</div>
-                                <div className={cx('_1HyS82')}>đánh giá</div>
-                            </div>
-                            <div className={cx('flex_3EOMd6')}>
-                                <div className={cx('HmRxgn')}>{product.SP_soluongban || 0}</div>
-                                <div className={cx('qBnNRR')}>đã bán</div>
-                            </div>
-                        </div>
-                        <div className={cx('flex-column-price')}>
-                            <div className={cx('flex-column_38g6so')}>
-                                <div className={cx('items-center-price')}>
-                                    <div className={cx('items-center-price_34BHKe')}>
-                                        {product.SP_khuyenmai !== 0 ? (
-                                            <div className={cx('_2yjfFH')}>
-                                                ₫{product !== '' && formatCash(product.SP_gia)}
-                                            </div>
-                                        ) : (
-                                            ''
-                                        )}
-
-                                        <div className={cx('items-center-price')}>
-                                            {product.SP_gia !== undefined && product.SP_gia.toString().length > 6 ? (
-                                                <div className={cx('')}>
-                                                    {formatCash(product.SP_gia * ((100 - product.SP_khuyenmai) / 100))}
-                                                </div>
-                                            ) : product.SP_khuyenmai !== 0 ? (
-                                                <div className={cx('_2Shl1j')}>
-                                                    ₫
-                                                    {Math.round(
-                                                        formatCash(
-                                                            product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
-                                                        ),
-                                                    ).toFixed(3)}
+                            <div className={cx('flex-column-price')}>
+                                <div className={cx('flex-column_38g6so')}>
+                                    <div className={cx('items-center-price')}>
+                                        <div className={cx('items-center-price_34BHKe')}>
+                                            {product.SP_khuyenmai !== 0 ? (
+                                                <div className={cx('_2yjfFH')}>
+                                                    ₫{product !== '' && formatCash(product.SP_gia)}
                                                 </div>
                                             ) : (
-                                                <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
+                                                ''
                                             )}
 
-                                            <div className={cx('_3PlIlX')}>{product.SP_khuyenmai}% giảm</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('flex_VrhRS0_1RCFQu')}>
-                            <div className={cx('flex-column-number')}>
-                                <div className={cx('flex-column-number_283ldj')}>
-                                    <div className={cx('_34CHXV')}>Số lượng</div>
-                                    <div className={cx('flex-column-number')}>
-                                        <div>
-                                            <div className={cx('_1RTqoK-input-quantity')}>
-                                                <button className={cx('_1MGNbJ')} onClick={handleMinusNumber}>
-                                                    <FontAwesomeIcon icon={faMinus} />
-                                                </button>
-                                                <input
-                                                    className={cx('_1MGNbJ_1eS5m1')}
-                                                    type="text"
-                                                    value={numberValue}
-                                                    onChange={(e) => setNumberValue(e.target.value)}
-                                                />
-                                                <button className={cx('_1MGNbJ')} onClick={handlePlusNumber}>
-                                                    <FontAwesomeIcon icon={faPlus} />
-                                                </button>
+                                            <div className={cx('items-center-price')}>
+                                                {product.SP_gia !== undefined &&
+                                                product.SP_gia.toString().length > 6 ? (
+                                                    <div className={cx('')}>
+                                                        {formatCash(
+                                                            product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
+                                                        )}
+                                                    </div>
+                                                ) : product.SP_khuyenmai !== 0 ? (
+                                                    <div className={cx('_2Shl1j')}>
+                                                        ₫
+                                                        {Math.round(
+                                                            formatCash(
+                                                                product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
+                                                            ),
+                                                        ).toFixed(3)}
+                                                    </div>
+                                                ) : (
+                                                    <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
+                                                )}
+
+                                                <div className={cx('_3PlIlX')}>{product.SP_khuyenmai}% giảm</div>
                                             </div>
                                         </div>
-                                        <div>
-                                            {product !== '' && product.SP_soluong - product.SP_soluongban} sản phẩm có
-                                            sẵn
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('flex_VrhRS0_1RCFQu')}>
+                                <div className={cx('flex-column-number')}>
+                                    <div className={cx('flex-column-number_283ldj')}>
+                                        <div className={cx('_34CHXV')}>Số lượng</div>
+                                        <div className={cx('flex-column-number')}>
+                                            <div>
+                                                <div className={cx('_1RTqoK-input-quantity')}>
+                                                    <button className={cx('_1MGNbJ')} onClick={handleMinusNumber}>
+                                                        <FontAwesomeIcon icon={faMinus} />
+                                                    </button>
+                                                    <input
+                                                        className={cx('_1MGNbJ_1eS5m1')}
+                                                        type="text"
+                                                        value={numberValue}
+                                                        onChange={(e) => setNumberValue(e.target.value)}
+                                                    />
+                                                    <button className={cx('_1MGNbJ')} onClick={handlePlusNumber}>
+                                                        <FontAwesomeIcon icon={faPlus} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                {product !== '' && product.SP_soluong - product.SP_soluongban} sản phẩm
+                                                có sẵn
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <div className={cx('_3pcTIL')}>
-                                <div className={cx('_37uIr4')}>
-                                    <button className={cx('btn-tinted_3f7_YI_1TpzVc')} onClick={handleAddToCart}>
-                                        <FontAwesomeIcon
-                                            className={cx('shopee-svg-icon_1FtIAE-icon-add-to-cart')}
-                                            icon={faCartPlus}
-                                        />
-                                        <span>Thêm vào giỏ hàng</span>
-                                    </button>
-                                    {/* <button type="button" className={cx('btn-solid-primary_3f7_YI')}>
+                            <div>
+                                <div className={cx('_3pcTIL')}>
+                                    <div className={cx('_37uIr4')}>
+                                        <button className={cx('btn-tinted_3f7_YI_1TpzVc')} onClick={handleAddToCart}>
+                                            <FontAwesomeIcon
+                                                className={cx('shopee-svg-icon_1FtIAE-icon-add-to-cart')}
+                                                icon={faCartPlus}
+                                            />
+                                            <span>Thêm vào giỏ hàng</span>
+                                        </button>
+                                        {/* <button type="button" className={cx('btn-solid-primary_3f7_YI')}>
                                         Mua ngay
                                     </button> */}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className={cx('_1YY3XU')}>
-                            <Link className={cx('_2O_CHG')} to={`/shop/name=${product.NB_id}`}>
-                                <div className={cx('avatar_3q1-OA')}>
-                                    <img
-                                        className={cx('avatar__img')}
-                                        alt=""
-                                        src={
-                                            product !== ''
-                                                ? product.shop[0].MTS_logo
-                                                : process.env.REACT_APP_URL_NODEJS_IMAGE + '/default-ui-image.webp'
-                                        }
-                                    />
-                                </div>
-                            </Link>
-                            <div className={cx('zYQ1eS')}>
-                                <div className={cx('_3LoNDM')}>
-                                    {product !== '' ? product.shop[0].MTS_ten : 'Tên Cửa Hàng'}
-                                </div>
-                                <div className={cx('_2xDNx7')}>
-                                    <Link
-                                        className={cx('btn-light--link_1CglVM')}
-                                        to={product !== '' ? `/shop/name=${product.NB_id}` : ''}
-                                    >
-                                        <svg
-                                            enableBackground="new 0 0 15 15"
-                                            viewBox="0 0 15 15"
-                                            x="0"
-                                            y="0"
-                                            strokeWidth="0"
-                                            className={cx('svg-icon_1rcInn')}
+                            <div className={cx('_1YY3XU')}>
+                                <Link className={cx('_2O_CHG')} to={`/shop/name=${product.NB_id}`}>
+                                    <div className={cx('avatar_3q1-OA')}>
+                                        <img
+                                            className={cx('avatar__img')}
+                                            alt=""
+                                            src={
+                                                product !== ''
+                                                    ? product.shop[0].MTS_logo
+                                                    : process.env.REACT_APP_URL_NODEJS_IMAGE + '/default-ui-image.webp'
+                                            }
+                                        />
+                                    </div>
+                                </Link>
+                                <div className={cx('zYQ1eS')}>
+                                    <div className={cx('_3LoNDM')}>
+                                        {product !== '' ? product.shop[0].MTS_ten : 'Tên Cửa Hàng'}
+                                    </div>
+                                    <div className={cx('_2xDNx7')}>
+                                        <Link
+                                            className={cx('btn-light--link_1CglVM')}
+                                            to={product !== '' ? `/shop/name=${product.NB_id}` : ''}
                                         >
-                                            <path d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z"></path>
-                                        </svg>
-                                        Xem Gian Hàng
-                                    </Link>
+                                            <svg
+                                                enableBackground="new 0 0 15 15"
+                                                viewBox="0 0 15 15"
+                                                x="0"
+                                                y="0"
+                                                strokeWidth="0"
+                                                className={cx('svg-icon_1rcInn')}
+                                            >
+                                                <path d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z"></path>
+                                            </svg>
+                                            Xem Gian Hàng
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <div className={cx('product_unavailable')}>Sản phẩm không khả dụng</div>
+            )}
             {/* / */}
             <div className={cx('page-product__content')}>
                 <div className={cx('page-product__content--left')}>
-                    <div className={cx('page-product__detail')}>
-                        <div className={cx('_3ICPhk')}>
-                            <div className={cx('_2N2_VN')}>MÔ TẢ SẢN PHẨM</div>
-                            <div className={cx('_2jz573')}>
-                                <div className={cx('_1MqcWX')}>
-                                    <div
-                                        className={cx('_2jrvqA')}
-                                        dangerouslySetInnerHTML={{ __html: product !== '' ? `${product.SP_mota}` : '' }}
-                                    ></div>
+                    {product.SP_trangthai !== 2 ? (
+                        <div className={cx('page-product__detail')}>
+                            <div className={cx('_3ICPhk')}>
+                                <div className={cx('_2N2_VN')}>MÔ TẢ SẢN PHẨM</div>
+                                <div className={cx('_2jz573')}>
+                                    <div className={cx('_1MqcWX')}>
+                                        <div
+                                            className={cx('_2jrvqA')}
+                                            dangerouslySetInnerHTML={{
+                                                __html: product !== '' ? `${product.SP_mota}` : '',
+                                            }}
+                                        ></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className={cx('product-ratings')}>
-                            <div className={cx('product-ratings__header')}>ĐÁNH GIÁ SẢN PHẨM</div>
-                            <div className={cx('product-ratings__list')}>
-                                {evaluation !== '' ? <StarDetailPage data={evaluation} /> : ''}
+                    ) : (
+                        ''
+                    )}
+                    {product.SP_trangthai !== 2 ? (
+                        <div>
+                            <div className={cx('product-ratings')}>
+                                <div className={cx('product-ratings__header')}>ĐÁNH GIÁ SẢN PHẨM</div>
+                                <div className={cx('product-ratings__list')}>
+                                    {evaluation !== '' ? <StarDetailPage data={evaluation} /> : ''}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        ''
+                    )}
                     <div className={cx('recommendation-by-carousel')}>
                         <div>
                             <div className={cx('detail-header-section_2Pk9pv--simple')}>
@@ -720,6 +739,7 @@ function Detail() {
                     {/* / */}
                 </div>
             </div>
+
             <ToastContainer />
         </div>
     );

@@ -48,6 +48,10 @@ function Order() {
             .then((res) => {
                 //console.log('data', res.data);
                 setUserVaule(res.data.results);
+                if (res.data.results.ND_diachiGH !== undefined && res.data.results.ND_chitiet !== undefined) {
+                    setAddressVaule(res.data.results.ND_chitiet);
+                    setCtyVaule(res.data.results.ND_diachiGH);
+                }
             })
             .catch((err) => {
                 console.log('loi');
@@ -280,9 +284,18 @@ function Order() {
     };
 
     const handleSubmitFormAddress = () => {
-        //console.log('cty', ctyVaule);
-        //console.log('address', addressVaule);
-        if (ctyVaule === '' && addressVaule === '') {
+        console.log('cty', ctyVaule);
+        console.log('address', typeof addressVaule);
+        if (ctyVaule === '') {
+            toast.warning('Địa chỉ không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (addressVaule === '') {
+            toast.warning('Địa chỉ cụ thể không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
         } else {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/order/update/address`, {
@@ -291,9 +304,17 @@ function Order() {
                     ND_chitiet: addressVaule,
                 })
                 .then((res) => {
+                    console.log(res.data);
                     if (res.data.update) {
                         const address = document.getElementById('ReDGyJ');
                         address.style.display = 'none';
+
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                    } else {
+                        toast.warning('Địa chỉ không được bỏ trống!', {
+                            position: toast.POSITION.TOP_CENTER,
+                            className: `${cx('toast-message')}`,
+                        });
                     }
                 })
                 .catch((err) => {
@@ -1239,164 +1260,161 @@ function Order() {
                     <div className={cx('nwCEcV')}>
                         <div className={cx('w2EqJ')}>
                             <div className={cx('_84tOMz')}>Cập nhật địa chỉ</div>
-                            <form>
-                                <div className={cx('lHCVqO')}>
-                                    <div className={cx('iWBSHn')}>
-                                        <div className={cx('_0fHnjY')}>
-                                            <div className={cx('XjHkd3')}>
-                                                <div className={cx('T1souv')}>
-                                                    <div className={cx('u1wAmL')}>
-                                                        <div className={cx('vEFwLK_6DXlE9')}>
-                                                            Phường/Xã, Quận/Huyện,Tỉnh/ Thành phố
-                                                        </div>
-                                                        <input
-                                                            id="ChI2Nx_92k3pl"
-                                                            className={cx('ChI2Nx_92k3pl')}
-                                                            type="text"
-                                                            placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
-                                                            defaultValue={
-                                                                ctyVaule === '' &&
-                                                                userVaule !== '' &&
-                                                                userVaule.ND_diachiGH !== undefined
-                                                                    ? userVaule.ND_diachiGH
-                                                                    : ctyVaule
-                                                            }
-                                                            onChange={(e) => setCtyVaule(e.target.value)}
-                                                            onFocus={() => handleOpenFormIcon()}
-                                                        />
-                                                        <FontAwesomeIcon
-                                                            id="Izrgn0"
-                                                            className={cx('Izrgn0')}
-                                                            icon={faSortDown}
-                                                            onClick={() => handleOpenFormIcon()}
-                                                        />
-                                                        <FontAwesomeIcon
-                                                            id="Izrgn1"
-                                                            className={cx('Izrgn1')}
-                                                            icon={faSortUp}
-                                                            onClick={() => handleCloseFormIcon()}
-                                                        />
+                            {/* <form> */}
+                            <div className={cx('lHCVqO')}>
+                                <div className={cx('iWBSHn')}>
+                                    <div className={cx('_0fHnjY')}>
+                                        <div className={cx('XjHkd3')}>
+                                            <div className={cx('T1souv')}>
+                                                <div className={cx('u1wAmL')}>
+                                                    <div className={cx('vEFwLK_6DXlE9')}>
+                                                        Phường/Xã, Quận/Huyện,Tỉnh/ Thành phố
                                                     </div>
-                                                </div>
-                                                <div id="H8sVZh" className={cx('H8sVZh')}>
-                                                    <div className={cx('qtcuwq')}>
-                                                        <div
-                                                            id="_1E8NDO1"
-                                                            className={cx('_1E8NDO1')}
-                                                            onClick={() => handleClickCity()}
-                                                        >
-                                                            Tỉnh/Thành phố
-                                                        </div>
-                                                        <div
-                                                            id="_1E8NDO2"
-                                                            className={cx('_1E8NDO2')}
-                                                            onClick={() => ctyVaule !== '' && handleClickDistrict()}
-                                                        >
-                                                            Quận/Huyện
-                                                        </div>
-                                                        <div
-                                                            id="_1E8NDO3"
-                                                            className={cx('_1E8NDO3')}
-                                                            onClick={() =>
-                                                                ctyVaule !== '' &&
-                                                                ctyVaule.split(',')[1] !== undefined &&
-                                                                handleClickWard()
-                                                            }
-                                                        >
-                                                            Phường/ Xã
-                                                        </div>
-                                                    </div>
-                                                    <div id="_0Eu0W2_LqeTPG" className={cx('_0Eu0W2_LqeTPG')}></div>
-                                                    <div id="aox-Gc1" className={cx('aox-Gc1')}>
-                                                        {cityValue !== ''
-                                                            ? cityValue.map((city, index) => (
-                                                                  <div
-                                                                      key={index}
-                                                                      className={cx('Pcd7He')}
-                                                                      onClick={() =>
-                                                                          handleClickDistrict(
-                                                                              city.ProvinceID,
-                                                                              city.ProvinceName,
-                                                                          )
-                                                                      }
-                                                                  >
-                                                                      {city.ProvinceName}
-                                                                  </div>
-                                                              ))
-                                                            : ''}
-                                                    </div>
-                                                    <div id="aox-Gc2" className={cx('aox-Gc2')}>
-                                                        {districtValue !== ''
-                                                            ? districtValue.map((district, index) => (
-                                                                  <div
-                                                                      key={index}
-                                                                      className={cx('Pcd7He')}
-                                                                      onClick={() =>
-                                                                          handleClickWard(
-                                                                              district.DistrictID,
-                                                                              district.DistrictName,
-                                                                          )
-                                                                      }
-                                                                  >
-                                                                      {district.DistrictName}
-                                                                  </div>
-                                                              ))
-                                                            : ''}
-                                                    </div>
-                                                    <div id="aox-Gc3" className={cx('aox-Gc3')}>
-                                                        {wardValue !== ''
-                                                            ? wardValue.map((ward, index) => (
-                                                                  <div
-                                                                      key={index}
-                                                                      className={cx('Pcd7He')}
-                                                                      onClick={() => handleCloseFormIcon(ward.WardName)}
-                                                                  >
-                                                                      {ward.WardName}
-                                                                  </div>
-                                                              ))
-                                                            : ''}
-                                                    </div>
+                                                    <input
+                                                        id="ChI2Nx_92k3pl"
+                                                        className={cx('ChI2Nx_92k3pl')}
+                                                        type="text"
+                                                        placeholder="Xã An Hóa, Huyện Châu Thành, Bến Tre  "
+                                                        defaultValue={
+                                                            ctyVaule === '' &&
+                                                            userVaule !== '' &&
+                                                            userVaule.ND_diachiGH !== undefined
+                                                                ? userVaule.ND_diachiGH
+                                                                : ctyVaule
+                                                        }
+                                                        onChange={(e) => setCtyVaule(e.target.value)}
+                                                        onFocus={() => handleOpenFormIcon()}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        id="Izrgn0"
+                                                        className={cx('Izrgn0')}
+                                                        icon={faSortDown}
+                                                        onClick={() => handleOpenFormIcon()}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        id="Izrgn1"
+                                                        className={cx('Izrgn1')}
+                                                        icon={faSortUp}
+                                                        onClick={() => handleCloseFormIcon()}
+                                                    />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className={cx('_0fHnjY')}>
-                                            <div className={cx('SnzDoF')}>
-                                                <div className={cx('QbqEj_tyikTg_RYXN7V')}>
-                                                    <div className={cx('M9JCAS')}>
-                                                        <div className={cx('oaCSZH_bG1pWU')}>Địa chỉ cụ thể</div>
-                                                        <textarea
-                                                            className={cx('gRsrLD')}
-                                                            placeholder="Địa chỉ cụ thể"
-                                                            defaultValue={
-                                                                userVaule !== '' && userVaule.ND_chitiet !== ''
-                                                                    ? userVaule.ND_chitiet
-                                                                    : ''
-                                                            }
-                                                            onChange={(e) => setAddressVaule(e.target.value)}
-                                                        />
+                                            <div id="H8sVZh" className={cx('H8sVZh')}>
+                                                <div className={cx('qtcuwq')}>
+                                                    <div
+                                                        id="_1E8NDO1"
+                                                        className={cx('_1E8NDO1')}
+                                                        onClick={() => handleClickCity()}
+                                                    >
+                                                        Tỉnh/Thành phố
                                                     </div>
+                                                    <div
+                                                        id="_1E8NDO2"
+                                                        className={cx('_1E8NDO2')}
+                                                        onClick={() => ctyVaule !== '' && handleClickDistrict()}
+                                                    >
+                                                        Quận/Huyện
+                                                    </div>
+                                                    <div
+                                                        id="_1E8NDO3"
+                                                        className={cx('_1E8NDO3')}
+                                                        onClick={() =>
+                                                            ctyVaule !== '' &&
+                                                            ctyVaule.split(',')[1] !== undefined &&
+                                                            handleClickWard()
+                                                        }
+                                                    >
+                                                        Phường/ Xã
+                                                    </div>
+                                                </div>
+                                                <div id="_0Eu0W2_LqeTPG" className={cx('_0Eu0W2_LqeTPG')}></div>
+                                                <div id="aox-Gc1" className={cx('aox-Gc1')}>
+                                                    {cityValue !== ''
+                                                        ? cityValue.map((city, index) => (
+                                                              <div
+                                                                  key={index}
+                                                                  className={cx('Pcd7He')}
+                                                                  onClick={() =>
+                                                                      handleClickDistrict(
+                                                                          city.ProvinceID,
+                                                                          city.ProvinceName,
+                                                                      )
+                                                                  }
+                                                              >
+                                                                  {city.ProvinceName}
+                                                              </div>
+                                                          ))
+                                                        : ''}
+                                                </div>
+                                                <div id="aox-Gc2" className={cx('aox-Gc2')}>
+                                                    {districtValue !== ''
+                                                        ? districtValue.map((district, index) => (
+                                                              <div
+                                                                  key={index}
+                                                                  className={cx('Pcd7He')}
+                                                                  onClick={() =>
+                                                                      handleClickWard(
+                                                                          district.DistrictID,
+                                                                          district.DistrictName,
+                                                                      )
+                                                                  }
+                                                              >
+                                                                  {district.DistrictName}
+                                                              </div>
+                                                          ))
+                                                        : ''}
+                                                </div>
+                                                <div id="aox-Gc3" className={cx('aox-Gc3')}>
+                                                    {wardValue !== ''
+                                                        ? wardValue.map((ward, index) => (
+                                                              <div
+                                                                  key={index}
+                                                                  className={cx('Pcd7He')}
+                                                                  onClick={() => handleCloseFormIcon(ward.WardName)}
+                                                              >
+                                                                  {ward.WardName}
+                                                              </div>
+                                                          ))
+                                                        : ''}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* / */}
-                                    <div className={cx('GixP1t')}>
-                                        <button
-                                            className={cx('HtW4DS_x4AEET')}
-                                            onClick={() => handleShowFormAddress('back')}
-                                        >
-                                            Trở Lại
-                                        </button>
-                                        <button
-                                            className={cx('HtW4DS_IJ1jvV')}
-                                            onClick={() => handleSubmitFormAddress()}
-                                        >
-                                            Hoàn thành
-                                        </button>
+                                    <div className={cx('_0fHnjY')}>
+                                        <div className={cx('SnzDoF')}>
+                                            <div className={cx('QbqEj_tyikTg_RYXN7V')}>
+                                                <div className={cx('M9JCAS')}>
+                                                    <div className={cx('oaCSZH_bG1pWU')}>Địa chỉ cụ thể</div>
+                                                    <textarea
+                                                        className={cx('gRsrLD')}
+                                                        placeholder="Địa chỉ cụ thể"
+                                                        defaultValue={
+                                                            userVaule !== '' && userVaule.ND_chitiet !== ''
+                                                                ? userVaule.ND_chitiet
+                                                                : ''
+                                                        }
+                                                        onChange={(e) => setAddressVaule(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+
+                                {/* / */}
+                                <div className={cx('GixP1t')}>
+                                    <button
+                                        className={cx('HtW4DS_x4AEET')}
+                                        onClick={() => handleShowFormAddress('back')}
+                                    >
+                                        Trở Lại
+                                    </button>
+                                    <button className={cx('HtW4DS_IJ1jvV')} onClick={() => handleSubmitFormAddress()}>
+                                        Hoàn thành
+                                    </button>
+                                </div>
+                            </div>
+                            {/* </form> */}
                         </div>
                     </div>
                 </div>

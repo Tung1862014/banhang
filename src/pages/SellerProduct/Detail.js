@@ -52,7 +52,7 @@ function Detail({ currentItems, clickPageCheck }) {
                 });
         }
         setCheckDelete(false);
-        window.open('http://localhost:3000/seller/product', '_self', 1);
+        window.open('http://localhost:3000/seller/product/@all', '_self', 1);
     }
 
     const handleDelete = () => {
