@@ -292,7 +292,7 @@ function SellerDetailBill() {
                                       </div>{' '}
                                       <div className={cx('body-detail')}>
                                           <div>
-                                              {info.product[0].ND_hoten}, {info.product[0].ND_sdt}
+                                              {info.product[0].ND_hoten}, {'0' + info.product[0].ND_sdt.toString()}
                                           </div>{' '}
                                           <div className={cx('ship-address')}>
                                               {info.DH_diachi}
@@ -429,17 +429,38 @@ function SellerDetailBill() {
                                                                   >
                                                                       {pro.SP_ten}
                                                                   </div>{' '}
-                                                                  <div className={cx('product-meta')}>
+                                                                  {/* <div className={cx('product-meta')}>
                                                                       <div>Phân loại:&nbsp;10 viên</div>{' '}
-                                                                  </div>
+                                                                  </div> */}
                                                               </div>
                                                           </div>{' '}
                                                           <div className={cx('price-detail')}>
-                                                              {formatCash(pro.SP_gia)}
+                                                              {formatCash(
+                                                                  pro.SP_gia * ((100 - pro.SP_khuyenmai) / 100),
+                                                              )}
                                                           </div>
                                                           <div className={cx('qty-detail')}>{pro.TTDH_soluong}</div>{' '}
                                                           <div className={cx('subtotal-detail')}>
-                                                              {formatCash(pro.SP_gia * pro.TTDH_soluong)}
+                                                              {pro.SP_gia !== undefined &&
+                                                              pro.SP_gia.toString().length > 6
+                                                                  ? formatCash(
+                                                                        pro.SP_gia *
+                                                                            ((100 - pro.SP_khuyenmai) / 100) *
+                                                                            pro.TTDH_soluong,
+                                                                    )
+                                                                  : formatCash(
+                                                                        Number(
+                                                                            Math.round(
+                                                                                formatCash(
+                                                                                    pro.SP_gia *
+                                                                                        ((100 - pro.SP_khuyenmai) /
+                                                                                            100),
+                                                                                ),
+                                                                            )
+                                                                                .toFixed(3)
+                                                                                .replace('.', ''),
+                                                                        ) * pro.TTDH_soluong,
+                                                                    )}
                                                           </div>
                                                       </div>
                                                   </div>
@@ -534,12 +555,17 @@ function SellerDetailBill() {
                                                       </div>{' '}
                                                       <div className={cx('income-item-subtotal')}>
                                                           <div className={cx('income-value')}>
-                                                              ₫{formatCash(info.DH_tongtien) || 0}
+                                                              ₫
+                                                              {info.DH_loaithanhtoan !== 2
+                                                                  ? formatCash(
+                                                                        info.DH_tongtien + info.DH_phivanchuyen,
+                                                                    ) || 0
+                                                                  : '0'}
                                                           </div>
                                                       </div>{' '}
                                                       <div className={cx('income-item-income-subtotal')}>
                                                           <div className={cx('income-value-big-total')}>
-                                                              ₫{formatCash(info.DH_tongtien + info.DH_tongtien)}
+                                                              ₫{formatCash(info.DH_tongtien)}
                                                           </div>
                                                       </div>
                                                   </div>

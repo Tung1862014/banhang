@@ -269,7 +269,7 @@ function Header() {
                 // handle success
                 console.log('data', res.data);
                 if (seller) {
-                    if (res.data.account && res.data.pass) {
+                    if (res.data.account && res.data.pass && res.data.status !== 0) {
                         RemoveCookie('seller');
                         SetCookie('seller', JSON.stringify(res.data.result));
                         //alert('Đăng nhập thành công');
@@ -298,9 +298,17 @@ function Header() {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });
+                    } else if (res.data.status === 0) {
+                        //alert('Mật khẩu không đúng');
+                        //setLoading(false);
+                        // console.log('pass', res.data.pass);
+                        toast.error('Tài khoản của bạn đã bị khóa', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-message')}`,
+                        });
                     }
                 } else {
-                    if (res.data.account && res.data.pass) {
+                    if (res.data.account && res.data.pass && res.data.status !== 0) {
                         RemoveCookie('usrin');
                         SetCookie('usrin', JSON.stringify(res.data.result));
                         //alert('Đăng nhập thành công');
@@ -312,7 +320,7 @@ function Header() {
                         toast.success('Đăng nhập thành công', {
                             position: toast.POSITION.TOP_RIGHT,
                         });
-                        window.open(`${process.env.REACT_APP_URL_FRONTEND}`, '_self', 1);
+                        //window.open(`${process.env.REACT_APP_URL_FRONTEND}`, '_self', 1);
                     } else if (!res.data.account) {
                         //alert('Tài khoản không tồn tại');
                         //const lastname = `${cx('toast-message')}`;
@@ -327,6 +335,14 @@ function Header() {
                         //setLoading(false);
                         // console.log('pass', res.data.pass);
                         toast.error('Mật khẩu không đúng', {
+                            position: toast.POSITION.TOP_RIGHT,
+                            className: `${cx('toast-message')}`,
+                        });
+                    } else if (res.data.status === 0) {
+                        //alert('Mật khẩu không đúng');
+                        //setLoading(false);
+                        // console.log('pass', res.data.pass);
+                        toast.error('Tài khoản của bạn đã bị khóa', {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });
@@ -447,7 +463,7 @@ function Header() {
             <header className={cx('wrapper')}>
                 <div>
                     <div className={cx('inner')}>
-                        <div className={cx('logo')}>
+                        <Link to={'/'} className={cx('logo')}>
                             <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
                             {/* <iframe
                                 className={cx('video-logo')}
@@ -460,7 +476,7 @@ function Header() {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe> */}
-                        </div>
+                        </Link>
 
                         <div className={cx('home-page-zytl')}>
                             <Link to="/" className={cx('home-page-zytlt1')}>

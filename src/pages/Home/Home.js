@@ -137,102 +137,106 @@ function Home() {
     const [product, setProduct] = useState('');
     const [clickSuggestions, setClickSuggestions] = useState('');
     //console.log(product.length);
-    //const [orderValue, setOrderValue] = useState('');
-    //const [billId, setBillId] = useState('');
+    const [orderValue, setOrderValue] = useState('');
+    const [billId, setBillId] = useState('');
 
     // const siginList = useSelector((state) => state.numberProduct.list);
-    //console.log('billId: ', billId);
-    // useEffect(() => {
-    //     axios
-    //         .get(
-    //             `${process.env.REACT_APP_URL_NODEJS}/historybill/cart/show/all?ND_id=${
-    //                 JSON.parse(GetCookie('usrin')).ND_id
-    //             }&DH_trangthai=all`,
-    //         )
-    //         .then((res) => {
-    //             console.log('data', res.data);
-    //             setOrderValue(res.data.results);
-    //         })
-    //         .catch((err) => {
-    //             console.log('loi');
-    //         });
-    // }, []);
+    // console.log('billId: ', billId);
+    useEffect(() => {
+        if (GetCookie('usrin') !== undefined) {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/historybill/cart/show/all?ND_id=${
+                        JSON.parse(GetCookie('usrin')).ND_id
+                    }&DH_trangthai=all`,
+                )
+                .then((res) => {
+                    console.log('data', res.data);
+                    setOrderValue(res.data.results);
+                })
+                .catch((err) => {
+                    console.log('loi');
+                });
+        }
+    }, []);
 
-    // useEffect(() => {
-    //     let sellerArr = [];
-    //     let billIdValue = [];
+    useEffect(() => {
+        if (GetCookie('usrin') !== undefined) {
+            let sellerArr = [];
+            let billIdValue = [];
 
-    //     for (let i = 0; i < orderValue.length; i++) {
-    //         if (!sellerArr.includes(orderValue[i].NB_id)) {
-    //             sellerArr.push(orderValue[i].NB_id);
-    //             billIdValue.push(orderValue[i].DH_id);
-    //         }
-    //     }
+            for (let i = 0; i < orderValue.length; i++) {
+                if (!sellerArr.includes(orderValue[i].NB_id)) {
+                    sellerArr.push(orderValue[i].NB_id);
+                    billIdValue.push(orderValue[i].DH_id);
+                }
+            }
 
-    //     if (sellerArr.length > 0) {
-    //         setBillId((prev) => {
-    //             const newSeller = [...prev, billIdValue];
-    //             return newSeller[0];
-    //         });
-    //     }
-    // }, [orderValue]);
-    // //take status bill do update
-    // useEffect(() => {
-    //     if (billId !== '') {
-    //         for (let i = 0; i < billId.length; i++) {
-    //             console.log('id bill', billId[i]);
-    //             axios
-    //                 .get(
-    //                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail?order_code=${billId[i]}`,
-    //                     {
-    //                         headers: {
-    //                             Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-    //                         },
-    //                     },
-    //                 )
-    //                 .then((res) => {
-    //                     console.log('data status', res.data.data.status);
+            if (sellerArr.length > 0) {
+                setBillId((prev) => {
+                    const newSeller = [...prev, billIdValue];
+                    return newSeller[0];
+                });
+            }
+        }
+    }, [orderValue]);
+    //take status bill do update
+    useEffect(() => {
+        if (billId !== '' && GetCookie('usrin') !== undefined) {
+            for (let i = 0; i < billId.length; i++) {
+                console.log('id bill', billId[i]);
+                axios
+                    .get(
+                        `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail?order_code=${billId[i]}`,
+                        {
+                            headers: {
+                                Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            },
+                        },
+                    )
+                    .then((res) => {
+                        console.log('data status', res.data.data.status);
 
-    //                     if (res.data.data.status === 'picked') {
-    //                         let status = '3';
-    //                         console.log('id bill', billId[i]);
-    //                         axios
-    //                             .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/auto/bill`, {
-    //                                 NB_id: JSON.parse(GetCookie('seller')).ND_id,
-    //                                 DH_id: billId[i],
-    //                                 DH_trangthai: status,
-    //                             })
+                        if (res.data.data.status === 'picked') {
+                            let status = '3';
+                            console.log('id bill', billId[i]);
+                            axios
+                                .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/auto/bill`, {
+                                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                                    DH_id: billId[i],
+                                    DH_trangthai: status,
+                                })
 
-    //                             .then((res) => {
-    //                                 console.log(res.data);
-    //                             })
-    //                             .catch(() => {
-    //                                 console.log('loi khong the show bill');
-    //                             });
-    //                     } else if (res.data.data.status === 'delivered') {
-    //                         let status = '4';
-    //                         console.log('id bill', billId[i]);
-    //                         axios
-    //                             .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/auto/bill`, {
-    //                                 NB_id: JSON.parse(GetCookie('seller')).ND_id,
-    //                                 DH_id: billId[i],
-    //                                 DH_trangthai: status,
-    //                             })
+                                .then((res) => {
+                                    console.log(res.data);
+                                })
+                                .catch(() => {
+                                    console.log('loi khong the show bill');
+                                });
+                        } else if (res.data.data.status === 'delivered') {
+                            let status = '4';
+                            console.log('id bill', billId[i]);
+                            axios
+                                .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/auto/bill`, {
+                                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                                    DH_id: billId[i],
+                                    DH_trangthai: status,
+                                })
 
-    //                             .then((res) => {
-    //                                 console.log(res.data);
-    //                             })
-    //                             .catch(() => {
-    //                                 console.log('loi khong the show bill');
-    //                             });
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     console.log('loi status');
-    //                 });
-    //         }
-    //     }
-    // }, [billId]);
+                                .then((res) => {
+                                    console.log(res.data);
+                                })
+                                .catch(() => {
+                                    console.log('loi khong the show bill');
+                                });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('loi status');
+                    });
+            }
+        }
+    }, [billId]);
 
     // useEffect(() => {
     //     // let url;
@@ -241,19 +245,21 @@ function Home() {
     //     // } else if (clickSuggestions === 'promotion') {
     //     //     url = `${process.env.REACT_APP_URL_NODEJS}/product/show/promotion/all`;
     //     // }
-    //     axios
-    //         .get(
-    //             `${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/user/all?ND_id=${
-    //                 JSON.parse(GetCookie('usrin')).ND_id
-    //             }`,
-    //         )
-    //         .then((res) => {
-    //             console.log('suggestions user', res.data.results);
-    //             //setProduct(res.data.results);
-    //         })
-    //         .catch((err) => {
-    //             console.log('loi');
-    //         });
+    //     if (GetCookie('usrin') !== undefined) {
+    //         axios
+    //             .get(
+    //                 `${process.env.REACT_APP_URL_NODEJS}/product/show/suggestions/user/all?ND_id=${
+    //                     JSON.parse(GetCookie('usrin')).ND_id
+    //                 }`,
+    //             )
+    //             .then((res) => {
+    //                 console.log('suggestions user', res.data.results);
+    //                 //setProduct(res.data.results);
+    //             })
+    //             .catch((err) => {
+    //                 console.log('loi');
+    //             });
+    //     }
     // }, []);
 
     useEffect(() => {

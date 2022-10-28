@@ -377,13 +377,15 @@ function Order() {
     };
 
     const handleTakePhone = (prodValue) => {
-        let phone = 0;
+        let phone = '0';
         for (let i = 0; i < orderValue.length; i++) {
             if (orderValue[i].NB_id === prodValue) {
                 //console.log('weight', orderValue[i].product.SP_trongluong);
                 //console.log('number', orderValue[i].TTDH_soluong);
-
-                phone += orderValue[i].seller.ND_sdt;
+                //console.log('orderValue[i].seller.ND_sdt', orderValue[i].seller.ND_sdt);
+                if (phone.toString().length < 10) {
+                    phone += orderValue[i].seller.ND_sdt.toString();
+                }
             }
         }
 
@@ -411,8 +413,10 @@ function Order() {
         let arr = [];
         for (let i = 0; i < orderValue.length; i++) {
             if (orderValue[i].NB_id === prodValue) {
-                //console.log('orderValue', orderValue[i].product.SP_ten);
-                // console.log('prodValue', prodValue);
+                // console.log('SP_ten', orderValue[i].product.SP_ten);
+                // console.log('SP_id', orderValue[i].SP_id);
+                // console.log('TTDH_soluong', orderValue[i].TTDH_soluong);
+                // console.log('SP_gia', orderValue[i].product.SP_gia);
                 // if (arr === undefined) {
                 //     arr = {
                 //         name: orderValue[i].product.SP_ten.toString(),
@@ -442,8 +446,7 @@ function Order() {
                     {
                         name: orderValue[i].product.SP_ten.toString(),
                         code: orderValue[i].product.SP_id.toString(),
-                        quantity: orderValue[i].TTDH_soluong,
-                        price: orderValue[i].product.SP_gia,
+                        quantity: Number(orderValue[i].TTDH_soluong),
                         length: 12,
                         width: 12,
                         height: 12,
@@ -480,16 +483,20 @@ function Order() {
                         // }
 
                         if (res.data.data.shops[i].name === sellerName[j]) {
-                            console.log('res', res.data.data.shops[i]._id);
-                            console.log([handleInfoProoduct(sellerValue[j])]);
-                            console.log('sellerValue[k]', sellerValue[j]);
-                            console.log('districtID, wardID', districtID, wardID);
-                            console.log('res', res.data.data.shops[i]._id);
-                            console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[j]));
-                            console.log('sellerValue[k]', sellerValue[j], sellerName[j]);
-                            console.log('handleTakePhone', handleTakePhone(sellerValue[j]).toString());
+                            // console.log('res', res.data.data.shops[i]._id);
+                            // console.log([handleInfoProoduct(sellerValue[j])]);
+                            // console.log('sellerValue[k]', sellerValue[j]);
+                            // console.log('districtID, wardID', districtID, wardID);
+                            // console.log('res', res.data.data.shops[i]._id);
+                            // console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[j]));
+                            // console.log('sellerValue[k]', sellerValue[j], sellerName[j]);
+                            // console.log('handleTakePhone', handleTakePhone(sellerValue[j]).toString());
                             console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[j]).toString());
-                            console.log('submitserviceIdUser', serviceIdUser);
+                            // console.log('submitserviceIdUser', serviceIdUser);
+                            // console.log(
+                            //     'handlePriceSellerNoTransport(sellerValue[j], j)',
+                            //     handlePriceSellerNoTransport(sellerValue[j], j),
+                            // );
                             axios
                                 .post(
                                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,

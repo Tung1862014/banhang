@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -61,6 +62,9 @@ function HeaderSeller() {
             <header className={cx('wrapper')}>
                 <div className={cx('inner')}>
                     <div className={cx('action')}>
+                        <Link to={'/'} className={cx('logo')}>
+                            <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
+                        </Link>
                         {establish !== '' && establish !== undefined ? (
                             <img src={establish.ND_image} className={cx('account-avatar')} alt="" />
                         ) : (
