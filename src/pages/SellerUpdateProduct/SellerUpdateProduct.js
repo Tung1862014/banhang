@@ -262,7 +262,12 @@ function SellerUpdateProduct() {
         if (window.confirm('Bạn đồng ý thay đổi') === true) {
             const pathId = window.location.pathname.toString();
             const resultId = pathId.slice(24);
-            if (coverImage === '') {
+            if (price !== '' && price !== undefined && price.toString().length < 4) {
+                toast.warning('Giá chưa hợp lệ!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (coverImage === '') {
                 axios
                     .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
                         SP_id: resultId,

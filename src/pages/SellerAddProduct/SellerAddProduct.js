@@ -234,37 +234,52 @@ function SellerAddProduct() {
         console.log(describeProduct);
 
         if (nameProduct === '') {
-            toast.error('Tên sản phẩm không được bỏ trống!', {
+            toast.warning('Tên sản phẩm không được bỏ trống!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (coverImage === '') {
-            toast.error('Ảnh bìa không được bỏ trông!', {
+            toast.warning('Ảnh bìa không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (describeProduct === '') {
-            toast.error('Mô tả không được bỏ trông!', {
+            toast.warning('Mô tả không được bỏ trông!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (weight === '') {
+            toast.warning('Trọng không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (number === '') {
-            toast.error('Số lượng không được bỏ trông!', {
+            toast.warning('Số lượng không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (price === '') {
-            toast.error('Giá không được bỏ trông!', {
+            toast.warning('Giá không được bỏ trông!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (promotion === '') {
+            toast.warning('Khuyến mãi không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (category === '') {
-            toast.error('Danh mục không được bỏ trông!', {
+            toast.warning('Danh mục không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else if (image === '' || imageTwo === '' || imageThree === '') {
-            toast.error('Hình ảnh không được bỏ trông!', {
+            toast.warning('Hình ảnh không được bỏ trông!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (price.toString().length < 4) {
+            toast.warning('Giá chưa hợp lệ!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
@@ -547,6 +562,9 @@ function SellerAddProduct() {
                                         </div>
                                     </div>
                                     <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                        <div className={cx('mandatory')}>
+                                            <span className={cx('mandatory-icon')}>*</span>
+                                        </div>{' '}
                                         <span>Khuyến mãi</span>
                                     </div>
                                     <div className={cx('edit-input-detail-money-promotion')}>
