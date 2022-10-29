@@ -1,7 +1,9 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { SidberSeller } from '~/actions/SidberSeller';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerBill.module.scss';
 import SellerBillPage from './SellerBillPage';
@@ -18,6 +20,11 @@ function SellerBill() {
     const [number, setNumber] = useState('');
     const [checkStatus, setCheckStatus] = useState();
     const [searchValue, setSearchValue] = useState('');
+
+    const [checkProduct, setCheckProduct] = useState('');
+
+    const SidebarReducer = useSelector((state) => state.sidebarSeller.list);
+    const dispatchSignIn = useDispatch();
 
     useEffect(() => {
         axios
@@ -75,7 +82,12 @@ function SellerBill() {
         } else {
             handlerClickAllCancelOrder();
         }
-    }, []);
+    }, [SidebarReducer]);
+
+    useEffect(() => {
+        const action = SidberSeller(checkProduct);
+        dispatchSignIn(action);
+    }, [checkProduct, dispatchSignIn]);
 
     const handlerClickAll = () => {
         const tab1 = document.getElementById('tabs__tab1');
@@ -105,6 +117,7 @@ function SellerBill() {
         badge4.style.color = '#999';
         badge5.style.color = '#999';
         setCheckStatus('');
+        setCheckProduct('add_product');
     };
     const handlerClickAllConfirm = () => {
         const tab1 = document.getElementById('tabs__tab1');
@@ -252,6 +265,7 @@ function SellerBill() {
         badge4.style.color = '#999';
         badge5.style.color = 'red';
         setCheckStatus('CancelOrder');
+        setCheckProduct('destroy_product');
     };
 
     const handleSearch = () => {

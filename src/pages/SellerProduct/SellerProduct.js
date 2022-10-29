@@ -1,7 +1,9 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { SidberSeller } from '~/actions/SidberSeller';
 import GetCookie from '~/components/Hook/GetCookies';
 import ProductSeller from './ProductSeller';
 import styles from './SellerProduct.module.scss';
@@ -14,6 +16,8 @@ function SellerProduct() {
     const [number, setNumber] = useState('');
     const [checkOutOfStock, setCheckOutOfStock] = useState();
     const [searchValue, setSearchValue] = useState('');
+
+    const dispatchSignIn = useDispatch();
 
     useEffect(() => {
         axios
@@ -111,6 +115,11 @@ function SellerProduct() {
             .catch(() => {
                 console.log('loi khong the show product');
             });
+    };
+
+    const handleAddProduct = () => {
+        const action = SidberSeller('add_product');
+        dispatchSignIn(action);
     };
 
     return (
@@ -218,7 +227,11 @@ function SellerProduct() {
                         </span>
                     </div>
                     <div className={cx('grid-right')}>
-                        <Link to={'/seller/product/insert'} className={cx('add-action')}>
+                        <Link
+                            to={'/seller/product/insert'}
+                            className={cx('add-action')}
+                            onClick={() => handleAddProduct()}
+                        >
                             <i className={cx('shopee-icon')}>
                                 <svg viewBox="0 0 32 32">
                                     <path d="M17.5 2.5h-3v12h-12v3h12v12h3v-12h12v-3h-12v-12z"></path>

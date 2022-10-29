@@ -26,6 +26,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { SidberSeller } from '~/actions/SidberSeller';
+
 // import { faBars } from '@fortawesome/free-solid-svg-icons';
 //import { useState } from 'react';
 
@@ -44,6 +47,11 @@ function Sidebar() {
     const [checkDownUp, setCheckDownUp] = useState(false);
 
     const [checkCategory, setCheckCategory] = useState(true);
+
+    const [checkProduct, setCheckProduct] = useState('');
+
+    const SidebarReducer = useSelector((state) => state.sidebarSeller.list);
+    const dispatchSignIn = useDispatch();
 
     useEffect(() => {
         if (checkCategory === true) {
@@ -67,7 +75,12 @@ function Sidebar() {
                 handleClickCategory1Evaluate(checkCategory);
             }
         }
-    }, [checkCategory]);
+    }, [checkCategory, SidebarReducer]);
+
+    useEffect(() => {
+        const action = SidberSeller(checkProduct);
+        dispatchSignIn(action);
+    }, [checkProduct, dispatchSignIn]);
 
     const handleClickDownUpIcon = (idIcon1, idIcon2, sidebarIcon) => {
         const downIcon = document.getElementById(idIcon1);
@@ -159,6 +172,7 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        setCheckProduct('add_product');
 
         if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
@@ -185,6 +199,7 @@ function Sidebar() {
         itemLink2.style.color = 'var(--text-color)';
         itemLink1Weight.style.color = 'var(--text-color)';
         itemLink1evaluate.style.color = 'var(--text-color)';
+        setCheckProduct('destroy_product');
 
         if (checkCategory === false) {
             const clickCategory = document.getElementById('sidebar-container');
