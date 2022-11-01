@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerCategory.module.scss';
+import SellerCategoryPage from './SellerCategoryPage';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,8 @@ function SellerCategory() {
     const [category, setCategory] = useState('');
     //const [weight, setWeight] = useState('');
     const [categoryValue, setCategoryValue] = useState('');
+    const [product, setProduct] = useState([]);
+    const [idCategory, setIdCategory] = useState('');
     //const [weightValue, setWeightValue] = useState('');
     //const [categoryValueContent, setCategoryValueContent] = useState('');
 
@@ -61,6 +64,24 @@ function SellerCategory() {
                 console.log('loi');
             });
     }, [checkCategory]);
+
+    useEffect(() => {
+        if (idCategory !== '') {
+            axios
+                .post(`${process.env.REACT_APP_URL_NODEJS}/sellercategoryandweight/product/show/product/id`, {
+                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                    DM_id: idCategory,
+                })
+
+                .then((res) => {
+                    console.log('id category', res.data);
+                    setProduct(res.data.result);
+                })
+                .catch(() => {
+                    console.log('loi khong the show product');
+                });
+        }
+    }, [idCategory]);
 
     // function handleWeight(takeWeight) {
     //     const selectValue = document.getElementById('input-weight-select');
@@ -332,6 +353,21 @@ function SellerCategory() {
     //         });
     // }
 
+    function formatCash(str) {
+        return str
+            .toString()
+            .split('')
+            .reverse()
+            .reduce((prev, next, index) => {
+                return (index % 3 ? next : next + '.') + prev;
+            });
+    }
+
+    const handleLookCategory = (id) => {
+        console.log('id: ', id);
+        setIdCategory(id);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -438,6 +474,7 @@ function SellerCategory() {
                                 <td className={cx('td_table-name')}>Mã danh mục</td>
                                 <td className={cx('td_table-name')}>Tên danh mục</td>
                                 <td className={cx('td_table-name')}>Tổng sản phẩm</td>
+                                <td className={cx('td_table-name_detail')}>Chi tiết</td>
                             </tr>
 
                             {takeCategory !== ''
@@ -446,6 +483,12 @@ function SellerCategory() {
                                           <td className={cx('td_table-name')}>{pro.DM_id}</td>
                                           <td className={cx('td_table-name')}>{pro.DM_danhmuc}</td>
                                           <td className={cx('td_table-name')}>{pro.product}</td>
+                                          <td
+                                              className={cx('td_table-name_detail')}
+                                              onClick={() => handleLookCategory(pro.DM_id)}
+                                          >
+                                              Xem
+                                          </td>
                                       </tr>
                                   ))
                                 : ''}
@@ -525,7 +568,7 @@ function SellerCategory() {
                     </div>
                 </div>
             </div>
-
+            <SellerCategoryPage data={product !== '' ? product : ''} />
             <ToastContainer />
         </div>
     );

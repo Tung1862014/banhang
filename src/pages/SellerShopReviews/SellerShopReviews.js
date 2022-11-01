@@ -1,3 +1,5 @@
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
@@ -16,6 +18,8 @@ function SellerShopReviews() {
     const [star3Value, setStar3Value] = useState('');
     const [star2Value, setStar2Value] = useState('');
     const [star1Value, setStar1Value] = useState('');
+    /////////////////////////////////////////////////
+    const [nameProduct, setNameProduct] = useState('');
 
     useEffect(() => {
         axios
@@ -33,6 +37,23 @@ function SellerShopReviews() {
                 console.log('loi khong the show product');
             });
     }, [star]);
+
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/all/name/product?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&SP_id=4`,
+            )
+
+            .then((res) => {
+                console.log('Name prooduct', res.data.result);
+                setNameProduct(res.data.result);
+            })
+            .catch(() => {
+                console.log('loi khong the show product');
+            });
+    }, []);
 
     useEffect(() => {
         axios
@@ -341,6 +362,68 @@ function SellerShopReviews() {
                                     </Link>
                                 </div>{' '}
                             </div>{' '}
+                            <div className={cx('')}>
+                                {/* <select>
+                                    {nameProduct !== ''
+                                        ? nameProduct.map((review, index) => (
+                                              <option key={index} value="">
+                                                  {review.SP_ten}
+                                              </option>
+                                          ))
+                                        : ''}
+                                </select> */}
+                                <div className={cx('lHCVqO')}>
+                                    <div className={cx('iWBSHn')}>
+                                        <div className={cx('_0fHnjY')}>
+                                            <div className={cx('XjHkd3')}>
+                                                <div className={cx('T1souv')}>
+                                                    <div className={cx('u1wAmL')}>
+                                                        <div className={cx('vEFwLK_6DXlE9')}>Tên sản phẩm</div>
+                                                        <input
+                                                            id="ChI2Nx_92k3pl"
+                                                            className={cx('ChI2Nx_92k3pl')}
+                                                            type="text"
+                                                            placeholder="Chọn tên sản phẩm..."
+                                                            defaultValue={''}
+                                                            // onChange={(e) => setCtyVaule(e.target.value)}
+                                                            // onFocus={() => handleOpenFormIcon()}
+                                                        />
+                                                        <FontAwesomeIcon
+                                                            id="Izrgn0"
+                                                            className={cx('Izrgn0')}
+                                                            icon={faSortDown}
+                                                            // onClick={() => handleOpenFormIcon()}
+                                                        />
+                                                        <FontAwesomeIcon
+                                                            id="Izrgn1"
+                                                            className={cx('Izrgn1')}
+                                                            icon={faSortUp}
+                                                            // onClick={() => handleCloseFormIcon()}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div id="H8sVZh" className={cx('H8sVZh')}>
+                                                    <div id="aox-Gc1" className={cx('aox-Gc1')}>
+                                                        {nameProduct !== ''
+                                                            ? nameProduct.map((review, index) => (
+                                                                  <div
+                                                                      key={index}
+                                                                      className={cx('Pcd7He')}
+                                                                      //   onClick={() =>
+                                                                      //       handleClickDistrict(city.ProvinceID, city.ProvinceName)
+                                                                      //   }
+                                                                  >
+                                                                      {review.SP_ten}
+                                                                  </div>
+                                                              ))
+                                                            : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>{' '}
                     </div>
                     <div className={cx('table-header')}>
