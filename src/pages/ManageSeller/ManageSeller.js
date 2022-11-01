@@ -38,8 +38,6 @@ function ManageSeller() {
         const resultId = pathId.slice(21);
         if (resultId === 'all') {
             handlerClickAll();
-        } else if (resultId === 'action') {
-            handlerClickAllAction();
         } else {
             handlerClickAllOutOfStock();
         }
@@ -47,47 +45,47 @@ function ManageSeller() {
 
     const handlerClickAll = () => {
         const tab1 = document.getElementById('tabs__tab1');
-        const tab2 = document.getElementById('tabs__tab2');
+        // const tab2 = document.getElementById('tabs__tab2');
         const tab3 = document.getElementById('tabs__tab3');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
-        tab2.style.color = '';
+        //tab2.style.color = '';
         tab3.style.color = '';
         tab1.style.color = 'red';
         tab1.style.fontFamily = 'Helvetica';
-        tab2.style.fontFamily = 'Helvetica';
-        tab3.style.fontFamily = 'Helvetica';
-        badge1.style.color = '#999';
-        badge2.style.color = '#999';
-        setCheckOutOfStock('');
-    };
-    const handlerClickAllAction = () => {
-        const tab1 = document.getElementById('tabs__tab1');
-        const tab2 = document.getElementById('tabs__tab2');
-        const tab3 = document.getElementById('tabs__tab3');
-        const badge1 = document.getElementById('tab-badge1');
-        const badge2 = document.getElementById('tab-badge2');
-        tab2.style.color = 'red';
-        tab3.style.color = '';
-        tab1.style.color = '';
-        tab1.style.fontFamily = 'Helvetica';
-        tab2.style.fontFamily = 'Helvetica';
+        //tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         badge1.style.color = 'red';
         badge2.style.color = '#999';
-        setCheckOutOfStock('trangthaiaction');
+        setCheckOutOfStock('');
     };
+    // const handlerClickAllAction = () => {
+    //     const tab1 = document.getElementById('tabs__tab1');
+    //     const tab2 = document.getElementById('tabs__tab2');
+    //     const tab3 = document.getElementById('tabs__tab3');
+    //     const badge1 = document.getElementById('tab-badge1');
+    //     const badge2 = document.getElementById('tab-badge2');
+    //     tab2.style.color = 'red';
+    //     tab3.style.color = '';
+    //     tab1.style.color = '';
+    //     tab1.style.fontFamily = 'Helvetica';
+    //     tab2.style.fontFamily = 'Helvetica';
+    //     tab3.style.fontFamily = 'Helvetica';
+    //     badge1.style.color = 'red';
+    //     badge2.style.color = '#999';
+    //     setCheckOutOfStock('trangthaiaction');
+    // };
     const handlerClickAllOutOfStock = () => {
         const tab1 = document.getElementById('tabs__tab1');
-        const tab2 = document.getElementById('tabs__tab2');
+        //const tab2 = document.getElementById('tabs__tab2');
         const tab3 = document.getElementById('tabs__tab3');
         const badge1 = document.getElementById('tab-badge1');
         const badge2 = document.getElementById('tab-badge2');
-        tab2.style.color = '';
+        //tab2.style.color = '';
         tab3.style.color = 'red';
         tab1.style.color = '';
         tab1.style.fontFamily = 'Helvetica';
-        tab2.style.fontFamily = 'Helvetica';
+        //tab2.style.fontFamily = 'Helvetica';
         tab3.style.fontFamily = 'Helvetica';
         badge1.style.color = '#999';
         badge2.style.color = 'red';
@@ -123,9 +121,12 @@ function ManageSeller() {
                                     onClick={handlerClickAll}
                                 >
                                     Tất cả
+                                    <span id="tab-badge1" className={cx('tab-badge1')}>
+                                        ( {number !== '' ? number : '0'} )
+                                    </span>
                                 </Link>{' '}
                             </div>
-                            <div className={cx('shopee-tabs__nav-tab')}>
+                            {/* <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/admin/manage/seller=action"
                                     id="tabs__tab2"
@@ -137,7 +138,7 @@ function ManageSeller() {
                                         ( {number !== '' ? number : '0'} )
                                     </span>
                                 </Link>{' '}
-                            </div>
+                            </div> */}
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
                                     to="/admin/manage/seller=limit"
@@ -145,7 +146,7 @@ function ManageSeller() {
                                     className={cx('tabs__tab3')}
                                     onClick={handlerClickAllOutOfStock}
                                 >
-                                    Hạn chế
+                                    Khóa
                                     <span id="tab-badge2" className={cx('tab-badge2')}>
                                         {' '}
                                         ( {limits !== '' ? limits : '0'} )
