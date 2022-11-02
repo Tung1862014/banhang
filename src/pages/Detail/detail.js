@@ -249,6 +249,20 @@ function Detail() {
         }
     }
 
+    function handleTestDate(promotion) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let date1 = new Date(takeDateNow('true'));
+            let datefrom = new Date(takeDateNow(promotion.KM_tungay));
+            let dateto = new Date(takeDateNow(promotion.KM_denngay));
+            if (date1 >= datefrom && date1 <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
+    }
     return (
         <div className={cx('wrapper')}>
             {checkAddOfCart && (
@@ -646,7 +660,10 @@ function Detail() {
                                                                                   />
 
                                                                                   <div className={cx('_23y7qS')}>
-                                                                                      {prodvalue.SP_khuyenmai !== 0 ? (
+                                                                                      {prodvalue.promotion !== 0 &&
+                                                                                      handleTestDate(
+                                                                                          prodvalue.promotion,
+                                                                                      ) ? (
                                                                                           <div
                                                                                               className={cx(
                                                                                                   'VPfNgf_3Vf-cm_pKWQzh',
@@ -658,7 +675,9 @@ function Detail() {
                                                                                                   )}
                                                                                               >
                                                                                                   {
-                                                                                                      prodvalue.SP_khuyenmai
+                                                                                                      prodvalue
+                                                                                                          .promotion
+                                                                                                          .KM_phantram
                                                                                                   }
                                                                                                   %
                                                                                               </span>
@@ -694,11 +713,60 @@ function Detail() {
                                                                                           ₫
                                                                                       </span>
                                                                                       <span className={cx('_2igTXp')}>
-                                                                                          {formatCash(
-                                                                                              prodvalue.SP_gia *
-                                                                                                  ((100 -
-                                                                                                      prodvalue.SP_khuyenmai) /
-                                                                                                      100),
+                                                                                          {prodvalue.SP_gia !==
+                                                                                              undefined &&
+                                                                                          prodvalue.SP_gia.toString()
+                                                                                              .length > 6 &&
+                                                                                          prodvalue.promotion !== 0 &&
+                                                                                          handleTestDate(
+                                                                                              prodvalue.promotion,
+                                                                                          ) ? (
+                                                                                              <div className={cx('')}>
+                                                                                                  {formatCash(
+                                                                                                      prodvalue.SP_gia *
+                                                                                                          ((100 -
+                                                                                                              prodvalue
+                                                                                                                  .promotion
+                                                                                                                  .KM_phantram) /
+                                                                                                              100),
+                                                                                                  )}
+                                                                                              </div>
+                                                                                          ) : prodvalue.promotion !==
+                                                                                                0 &&
+                                                                                            handleTestDate(
+                                                                                                prodvalue.promotion,
+                                                                                            ) ? (
+                                                                                              <div
+                                                                                                  className={cx(
+                                                                                                      '_2Shl1j',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  ₫
+                                                                                                  {Math.round(
+                                                                                                      formatCash(
+                                                                                                          prodvalue.SP_gia *
+                                                                                                              ((100 -
+                                                                                                                  prodvalue
+                                                                                                                      .promotion
+                                                                                                                      .KM_phantram) /
+                                                                                                                  100),
+                                                                                                      ),
+                                                                                                  ).toFixed(3)}
+                                                                                              </div>
+                                                                                          ) : prodvalue.SP_gia !==
+                                                                                            undefined ? (
+                                                                                              <div
+                                                                                                  className={cx(
+                                                                                                      '_2Shl1j',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  ₫
+                                                                                                  {formatCash(
+                                                                                                      prodvalue.SP_gia,
+                                                                                                  )}
+                                                                                              </div>
+                                                                                          ) : (
+                                                                                              ''
                                                                                           )}
                                                                                       </span>
                                                                                   </div>
@@ -740,7 +808,10 @@ function Detail() {
                                                                                   />
 
                                                                                   <div className={cx('_23y7qS')}>
-                                                                                      {prodvalue.SP_khuyenmai !== 0 ? (
+                                                                                      {prodvalue.promotion !== 0 &&
+                                                                                      handleTestDate(
+                                                                                          prodvalue.promotion,
+                                                                                      ) ? (
                                                                                           <div
                                                                                               className={cx(
                                                                                                   'VPfNgf_3Vf-cm_pKWQzh',
@@ -752,7 +823,9 @@ function Detail() {
                                                                                                   )}
                                                                                               >
                                                                                                   {
-                                                                                                      prodvalue.SP_khuyenmai
+                                                                                                      prodvalue
+                                                                                                          .promotion
+                                                                                                          .KM_phantram
                                                                                                   }
                                                                                                   %
                                                                                               </span>
@@ -788,11 +861,60 @@ function Detail() {
                                                                                           ₫
                                                                                       </span>
                                                                                       <span className={cx('_2igTXp')}>
-                                                                                          {formatCash(
-                                                                                              prodvalue.SP_gia *
-                                                                                                  ((100 -
-                                                                                                      prodvalue.SP_khuyenmai) /
-                                                                                                      100),
+                                                                                          {prodvalue.SP_gia !==
+                                                                                              undefined &&
+                                                                                          prodvalue.SP_gia.toString()
+                                                                                              .length > 6 &&
+                                                                                          prodvalue.promotion !== 0 &&
+                                                                                          handleTestDate(
+                                                                                              prodvalue.promotion,
+                                                                                          ) ? (
+                                                                                              <div className={cx('')}>
+                                                                                                  {formatCash(
+                                                                                                      prodvalue.SP_gia *
+                                                                                                          ((100 -
+                                                                                                              prodvalue
+                                                                                                                  .promotion
+                                                                                                                  .KM_phantram) /
+                                                                                                              100),
+                                                                                                  )}
+                                                                                              </div>
+                                                                                          ) : prodvalue.promotion !==
+                                                                                                0 &&
+                                                                                            handleTestDate(
+                                                                                                prodvalue.promotion,
+                                                                                            ) ? (
+                                                                                              <div
+                                                                                                  className={cx(
+                                                                                                      '_2Shl1j',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  ₫
+                                                                                                  {Math.round(
+                                                                                                      formatCash(
+                                                                                                          prodvalue.SP_gia *
+                                                                                                              ((100 -
+                                                                                                                  prodvalue
+                                                                                                                      .promotion
+                                                                                                                      .KM_phantram) /
+                                                                                                                  100),
+                                                                                                      ),
+                                                                                                  ).toFixed(3)}
+                                                                                              </div>
+                                                                                          ) : prodvalue.SP_gia !==
+                                                                                            undefined ? (
+                                                                                              <div
+                                                                                                  className={cx(
+                                                                                                      '_2Shl1j',
+                                                                                                  )}
+                                                                                              >
+                                                                                                  ₫
+                                                                                                  {formatCash(
+                                                                                                      prodvalue.SP_gia,
+                                                                                                  )}
+                                                                                              </div>
+                                                                                          ) : (
+                                                                                              ''
                                                                                           )}
                                                                                       </span>
                                                                                   </div>

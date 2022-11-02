@@ -29,9 +29,12 @@ function SellerAddProduct() {
     const [checkCategory, setCheckCategory] = useState('');
     const [checkCategoryValue, setCheckCategoryValue] = useState(false);
     const [checkSettingShop, setCheckSettingShop] = useState(false);
+    //////////////////////////////////////////////////////
+    const [dateFromValue, setDateFromValue] = useState('');
+    const [dateToValue, setDateToValue] = useState('');
 
-    console.log('checkCategoryValue', checkCategoryValue);
-    console.log('checkSettingShop', checkSettingShop);
+    console.log('dateFromValue', dateFromValue);
+    console.log('dateToValue', dateToValue);
 
     // if (takeWeight !== '') {
     //     //  console.log(takeWeight.length);
@@ -263,11 +266,6 @@ function SellerAddProduct() {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
-        } else if (promotion === '') {
-            toast.warning('Khuyến mãi không được bỏ trông!', {
-                position: toast.POSITION.TOP_CENTER,
-                className: `${cx('toast-message')}`,
-            });
         } else if (category === '') {
             toast.warning('Danh mục không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
@@ -280,6 +278,31 @@ function SellerAddProduct() {
             });
         } else if (price.toString().length < 4) {
             toast.warning('Giá chưa hợp lệ!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateFromValue !== '' && dateToValue !== '' && !handleTestDate(dateFromValue, dateToValue)) {
+            toast.warning('Ngày bắt đầu và ngày kết thúc chưa hợp lệ!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateFromValue === '' && dateToValue !== '' && !handleTestDate(dateFromValue, dateToValue)) {
+            toast.warning('Ngày bắt đầu không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateFromValue !== '' && dateToValue === '' && !handleTestDate(dateFromValue, dateToValue)) {
+            toast.warning('Ngày kết thúc không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (
+            dateFromValue !== '' &&
+            dateToValue !== '' &&
+            handleTestDate(dateFromValue, dateToValue) &&
+            promotion === ''
+        ) {
+            toast.warning('Phần trăm khuyến mãi không được bỏ trống!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
@@ -380,6 +403,19 @@ function SellerAddProduct() {
             .catch((err) => {});
     }
 
+    function handleTestDate(fromValue, toValue) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let datefrom = new Date(fromValue);
+            let dateto = new Date(toValue);
+            if (datefrom <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
+    }
     return (
         <div className={cx('wrapper')}>
             {!checkCategoryValue && !checkSettingShop ? (
@@ -561,39 +597,6 @@ function SellerAddProduct() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={cx('edit-label-detail')} data-education-trigger-key="name">
-                                        <div className={cx('mandatory')}>
-                                            <span className={cx('mandatory-icon')}>*</span>
-                                        </div>{' '}
-                                        <span>Khuyến mãi</span>
-                                    </div>
-                                    <div className={cx('edit-input-detail-money-promotion')}>
-                                        <div className={cx('shopee-input')}>
-                                            <div className={cx('shopee-input__inner')}>
-                                                <div className={cx('shopee-input__prefix')}>
-                                                    %<span className={cx('shopee-input__prefix-split')}></span>
-                                                </div>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nhập vào"
-                                                    size="large"
-                                                    resize="none"
-                                                    rows="2"
-                                                    minrows="2"
-                                                    restrictiontype="input"
-                                                    max="Infinity"
-                                                    min="-Infinity"
-                                                    className={cx('shopee-input__input')}
-                                                    onChange={(e) => setPromotion(e.target.value)}
-                                                />
-                                                {/* <div className={cx('shopee-input__suffix')}>
-                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
-                                    </div> */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx('grid-detail')}>
                                     <div className={cx('edit-label')} data-education-trigger-key="name">
                                         <div className={cx('mandatory')}>
                                             <span className={cx('mandatory-icon')}>*</span>
@@ -624,6 +627,83 @@ function SellerAddProduct() {
                                         </select>
                                     </div>
                                 </div>
+                                <div className={cx('grid-detail')}>
+                                    <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                        <span>Từ ngày</span>
+                                    </div>
+                                    <div className={cx('edit-input-detail-money-promotion-date')}>
+                                        <div className={cx('shopee-input')}>
+                                            <div className={cx('shopee-input__inner')}>
+                                                <div className={cx('shopee-input__prefix')}>
+                                                    <span className={cx('shopee-input__prefix-split')}></span>
+                                                </div>
+                                                <input
+                                                    type="date"
+                                                    placeholder="Nhập vào"
+                                                    defaultValue="__-__-____"
+                                                    className={cx('shopee-input__input')}
+                                                    onChange={(e) => setDateFromValue(e.target.value)}
+                                                />
+                                                {/* <div className={cx('shopee-input__suffix')}>
+                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                    </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                        <div className={cx('mandatory')}></div> <span>Đến ngày</span>
+                                    </div>
+                                    <div className={cx('edit-input-detail-money-promotion-date')}>
+                                        <div className={cx('shopee-input')}>
+                                            <div className={cx('shopee-input__inner')}>
+                                                <div className={cx('shopee-input__prefix')}>
+                                                    <span className={cx('shopee-input__prefix-split')}></span>
+                                                </div>
+                                                <input
+                                                    type="date"
+                                                    placeholder="Nhập vào"
+                                                    defaultValue="__-__-____"
+                                                    className={cx('shopee-input__input')}
+                                                    onChange={(e) => setDateToValue(e.target.value)}
+                                                />
+
+                                                {/* <div className={cx('shopee-input__suffix')}>
+                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                    </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                        <span>Khuyến mãi</span>
+                                    </div>
+                                    <div className={cx('edit-input-detail-money-promotion-date')}>
+                                        <div className={cx('shopee-input')}>
+                                            <div className={cx('shopee-input__inner')}>
+                                                <div className={cx('shopee-input__prefix')}>
+                                                    %<span className={cx('shopee-input__prefix-split')}></span>
+                                                </div>
+
+                                                <input
+                                                    type="text"
+                                                    placeholder="Nhập vào"
+                                                    size="large"
+                                                    resize="none"
+                                                    rows="2"
+                                                    minrows="2"
+                                                    restrictiontype="input"
+                                                    max="Infinity"
+                                                    min="-Infinity"
+                                                    className={cx('shopee-input__input')}
+                                                    onChange={(e) => setPromotion(e.target.value)}
+                                                />
+                                                {/* <div className={cx('shopee-input__suffix')}>
+                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                    </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className={cx('grid-detail-image')}>
                                     <div className={cx('edit-label')}>
                                         <div className={cx('mandatory')}>

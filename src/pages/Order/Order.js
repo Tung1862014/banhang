@@ -60,6 +60,44 @@ function Order() {
 
     //show order
     useEffect(() => {
+        function takeDateNow(date) {
+            let dateValue;
+            if (date !== 'true') {
+                dateValue = new Date(date);
+            } else {
+                dateValue = new Date();
+            }
+            let day = dateValue.getDate();
+            let month = dateValue.getMonth() + 1;
+            let year = dateValue.getFullYear();
+
+            if (month < 10 && day >= 10) {
+                return year + '-0' + month + '-' + day;
+            } else if (month < 10 && day < 10) {
+                return year + '-0' + month + '-0' + day;
+            } else if (month >= 10 && day < 10) {
+                return year + '-' + month + '-0' + day;
+            } else if (month >= 10 && day >= 10) {
+                return year + '-' + month + '-' + day;
+            } else {
+                return year + '-' + month + '-' + day;
+            }
+        }
+
+        function handleTestDate(promotion) {
+            console.log('handleTestDate', promotion);
+            if (promotion !== 0) {
+                let date1 = new Date(takeDateNow('true'));
+                let datefrom = new Date(takeDateNow(promotion.KM_tungay));
+                let dateto = new Date(takeDateNow(promotion.KM_denngay));
+                if (date1 >= datefrom && date1 <= dateto) {
+                    return true;
+                } else {
+                    return false;
+                }
+                // console.log('date1', date1);
+            }
+        }
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/cartcustomer/cart/show/all?ND_id=${
@@ -84,9 +122,11 @@ function Order() {
                     }
 
                     //sumnumber += 1;
+                    let test = handleTestDate(res.data.results[i].promotion);
                     if (
                         res.data.results[i].product.SP_gia.toString().length > 6 &&
-                        res.data.results[i].promotion !== 0
+                        res.data.results[i].promotion !== 0 &&
+                        test
                     ) {
                         price += Number(
                             res.data.results[i].product.SP_gia *
@@ -98,7 +138,7 @@ function Order() {
                         res.data.results[i].promotion === 0
                     ) {
                         price += Number(res.data.results[i].product.SP_gia * res.data.results[i].TTDH_soluong);
-                    } else if (res.data.results[i].promotion !== 0) {
+                    } else if (res.data.results[i].promotion !== 0 && test) {
                         price +=
                             Number(
                                 Math.round(
@@ -217,14 +257,15 @@ function Order() {
         console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0) {
+                let test = handleTestDate(orderValue[i].promotion);
+                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0 && test) {
                     prices +=
                         orderValue[i].product.SP_gia *
                         orderValue[i].TTDH_soluong *
                         ((100 - orderValue[i].promotion.KM_phantram) / 100);
                 } else if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion === 0) {
                     prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
-                } else if (orderValue[i].promotion !== 0) {
+                } else if (orderValue[i].promotion !== 0 && test) {
                     prices +=
                         Number(
                             Math.round(
@@ -260,14 +301,15 @@ function Order() {
         //console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0) {
+                let test = handleTestDate(orderValue[i].promotion);
+                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0 && test) {
                     prices +=
                         orderValue[i].product.SP_gia *
                         orderValue[i].TTDH_soluong *
                         ((100 - orderValue[i].promotion.KM_phantram) / 100);
                 } else if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion === 0) {
                     prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
-                } else if (orderValue[i].promotion !== 0) {
+                } else if (orderValue[i].promotion !== 0 && test) {
                     prices +=
                         Number(
                             Math.round(
@@ -495,7 +537,8 @@ function Order() {
         let promotions = [];
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                if (orderValue[i].promotion !== 0) {
+                let test = handleTestDate(orderValue[i].promotion);
+                if (orderValue[i].promotion !== 0 && test) {
                     promotions.push(orderValue[i].promotion.KM_phantram);
                 } else {
                     promotions.push(0);
@@ -1325,6 +1368,45 @@ function Order() {
         setServiceIdUser(e);
     }
 
+    function takeDateNow(date) {
+        let dateValue;
+        if (date !== 'true') {
+            dateValue = new Date(date);
+        } else {
+            dateValue = new Date();
+        }
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    function handleTestDate(promotion) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let date1 = new Date(takeDateNow('true'));
+            let datefrom = new Date(takeDateNow(promotion.KM_tungay));
+            let dateto = new Date(takeDateNow(promotion.KM_denngay));
+            if (date1 >= datefrom && date1 <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div id="ReDGyJ" className={cx('ReDGyJ')}>
@@ -1541,14 +1623,16 @@ function Order() {
                                                                         ₫
                                                                         {order.product.SP_gia !== undefined &&
                                                                         order.product.SP_gia.toString().length > 6 &&
-                                                                        order.promotion !== 0
+                                                                        order.promotion !== 0 &&
+                                                                        handleTestDate(order.promotion)
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
                                                                                       ((100 -
                                                                                           order.promotion.KM_phantram) /
                                                                                           100),
                                                                               )
-                                                                            : order.promotion !== 0
+                                                                            : order.promotion !== 0 &&
+                                                                              handleTestDate(order.promotion)
                                                                             ? Math.round(
                                                                                   formatCash(
                                                                                       order.product.SP_gia *
@@ -1567,7 +1651,8 @@ function Order() {
                                                                         ₫
                                                                         {order.product.SP_gia !== undefined &&
                                                                         order.product.SP_gia.toString().length > 6 &&
-                                                                        order.promotion !== 0
+                                                                        order.promotion !== 0 &&
+                                                                        handleTestDate(order.promotion)
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
                                                                                       ((100 -
@@ -1575,7 +1660,8 @@ function Order() {
                                                                                           100) *
                                                                                       order.TTDH_soluong,
                                                                               )
-                                                                            : order.promotion !== 0
+                                                                            : order.promotion !== 0 &&
+                                                                              handleTestDate(order.promotion)
                                                                             ? formatCash(
                                                                                   Number(
                                                                                       Math.round(

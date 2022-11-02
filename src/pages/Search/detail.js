@@ -21,6 +21,45 @@ function Detail({ productValue }) {
             });
     }
 
+    function takeDateNow(date) {
+        let dateValue;
+        if (date !== 'true') {
+            dateValue = new Date(date);
+        } else {
+            dateValue = new Date();
+        }
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    function handleTestDate(promotion) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let date1 = new Date(takeDateNow('true'));
+            let datefrom = new Date(takeDateNow(promotion.KM_tungay));
+            let dateto = new Date(takeDateNow(promotion.KM_denngay));
+            if (date1 >= datefrom && date1 <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
+    }
+
     return (
         <div className={cx('row')}>
             {productValue !== ''
@@ -43,10 +82,12 @@ function Detail({ productValue }) {
                                                             '/default-ui-image.webp'
                                                   }
                                               />
-                                              {prod.SP_khuyenmai !== 0 ? (
+                                              {prod.promotion !== 0 && handleTestDate(prod.promotion) ? (
                                                   <div className={cx('_3atTkb')}>
                                                       <div className={cx('CNco3q_2PoYxv_HpfQ6t')}>
-                                                          <span className={cx('percent')}>{prod.SP_khuyenmai}%</span>
+                                                          <span className={cx('percent')}>
+                                                              {prod.promotion.KM_phantram}%
+                                                          </span>
                                                           <span className={cx('_338wTY')}>giảm</span>
                                                       </div>
                                                   </div>
@@ -62,7 +103,7 @@ function Detail({ productValue }) {
                                               </div>
                                               <div className={cx('_3CsOH6')}>
                                                   <div className={cx('_3w3Slt_1NAEoM')}>
-                                                      {prod.SP_khuyenmai !== 0 ? (
+                                                      {prod.promotion !== 0 && handleTestDate(prod.promotion) ? (
                                                           <span className={cx('_2whgI2')}>
                                                               ₫{formatCash(prod.SP_gia)}
                                                           </span>
@@ -70,9 +111,33 @@ function Detail({ productValue }) {
                                                           ''
                                                       )}
 
-                                                      <span className={cx('_3TJGx5')}>
-                                                          ₫{formatCash(prod.SP_gia * ((100 - prod.SP_khuyenmai) / 100))}
-                                                      </span>
+                                                      {prod.SP_gia !== undefined &&
+                                                      prod.SP_gia.toString().length > 6 &&
+                                                      prod.promotion !== 0 &&
+                                                      handleTestDate(prod.promotion) ? (
+                                                          <span className={cx('_3TJGx5')}>
+                                                              {formatCash(
+                                                                  prod.SP_gia *
+                                                                      ((100 - prod.promotion.KM_phantram) / 100),
+                                                              )}
+                                                          </span>
+                                                      ) : prod.promotion !== 0 && handleTestDate(prod.promotion) ? (
+                                                          <span className={cx('_3TJGx5')}>
+                                                              ₫
+                                                              {Math.round(
+                                                                  formatCash(
+                                                                      prod.SP_gia *
+                                                                          ((100 - prod.promotion.KM_phantram) / 100),
+                                                                  ),
+                                                              ).toFixed(3)}
+                                                          </span>
+                                                      ) : prod.SP_gia !== undefined ? (
+                                                          <span className={cx('_3TJGx5')}>
+                                                              ₫{formatCash(prod.SP_gia)}
+                                                          </span>
+                                                      ) : (
+                                                          ''
+                                                      )}
                                                   </div>
                                               </div>
                                               <div className={cx('_3UeJ1q')}>

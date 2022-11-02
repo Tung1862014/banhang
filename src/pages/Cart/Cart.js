@@ -112,11 +112,12 @@ function Cart() {
         if (number - sellnumber > Number(inpurId.value)) {
             inpurId.value = Number(inpurId.value) + 1;
             let prices = 0;
-            if (price.toString().length > 6 && promotion !== 0) {
+            let test = handleTestDate(promotion);
+            if (price.toString().length > 6 && promotion !== 0 && test) {
                 prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
             } else if (price.toString().length > 6 && promotion === 0) {
                 prices = formatCash(Number(price) * Number(inpurId.value));
-            } else if (promotion !== 0) {
+            } else if (promotion !== 0 && test) {
                 prices = formatCash(
                     Number(
                         Math.round(formatCash(price * ((100 - promotion.KM_phantram) / 100)))
@@ -152,11 +153,12 @@ function Cart() {
         if (Number(inpurId.value) > 1) {
             inpurId.value = Number(inpurId.value) - 1;
             let prices = 0;
-            if (price.toString().length > 6 && promotion !== 0) {
+            let test = handleTestDate(promotion);
+            if (price.toString().length > 6 && promotion !== 0 && test) {
                 prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
             } else if (price.toString().length > 6 && promotion === 0) {
                 prices = formatCash(Number(price) * Number(inpurId.value));
-            } else if (promotion !== 0) {
+            } else if (promotion !== 0 && test) {
                 prices = formatCash(
                     Number(
                         Math.round(formatCash(price * ((100 - promotion.KM_phantram) / 100)))
@@ -205,11 +207,12 @@ function Cart() {
         if (number - sellnumber > Number(inpurId.value)) {
             inpurId.value = Number(inpurId.value);
             let prices = 0;
-            if (price.toString().length > 6 && promotion !== 0) {
+            let test = handleTestDate(promotion);
+            if (price.toString().length > 6 && promotion !== 0 && test) {
                 prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
             } else if (price.toString().length > 6 && promotion === 0) {
                 prices = formatCash(Number(price) * Number(inpurId.value));
-            } else if (promotion !== 0) {
+            } else if (promotion !== 0 && test) {
                 prices = formatCash(
                     Number(
                         Math.round(formatCash(price * ((100 - promotion.KM_phantram) / 100)))
@@ -236,6 +239,45 @@ function Cart() {
             setTimeout(() => (notification.style.display = 'none'), 1200);
         }
     };
+
+    function takeDateNow(date) {
+        let dateValue;
+        if (date !== 'true') {
+            dateValue = new Date(date);
+        } else {
+            dateValue = new Date();
+        }
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    function handleTestDate(promotion) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let date1 = new Date(takeDateNow('true'));
+            let datefrom = new Date(takeDateNow(promotion.KM_tungay));
+            let dateto = new Date(takeDateNow(promotion.KM_denngay));
+            if (date1 >= datefrom && date1 <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
+    }
 
     return (
         <div className={cx('wrapper')}>
@@ -323,23 +365,26 @@ function Cart() {
                                                             {/* / */}
                                                             <div className={cx('Ra8lP2')}>
                                                                 <div>
-                                                                    {order.promotion !== 0 && (
-                                                                        <span className={cx('_1CXksa_1k1Vcm')}>
-                                                                            ₫{formatCash(order.product.SP_gia)}
-                                                                        </span>
-                                                                    )}
+                                                                    {order.promotion !== 0 &&
+                                                                        handleTestDate(order.promotion) && (
+                                                                            <span className={cx('_1CXksa_1k1Vcm')}>
+                                                                                ₫{formatCash(order.product.SP_gia)}
+                                                                            </span>
+                                                                        )}
                                                                     <span className={cx('_1CXksa')}>
                                                                         ₫
                                                                         {order.product.SP_gia !== undefined &&
                                                                         order.product.SP_gia.toString().length > 6 &&
-                                                                        order.promotion !== 0
+                                                                        order.promotion !== 0 &&
+                                                                        handleTestDate(order.promotion)
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
                                                                                       ((100 -
                                                                                           order.promotion.KM_phantram) /
                                                                                           100),
                                                                               )
-                                                                            : order.promotion !== 0
+                                                                            : order.promotion !== 0 &&
+                                                                              handleTestDate(order.promotion)
                                                                             ? Math.round(
                                                                                   formatCash(
                                                                                       order.product.SP_gia *
@@ -434,27 +479,34 @@ function Cart() {
                                                                 <span>
                                                                     ₫
                                                                     {order.product.SP_gia !== undefined &&
-                                                                    order.product.SP_gia.toString().length > 6
+                                                                    order.product.SP_gia.toString().length > 6 &&
+                                                                    order.promotion !== 0 &&
+                                                                    handleTestDate(order.promotion)
                                                                         ? formatCash(
                                                                               order.product.SP_gia *
-                                                                                  ((100 - order.product.SP_khuyenmai) /
+                                                                                  ((100 - order.promotion.KM_phantram) /
                                                                                       100) *
                                                                                   order.TTDH_soluong,
                                                                           )
-                                                                        : formatCash(
+                                                                        : order.promotion !== 0 &&
+                                                                          handleTestDate(order.promotion)
+                                                                        ? formatCash(
                                                                               Number(
                                                                                   Math.round(
                                                                                       formatCash(
                                                                                           order.product.SP_gia *
                                                                                               ((100 -
-                                                                                                  order.product
-                                                                                                      .SP_khuyenmai) /
+                                                                                                  order.promotion
+                                                                                                      .KM_phantram) /
                                                                                                   100),
                                                                                       ),
                                                                                   )
                                                                                       .toFixed(3)
                                                                                       .replace('.', ''),
                                                                               ) * order.TTDH_soluong,
+                                                                          )
+                                                                        : formatCash(
+                                                                              order.product.SP_gia * order.TTDH_soluong,
                                                                           )}
                                                                 </span>
                                                             </div>
