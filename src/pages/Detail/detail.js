@@ -23,13 +23,14 @@ function Detail() {
     const [evaluation, setEvaluation] = useState('');
     const [evaluationNum, setEvaluationNum] = useState('');
     const [evaluationStar, setEvaluationStar] = useState('');
+    const [promotion, setPromotion] = useState('');
     const [productValue, setProductValue] = useState('');
     //
     const [numberValue, setNumberValue] = useState(1);
     const [imageValue, setImageValue] = useState('');
     const [checkAddOfCart, setCheckAddOfCart] = useState(false);
 
-    //console.log(numberValue);
+    console.log('promotion', promotion);
 
     //const numberProduct = useSelector((state) => state.numberProduct.list);
     //const dispatchNumberProduct = useDispatch();
@@ -51,6 +52,7 @@ function Detail() {
                 setEvaluation(res.data.evaluation);
                 setEvaluationNum(res.data.evaluationNum);
                 setEvaluationStar(res.data.evaluationStar);
+                setPromotion(res.data.promotion[0]);
             })
             .catch((error) => {
                 console.log('loi');
@@ -374,7 +376,7 @@ function Detail() {
                                 <div className={cx('flex-column_38g6so')}>
                                     <div className={cx('items-center-price')}>
                                         <div className={cx('items-center-price_34BHKe')}>
-                                            {product.SP_khuyenmai !== 0 ? (
+                                            {promotion !== undefined ? (
                                                 <div className={cx('_2yjfFH')}>
                                                     ₫{product !== '' && formatCash(product.SP_gia)}
                                                 </div>
@@ -384,18 +386,19 @@ function Detail() {
 
                                             <div className={cx('items-center-price')}>
                                                 {product.SP_gia !== undefined &&
-                                                product.SP_gia.toString().length > 6 ? (
+                                                product.SP_gia.toString().length > 6 &&
+                                                promotion !== undefined ? (
                                                     <div className={cx('')}>
                                                         {formatCash(
-                                                            product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
+                                                            product.SP_gia * ((100 - promotion.KM_phantram) / 100),
                                                         )}
                                                     </div>
-                                                ) : product.SP_khuyenmai !== 0 ? (
+                                                ) : promotion !== undefined ? (
                                                     <div className={cx('_2Shl1j')}>
                                                         ₫
                                                         {Math.round(
                                                             formatCash(
-                                                                product.SP_gia * ((100 - product.SP_khuyenmai) / 100),
+                                                                product.SP_gia * ((100 - promotion.KM_phantram) / 100),
                                                             ),
                                                         ).toFixed(3)}
                                                     </div>
@@ -403,7 +406,11 @@ function Detail() {
                                                     <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
                                                 )}
 
-                                                <div className={cx('_3PlIlX')}>{product.SP_khuyenmai}% giảm</div>
+                                                {promotion !== undefined ? (
+                                                    <div className={cx('_3PlIlX')}>{promotion.KM_phantram}% giảm</div>
+                                                ) : (
+                                                    ''
+                                                )}
                                             </div>
                                         </div>
                                     </div>

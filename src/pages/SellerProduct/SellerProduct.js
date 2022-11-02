@@ -27,7 +27,7 @@ function SellerProduct() {
             })
 
             .then((res) => {
-                console.log(res.data.status[0].status);
+                console.log('...', res.data.status[0].status);
                 setProduct(res.data.result);
                 setStatus(res.data.status[0].status);
                 setNumber(res.data.number[0].number);

@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 function SellerShopReviews() {
     const [star, setStar] = useState('');
     const [evaluate, setEvaluate] = useState('');
+    const [numberValue, setNumberValue] = useState('');
     const [star5Value, setStar5Value] = useState('');
     const [star4Value, setStar4Value] = useState('');
     const [star3Value, setStar3Value] = useState('');
@@ -20,24 +21,28 @@ function SellerShopReviews() {
     const [star1Value, setStar1Value] = useState('');
     /////////////////////////////////////////////////
     const [nameProduct, setNameProduct] = useState('');
+    const [idProduct, setIdProduct] = useState('');
+    const [nameValue, setNameValue] = useState('');
 
     useEffect(() => {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DG_sosao=${star || ''}`,
+                }&DG_sosao=${star || ''}&SP_id=${idProduct}`,
             )
 
             .then((res) => {
-                console.log(res.data.result);
+                console.log(res.data);
                 setEvaluate(res.data.result);
+                setNumberValue(res.data.number);
             })
             .catch(() => {
                 console.log('loi khong the show product');
             });
-    }, [star]);
+    }, [star, idProduct]);
 
+    //take name product
     useEffect(() => {
         axios
             .get(
@@ -55,12 +60,13 @@ function SellerShopReviews() {
             });
     }, []);
 
+    //take number star
     useEffect(() => {
         axios
             .get(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/evaluate/show/star?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DG_sosao=${star || ''}`,
+                }&DG_sosao=${star || ''}&SP_id=${idProduct}`,
             )
 
             .then((res) => {
@@ -74,7 +80,7 @@ function SellerShopReviews() {
             .catch(() => {
                 console.log('loi khong the show product');
             });
-    }, [star]);
+    }, [star, idProduct]);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -282,6 +288,39 @@ function SellerShopReviews() {
         setStar('1');
     }
 
+    const handleChoseNameProduct = (id, name) => {
+        console.log('name pr', id);
+        setIdProduct(id);
+        setNameValue(name);
+        const formAddress = document.getElementById('H8sVZh');
+        formAddress.style.display = 'none';
+    };
+
+    const handleOpenFormIcon = () => {
+        const iconDown = document.getElementById('Izrgn0');
+        const iconUp = document.getElementById('Izrgn1');
+        const formAddress = document.getElementById('H8sVZh');
+
+        iconDown.style.display = 'none';
+        iconUp.style.display = 'flex';
+        formAddress.style.display = 'flex';
+        // if (userVaule !== undefined && userVaule.MTS_diachi !== undefined) {
+        //     const inputValue = document.getElementById('ChI2Nx_92k3pl');
+
+        //     inputValue.defaultValue = ctyVaule;
+        // }
+    };
+
+    const handleCloseFormIcon = () => {
+        const iconDown = document.getElementById('Izrgn0');
+        const iconUp = document.getElementById('Izrgn1');
+        const formAddress = document.getElementById('H8sVZh');
+
+        iconDown.style.display = 'flex';
+        iconUp.style.display = 'none';
+        formAddress.style.display = 'none';
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('rating')}>
@@ -384,34 +423,41 @@ function SellerShopReviews() {
                                                             className={cx('ChI2Nx_92k3pl')}
                                                             type="text"
                                                             placeholder="Chọn tên sản phẩm..."
-                                                            defaultValue={''}
+                                                            defaultValue={nameValue}
                                                             // onChange={(e) => setCtyVaule(e.target.value)}
-                                                            // onFocus={() => handleOpenFormIcon()}
+                                                            onFocus={() => handleOpenFormIcon()}
                                                         />
                                                         <FontAwesomeIcon
                                                             id="Izrgn0"
                                                             className={cx('Izrgn0')}
                                                             icon={faSortDown}
-                                                            // onClick={() => handleOpenFormIcon()}
+                                                            onClick={() => handleOpenFormIcon()}
                                                         />
                                                         <FontAwesomeIcon
                                                             id="Izrgn1"
                                                             className={cx('Izrgn1')}
                                                             icon={faSortUp}
-                                                            // onClick={() => handleCloseFormIcon()}
+                                                            onClick={() => handleCloseFormIcon()}
                                                         />
                                                     </div>
                                                 </div>
                                                 <div id="H8sVZh" className={cx('H8sVZh')}>
-                                                    <div id="aox-Gc1" className={cx('aox-Gc1')}>
+                                                    <div
+                                                        id="aox-Gc1"
+                                                        className={cx('aox-Gc1')}
+                                                        onBlur={() => handleCloseFormIcon()}
+                                                    >
                                                         {nameProduct !== ''
                                                             ? nameProduct.map((review, index) => (
                                                                   <div
                                                                       key={index}
                                                                       className={cx('Pcd7He')}
-                                                                      //   onClick={() =>
-                                                                      //       handleClickDistrict(city.ProvinceID, city.ProvinceName)
-                                                                      //   }
+                                                                      onClick={() =>
+                                                                          handleChoseNameProduct(
+                                                                              review.SP_id,
+                                                                              review.SP_ten,
+                                                                          )
+                                                                      }
                                                                   >
                                                                       {review.SP_ten}
                                                                   </div>
@@ -421,6 +467,9 @@ function SellerShopReviews() {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className={cx('lHCRVE')}>
+                                        {numberValue !== '' && numberValue !== undefined ? numberValue : '0'} Đánh Giá
                                     </div>
                                 </div>
                             </div>

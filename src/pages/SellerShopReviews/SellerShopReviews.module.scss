@@ -759,7 +759,7 @@
     }
 
     .shopee-tabs__nav {
-        margin-bottom: 16px;
+        //margin-bottom: 16px;
         position: relative;
         font-size: 14px;
         line-height: 16px;
@@ -1402,9 +1402,10 @@
 
     .lHCVqO {
         position: relative;
-        padding-top: 15px;
         height: 100%;
         box-sizing: border-box;
+        display: flex;
+        padding: 15px 30px;
     }
 
     .iWBSHn {
@@ -1487,7 +1488,7 @@
         border-radius: 2px;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.14);
         background-color: #fff;
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: stretch;
     }
@@ -1622,5 +1623,11 @@
         color: #222;
         border: 0;
         resize: none;
+    }
+
+    .lHCRVE {
+        font-size: 1.8rem;
+        color: #111010;
+        font-weight: 700;
     }
 }
