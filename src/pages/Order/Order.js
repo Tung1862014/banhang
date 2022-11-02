@@ -84,26 +84,37 @@ function Order() {
                     }
 
                     //sumnumber += 1;
-                    if (res.data.results[i].product.SP_gia.toString().length > 6) {
-                        price +=
+                    if (
+                        res.data.results[i].product.SP_gia.toString().length > 6 &&
+                        res.data.results[i].promotion !== 0
+                    ) {
+                        price += Number(
                             res.data.results[i].product.SP_gia *
-                            res.data.results[i].TTDH_soluong *
-                            ((100 - res.data.results[i].product.SP_khuyenmai) / 100);
-                    } else {
+                                ((100 - res.data.results[i].promotion.KM_phantram) / 100) *
+                                res.data.results[i].TTDH_soluong,
+                        );
+                    } else if (
+                        res.data.results[i].product.SP_gia.toString().length > 6 &&
+                        res.data.results[i].promotion === 0
+                    ) {
+                        price += Number(res.data.results[i].product.SP_gia * res.data.results[i].TTDH_soluong);
+                    } else if (res.data.results[i].promotion !== 0) {
                         price +=
                             Number(
                                 Math.round(
                                     formatCash(
                                         res.data.results[i].product.SP_gia *
-                                            ((100 - res.data.results[i].product.SP_khuyenmai) / 100),
+                                            ((100 - res.data.results[i].promotion.KM_phantram) / 100),
                                     ),
                                 )
                                     .toFixed(3)
                                     .replace('.', ''),
                             ) * res.data.results[i].TTDH_soluong;
+                    } else {
+                        price += res.data.results[i].product.SP_gia * res.data.results[i].TTDH_soluong;
                     }
                 }
-                //console.log('sellerArr', sellerArr);
+                console.log('sellerArr price', price);
                 if (sellerArr.length > 0) {
                     setSellerClientId((prev) => {
                         const newSeller = [...prev, ClientId];
@@ -206,22 +217,28 @@ function Order() {
         console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                if (orderValue[i].product.SP_gia.toString().length > 6) {
+                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0) {
                     prices +=
                         orderValue[i].product.SP_gia *
                         orderValue[i].TTDH_soluong *
-                        ((100 - orderValue[i].product.SP_khuyenmai) / 100);
-                } else {
+                        ((100 - orderValue[i].promotion.KM_phantram) / 100);
+                } else if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion === 0) {
+                    prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
+                } else if (orderValue[i].promotion !== 0) {
                     prices +=
                         Number(
                             Math.round(
                                 formatCash(
-                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].product.SP_khuyenmai) / 100),
+                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].promotion.KM_phantram) / 100),
                                 ),
                             )
                                 .toFixed(3)
                                 .replace('.', ''),
                         ) * orderValue[i].TTDH_soluong;
+                } else {
+                    prices +=
+                        Number(Math.round(formatCash(orderValue[i].product.SP_gia)).toFixed(3).replace('.', '')) *
+                        orderValue[i].TTDH_soluong;
                 }
             }
             if (i === orderValue.length - 1) {
@@ -243,22 +260,26 @@ function Order() {
         //console.log('sell', sell);
         for (let i = 0; i < orderValue.length; i++) {
             if (sell === orderValue[i].NB_id) {
-                if (orderValue[i].product.SP_gia.toString().length > 6) {
+                if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0) {
                     prices +=
                         orderValue[i].product.SP_gia *
                         orderValue[i].TTDH_soluong *
-                        ((100 - orderValue[i].product.SP_khuyenmai) / 100);
-                } else {
+                        ((100 - orderValue[i].promotion.KM_phantram) / 100);
+                } else if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion === 0) {
+                    prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
+                } else if (orderValue[i].promotion !== 0) {
                     prices +=
                         Number(
                             Math.round(
                                 formatCash(
-                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].product.SP_khuyenmai) / 100),
+                                    orderValue[i].product.SP_gia * ((100 - orderValue[i].promotion.KM_phantram) / 100),
                                 ),
                             )
                                 .toFixed(3)
                                 .replace('.', ''),
                         ) * orderValue[i].TTDH_soluong;
+                } else {
+                    prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
                 }
             }
             if (i === orderValue.length - 1) {
@@ -457,6 +478,44 @@ function Order() {
         return arr;
     };
 
+    //Take price product and promotion
+    const handleTakePriceProduct = (sell) => {
+        console.log('PriceAndPromotion', sell);
+        let prices = [];
+        for (let i = 0; i < orderValue.length; i++) {
+            if (sell === orderValue[i].NB_id) {
+                prices.push(orderValue[i].product.SP_gia);
+            }
+        }
+        return prices;
+    };
+    //take promotion of product
+    const handleTakePromotionProduct = (sell) => {
+        console.log('PriceAndPromotion', sell);
+        let promotions = [];
+        for (let i = 0; i < orderValue.length; i++) {
+            if (sell === orderValue[i].NB_id) {
+                if (orderValue[i].promotion !== 0) {
+                    promotions.push(orderValue[i].promotion.KM_phantram);
+                } else {
+                    promotions.push(0);
+                }
+            }
+        }
+        return promotions;
+    };
+
+    const handleTakeIdProduct = (sell) => {
+        console.log('PriceAndPromotion', sell);
+        let idProduct = [];
+        for (let i = 0; i < orderValue.length; i++) {
+            if (sell === orderValue[i].NB_id) {
+                idProduct.push(orderValue[i].product.SP_id);
+            }
+        }
+        return idProduct;
+    };
+
     const handleOrderCustomer = () => {
         axios
             .post(
@@ -575,6 +634,9 @@ function Order() {
                                                 DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
                                                 DH_ngay: YMD,
                                                 DH_trangthaiTT: 1,
+                                                TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                                                TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                                                SP_id: handleTakeIdProduct(sellerValue[j]),
                                             })
                                             .then((res) => {
                                                 console.log('insert order', res.data);
@@ -768,6 +830,9 @@ function Order() {
                                                     : '0',
                                             DH_ngay: YMD,
                                             DH_trangthaiTT: 2,
+                                            TTDH_gia: handleTakePriceProduct(sellerValue[index]),
+                                            TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
+                                            SP_id: handleTakeIdProduct(sellerValue[index]),
                                         })
                                         .then((res) => {
                                             console.log('', res.data);
@@ -1475,22 +1540,25 @@ function Order() {
                                                                     <div className={cx('_4MGXB1')}>
                                                                         ₫
                                                                         {order.product.SP_gia !== undefined &&
-                                                                        order.product.SP_gia.toString().length > 6
+                                                                        order.product.SP_gia.toString().length > 6 &&
+                                                                        order.promotion !== 0
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
                                                                                       ((100 -
-                                                                                          order.product.SP_khuyenmai) /
+                                                                                          order.promotion.KM_phantram) /
                                                                                           100),
                                                                               )
-                                                                            : Math.round(
+                                                                            : order.promotion !== 0
+                                                                            ? Math.round(
                                                                                   formatCash(
                                                                                       order.product.SP_gia *
                                                                                           ((100 -
-                                                                                              order.product
-                                                                                                  .SP_khuyenmai) /
+                                                                                              order.promotion
+                                                                                                  .KM_phantram) /
                                                                                               100),
                                                                                   ),
-                                                                              ).toFixed(3)}
+                                                                              ).toFixed(3)
+                                                                            : formatCash(order.product.SP_gia)}
                                                                     </div>
                                                                     <div className={cx('_4MGXB1')}>
                                                                         x{order.TTDH_soluong}
@@ -1498,29 +1566,36 @@ function Order() {
                                                                     <div className={cx('_4MGXB1_8fgmps')}>
                                                                         ₫
                                                                         {order.product.SP_gia !== undefined &&
-                                                                        order.product.SP_gia.toString().length > 6
+                                                                        order.product.SP_gia.toString().length > 6 &&
+                                                                        order.promotion !== 0
                                                                             ? formatCash(
                                                                                   order.product.SP_gia *
                                                                                       ((100 -
-                                                                                          order.product.SP_khuyenmai) /
+                                                                                          order.promotion.KM_phantram) /
                                                                                           100) *
                                                                                       order.TTDH_soluong,
                                                                               )
-                                                                            : formatCash(
+                                                                            : order.promotion !== 0
+                                                                            ? formatCash(
                                                                                   Number(
                                                                                       Math.round(
                                                                                           formatCash(
                                                                                               order.product.SP_gia *
                                                                                                   ((100 -
-                                                                                                      order.product
-                                                                                                          .SP_khuyenmai) /
+                                                                                                      order.promotion
+                                                                                                          .KM_phantram) /
                                                                                                       100),
                                                                                           ),
                                                                                       )
                                                                                           .toFixed(3)
                                                                                           .replace('.', ''),
                                                                                   ) * order.TTDH_soluong,
+                                                                              )
+                                                                            : formatCash(
+                                                                                  order.product.SP_gia *
+                                                                                      order.TTDH_soluong,
                                                                               )}
+                                                                        ,
                                                                     </div>
                                                                 </div>
                                                             </div>

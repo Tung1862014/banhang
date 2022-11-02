@@ -29,6 +29,8 @@ function Detail() {
     const [numberValue, setNumberValue] = useState(1);
     const [imageValue, setImageValue] = useState('');
     const [checkAddOfCart, setCheckAddOfCart] = useState(false);
+    ////////////////////////////////////////////////////////////////
+    const [testDatePromotion, setTestDatePromotion] = useState(false);
 
     console.log('promotion', promotion);
 
@@ -47,24 +49,58 @@ function Detail() {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/productdetail/detail/product?SP_id=${resultId}`)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setProduct(res.data.results[0]);
                 setEvaluation(res.data.evaluation);
                 setEvaluationNum(res.data.evaluationNum);
                 setEvaluationStar(res.data.evaluationStar);
                 setPromotion(res.data.promotion[0]);
+
+                if (res.data.promotion[0] !== undefined) {
+                    let date1 = new Date(takeDateNow('true'));
+                    let datefrom = new Date(takeDateNow(res.data.promotion[0].KM_tungay));
+                    let dateto = new Date(takeDateNow(res.data.promotion[0].KM_denngay));
+                    if (date1 >= datefrom && date1 <= dateto) {
+                        setTestDatePromotion(true);
+                    }
+                    // console.log('date1', date1);
+                }
             })
             .catch((error) => {
                 console.log('loi');
             });
     }, [detailProductValueReducer]);
 
+    function takeDateNow(date) {
+        let dateValue;
+        if (date !== 'true') {
+            dateValue = new Date(date);
+        } else {
+            dateValue = new Date();
+        }
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
     useEffect(() => {
         if (product !== '') {
             axios
                 .get(`${process.env.REACT_APP_URL_NODEJS}/productdetail/product/show/all?NB_id=${product.NB_id}`)
                 .then((res) => {
-                    console.log(res.data.results);
+                    console.log('productdetail', res.data.results);
                     setProductValue(res.data.results);
                 })
                 .catch((error) => {
@@ -193,6 +229,26 @@ function Detail() {
         const action = DetailProduct(resultId);
         dispatchSignIn(action);
     };
+
+    function takeDate(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + '-' + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + '-' + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + '-' + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
+    }
+
     return (
         <div className={cx('wrapper')}>
             {checkAddOfCart && (
@@ -376,7 +432,7 @@ function Detail() {
                                 <div className={cx('flex-column_38g6so')}>
                                     <div className={cx('items-center-price')}>
                                         <div className={cx('items-center-price_34BHKe')}>
-                                            {promotion !== undefined ? (
+                                            {promotion !== undefined && testDatePromotion ? (
                                                 <div className={cx('_2yjfFH')}>
                                                     ₫{product !== '' && formatCash(product.SP_gia)}
                                                 </div>
@@ -387,13 +443,14 @@ function Detail() {
                                             <div className={cx('items-center-price')}>
                                                 {product.SP_gia !== undefined &&
                                                 product.SP_gia.toString().length > 6 &&
-                                                promotion !== undefined ? (
+                                                promotion !== undefined &&
+                                                testDatePromotion ? (
                                                     <div className={cx('')}>
                                                         {formatCash(
                                                             product.SP_gia * ((100 - promotion.KM_phantram) / 100),
                                                         )}
                                                     </div>
-                                                ) : promotion !== undefined ? (
+                                                ) : promotion !== undefined && testDatePromotion ? (
                                                     <div className={cx('_2Shl1j')}>
                                                         ₫
                                                         {Math.round(
@@ -402,15 +459,30 @@ function Detail() {
                                                             ),
                                                         ).toFixed(3)}
                                                     </div>
-                                                ) : (
+                                                ) : product.SP_gia !== undefined ? (
                                                     <div className={cx('_2Shl1j')}>₫{formatCash(product.SP_gia)}</div>
-                                                )}
-
-                                                {promotion !== undefined ? (
-                                                    <div className={cx('_3PlIlX')}>{promotion.KM_phantram}% giảm</div>
                                                 ) : (
                                                     ''
                                                 )}
+
+                                                {testDatePromotion && promotion !== undefined ? (
+                                                    <div className={cx('_3PlIlX')}>
+                                                        {promotion.KM_phantram}% giảm Từ ngày:{' '}
+                                                        {takeDate(promotion.KM_tungay)} - đến ngày:{' '}
+                                                        {takeDate(promotion.KM_denngay)}
+                                                    </div>
+                                                ) : (
+                                                    ''
+                                                )}
+
+                                                {/* {promotion !== undefined ? (
+                                                    <div className={cx('_3PlIlX')}>
+                                                        Từ ngày: {takeDate(promotion.KM_tungay)} - đến ngày:
+                                                        {takeDate(promotion.KM_denngay)}
+                                                    </div>
+                                                ) : (
+                                                    ''
+                                                )} */}
                                             </div>
                                         </div>
                                     </div>

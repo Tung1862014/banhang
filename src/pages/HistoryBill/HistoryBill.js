@@ -839,8 +839,8 @@ function HistoryBill() {
                                                                                     </div>
                                                                                     <div className={cx('QRFJX')}>
                                                                                         <div>
-                                                                                            {order.product
-                                                                                                .SP_khuyenmai !== 0 ? (
+                                                                                            {order.TTDH_phantram !==
+                                                                                            0 ? (
                                                                                                 <span
                                                                                                     className={cx(
                                                                                                         'd12Axb',
@@ -848,8 +848,7 @@ function HistoryBill() {
                                                                                                 >
                                                                                                     ₫
                                                                                                     {formatCash(
-                                                                                                        order.product
-                                                                                                            .SP_gia,
+                                                                                                        order.TTDH_gia,
                                                                                                     )}
                                                                                                 </span>
                                                                                             ) : (
@@ -861,32 +860,31 @@ function HistoryBill() {
                                                                                                 )}
                                                                                             >
                                                                                                 ₫
-                                                                                                {order.product
-                                                                                                    .SP_gia !==
+                                                                                                {order.TTDH_gia !==
                                                                                                     undefined &&
-                                                                                                order.product.SP_gia.toString()
+                                                                                                order.TTDH_gia.toString()
                                                                                                     .length > 6
                                                                                                     ? formatCash(
-                                                                                                          order.product
-                                                                                                              .SP_gia *
+                                                                                                          order.TTDH_gia *
                                                                                                               ((100 -
-                                                                                                                  order
-                                                                                                                      .product
-                                                                                                                      .SP_khuyenmai) /
+                                                                                                                  order.TTDH_phantram) /
                                                                                                                   100),
                                                                                                       )
-                                                                                                    : Math.round(
+                                                                                                    : order.TTDH_phantram !==
+                                                                                                      0
+                                                                                                    ? Math.round(
                                                                                                           formatCash(
-                                                                                                              order
-                                                                                                                  .product
-                                                                                                                  .SP_gia *
+                                                                                                              order.TTDH_gia *
                                                                                                                   ((100 -
                                                                                                                       order
                                                                                                                           .product
                                                                                                                           .SP_khuyenmai) /
                                                                                                                       100),
                                                                                                           ),
-                                                                                                      ).toFixed(3)}
+                                                                                                      ).toFixed(3)
+                                                                                                    : formatCash(
+                                                                                                          order.TTDH_gia,
+                                                                                                      )}
                                                                                             </span>
                                                                                         </div>
                                                                                     </div>

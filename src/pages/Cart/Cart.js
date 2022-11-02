@@ -205,15 +205,21 @@ function Cart() {
         if (number - sellnumber > Number(inpurId.value)) {
             inpurId.value = Number(inpurId.value);
             let prices = 0;
-            if (price.toString().length > 6) {
-                prices = formatCash(Number(price * ((100 - promotion) / 100)) * Number(inpurId.value));
-            } else {
+            if (price.toString().length > 6 && promotion !== 0) {
+                prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
+            } else if (price.toString().length > 6 && promotion === 0) {
+                prices = formatCash(Number(price) * Number(inpurId.value));
+            } else if (promotion !== 0) {
                 prices = formatCash(
                     Number(
-                        Math.round(formatCash(price * ((100 - promotion) / 100)))
+                        Math.round(formatCash(price * ((100 - promotion.KM_phantram) / 100)))
                             .toFixed(3)
                             .replace('.', ''),
                     ) * Number(inpurId.value),
+                );
+            } else {
+                prices = formatCash(
+                    Number(Math.round(formatCash(price)).toFixed(3).replace('.', '')) * Number(inpurId.value),
                 );
             }
 
@@ -391,7 +397,7 @@ function Cart() {
                                                                                 order.TTDH_id,
                                                                                 index,
                                                                                 order.product.SP_gia,
-                                                                                order.product.SP_khuyenmai,
+                                                                                order.promotion,
                                                                                 order.product.SP_soluong,
                                                                                 order.product.SP_soluongban,
                                                                             )
