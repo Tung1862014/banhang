@@ -380,7 +380,7 @@ function SidebarAdmin() {
                                     <ul id="sidebar-submenu-quangba" className={cx('sidebar-submenu-shop')}>
                                         <li className={cx('sidebar-submenu-item')}>
                                             <Link
-                                                to="/admin/advertise/seller=all"
+                                                to="/admin/advertise=all"
                                                 id="sidebar-submenu-item-link1-quangba"
                                                 className={cx('sidebar-submenu-item-link1-shop')}
                                                 onClick={handleClickAdvertise}

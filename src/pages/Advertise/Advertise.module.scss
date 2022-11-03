@@ -93,7 +93,7 @@
     min-width: 0;
     height: 50px;
     display: flex;
-    width: 400px;
+    width: 100%;
     -webkit-tap-highlight-color: transparent;
     // background-color: aquamarine;
 }
@@ -239,7 +239,7 @@
 }
 
 .td_table-name {
-    width: 200px;
+    width: 340px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -281,7 +281,7 @@
     justify-content: center;
 }
 .td_table-name-sp {
-    width: 200px;
+    width: 340px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -299,7 +299,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     position: relative;
-    margin-left: 5px;
+    margin-left: 52px;
 }
 
 //Link

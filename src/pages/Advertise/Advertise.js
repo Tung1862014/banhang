@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Advertise.module.scss';
+import AdvertisePage from './AdvertisePage';
 
 const cx = classNames.bind(styles);
 
@@ -51,7 +52,7 @@ function Advertise() {
                         <div className={cx('shopee-tabs__nav-tabs')}>
                             <div className={cx('shopee-tabs__nav-tab')}>
                                 <Link
-                                    to="/admin/advertise/seller=all"
+                                    to="/admin/advertise=all"
                                     id="tabs__tab1"
                                     className={cx('tabs__tab1')}
                                     // onClick={handlerClickAll}
@@ -80,7 +81,7 @@ function Advertise() {
                     </div>
                     <div className={cx('grid-right')}>
                         <Link
-                            to={'/seller/product/insert'}
+                            to={'/admin/add/advertise'}
                             className={cx('add-action')}
                             //onClick={() => handleAddProduct()}
                         >
@@ -94,70 +95,7 @@ function Advertise() {
                     </div>
                 </div>
             </div>
-            <div className={cx('product-list-container')}>
-                <div className={cx('product-list-table')}>
-                    <div className={cx('shopee-table__header-container')}>
-                        <table className={cx('shopee-table__header')}>
-                            <thead>
-                                <tr className={cx('table__header')}>
-                                    <td width="30">
-                                        <input
-                                            type="checkbox"
-                                            name="check"
-                                            id="checkAll"
-                                            className="checkbox"
-                                            // onChange={() => handleCheckAll()}
-                                        />
-                                    </td>
-                                    <td className={cx('td_table-name')}>Thông tin</td>
-                                    <td className={cx('td_table-name-number')}>Mô tả</td>
-                                    <td className={cx('td_table-name-note')}>Hoạt động</td>
-                                </tr>
-                                {advertiseValue !== ''
-                                    ? advertiseValue.map((info, index) => (
-                                          <tr key={index} className={cx('table__header-conten')}>
-                                              <td>
-                                                  <input
-                                                      type="checkbox"
-                                                      name="id[]"
-                                                      id={`checkId`}
-                                                      className={cx('checkbox')}
-                                                      value="<?=$bien['idsp']?>"
-                                                      //   onChange={() => handleChecked(pro.ND_id)}
-                                                  />
-                                              </td>
-                                              <td className={cx('td_table-name-sp')}>
-                                                  <img src={info.QB_imge} alt="" width="50" height="50" />
-                                                  <span className={cx('name-product-sp')}>
-                                                      {
-                                                          'Áo khoác nỉ hoodie nam nữ form rộng,Áo khoác Sheeryan form rộng nỉ dày có mũ unisex ulzzang hàn quốc hot mới nhất 2022'
-                                                      }
-                                                  </span>
-                                              </td>
-                                              <td className={cx('td_table-name-sp')}>
-                                                  <span className={cx('name-product-sp')}>
-                                                      {
-                                                          'Áo khoác nỉ hoodie nam nữ form rộng,Áo khoác Sheeryan form rộng nỉ dày có mũ unisex ulzzang hàn quốc hot mới nhất 2022'
-                                                      }
-                                                  </span>
-                                              </td>
-
-                                              <td className={cx('td_table-name-note')}>
-                                                  <span
-                                                      className={cx('td_table-name-note-button')}
-                                                      //   onClick={() => handleNote(pro.ND_id, pro.ND_ghichu)}
-                                                  >
-                                                      Cập nhật
-                                                  </span>
-                                              </td>
-                                          </tr>
-                                      ))
-                                    : ''}
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <AdvertisePage data={advertiseValue} />
         </div>
     );
 }
