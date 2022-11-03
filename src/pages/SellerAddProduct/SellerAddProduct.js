@@ -256,13 +256,33 @@ function SellerAddProduct() {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
+        } else if (weight !== '' && !Number.isInteger(Number(weight))) {
+            toast.warning('Trọng phải là số!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
         } else if (number === '') {
             toast.warning('Số lượng không được bỏ trông!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
+        } else if (number !== '' && !Number.isInteger(Number(number))) {
+            toast.warning('Số lượng phải là số!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
         } else if (price === '') {
             toast.warning('Giá không được bỏ trông!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (price !== '' && !Number.isInteger(Number(price))) {
+            toast.warning('Giá phải là số nguyên!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (price !== '' && price !== undefined && price.toString().length < 4) {
+            toast.warning('Giá chưa hợp lệ!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
@@ -306,6 +326,29 @@ function SellerAddProduct() {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
+        } else if (
+            dateFromValue !== '' &&
+            dateToValue !== '' &&
+            handleTestDate(dateFromValue, dateToValue) &&
+            promotion !== '' &&
+            !Number.isInteger(Number(promotion))
+        ) {
+            toast.warning('Phần trăm khuyến mãi phải là số!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (
+            dateFromValue !== '' &&
+            dateToValue !== '' &&
+            handleTestDate(dateFromValue, dateToValue) &&
+            promotion !== '' &&
+            Number.isInteger(Number(promotion)) &&
+            Number(promotion) > 50
+        ) {
+            toast.warning('Phần trăm khuyến mãi không vượt quá 50% giá trị sản phẩm!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
         } else {
             const formData = new FormData();
             formData.append('image', coverImage[0]);
@@ -329,7 +372,9 @@ function SellerAddProduct() {
                     console.log(res.data);
                 })
                 .catch((err) => {});
-            // handleDescribeProduct(describeProduct, weight);
+            if (dateFromValue !== '' && dateToValue !== '' && promotion !== '') {
+                handlePromotionProduct(dateFromValue, dateToValue, promotion);
+            }
             setTimeout(() => handleImageProduct(image), 900);
             setTimeout(() => handleImageProductTwo(imageTwo), 1200);
             setTimeout(() => handleImageProductThree(imageThree), 1400);
@@ -341,16 +386,21 @@ function SellerAddProduct() {
         }
     }
 
-    // function handleDescribeProduct(describeProduct, weight) {
-    //     axios
-    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/describe`, {
-    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
-    //             MTSP_noidung: describeProduct,
-    //             TL_trongluong: weight,
-    //         })
-    //         .then((res) => {})
-    //         .catch((err) => {});
-    // }
+    function handlePromotionProduct(dateFromValue, dateToValue, promotion) {
+        axios
+            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerproduct/product/add/promotion`, {
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                KM_tungay: dateFromValue,
+                KM_denngay: dateToValue,
+                KM_phantram: promotion,
+            })
+            .then((res) => {
+                console.log('add promotion', res.data);
+            })
+            .catch((err) => {
+                console.log('loi promotion');
+            });
+    }
 
     function handleImageProduct(image) {
         const formData = new FormData();
@@ -629,6 +679,9 @@ function SellerAddProduct() {
                                 </div>
                                 <div className={cx('grid-detail')}>
                                     <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                        <span>Khuyến mãi:</span>
+                                    </div>
+                                    <div className={cx('edit-label-detail')} data-education-trigger-key="name">
                                         <span>Từ ngày</span>
                                     </div>
                                     <div className={cx('edit-input-detail-money-promotion-date')}>
@@ -674,7 +727,7 @@ function SellerAddProduct() {
                                         </div>
                                     </div>
                                     <div className={cx('edit-label-detail')} data-education-trigger-key="name">
-                                        <span>Khuyến mãi</span>
+                                        <span>Phần trăm</span>
                                     </div>
                                     <div className={cx('edit-input-detail-money-promotion-date')}>
                                         <div className={cx('shopee-input')}>

@@ -13,8 +13,9 @@ const cx = classNames.bind(styles);
 
 function SellerUpdateProduct() {
     const [productUpdate, setProductUpdate] = useState('');
+    // const [productPromotion, setProductPromotion] = useState('');
     //const [describeUpdate, setDescribeUpdate] = useState('');
-    const [describeWeightUpdate, setDescribeWeightUpdate] = useState('');
+    //const [describeWeightUpdate, setDescribeWeightUpdate] = useState('');
     const [productCategoryUpdate, setProductCategoryUpdate] = useState('');
     const [image1Update, setImage1Update] = useState('');
     const [image2Update, setImage2Update] = useState('');
@@ -26,6 +27,8 @@ function SellerUpdateProduct() {
     const [weight, setWeight] = useState('');
     const [number, setNumber] = useState('');
     const [price, setPrice] = useState('');
+    const [dateFromValue, setDateFromValue] = useState('');
+    const [dateToValue, setDateToValue] = useState('');
     const [promotion, setPromotion] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState('');
@@ -35,7 +38,7 @@ function SellerUpdateProduct() {
     //const [checkWeight, setCheckWeight] = useState('');
     const [checkCategory, setCheckCategory] = useState('');
 
-    console.log(describeWeightUpdate);
+    //console.log('productPromotion', productPromotion);
     ///take data product
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -47,34 +50,42 @@ function SellerUpdateProduct() {
                 SP_id: result,
             })
             .then((res) => {
-                // console.log(res.data.result[0]);
+                console.log('data product..', res.data.promotion[0]);
                 if (productUpdate === '') {
                     setProductUpdate(res.data.result[0]);
                     setProductCategoryUpdate(res.data.category[0]);
+                    if (res.data.promotion[0] !== undefined) {
+                        //setProductPromotion(res.data.promotion[0]);
+                        setDateFromValue(takeDateNow(res.data.promotion[0].KM_tungay));
+                        setDateToValue(takeDateNow(res.data.promotion[0].KM_denngay));
+                        setPromotion(res.data.promotion[0].KM_phantram);
+                    } else {
+                        //setProductPromotion(0);
+                    }
                 }
             })
             .catch((err) => {});
     }, [productUpdate]);
 
     //Take motasanpham
-    useEffect(() => {
-        const pathId = window.location.pathname.toString();
-        const result = pathId.slice(24);
-        // console.log('Page path is:  ' + result);
-        axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/describe`, {
-                NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                SP_id: result,
-            })
-            .then((res) => {
-                console.log(res.data.result[0]);
-                if (productUpdate === '') {
-                    //setDescribeUpdate(res.data.result[0]);
-                    setDescribeWeightUpdate(res.data.weight[0]);
-                }
-            })
-            .catch((err) => {});
-    }, [productUpdate]);
+    // useEffect(() => {
+    //     const pathId = window.location.pathname.toString();
+    //     const result = pathId.slice(24);
+    //     // console.log('Page path is:  ' + result);
+    //     axios
+    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/show/describe`, {
+    //             NB_id: JSON.parse(GetCookie('seller')).ND_id,
+    //             SP_id: result,
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data.result[0]);
+    //             if (productUpdate === '') {
+    //                 //setDescribeUpdate(res.data.result[0]);
+    //                 setDescribeWeightUpdate(res.data.weight[0]);
+    //             }
+    //         })
+    //         .catch((err) => {});
+    // }, [productUpdate]);
 
     //Take image
     useEffect(() => {
@@ -253,6 +264,8 @@ function SellerUpdateProduct() {
         weight,
         number,
         price,
+        dateFromValue,
+        dateToValue,
         promotion,
         category,
         image,
@@ -262,102 +275,149 @@ function SellerUpdateProduct() {
         if (window.confirm('Bạn đồng ý thay đổi') === true) {
             const pathId = window.location.pathname.toString();
             const resultId = pathId.slice(24);
-            if (price !== '' && price !== undefined && price.toString().length < 4) {
+            if (weight !== '' && weight !== undefined && !Number.isInteger(Number(weight))) {
+                toast.warning('Trọng lượng phải là số nguyên!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (number !== '' && number !== undefined && !Number.isInteger(Number(number))) {
+                toast.warning('Số lượng lượng phải là số nguyên!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (price !== '' && price !== undefined && !Number.isInteger(Number(price))) {
+                toast.warning('Giá phải là chữ số!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (price !== '' && price !== undefined && price.toString().length < 4) {
                 toast.warning('Giá chưa hợp lệ!', {
                     position: toast.POSITION.TOP_CENTER,
                     className: `${cx('toast-message')}`,
                 });
-            } else if (coverImage === '') {
-                axios
-                    .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
-                        SP_id: resultId,
-                        NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                        SP_ten: nameProduct !== '' ? nameProduct : '',
-                        SP_soluong: number !== '' ? number : '',
-                        SP_gia: price !== '' ? price : '',
-                        SP_khuyenmai: promotion !== '' ? promotion : '',
-                        DM_id: category !== '' ? category : '',
-                        SP_trongluong: weight !== '' ? Number(weight) : '',
-                        SP_mota: describeProduct !== '' ? describeProduct : '',
-                    })
-                    .then((res) => {
-                        if (res.data.update === true) {
-                            toast.success('Cập nhật sản phẩm thành công', {
-                                position: toast.POSITION.TOP_CENTER,
-                                className: `${cx('toast-message')}`,
-                            });
-                        }
-                        console.log('data', res.data);
-                    })
-                    .catch((err) => {
-                        console.log('loi');
-                    });
+            } else if (dateFromValue !== '' && dateToValue !== '' && !handleTestDate(dateFromValue, dateToValue)) {
+                toast.warning('Ngày bắt đầu và ngày kết thúc chưa hợp lệ!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (
+                dateFromValue !== '' &&
+                dateToValue !== '' &&
+                handleTestDate(dateFromValue, dateToValue) &&
+                promotion !== '' &&
+                !Number.isInteger(Number(promotion))
+            ) {
+                toast.warning('Phần trăm khuyến mãi phải là số!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (
+                dateFromValue !== '' &&
+                dateToValue !== '' &&
+                handleTestDate(dateFromValue, dateToValue) &&
+                promotion !== '' &&
+                Number.isInteger(Number(promotion)) &&
+                Number(promotion) > 50
+            ) {
+                toast.warning('Phần trăm khuyến mãi không vượt quá 50% giá trị sản phẩm!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
             } else {
-                const formData = new FormData();
-                formData.append('image', coverImage[0]);
-                formData.append('SP_id', resultId);
-                formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                formData.append('SP_ten', nameProduct);
-                formData.append('SP_soluong', number);
-                formData.append('SP_gia', price);
-                formData.append('SP_khuyenmai', promotion);
-                formData.append('DM_id', category);
-                formData.append('SP_trongluong', weight);
-                formData.append('SP_mota', describeProduct);
-                axios({
-                    method: 'POST',
-                    url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
-                    data: formData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                    .then((res) => {
-                        if (res.data.update === true) {
-                            toast.success('Cập nhật sản phẩm thành công', {
-                                position: toast.POSITION.TOP_CENTER,
-                                className: `${cx('toast-message')}`,
-                            });
-                        }
-                        console.log('data image', res.data);
-                    })
-                    .catch((err) => {});
-            }
+                // else if (coverImage === '') {
+                //     axios
+                //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
+                //             SP_id: resultId,
+                //             NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                //             SP_ten: nameProduct !== '' ? nameProduct : '',
+                //             SP_soluong: number !== '' ? number : '',
+                //             SP_gia: price !== '' ? price : '',
+                //             SP_khuyenmai: promotion !== '' ? promotion : '',
+                //             DM_id: category !== '' ? category : '',
+                //             SP_trongluong: weight !== '' ? Number(weight) : '',
+                //             SP_mota: describeProduct !== '' ? describeProduct : '',
+                //         })
+                //         .then((res) => {
+                //             if (res.data.update === true) {
+                //                 toast.success('Cập nhật sản phẩm thành công', {
+                //                     position: toast.POSITION.TOP_CENTER,
+                //                     className: `${cx('toast-message')}`,
+                //                 });
+                //             }
+                //             console.log('data', res.data);
+                //         })
+                //         .catch((err) => {
+                //             console.log('loi');
+                //         });
+                // } else {
+                //     const formData = new FormData();
+                //     formData.append('image', coverImage[0]);
+                //     formData.append('SP_id', resultId);
+                //     formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                //     formData.append('SP_ten', nameProduct);
+                //     formData.append('SP_soluong', number);
+                //     formData.append('SP_gia', price);
+                //     formData.append('SP_khuyenmai', promotion);
+                //     formData.append('DM_id', category);
+                //     formData.append('SP_trongluong', weight);
+                //     formData.append('SP_mota', describeProduct);
+                //     axios({
+                //         method: 'POST',
+                //         url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
+                //         data: formData,
+                //         headers: {
+                //             'Content-Type': 'multipart/form-data',
+                //         },
+                //     })
+                //         .then((res) => {
+                //             if (res.data.update === true) {
+                //                 toast.success('Cập nhật sản phẩm thành công', {
+                //                     position: toast.POSITION.TOP_CENTER,
+                //                     className: `${cx('toast-message')}`,
+                //                 });
+                //             }
+                //             console.log('data image', res.data);
+                //         })
+                //         .catch((err) => {});
+                // }
 
-            // if (describeProduct !== '') {
-            //     handleDescribeProduct(describeProduct, weight);
-            // }
-            if (image !== '') {
-                handleImageProduct(image);
-            }
-            if (imageTwo !== '') {
-                handleImageTwoProduct(imageTwo);
-            }
-            if (imageThree !== '') {
-                handleImageThreeProduct(imageThree);
+                if (dateFromValue !== '' && dateToValue !== '') {
+                    handleDescribeProduct(dateFromValue, dateToValue, promotion);
+                }
+
+                // if (image !== '') {
+                //     handleImageProduct(image);
+                // }
+                // if (imageTwo !== '') {
+                //     handleImageTwoProduct(imageTwo);
+                // }
+                // if (imageThree !== '') {
+                //     handleImageThreeProduct(imageThree);
+                // }
             }
         }
     }
 
-    // function handleDescribeProduct(describeProduct, weight) {
-    //     const pathId = window.location.pathname.toString();
-    //     const resultId = pathId.slice(24);
-    //     axios
-    //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/describe`, {
-    //             SP_id: resultId,
-    //             NB_id: JSON.parse(GetCookie('seller')).NB_id,
-    //             MTSP_noidung: describeProduct,
-    //             TL_id: weight,
-    //         })
-    //         .then((res) => {
-    //             console.log(res.data);
-    //             toast.success('Lưu sản phẩm thành công', {
-    //                 position: toast.POSITION.TOP_CENTER,
-    //                 className: `${cx('toast-message')}`,
-    //             });
-    //         })
-    //         .catch((err) => {});
-    // }
+    function handleDescribeProduct(dateFromValue, dateToValue, promotion) {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(24);
+        axios
+            .put(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/promotion`, {
+                SP_id: resultId,
+                NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                KM_tungay: dateFromValue,
+                KM_denngay: dateToValue,
+                KM_phantram: promotion,
+            })
+            .then((res) => {
+                console.log(res.data);
+                toast.success('Lưu sản phẩm thành công', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            })
+            .catch((err) => {});
+    }
 
     function handleImageProduct(image) {
         const pathId = window.location.pathname.toString();
@@ -412,6 +472,39 @@ function SellerUpdateProduct() {
         })
             .then((res) => {})
             .catch((err) => {});
+    }
+
+    function takeDateNow(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    function handleTestDate(fromValue, toValue) {
+        console.log('handleTestDate', promotion);
+        if (promotion !== 0) {
+            let datefrom = new Date(fromValue);
+            let dateto = new Date(toValue);
+            if (datefrom <= dateto) {
+                return true;
+            } else {
+                return false;
+            }
+            // console.log('date1', date1);
+        }
     }
 
     return (
@@ -572,6 +665,7 @@ function SellerUpdateProduct() {
                                 </div>
                             </div>
                         </div>
+
                         <div className={cx('grid-detail')}>
                             <div className={cx('edit-label-detail')} data-education-trigger-key="name">
                                 <div className={cx('mandatory')}>
@@ -605,40 +699,6 @@ function SellerUpdateProduct() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
-                                <div className={cx('mandatory')}>
-                                    <span className={cx('mandatory-icon')}>*</span>
-                                </div>
-                                <span>Khuyến mãi</span>
-                            </div>
-                            <div className={cx('edit-input-detail-money-promotion')}>
-                                <div className={cx('shopee-input')}>
-                                    <div className={cx('shopee-input__inner')}>
-                                        <div className={cx('shopee-input__prefix')}>
-                                            %<span className={cx('shopee-input__prefix-split')}></span>
-                                        </div>
-                                        <input
-                                            type="text"
-                                            placeholder="Nhập vào"
-                                            size="large"
-                                            resize="none"
-                                            rows="2"
-                                            minrows="2"
-                                            restrictiontype="input"
-                                            max="Infinity"
-                                            min="-Infinity"
-                                            defaultValue={productUpdate.SP_khuyenmai}
-                                            className={cx('shopee-input__input')}
-                                            onChange={(e) => setPromotion(e.target.value)}
-                                        />
-                                        {/* <div className={cx('shopee-input__suffix')}>
-                                    <span className={cx('shopee-input__suffix-split')}></span>69/120
-                                </div> */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={cx('grid-detail')}>
                             <div className={cx('edit-label')} data-education-trigger-key="name">
                                 <div className={cx('mandatory')}>
                                     <span className={cx('mandatory-icon')}>*</span>
@@ -672,6 +732,85 @@ function SellerUpdateProduct() {
                                         Khô cá Basa
                                     </option> */}
                                 </select>
+                            </div>
+                        </div>
+                        <div className={cx('grid-detail')}>
+                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <span>Khuyến mãi</span>
+                            </div>
+                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <span>Từ ngày</span>
+                            </div>
+                            <div className={cx('edit-input-detail-money-promotion-date')}>
+                                <div className={cx('shopee-input')}>
+                                    <div className={cx('shopee-input__inner')}>
+                                        <div className={cx('shopee-input__prefix')}>
+                                            <span className={cx('shopee-input__prefix-split')}></span>
+                                        </div>
+                                        <input
+                                            type="date"
+                                            placeholder="Nhập vào"
+                                            value={dateFromValue !== '' ? dateFromValue : ''}
+                                            className={cx('shopee-input__input')}
+                                            onChange={(e) => setDateFromValue(e.target.value)}
+                                        />
+                                        {/* <div className={cx('shopee-input__suffix')}>
+                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                    </div> */}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <div className={cx('mandatory')}></div> <span>Đến ngày</span>
+                            </div>
+                            <div className={cx('edit-input-detail-money-promotion-date')}>
+                                <div className={cx('shopee-input')}>
+                                    <div className={cx('shopee-input__inner')}>
+                                        <div className={cx('shopee-input__prefix')}>
+                                            <span className={cx('shopee-input__prefix-split')}></span>
+                                        </div>
+                                        <input
+                                            type="date"
+                                            placeholder="Nhập vào"
+                                            defaultValue={dateToValue !== '' ? dateToValue : ''}
+                                            className={cx('shopee-input__input')}
+                                            onChange={(e) => setDateToValue(e.target.value)}
+                                        />
+
+                                        {/* <div className={cx('shopee-input__suffix')}>
+                                        <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                    </div> */}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={cx('edit-label-detail')} data-education-trigger-key="name">
+                                <span>Phần trăm</span>
+                            </div>
+                            <div className={cx('edit-input-detail-money-promotion-date')}>
+                                <div className={cx('shopee-input')}>
+                                    <div className={cx('shopee-input__inner')}>
+                                        <div className={cx('shopee-input__prefix')}>
+                                            %<span className={cx('shopee-input__prefix-split')}></span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            placeholder="Nhập vào"
+                                            size="large"
+                                            resize="none"
+                                            rows="2"
+                                            minrows="2"
+                                            restrictiontype="input"
+                                            max="Infinity"
+                                            min="-Infinity"
+                                            defaultValue={promotion !== '' ? promotion : ''}
+                                            className={cx('shopee-input__input')}
+                                            onChange={(e) => setPromotion(e.target.value)}
+                                        />
+                                        {/* <div className={cx('shopee-input__suffix')}>
+                                    <span className={cx('shopee-input__suffix-split')}></span>69/120
+                                </div> */}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className={cx('grid-detail-image')}>
@@ -816,6 +955,8 @@ function SellerUpdateProduct() {
                             weight,
                             number,
                             price,
+                            dateFromValue,
+                            dateToValue,
                             promotion,
                             category,
                             image,
