@@ -300,6 +300,26 @@ function SellerUpdateProduct() {
                     position: toast.POSITION.TOP_CENTER,
                     className: `${cx('toast-message')}`,
                 });
+            } else if (dateFromValue === '' && dateToValue !== '') {
+                toast.warning('Ngày bắt đầu không được bỏ trống!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (dateFromValue !== '' && dateToValue === '') {
+                toast.warning('Ngày kết thúc không được bỏ trống!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
+            } else if (
+                dateFromValue !== '' &&
+                dateToValue !== '' &&
+                handleTestDate(dateFromValue, dateToValue) &&
+                promotion === ''
+            ) {
+                toast.warning('Phần trăm khuyến mãi không được bỏ trống!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    className: `${cx('toast-message')}`,
+                });
             } else if (
                 dateFromValue !== '' &&
                 dateToValue !== '' &&
@@ -324,76 +344,76 @@ function SellerUpdateProduct() {
                     className: `${cx('toast-message')}`,
                 });
             } else {
-                // else if (coverImage === '') {
-                //     axios
-                //         .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
-                //             SP_id: resultId,
-                //             NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                //             SP_ten: nameProduct !== '' ? nameProduct : '',
-                //             SP_soluong: number !== '' ? number : '',
-                //             SP_gia: price !== '' ? price : '',
-                //             SP_khuyenmai: promotion !== '' ? promotion : '',
-                //             DM_id: category !== '' ? category : '',
-                //             SP_trongluong: weight !== '' ? Number(weight) : '',
-                //             SP_mota: describeProduct !== '' ? describeProduct : '',
-                //         })
-                //         .then((res) => {
-                //             if (res.data.update === true) {
-                //                 toast.success('Cập nhật sản phẩm thành công', {
-                //                     position: toast.POSITION.TOP_CENTER,
-                //                     className: `${cx('toast-message')}`,
-                //                 });
-                //             }
-                //             console.log('data', res.data);
-                //         })
-                //         .catch((err) => {
-                //             console.log('loi');
-                //         });
-                // } else {
-                //     const formData = new FormData();
-                //     formData.append('image', coverImage[0]);
-                //     formData.append('SP_id', resultId);
-                //     formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
-                //     formData.append('SP_ten', nameProduct);
-                //     formData.append('SP_soluong', number);
-                //     formData.append('SP_gia', price);
-                //     formData.append('SP_khuyenmai', promotion);
-                //     formData.append('DM_id', category);
-                //     formData.append('SP_trongluong', weight);
-                //     formData.append('SP_mota', describeProduct);
-                //     axios({
-                //         method: 'POST',
-                //         url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
-                //         data: formData,
-                //         headers: {
-                //             'Content-Type': 'multipart/form-data',
-                //         },
-                //     })
-                //         .then((res) => {
-                //             if (res.data.update === true) {
-                //                 toast.success('Cập nhật sản phẩm thành công', {
-                //                     position: toast.POSITION.TOP_CENTER,
-                //                     className: `${cx('toast-message')}`,
-                //                 });
-                //             }
-                //             console.log('data image', res.data);
-                //         })
-                //         .catch((err) => {});
-                // }
+                if (coverImage === '') {
+                    axios
+                        .post(`${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update`, {
+                            SP_id: resultId,
+                            NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                            SP_ten: nameProduct !== '' ? nameProduct : '',
+                            SP_soluong: number !== '' ? number : '',
+                            SP_gia: price !== '' ? price : '',
+
+                            DM_id: category !== '' ? category : '',
+                            SP_trongluong: weight !== '' ? Number(weight) : '',
+                            SP_mota: describeProduct !== '' ? describeProduct : '',
+                        })
+                        .then((res) => {
+                            if (res.data.update === true) {
+                                toast.success('Cập nhật sản phẩm thành công', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    className: `${cx('toast-message')}`,
+                                });
+                            }
+                            console.log('data', res.data);
+                        })
+                        .catch((err) => {
+                            console.log('loi');
+                        });
+                } else {
+                    const formData = new FormData();
+                    formData.append('image', coverImage[0]);
+                    formData.append('SP_id', resultId);
+                    formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                    formData.append('SP_ten', nameProduct);
+                    formData.append('SP_soluong', number);
+                    formData.append('SP_gia', price);
+                    formData.append('SP_khuyenmai', promotion);
+                    formData.append('DM_id', category);
+                    formData.append('SP_trongluong', weight);
+                    formData.append('SP_mota', describeProduct);
+                    axios({
+                        method: 'POST',
+                        url: `${process.env.REACT_APP_URL_NODEJS}/sellerupdateproduct/product/update/image`,
+                        data: formData,
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                        .then((res) => {
+                            if (res.data.update === true) {
+                                toast.success('Cập nhật sản phẩm thành công', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    className: `${cx('toast-message')}`,
+                                });
+                            }
+                            console.log('data image', res.data);
+                        })
+                        .catch((err) => {});
+                }
 
                 if (dateFromValue !== '' && dateToValue !== '') {
                     handleDescribeProduct(dateFromValue, dateToValue, promotion);
                 }
 
-                // if (image !== '') {
-                //     handleImageProduct(image);
-                // }
-                // if (imageTwo !== '') {
-                //     handleImageTwoProduct(imageTwo);
-                // }
-                // if (imageThree !== '') {
-                //     handleImageThreeProduct(imageThree);
-                // }
+                if (image !== '') {
+                    handleImageProduct(image);
+                }
+                if (imageTwo !== '') {
+                    handleImageTwoProduct(imageTwo);
+                }
+                if (imageThree !== '') {
+                    handleImageThreeProduct(imageThree);
+                }
             }
         }
     }

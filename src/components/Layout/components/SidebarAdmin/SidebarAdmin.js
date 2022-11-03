@@ -39,6 +39,8 @@ function SidebarAdmin() {
             handleClickCategory1Statistical();
         } else if (resultId === 'seller=all') {
             handleClickCategory1Shop();
+        } else if (resultId === 'se/seller=all') {
+            handleClickAdvertise();
         }
         // } else if (resultId === '/product/@all') {
         //     handleClickCategory1();
@@ -158,6 +160,8 @@ function SidebarAdmin() {
     const handleClickCategory1Shop = () => {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
+        const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
+
         // const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         // const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
         // const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
@@ -167,6 +171,7 @@ function SidebarAdmin() {
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'red';
+        itemLink1Infmation.style.color = 'var(--text-color)';
         // itemLink1Order.style.color = 'var(--text-color)';
         // itemLink2Order.style.color = 'var(--text-color)';
         // itemLink1.style.color = 'var(--text-color)';
@@ -178,6 +183,8 @@ function SidebarAdmin() {
     const handleClickCategory1Statistical = () => {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
+        const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
+
         // const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         // const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
         // const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
@@ -187,12 +194,23 @@ function SidebarAdmin() {
 
         itemLink1Statistical.style.color = 'red';
         itemLink1Shop.style.color = 'var(--text-color)';
+        itemLink1Infmation.style.color = 'var(--text-color)';
         // itemLink1Order.style.color = 'var(--text-color)';
         // itemLink2Order.style.color = 'var(--text-color)';
         // itemLink1.style.color = 'var(--text-color)';
         // itemLink2.style.color = 'var(--text-color)';
         // itemLink1Weight.style.color = 'var(--text-color)';
         // itemLink1evaluate.style.color = 'var(--text-color)';
+    };
+
+    const handleClickAdvertise = () => {
+        const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
+        const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
+
+        itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink1Shop.style.color = 'var(--text-color)';
+        itemLink1Infmation.style.color = 'red';
     };
 
     // const handleClickCategory1Weight = () => {
@@ -325,6 +343,49 @@ function SidebarAdmin() {
                                                 onClick={handleClickCategory1Shop}
                                             >
                                                 <span>Chủ gian hàng</span>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="quangba" className={cx('sidebar-menu-box')}>
+                                    <div
+                                        className={cx('sidebar-menu-item-shop')}
+                                        onClick={() =>
+                                            handleCheckIcon(
+                                                'sidebar-menu-item-collapse-down-shop',
+                                                'sidebar-menu-item-collapse-up-shop',
+                                                'sidebar-submenu-shop',
+                                            )
+                                        }
+                                    >
+                                        {/* <img
+                                            src="https://cf.shopee.vn/file/6b1ffcde1ff12621088110f419a5283a"
+                                            alt=""
+                                            className={cx('sidebar-menu-item-icon')}
+                                        /> */}
+                                        <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faUsers} />
+                                        <span className={cx('sidebar-menu-item-text')}>Quản lý thông tin</span>
+                                        <span className={cx('sidebar-menu-item-space')}></span>
+                                        <FontAwesomeIcon
+                                            id="sidebar-menu-item-collapse-down-quangba"
+                                            className={cx('sidebar-menu-item-collapse-down-shop')}
+                                            icon={faAngleDown}
+                                        />
+                                        <FontAwesomeIcon
+                                            id="sidebar-menu-item-collapse-up-quangba"
+                                            className={cx('sidebar-menu-item-collapse-up-shop')}
+                                            icon={faAngleUp}
+                                        />
+                                    </div>
+                                    <ul id="sidebar-submenu-quangba" className={cx('sidebar-submenu-shop')}>
+                                        <li className={cx('sidebar-submenu-item')}>
+                                            <Link
+                                                to="/admin/advertise/seller=all"
+                                                id="sidebar-submenu-item-link1-quangba"
+                                                className={cx('sidebar-submenu-item-link1-shop')}
+                                                onClick={handleClickAdvertise}
+                                            >
+                                                <span>Thông tin</span>
                                             </Link>
                                         </li>
                                     </ul>
