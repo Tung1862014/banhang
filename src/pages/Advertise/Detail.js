@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import styles from './Advertise.module.scss';
@@ -184,7 +185,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                             onChange={() => handleCheckAll()}
                                         />
                                     </td>
-                                    <td className={cx('td_table-name')}>Thông tin</td>
+                                    <td className={cx('td_table-name')}>Làng nghề</td>
                                     <td className={cx('td_table-name')}>Mô tả</td>
                                     <td className={cx('td_table-name-note')}>Hoạt động</td>
                                 </tr>
@@ -215,12 +216,13 @@ function Detail({ currentItems, clickPageCheck }) {
                                               </td>
 
                                               <td className={cx('td_table-name-note')}>
-                                                  <span
+                                                  <Link
+                                                      to={`/admin/update/advertise=${info.QB_id}`}
                                                       className={cx('td_table-name-note-button')}
                                                       //   onClick={() => handleNote(pro.ND_id, pro.ND_ghichu)}
                                                   >
                                                       Cập nhật
-                                                  </span>
+                                                  </Link>
                                               </td>
                                           </tr>
                                       ))

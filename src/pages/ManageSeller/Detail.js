@@ -165,8 +165,10 @@ function Detail({ currentItems, clickPageCheck }) {
 
         noteModalContainer.style.display = 'flex';
         setUserId(id);
-        if (value !== undefined && value !== '') {
+        if (value !== undefined && value !== 'false') {
             setNoteValue(value);
+        } else {
+            setNoteValue('');
         }
     };
 
@@ -256,7 +258,7 @@ function Detail({ currentItems, clickPageCheck }) {
                             <div className={cx('note-modal__header-inner-title')}>
                                 <textarea
                                     className={cx('note-container')}
-                                    defaultValue={noteValue}
+                                    defaultValue={noteValue !== '' ? noteValue : ''}
                                     onChange={(e) => setNoteValue(e.target.value)}
                                 ></textarea>
                             </div>
@@ -335,7 +337,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                                   {pro.ND_ghichu === '' || pro.ND_ghichu === undefined ? (
                                                       <span
                                                           className={cx('td_table-name-note-button')}
-                                                          onClick={() => handleNote(pro.ND_id)}
+                                                          onClick={() => handleNote(pro.ND_id, 'false')}
                                                       >
                                                           Thêm
                                                       </span>

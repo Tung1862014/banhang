@@ -300,6 +300,11 @@
     -webkit-line-clamp: 2;
     position: relative;
     margin-left: 52px;
+
+    p {
+        padding: 0px;
+        margin: 0px;
+    }
 }
 
 //Link

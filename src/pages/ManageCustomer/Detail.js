@@ -166,8 +166,10 @@ function Detail({ currentItems, clickPageCheck }) {
 
         noteModalContainer.style.display = 'flex';
         setUserId(id);
-        if (value !== undefined && value !== '') {
+        if (value !== undefined && value !== 'false') {
             setNoteValue(value);
+        } else {
+            setNoteValue('');
         }
     };
 
@@ -336,7 +338,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                                   {pro.ND_ghichu === '' || pro.ND_ghichu === undefined ? (
                                                       <span
                                                           className={cx('td_table-name-note-button')}
-                                                          onClick={() => handleNote(pro.ND_id)}
+                                                          onClick={() => handleNote(pro.ND_id, 'false')}
                                                       >
                                                           Thêm
                                                       </span>

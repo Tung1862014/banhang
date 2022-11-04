@@ -90,7 +90,7 @@ function Advertise() {
                                     <path d="M17.5 2.5h-3v12h-12v3h12v12h3v-12h12v-3h-12v-12z"></path>
                                 </svg>
                             </i>
-                            <span className={cx('shopee-add-title')}>Thêm 1 thông tin vùng</span>
+                            <span className={cx('shopee-add-title')}>Thêm 1 thông tin làng nghề</span>
                         </Link>
                     </div>
                 </div>
