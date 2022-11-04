@@ -1,0 +1,42 @@
+.wrapper {
+    width: 100%;
+    padding: 20px 10px;
+    font-family: 'Lexend Deca', Arial, Helvetica, sans-serif;
+}
+
+.into-body {
+}
+
+.title-container {
+    h1 {
+        text-transform: capitalize;
+    }
+}
+
+.title-content {
+    text-indent: 30px;
+}
+
+.title-body {
+    text-indent: 30px;
+}
+
+.small-title {
+    h5 {
+        font-size: 1.8rem;
+        text-indent: 70px;
+    }
+}
+
+.ul-small-title {
+    list-style: none;
+    li {
+        text-indent: 90px;
+    }
+}
+
+.title-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

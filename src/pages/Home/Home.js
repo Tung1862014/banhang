@@ -7,6 +7,7 @@ import HomePage from './HomePage';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Link } from 'react-router-dom';
 //import GetCookie from '~/components/Hook/GetCookies';
 //import { useSelector } from 'react-redux';
 
@@ -18,6 +19,7 @@ function Home() {
     //console.log(product.length);
     const [orderValue, setOrderValue] = useState('');
     const [billId, setBillId] = useState('');
+    const [advertiseValue, setAdvertiseValue] = useState('');
 
     // const siginList = useSelector((state) => state.numberProduct.list);
     // console.log('billId: ', billId);
@@ -117,6 +119,18 @@ function Home() {
         }
     }, [billId]);
 
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/show/advertise`)
+            .then((res) => {
+                console.log('Advertise', res.data.numbers);
+                setAdvertiseValue(res.data.advertise);
+            })
+            .catch(() => {
+                console.log('loi khong the show product');
+            });
+    }, []);
+
     // useEffect(() => {
     //     // let url;
     //     // if (clickSuggestions === 'suggestions' || clickSuggestions === '') {
@@ -213,27 +227,29 @@ function Home() {
                 <div className={cx('image-carousel__item-list-wrapper')}>
                     <ul className={cx('image-carousel__item-lists')}>
                         <Slider {...settings}>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
-                            <li className={cx('image-carousel__item')}>
-                                <div className={cx('product-recommend-items__item-wrapper')}>gfdgdfg</div>
-                            </li>
+                            {advertiseValue !== '' &&
+                                advertiseValue.map((advertise, index) => (
+                                    <li className={cx('image-carousel__item')}>
+                                        <div className={cx('product-recommend-items__item-wrapper')}>
+                                            <Link
+                                                to={`/introduce/advartise=${advertise.QB_id}`}
+                                                className={cx('product-recommend-image')}
+                                            >
+                                                <img
+                                                    className={cx('product-recommend-advertise-image')}
+                                                    src={advertise.QB_image}
+                                                    alt=""
+                                                />
+                                            </Link>
+                                            <Link
+                                                to={`/introduce/advartise=${advertise.QB_id}`}
+                                                className={cx('advertise-title')}
+                                            >
+                                                {advertise.QB_tieude}
+                                            </Link>
+                                        </div>
+                                    </li>
+                                ))}
                         </Slider>
                     </ul>
                 </div>

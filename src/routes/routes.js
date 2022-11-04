@@ -4,6 +4,7 @@ import { DefaultLayoutAdmin } from '~/components/Layout';
 
 import Home from '~/pages/Home';
 import Introduce from '~/pages/Introduce';
+import IntroduceAdvertise from '~/pages/IntroduceAdvertise';
 // import SanPham from '~/pages/SanPham';
 import Shop from '~/pages/Shop';
 import Order from '~/pages/Order';
@@ -36,6 +37,7 @@ import SettingSeller from '~/pages/SettingSeller';
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
     { path: '/introduce', component: Introduce, layout: HeaderOnly },
+    { path: '/introduce/advartise=:id', component: IntroduceAdvertise, layout: HeaderOnly },
     //{ path: '/search', component: Search, layout: HeaderOnly },
     { path: '/search/keyword:id', component: Search, layout: HeaderOnly },
     // { path: config.routes.sanpham, component: SanPham },

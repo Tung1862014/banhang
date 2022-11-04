@@ -353,15 +353,15 @@ function SellerCategory() {
     //         });
     // }
 
-    function formatCash(str) {
-        return str
-            .toString()
-            .split('')
-            .reverse()
-            .reduce((prev, next, index) => {
-                return (index % 3 ? next : next + '.') + prev;
-            });
-    }
+    // function formatCash(str) {
+    //     return str
+    //         .toString()
+    //         .split('')
+    //         .reverse()
+    //         .reduce((prev, next, index) => {
+    //             return (index % 3 ? next : next + '.') + prev;
+    //         });
+    // }
 
     const handleLookCategory = (id) => {
         console.log('id: ', id);
