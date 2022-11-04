@@ -12,7 +12,7 @@ function HomePage(props) {
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
     const [clickPageCheck, setClickPageCheck] = useState(false);
-    const itemsPerPage = 6;
+    const itemsPerPage = 20;
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);

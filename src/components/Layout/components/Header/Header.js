@@ -302,7 +302,7 @@ function Header() {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
                         // console.log('pass', res.data.pass);
-                        toast.error('Tài khoản của bạn đã bị khóa', {
+                        toast.error(`Tài khoản của bạn đã bị khóa. ${res.data.note}!`, {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });
@@ -342,7 +342,7 @@ function Header() {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
                         // console.log('pass', res.data.pass);
-                        toast.error('Tài khoản của bạn đã bị khóa', {
+                        toast.error(`Tài khoản của bạn đã bị khóa. Lý do: ${res.data.note}!`, {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });

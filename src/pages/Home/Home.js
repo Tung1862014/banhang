@@ -229,7 +229,7 @@ function Home() {
                         <Slider {...settings}>
                             {advertiseValue !== '' &&
                                 advertiseValue.map((advertise, index) => (
-                                    <li className={cx('image-carousel__item')}>
+                                    <li key={index} className={cx('image-carousel__item')}>
                                         <div className={cx('product-recommend-items__item-wrapper')}>
                                             <Link
                                                 to={`/introduce/advartise=${advertise.QB_id}`}
