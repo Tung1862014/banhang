@@ -21,6 +21,7 @@ function Home() {
     const [billId, setBillId] = useState('');
     const [advertiseValue, setAdvertiseValue] = useState('');
     const [checkPromotion, setCheckPromotion] = useState(false);
+    const [visible, setVisible] = useState(3);
 
     // const siginList = useSelector((state) => state.numberProduct.list);
     // console.log('billId: ', billId);
@@ -277,6 +278,18 @@ function Home() {
         }
     }
 
+    const handleShowMoreItems = () => {
+        setVisible((prev) => prev + 3);
+        let items = visible + 3;
+        handleShowButtonMoreItem(items);
+    };
+
+    const handleShowButtonMoreItem = (items) => {
+        if (product.length <= items) {
+            const showItem = document.getElementById('btn_btn-solid-primary');
+            showItem.style.display = 'none';
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('image-carousel_DBnDYq')}>
@@ -333,111 +346,125 @@ function Home() {
             <div className={cx('stardust-tabs-panels')}>
                 <div className={cx('stardust-tabs-panels__panel')}>
                     {!checkPromotion ? (
-                        <div id="_6wTCb6-suggestions" className={cx('_6wTCb6')}>
-                            {product !== '' &&
-                                product.map(
-                                    (prod, index) =>
-                                        prod !== null && (
-                                            <div key={index} className={cx('_4beVMw')}>
-                                                <Link to={`/detail/product/nameid${prod.SP_id}`}>
-                                                    <div className={cx('yZLQT4')}>
-                                                        <div className={cx('uA1waf_4QQ4Ir')}>
-                                                            <div className={cx('UB2waf')}>
-                                                                <div className={cx('n-CE6j-iRsxV')}>
-                                                                    <img
-                                                                        width="invalid-value"
-                                                                        height="invalid-value"
-                                                                        alt="Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng đơn giản tiện dụng giá rẻ HDS-NTK04"
-                                                                        className={cx('Vz6gJ3-edy5hG')}
-                                                                        src={
-                                                                            prod.SP_image ||
-                                                                            'https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn'
-                                                                        }
-                                                                    />
-                                                                    {prod.promotion !== 0 &&
-                                                                    prod.promotion !== undefined &&
-                                                                    handleTestDate(prod.promotion) ? (
-                                                                        <div className={cx('vmaKHl')}>
-                                                                            <div className={cx('C2-vN-dCT7bq-Od5TJM')}>
-                                                                                <span className={cx('percent')}>
-                                                                                    {prod.promotion.KM_phantram}%
-                                                                                </span>
-                                                                                <span className={cx('mXP-A3')}>
-                                                                                    giảm
-                                                                                </span>
+                        <>
+                            <div id="_6wTCb6-suggestions" className={cx('_6wTCb6')}>
+                                {product !== '' &&
+                                    product.slice(0, visible).map(
+                                        (prod, index) =>
+                                            prod !== null && (
+                                                <div key={index} className={cx('_4beVMw')}>
+                                                    <Link to={`/detail/product/nameid${prod.SP_id}`}>
+                                                        <div className={cx('yZLQT4')}>
+                                                            <div className={cx('uA1waf_4QQ4Ir')}>
+                                                                <div className={cx('UB2waf')}>
+                                                                    <div className={cx('n-CE6j-iRsxV')}>
+                                                                        <img
+                                                                            width="invalid-value"
+                                                                            height="invalid-value"
+                                                                            alt="Kệ để màn hình máy tính - laptop để bàn bằng gỗ trơn kiểu dáng đơn giản tiện dụng giá rẻ HDS-NTK04"
+                                                                            className={cx('Vz6gJ3-edy5hG')}
+                                                                            src={
+                                                                                prod.SP_image ||
+                                                                                'https://cf.shopee.vn/file/0e06d428fbc48666580e0f535a208637_tn'
+                                                                            }
+                                                                        />
+                                                                        {prod.promotion !== 0 &&
+                                                                        prod.promotion !== undefined &&
+                                                                        handleTestDate(prod.promotion) ? (
+                                                                            <div className={cx('vmaKHl')}>
+                                                                                <div
+                                                                                    className={cx(
+                                                                                        'C2-vN-dCT7bq-Od5TJM',
+                                                                                    )}
+                                                                                >
+                                                                                    <span className={cx('percent')}>
+                                                                                        {prod.promotion.KM_phantram}%
+                                                                                    </span>
+                                                                                    <span className={cx('mXP-A3')}>
+                                                                                        giảm
+                                                                                    </span>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    ) : (
-                                                                        ''
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                            <div className={cx('W3bJfG')}>
-                                                                <div className={cx('qUEEG4')}>
-                                                                    <div className={cx('hPc1Pf')}>
-                                                                        <div className={cx('vc0PvV-AxYdVM')}>
-                                                                            {prod.SP_ten}
-                                                                        </div>
+                                                                        ) : (
+                                                                            ''
+                                                                        )}
                                                                     </div>
                                                                 </div>
-                                                                <div className={cx('imdVqB_2fuFWg')}>
-                                                                    {prod.promotion !== 0 &&
-                                                                    prod.promotion !== undefined ? (
-                                                                        <div className={cx('WSVId4-fepoRf')}>
-                                                                            <span className={cx('Fea6JM')}>₫</span>
-                                                                            <span className={cx('j0vBz2')}>
-                                                                                {/* {formatCash(
-                                                                                    prod.SP_gia *
-                                                                                        ((100 -
-                                                                                            prod.promotion
-                                                                                                .KM_phantram) /
-                                                                                            100),
-                                                                                )} */}
-                                                                                {prod.SP_gia !== undefined &&
-                                                                                prod.SP_gia.toString().length > 6 &&
-                                                                                prod.promotion !== 0 &&
-                                                                                handleTestDate(prod.promotion)
-                                                                                    ? formatCash(
-                                                                                          prod.SP_gia *
-                                                                                              ((100 -
-                                                                                                  prod.promotion
-                                                                                                      .KM_phantram) /
-                                                                                                  100),
-                                                                                      )
-                                                                                    : prod.promotion !== 0 &&
-                                                                                      handleTestDate(prod.promotion)
-                                                                                    ? Math.round(
-                                                                                          formatCash(
+                                                                <div className={cx('W3bJfG')}>
+                                                                    <div className={cx('qUEEG4')}>
+                                                                        <div className={cx('hPc1Pf')}>
+                                                                            <div className={cx('vc0PvV-AxYdVM')}>
+                                                                                {prod.SP_ten}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className={cx('imdVqB_2fuFWg')}>
+                                                                        {prod.promotion !== 0 &&
+                                                                        prod.promotion !== undefined ? (
+                                                                            <div className={cx('WSVId4-fepoRf')}>
+                                                                                <span className={cx('Fea6JM')}>₫</span>
+                                                                                <span className={cx('j0vBz2')}>
+                                                                                    {/* {formatCash(
+                                                                                        prod.SP_gia *
+                                                                                            ((100 -
+                                                                                                prod.promotion
+                                                                                                    .KM_phantram) /
+                                                                                                100),
+                                                                                    )} */}
+                                                                                    {prod.SP_gia !== undefined &&
+                                                                                    prod.SP_gia.toString().length > 6 &&
+                                                                                    prod.promotion !== 0 &&
+                                                                                    handleTestDate(prod.promotion)
+                                                                                        ? formatCash(
                                                                                               prod.SP_gia *
                                                                                                   ((100 -
                                                                                                       prod.promotion
                                                                                                           .KM_phantram) /
                                                                                                       100),
-                                                                                          ),
-                                                                                      ).toFixed(3)
-                                                                                    : prod.SP_gia !== undefined
-                                                                                    ? formatCash(prod.SP_gia)
-                                                                                    : ''}
-                                                                            </span>
+                                                                                          )
+                                                                                        : prod.promotion !== 0 &&
+                                                                                          handleTestDate(prod.promotion)
+                                                                                        ? Math.round(
+                                                                                              formatCash(
+                                                                                                  prod.SP_gia *
+                                                                                                      ((100 -
+                                                                                                          prod.promotion
+                                                                                                              .KM_phantram) /
+                                                                                                          100),
+                                                                                              ),
+                                                                                          ).toFixed(3)
+                                                                                        : prod.SP_gia !== undefined
+                                                                                        ? formatCash(prod.SP_gia)
+                                                                                        : ''}
+                                                                                </span>
+                                                                            </div>
+                                                                        ) : (
+                                                                            ''
+                                                                        )}
+                                                                        <div className={cx('upl8wJ _82UoSS')}>
+                                                                            Đã bán {prod.SP_soluongban}
                                                                         </div>
-                                                                    ) : (
-                                                                        ''
-                                                                    )}
-                                                                    <div className={cx('upl8wJ _82UoSS')}>
-                                                                        Đã bán {prod.SP_soluongban}
                                                                     </div>
                                                                 </div>
+                                                                {/* <div className={cx('shopee-item-card__hover-footer _1X2yZq')}>
+                                                    Tìm sản phẩm tương tự
+                                                </div> */}
                                                             </div>
-                                                            {/* <div className={cx('shopee-item-card__hover-footer _1X2yZq')}>
-                                                Tìm sản phẩm tương tự
-                                            </div> */}
                                                         </div>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        ),
-                                )}
-                        </div>
+                                                    </Link>
+                                                </div>
+                                            ),
+                                    )}
+                            </div>
+                            <div id="btn_btn-solid-primary" className={cx('btn_btn-solid-primary')}>
+                                <button
+                                    className={cx('btn_btn-solid-primary-suggestions')}
+                                    onClick={handleShowMoreItems}
+                                >
+                                    Xem Thêm
+                                </button>
+                            </div>
+                        </>
                     ) : (
                         ''
                     )}

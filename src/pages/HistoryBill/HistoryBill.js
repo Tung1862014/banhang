@@ -32,6 +32,7 @@ function HistoryBill() {
     ///////////////////////////////////////////////////search
     const [searchValue, setSearchValue] = useState('');
     const [searchTextValue, setSearchTextValue] = useState('');
+    const [visible, setVisible] = useState(3);
 
     console.log('searchTextValue', searchTextValue);
     useEffect(() => {
@@ -582,6 +583,19 @@ function HistoryBill() {
         const searchId = document.getElementById('search-value-id');
         setSearchValue(searchId.value);
     };
+
+    const handleShowMoreItems = () => {
+        setVisible((prev) => prev + 3);
+        let items = visible + 3;
+        handleShowButtonMoreItem(items);
+    };
+
+    const handleShowButtonMoreItem = (items) => {
+        if (billId.length <= items) {
+            const showItem = document.getElementById('btn_btn-solid-primary');
+            showItem.style.display = 'none';
+        }
+    };
     return (
         <>
             {GetCookie('usrin') !== undefined ? (
@@ -707,7 +721,7 @@ function HistoryBill() {
                             ''
                         )}
                         {billId !== '' && orderValue.length > 0
-                            ? billId.map((bill, index) => (
+                            ? billId.slice(0, visible).map((bill, index) => (
                                   <div key={index}>
                                       <div className={cx('tF2pJg')}>
                                           <div>
@@ -967,6 +981,11 @@ function HistoryBill() {
                                   </div>
                               ))
                             : ''}
+                        <div id="btn_btn-solid-primary" className={cx('btn_btn-solid-primary')}>
+                            <button className={cx('btn_btn-solid-primary-suggestions')} onClick={handleShowMoreItems}>
+                                Xem Thêm
+                            </button>
+                        </div>
                     </div>
 
                     {/* ////////////////////////////////////////////////////////////// */}

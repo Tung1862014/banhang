@@ -26,11 +26,9 @@ const Shop = () => {
 
     //
     const [checkCategory, setCheckCategory] = useState(false);
-    const [checkPromotion, setCheckPromotion] = useState('false');
 
     //console.log(shopValue, numProduct, evaluate, categoryValue);
     console.log(chooseCategory);
-    console.log('checkPromotion shop', checkPromotion);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -61,13 +59,28 @@ const Shop = () => {
                 )
                 .then((res) => {
                     console.log('setProductValue', res.data);
-                    setProductValue(res.data.results);
+
+                    let arr = [];
+                    if (sortValue === 'promotion') {
+                        for (let i = 0; i < res.data.results.length; i++) {
+                            if (res.data.results[i].checkpromotion === 'true') {
+                                arr.push(res.data.results[i]);
+                            }
+
+                            if (i === res.data.results.length - 1) {
+                                setProductValue(arr);
+                            }
+                        }
+                    } else {
+                        setProductValue(res.data.results);
+                    }
+                    console.log('arr promotion', arr);
                 })
                 .catch((err) => {
                     console.error('loi');
                 });
         }
-    }, [chooseCategory, sortValue, priceSortValue, checkPromotion]);
+    }, [chooseCategory, sortValue, priceSortValue]);
 
     function takeDate(date) {
         const dateValue = new Date(date);
@@ -172,7 +185,6 @@ const Shop = () => {
         newproduct.style.backgroundColor = '#ee4d2d';
 
         setSortValue('promotion');
-        setCheckPromotion('true');
     };
 
     const handleCategory = (index, DM) => {
@@ -535,10 +547,7 @@ const Shop = () => {
                         </div>
                         {/* / */}
                         <div className={cx('shop-search-result-view')}>
-                            <ShopPage
-                                data={productValue}
-                                checkPromotion={checkPromotion !== '' ? checkPromotion : ''}
-                            />
+                            <ShopPage data={productValue} />
                         </div>
                     </div>
                 </div>

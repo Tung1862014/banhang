@@ -7,9 +7,13 @@ function Footer() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <div className={cx('name-project')}>dgjhjhgj</div>
-
-                <div className={cx('policy')}>dfgfdgfd</div>
+                <div className={cx('name-project')}>
+                    <div className={cx('_2ypCMv')}>
+                        <div>
+                            <div className={cx('shopee-footer-section')}>xgxdgfxdvxvx</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

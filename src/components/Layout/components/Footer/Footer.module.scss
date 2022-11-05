@@ -1,7 +1,22 @@
 @media only screen and (min-width: 740px) {
     .wrapper {
-        height: 80px;
+        height: 150px;
         width: var(--default-layout-width);
-        background-color: aqua;
+        background-color: rgb(186, 247, 247);
+    }
+
+    .name-project {
+        min-width: var(--default-layout-width);
+        border-top: 4px solid #ee4d2d;
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.54);
+        height: 150px;
+    }
+
+    ._2ypCMv {
+        position: relative;
+        bottom: 0;
+        padding-bottom: 120px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.09);
     }
 }

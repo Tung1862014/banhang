@@ -631,3 +631,37 @@
         text-decoration: underline;
     }
 }
+
+.btn_btn-solid-primary {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn_btn-solid-primary-suggestions {
+    color: #fff;
+    position: relative;
+    overflow: visible;
+    outline: 0;
+    background: #ee4d2d;
+    min-width: 80px;
+    max-width: 250px;
+    font-size: 16px;
+    height: 39px;
+    padding: 0 20px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    flex-direction: column;
+    box-sizing: border-box;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.09);
+    border-radius: 2px;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+
+    &:hover {
+        background: #f05d40;
+    }
+}

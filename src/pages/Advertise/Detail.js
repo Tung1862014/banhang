@@ -21,8 +21,8 @@ function Detail({ currentItems, clickPageCheck }) {
             const checkAll = document.getElementById('checkAll');
             checkAll.checked = false;
             for (let i = 0; i < currentItems.length; i++) {
-                let checkedId = document.getElementById(`checkId${currentItems[i].ND_id}`);
-                //console.log(checkedId.checked);
+                let checkedId = document.getElementById(`checkId${currentItems[i].QB_id}`);
+                console.log('checkedId', checkedId);
 
                 checkedId.checked = false;
             }

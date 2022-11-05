@@ -6,7 +6,7 @@ import Detail from './Detail';
 
 const cx = classNames.bind(styles);
 
-function ShopPage(props, { checkPromotion }) {
+function ShopPage(props) {
     const { data } = props;
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -25,11 +25,10 @@ function ShopPage(props, { checkPromotion }) {
         setItemOffset(newOffset);
     };
 
-    console.log('checkPromotion page', checkPromotion);
     return (
         <div className={cx('wrapper')}>
             <div className={cx('info-product')}>
-                <Detail productValue={currentItems} checkPromotion={checkPromotion} />
+                <Detail productValue={currentItems} />
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel=">>"
