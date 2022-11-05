@@ -26,9 +26,11 @@ const Shop = () => {
 
     //
     const [checkCategory, setCheckCategory] = useState(false);
+    const [checkPromotion, setCheckPromotion] = useState('false');
 
     //console.log(shopValue, numProduct, evaluate, categoryValue);
     console.log(chooseCategory);
+    console.log('checkPromotion shop', checkPromotion);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -65,7 +67,7 @@ const Shop = () => {
                     console.error('loi');
                 });
         }
-    }, [chooseCategory, sortValue, priceSortValue]);
+    }, [chooseCategory, sortValue, priceSortValue, checkPromotion]);
 
     function takeDate(date) {
         const dateValue = new Date(date);
@@ -170,6 +172,7 @@ const Shop = () => {
         newproduct.style.backgroundColor = '#ee4d2d';
 
         setSortValue('promotion');
+        setCheckPromotion('true');
     };
 
     const handleCategory = (index, DM) => {
@@ -532,7 +535,10 @@ const Shop = () => {
                         </div>
                         {/* / */}
                         <div className={cx('shop-search-result-view')}>
-                            <ShopPage data={productValue} />
+                            <ShopPage
+                                data={productValue}
+                                checkPromotion={checkPromotion !== '' ? checkPromotion : ''}
+                            />
                         </div>
                     </div>
                 </div>

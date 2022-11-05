@@ -6,7 +6,7 @@ import Detail from './Detail';
 
 const cx = classNames.bind(styles);
 
-function HomePage(props) {
+function HomePage(props, checkPromotion) {
     const { data } = props;
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -30,7 +30,7 @@ function HomePage(props) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('info-product')}>
-                <Detail product={currentItems} clickPageCheck={clickPageCheck} />
+                <Detail product={currentItems} checkPromotion={checkPromotion} clickPageCheck={clickPageCheck} />
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel="Trang kế >"
