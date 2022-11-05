@@ -21,7 +21,7 @@ function Home() {
     const [billId, setBillId] = useState('');
     const [advertiseValue, setAdvertiseValue] = useState('');
     const [checkPromotion, setCheckPromotion] = useState(false);
-    const [visible, setVisible] = useState(3);
+    const [visible, setVisible] = useState(6);
 
     // const siginList = useSelector((state) => state.numberProduct.list);
     // console.log('billId: ', billId);
@@ -279,8 +279,8 @@ function Home() {
     }
 
     const handleShowMoreItems = () => {
-        setVisible((prev) => prev + 3);
-        let items = visible + 3;
+        setVisible((prev) => prev + 6);
+        let items = visible + 6;
         handleShowButtonMoreItem(items);
     };
 
@@ -399,8 +399,7 @@ function Home() {
                                                                         </div>
                                                                     </div>
                                                                     <div className={cx('imdVqB_2fuFWg')}>
-                                                                        {prod.promotion !== 0 &&
-                                                                        prod.promotion !== undefined ? (
+                                                                        {prod.promotion !== undefined ? (
                                                                             <div className={cx('WSVId4-fepoRf')}>
                                                                                 <span className={cx('Fea6JM')}>₫</span>
                                                                                 <span className={cx('j0vBz2')}>
@@ -433,9 +432,13 @@ function Home() {
                                                                                                           100),
                                                                                               ),
                                                                                           ).toFixed(3)
-                                                                                        : prod.SP_gia !== undefined
-                                                                                        ? formatCash(prod.SP_gia)
-                                                                                        : ''}
+                                                                                        : prod.promotion === 0 &&
+                                                                                          formatCash(
+                                                                                              prod.SP_gia *
+                                                                                                  ((100 -
+                                                                                                      prod.promotion) /
+                                                                                                      100),
+                                                                                          )}
                                                                                 </span>
                                                                             </div>
                                                                         ) : (
