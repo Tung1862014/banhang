@@ -20,6 +20,7 @@ function HistoryBill() {
     const [statusClick, setStatusClick] = useState('');
     const [billId, setBillId] = useState('');
     const [billEvaluate, setBillEvaluate] = useState('');
+    const [idProductEvaluate, setIdProductEvaluate] = useState('');
 
     ///////////////////////////////////////////////
     const [IdValue, setIdValue] = useState('');
@@ -138,16 +139,22 @@ function HistoryBill() {
                 .then((res) => {
                     console.log('evaluate', res.data);
                     let evaluateArr = [];
+                    let idProductEvaluate = [];
 
                     for (let i = 0; i < res.data.result.length; i++) {
                         if (!evaluateArr.includes(res.data.result[i].DH_id)) {
                             evaluateArr.push(res.data.result[i].DH_id);
+                            idProductEvaluate.push(res.data.result[i].SP_id);
                         }
                     }
                     console.log('sellerArr', evaluateArr);
                     if (evaluateArr.length > 0) {
                         setBillEvaluate((prev) => {
                             const newSeller = [...prev, evaluateArr];
+                            return newSeller[0];
+                        });
+                        setIdProductEvaluate((prev) => {
+                            const newSeller = [...prev, idProductEvaluate];
                             return newSeller[0];
                         });
                     }
@@ -429,6 +436,7 @@ function HistoryBill() {
 
     //take id product
     const handleTakeIdProduct = (idproduct) => {
+        console.log('idproduct: ', idproduct);
         const nostar = document.getElementById('shop-popup-form__main-container');
         const star = document.getElementById('shop-popup-form__main-container-star');
         const btnFinish = document.getElementById('btn-solid-primary_wxJWI8');
@@ -468,9 +476,11 @@ function HistoryBill() {
             YMD = year + '-' + month + '-' + day;
         }
         let url;
+
+        console.log('IdValue', IdValue);
         if (billEvaluate.length > 0) {
             for (let i = 0; i < billEvaluate.length; i++) {
-                if (IdValue.toString() === billEvaluate[i].toString()) {
+                if (IdValue.toString() === billEvaluate[i].toString() && idProduct === idProductEvaluate[i]) {
                     url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/update/star/text`;
                 }
                 if (i === billEvaluate.length - 1) {

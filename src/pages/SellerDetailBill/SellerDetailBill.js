@@ -1,3 +1,5 @@
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
@@ -190,6 +192,25 @@ function SellerDetailBill() {
         }
     }
 
+    function takeDate(date) {
+        const datevalue = new Date(date);
+        let day = datevalue.getDate();
+        let month = datevalue.getMonth() + 1;
+        let year = datevalue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + '-' + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + '-' + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -369,6 +390,43 @@ function SellerDetailBill() {
                                                   ? 'Đã hủy'
                                                   : '...'}
                                           </div>{' '}
+                                      </div>
+                                  </div>
+                                  <div className={cx('section')}>
+                                      <div className={cx('header-detail')}>
+                                          <div className={cx('icon-detail')}>
+                                              <i className={cx('order-detail-title-icon')}>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                                      <path
+                                                          fillRule="evenodd"
+                                                          d="M5,2 L5,3 L3,3 L3,14 L13,14 L13,3 L11,3 L11,2 L13,2 C13.5522847,2 14,2.44771525 14,3 L14,14 C14,14.5522847 13.5522847,15 13,15 L3,15 C2.44771525,15 2,14.5522847 2,14 L2,3 C2,2.44771525 2.44771525,2 3,2 L5,2 Z M6,2 L6,3 L10,3 L10,2 L6,2 Z M6,1 L10,1 C10.5522847,1 11,1.44771525 11,2 L11,3 C11,3.55228475 10.5522847,4 10,4 L6,4 C5.44771525,4 5,3.55228475 5,3 L5,2 C5,1.44771525 5.44771525,1 6,1 Z M5.5,6 L10.5,6 C10.7761424,6 11,6.22385763 11,6.5 C11,6.77614237 10.7761424,7 10.5,7 L5.5,7 C5.22385763,7 5,6.77614237 5,6.5 C5,6.22385763 5.22385763,6 5.5,6 Z M5.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 C11,9.77614237 10.7761424,10 10.5,10 L5.5,10 C5.22385763,10 5,9.77614237 5,9.5 C5,9.22385763 5.22385763,9 5.5,9 Z"
+                                                      ></path>
+                                                  </svg>
+                                              </i>
+                                          </div>{' '}
+                                          <div className={cx('name-detail')}>Trạng thái thanh toán</div>{' '}
+                                      </div>{' '}
+                                      <div className={cx('body-detail')}>
+                                          <div>
+                                              {info.DH_trangthaiTT === 1
+                                                  ? 'Chưa thah toán'
+                                                  : info.DH_trangthaiTT === 2
+                                                  ? 'Đã thanh toán'
+                                                  : '...'}
+                                          </div>{' '}
+                                      </div>
+                                  </div>
+                                  <div className={cx('section')}>
+                                      <div className={cx('header-detail')}>
+                                          <div className={cx('icon-detail')}>
+                                              <i className={cx('order-detail-title-icon')}>
+                                                  <FontAwesomeIcon className={cx('')} icon={faCalendarDays} />
+                                              </i>
+                                          </div>{' '}
+                                          <div className={cx('name-detail')}>Ngày đặt hàng:</div>{' '}
+                                      </div>{' '}
+                                      <div className={cx('body-detail')}>
+                                          <div>{takeDate(info.DH_ngay)}</div>{' '}
                                       </div>
                                   </div>
                               </div>

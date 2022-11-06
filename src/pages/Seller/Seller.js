@@ -153,7 +153,7 @@ function Seller() {
             labels: chartListData,
             datasets: [
                 {
-                    label: 'Tổng số lượng bán',
+                    label: 'Tổng số lượng đơn hàng',
                     data: chartListNumber,
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',

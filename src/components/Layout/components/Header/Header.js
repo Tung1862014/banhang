@@ -302,10 +302,13 @@ function Header() {
                         //alert('Mật khẩu không đúng');
                         //setLoading(false);
                         // console.log('pass', res.data.pass);
+
                         toast.error(`Tài khoản của bạn đã bị khóa. ${res.data.note}!`, {
                             position: toast.POSITION.TOP_RIGHT,
                             className: `${cx('toast-message')}`,
                         });
+                        const pathId = window.location.pathname.toString();
+                        setTimeout(window.open(pathId, '_self', 1), 2000);
                     }
                 } else {
                     if (res.data.account && res.data.pass && res.data.status !== 0) {
@@ -317,9 +320,12 @@ function Header() {
                         // console.log('loginResult', res.data.result);
                         // const action = addNumberProduct(res.data.result);
                         // dispatchSignIn(action);
+
                         toast.success('Đăng nhập thành công', {
                             position: toast.POSITION.TOP_RIGHT,
                         });
+                        const pathId = window.location.pathname.toString();
+                        setTimeout(window.open(pathId, '_self', 1), 2000);
                         //window.open(`${process.env.REACT_APP_URL_FRONTEND}`, '_self', 1);
                     } else if (!res.data.account) {
                         //alert('Tài khoản không tồn tại');

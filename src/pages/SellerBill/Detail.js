@@ -20,6 +20,25 @@ function Detail({ bill }) {
             });
     }
 
+    // function takeDate(date) {
+    //     const datevalue = new Date(date);
+    //     let day = datevalue.getDate();
+    //     let month = datevalue.getMonth() + 1;
+    //     let year = datevalue.getFullYear();
+
+    //     if (month < 10 && day >= 10) {
+    //         return day + '-0' + month + '-' + year;
+    //     } else if (month < 10 && day < 10) {
+    //         return '0' + day + '-0' + month + year;
+    //     } else if (month >= 10 && day < 10) {
+    //         return '0' + day + '-' + month + '-' + year;
+    //     } else if (month >= 10 && day >= 10) {
+    //         return day + '-' + month + '-' + year;
+    //     } else {
+    //         return day + '-' + month + '-' + year;
+    //     }
+    // }
+
     return (
         <div className={cx('order-list-body')}>
             {bill[0] !== undefined
@@ -36,6 +55,9 @@ function Detail({ bill }) {
                                               <div className={cx('username-text-overflow')}>{use.ND_hoten}</div>{' '}
                                           </div>
                                       </div>
+                                      {/* <div className={cx('id-btn')}>
+                                          <span className={cx('orderid')}>Ngày: &nbsp;{takeDate(bill.DH_ngay)}</span>
+                                      </div> */}
                                       <div className={cx('id-btn')}>
                                           <span className={cx('orderid')}>ID Đơn hàng&nbsp;{bill.DH_id}</span>
                                       </div>
