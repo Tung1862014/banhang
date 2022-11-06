@@ -435,25 +435,32 @@ function SellerDetailBill() {
                                                               </div>
                                                           </div>{' '}
                                                           <div className={cx('price-detail')}>
-                                                              {formatCash(
-                                                                  pro.SP_gia * ((100 - pro.SP_khuyenmai) / 100),
-                                                              )}
+                                                              {pro.TTDH_gia.toString().length > 6
+                                                                  ? formatCash(
+                                                                        pro.TTDH_gia *
+                                                                            ((100 - pro.TTDH_phantram) / 100),
+                                                                    )
+                                                                  : Math.round(
+                                                                        formatCash(
+                                                                            pro.TTDH_gia *
+                                                                                ((100 - pro.TTDH_phantram) / 100),
+                                                                        ),
+                                                                    ).toFixed(3)}
                                                           </div>
                                                           <div className={cx('qty-detail')}>{pro.TTDH_soluong}</div>{' '}
                                                           <div className={cx('subtotal-detail')}>
-                                                              {pro.SP_gia !== undefined &&
-                                                              pro.SP_gia.toString().length > 6
+                                                              {pro.TTDH_gia.toString().length > 6
                                                                   ? formatCash(
-                                                                        pro.SP_gia *
-                                                                            ((100 - pro.SP_khuyenmai) / 100) *
+                                                                        pro.TTDH_gia *
+                                                                            ((100 - pro.TTDH_phantram) / 100) *
                                                                             pro.TTDH_soluong,
                                                                     )
                                                                   : formatCash(
                                                                         Number(
                                                                             Math.round(
                                                                                 formatCash(
-                                                                                    pro.SP_gia *
-                                                                                        ((100 - pro.SP_khuyenmai) /
+                                                                                    pro.TTDH_gia *
+                                                                                        ((100 - pro.TTDH_phantram) /
                                                                                             100),
                                                                                 ),
                                                                             )

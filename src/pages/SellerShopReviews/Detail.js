@@ -3,6 +3,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import classNames from 'classnames/bind';
+import { useState } from 'react';
 // import { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import styles from './SellerShopReviews.module.scss';
@@ -10,6 +11,8 @@ import styles from './SellerShopReviews.module.scss';
 const cx = classNames.bind(styles);
 
 function Detail({ evaluate }) {
+    const [idReview, setIdReview] = useState('');
+    const [answerValue, setAnswerValue] = useState('');
     function takeDate(date) {
         const dateValue = new Date(date);
         let day = dateValue.getDate();
@@ -30,29 +33,51 @@ function Detail({ evaluate }) {
         }
     }
 
-    const handleAnswers = (review, index) => {
+    const handleAnswers = (review, answer) => {
         const form = document.getElementById('ReDGyJ');
-        const btnSave = document.getElementById('HtW4DS_IJ1jvV');
+        //const btnSave = document.getElementById('HtW4DS_IJ1jvV');
         const text = document.getElementById('ChI2Nx_92k3pl');
 
         form.style.display = 'flex';
-        text.defaultValue = evaluate[index].DG_traloi;
+        text.defaultValue = answer;
+        if (answer !== '' && answer !== undefined) {
+            setAnswerValue(answer);
+        }
+        setIdReview(review);
 
-        btnSave.addEventListener('click', function () {
-            const text = document.getElementById('ChI2Nx_92k3pl');
-            console.log('review', text.value);
-            axios
-                .put(`${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/update/answer`, {
-                    DG_id: review,
-                    DG_traloi: text.value,
-                })
-                .then((res) => {
-                    console.log('successfully');
-                })
-                .catch((err) => {
-                    console.log('loi');
-                });
-        });
+        // btnSave.addEventListener('click', function () {
+        //     console.log('Save');
+        //     const text = document.getElementById('ChI2Nx_92k3pl');
+        //     console.log('review', text.value);
+        //     axios
+        //         .put(`${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/update/answer`, {
+        //             DG_id: review,
+        //             DG_traloi: text.value,
+        //         })
+        //         .then((res) => {
+        //             console.log('successfully');
+        //         })
+        //         .catch((err) => {
+        //             console.log('loi');
+        //         });
+        // });
+    };
+
+    const handleSubmitFormAddress = (idReview, answerValue) => {
+        console.log('Save', idReview);
+        //const text = document.getElementById('ChI2Nx_92k3pl');
+        console.log('review', answerValue);
+        axios
+            .put(`${process.env.REACT_APP_URL_NODEJS}/sellerreviewsshop/update/answer`, {
+                DG_id: idReview,
+                DG_traloi: answerValue,
+            })
+            .then((res) => {
+                console.log('successfully');
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
     };
 
     return (
@@ -73,7 +98,8 @@ function Detail({ evaluate }) {
                                                         <textarea
                                                             id="ChI2Nx_92k3pl"
                                                             className={cx('ChI2Nx_92k3pl')}
-                                                            //onChange={(e) => setContenValue(e.target.value)}
+                                                            defaultValue={answerValue !== '' ? answerValue : ''}
+                                                            onChange={(e) => setAnswerValue(e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
@@ -92,7 +118,7 @@ function Detail({ evaluate }) {
                                         <button
                                             id="HtW4DS_IJ1jvV"
                                             className={cx('HtW4DS_IJ1jvV')}
-                                            //onClick={() => handleSubmitFormAddress()}
+                                            onClick={() => handleSubmitFormAddress(idReview, answerValue)}
                                         >
                                             Lưu
                                         </button>
@@ -245,7 +271,7 @@ function Detail({ evaluate }) {
                                                   <div className={cx('btn-evaluation-answer')}>
                                                       <button
                                                           className={cx('btn-evaluation-answer-button')}
-                                                          onClick={() => handleAnswers(review.DG_id, index)}
+                                                          onClick={() => handleAnswers(review.DG_id, review.DG_traloi)}
                                                       >
                                                           {review.DG_traloi !== '' ? 'Cập nhật' : 'Trả lời'}
                                                       </button>

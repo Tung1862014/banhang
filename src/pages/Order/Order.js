@@ -305,8 +305,8 @@ function Order() {
                 if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion !== 0 && test) {
                     prices +=
                         orderValue[i].product.SP_gia *
-                        orderValue[i].TTDH_soluong *
-                        ((100 - orderValue[i].promotion.KM_phantram) / 100);
+                        ((100 - orderValue[i].promotion.KM_phantram) / 100) *
+                        orderValue[i].TTDH_soluong;
                 } else if (orderValue[i].product.SP_gia.toString().length > 6 && orderValue[i].promotion === 0) {
                     prices += orderValue[i].product.SP_gia * orderValue[i].TTDH_soluong;
                 } else if (orderValue[i].promotion !== 0 && test) {

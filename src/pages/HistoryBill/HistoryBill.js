@@ -34,7 +34,7 @@ function HistoryBill() {
     const [searchTextValue, setSearchTextValue] = useState('');
     const [visible, setVisible] = useState(3);
 
-    console.log('searchTextValue', searchTextValue);
+    console.log('setBillEvaluate : ', billEvaluate);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(23);
@@ -137,6 +137,20 @@ function HistoryBill() {
                 )
                 .then((res) => {
                     console.log('evaluate', res.data);
+                    let evaluateArr = [];
+
+                    for (let i = 0; i < res.data.result.length; i++) {
+                        if (!evaluateArr.includes(res.data.result[i].DH_id)) {
+                            evaluateArr.push(res.data.result[i].DH_id);
+                        }
+                    }
+                    console.log('sellerArr', evaluateArr);
+                    if (evaluateArr.length > 0) {
+                        setBillEvaluate((prev) => {
+                            const newSeller = [...prev, evaluateArr];
+                            return newSeller[0];
+                        });
+                    }
                     setEvaluateValue(res.data.result);
                 })
                 .catch((err) => {
@@ -144,38 +158,6 @@ function HistoryBill() {
                 });
         }
     }, []);
-
-    useEffect(() => {
-        let evaluateArr = [];
-        // let sellerName = [];
-        // let transportFees = [];
-        // let statusBills = [];
-        // let billIdValue = [];
-        //let sumnumber = 0;
-        //let price = 0;
-
-        for (let i = 0; i < evaluateValue.length; i++) {
-            if (!evaluateArr.includes(evaluateValue[i].DH_id)) {
-                evaluateArr.push(evaluateValue[i].DH_id);
-            }
-
-            //sumnumber += 1;
-            // price +=
-            //     orderValue[i].product.SP_gia *
-            //     orderValue[i].TTDH_soluong *
-            //     ((100 - orderValue[i].product.SP_khuyenmai) / 100);
-        }
-        //console.log('sellerArr', sellerArr);
-        if (evaluateArr.length > 0) {
-            setBillEvaluate((prev) => {
-                const newSeller = [...prev, evaluateArr];
-                return newSeller[0];
-            });
-        }
-
-        //setSumNumber(sumnumber);
-        //setPrice(price);
-    }, [evaluateValue]);
 
     function handleStatusEvaluate(evalue) {
         for (let i = 0; i < billEvaluate.length; i++) {
@@ -424,6 +406,7 @@ function HistoryBill() {
 
     //open form danh gia
     const handleOpenFormEvaluate = (value) => {
+        console.log('setIdValue fff: ', value);
         const formeValuate = document.getElementById('shop-modal__transition');
         const btnFinish = document.getElementById('btn-solid-primary_wxJWI8');
         formeValuate.style.display = 'flex';
@@ -462,7 +445,7 @@ function HistoryBill() {
     };
 
     //Save/Update evaluate
-    function handleSubmitEvaluate(star) {
+    function handleSubmitEvaluate(billEvaluate) {
         // IdValue
         // idProduct
         // takeStar
@@ -485,16 +468,24 @@ function HistoryBill() {
             YMD = year + '-' + month + '-' + day;
         }
         let url;
-        for (let i = 0; i < billEvaluate.length; i++) {
-            if (IdValue.toString() === billEvaluate[i].toString()) {
-                url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/update/star/text`;
-            }
-            if (i === billEvaluate.length - 1) {
-                if (url === undefined) {
-                    url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/star/text`;
+        if (billEvaluate.length > 0) {
+            for (let i = 0; i < billEvaluate.length; i++) {
+                if (IdValue.toString() === billEvaluate[i].toString()) {
+                    url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/update/star/text`;
+                }
+                if (i === billEvaluate.length - 1) {
+                    if (url === undefined) {
+                        url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/star/text`;
+                    }
                 }
             }
+        } else {
+            if (url === undefined) {
+                url = `${process.env.REACT_APP_URL_NODEJS}/historybill/evaluate/star/text`;
+            }
         }
+        console.log('url IdValue: ', IdValue);
+        console.log('url billEvaluate: ', billEvaluate);
         if (GetCookie('usrin') !== undefined) {
             axios
                 .post(url, {
@@ -890,9 +881,7 @@ function HistoryBill() {
                                                                                                           formatCash(
                                                                                                               order.TTDH_gia *
                                                                                                                   ((100 -
-                                                                                                                      order
-                                                                                                                          .product
-                                                                                                                          .SP_khuyenmai) /
+                                                                                                                      order.TTDH_phantram) /
                                                                                                                       100),
                                                                                                           ),
                                                                                                       ).toFixed(3)
@@ -941,14 +930,7 @@ function HistoryBill() {
                                                           </button>
                                                       </div>
                                                   ) : statusBill[index] === 2 ? (
-                                                      <div className={cx('_8vTqu9')}>
-                                                          <button
-                                                              className={cx('stardust-button--primary_Kz9HeM')}
-                                                              onClick={() => handleOpenDelete(billId[index])}
-                                                          >
-                                                              Hủy
-                                                          </button>
-                                                      </div>
+                                                      ''
                                                   ) : statusBill[index] === 3 ? (
                                                       ''
                                                   ) : statusBill[index] === 4 ? (
@@ -1363,7 +1345,7 @@ function HistoryBill() {
                                             id="btn-solid-primary_wxJWI8"
                                             type="button"
                                             className={cx('btn-solid-primary_wxJWI8')}
-                                            onClick={() => handleSubmitEvaluate()}
+                                            onClick={() => handleSubmitEvaluate(billEvaluate)}
                                         >
                                             Hoàn thành
                                         </button>

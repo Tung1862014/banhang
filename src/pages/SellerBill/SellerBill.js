@@ -34,7 +34,7 @@ function SellerBill() {
             })
 
             .then((res) => {
-                console.log('result', res.data.result);
+                console.log('result bill', res.data.result);
                 setBill(res.data.result);
                 // setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
                 // setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
