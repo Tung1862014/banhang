@@ -60,6 +60,14 @@ function HistoryBill() {
     }, []);
 
     useEffect(() => {
+        const handleShowButtonMoreItem = () => {
+            const showItem = document.getElementById('btn_btn-solid-primary');
+            showItem.style.display = 'none';
+        };
+        const handleShowButtonShowMoreItem = (items) => {
+            const showItem = document.getElementById('btn_btn-solid-primary');
+            showItem.style.display = 'flex';
+        };
         if (GetCookie('usrin') !== undefined) {
             axios
                 .get(
@@ -70,6 +78,19 @@ function HistoryBill() {
                 .then((res) => {
                     console.log('data', res.data);
                     setOrderValue(res.data.results);
+                    let idOder = [];
+                    for (let i = 0; i < res.data.results.length; i++) {
+                        if (!idOder.includes(res.data.results[i].DH_id)) {
+                            idOder.push(res.data.results[i].DH_id);
+                        }
+                    }
+                    if (idOder.length === 0) {
+                        handleShowButtonMoreItem();
+                    } else if (idOder.length <= 3) {
+                        handleShowButtonMoreItem();
+                    } else if (idOder.length > 3) {
+                        handleShowButtonShowMoreItem();
+                    }
                     if (searchValue !== '') {
                         if (res.data.results[0].DH_trangthai === 1) {
                             handlerClickType1();

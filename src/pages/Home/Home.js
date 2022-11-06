@@ -184,10 +184,11 @@ function Home() {
         } else if (clickSuggestions === 'promotion') {
             url = `${process.env.REACT_APP_URL_NODEJS}/product/show/promotion/all`;
         }
+        console.log('url: ', url);
         axios
             .get(url)
             .then((res) => {
-                console.log('results', res.data.results);
+                console.log('results', res.data);
                 if (res.data.results.length > 0) {
                     setProduct(res.data.results);
                 } else {
@@ -199,12 +200,12 @@ function Home() {
                             setProduct(res.data.results);
                         })
                         .catch((err) => {
-                            console.log('loi');
+                            console.log('loi nha');
                         });
                 }
             })
             .catch((err) => {
-                console.log('loi');
+                console.log('loi nnn');
             });
     }, [clickSuggestions, checkPromotion]);
 

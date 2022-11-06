@@ -182,7 +182,7 @@ function Header() {
 
     const handleCloseSeller = useCallback(() => {
         setLoginAvtice((prev) => !prev);
-        setSingUpAvtice(false);
+        setSingUpAvtice((prev) => !prev);
         setSingUpAvticeSeller(true);
     }, []);
 
@@ -599,7 +599,7 @@ function Header() {
                     />
                 </>
             )}
-            {signUpAvticeSeller === true && GetCookie('seller') == null && (
+            {signUpAvticeSeller === true && GetCookie('seller') == null ? (
                 <>
                     <SignUpSeller
                         onClickSignUp={handleCloseSignUpSeller}
@@ -608,6 +608,8 @@ function Header() {
                         Loading={loading}
                     />
                 </>
+            ) : (
+                ''
             )}
             <ToastContainer />
         </>

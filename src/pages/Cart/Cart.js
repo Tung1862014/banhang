@@ -335,9 +335,8 @@ function Cart() {
                                                         <div className={cx('_1GcTXp')}>
                                                             <div className={cx('_2pPbjQ')}>
                                                                 <div className={cx('YxpsCR')}>
-                                                                    <a
-                                                                        title="Dép Bánh Mì Đế Cao Đi Trong Nhà Êm Chân Ngộ Nghĩnh Hot Trend"
-                                                                        href="/Dép-Bánh-Mì-Đế-Cao-Đi-Trong-Nhà-Êm-Chân-Ngộ-Nghĩnh-Hot-Trend-i.788908334.20420777735?xptdk=1d3bc720-f816-4653-8855-b7fc7c65768a"
+                                                                    <Link
+                                                                        to={`/detail/product/nameid${order.product.SP_id}`}
                                                                     >
                                                                         <div className={cx('_3SWf-5')}>
                                                                             <img
@@ -350,7 +349,7 @@ function Cart() {
                                                                                 alt=""
                                                                             />
                                                                         </div>
-                                                                    </a>
+                                                                    </Link>
                                                                     <div className={cx('_3OrWGt')}>
                                                                         <a
                                                                             className={cx('_2fQT1K')}
