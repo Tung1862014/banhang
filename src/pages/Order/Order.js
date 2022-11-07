@@ -40,7 +40,10 @@ function Order() {
 
     console.log('serviceIdValue', serviceIdValue);
     console.log('serviceIdUser', serviceIdUser);
-    console.log('serviceFee', serviceFee);
+    console.log('serviceFee tt', serviceFee);
+    console.log('sellerClientId ClientId', sellerClientId);
+    console.log('GetCookie', JSON.parse(GetCookie('servicefee')));
+
     //show user
     useEffect(() => {
         axios
@@ -162,10 +165,7 @@ function Order() {
                 }
                 console.log('sellerArr price', price);
                 if (sellerArr.length > 0) {
-                    setSellerClientId((prev) => {
-                        const newSeller = [...prev, ClientId];
-                        return newSeller[0];
-                    });
+                    setSellerClientId(ClientId);
                     setSellerValue((prev) => {
                         const newSeller = [...prev, sellerArr];
                         return newSeller[0];
@@ -617,115 +617,113 @@ function Order() {
                             //     'handlePriceSellerNoTransport(sellerValue[j], j)',
                             //     handlePriceSellerNoTransport(sellerValue[j], j),
                             // );
+                            // axios
+                            //     .post(
+                            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                            //         {
+                            //             payment_type_id: 2,
+
+                            //             required_note: 'KHONGCHOXEMHANG',
+                            //             return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
+                            //             return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
+                            //             return_district_id: null,
+                            //             return_ward_code: '',
+                            //             client_order_code: '',
+                            //             to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
+                            //             to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                            //             to_address: `${
+                            //                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                            //                     ? userVaule.ND_diachiGH
+                            //                     : ctyVaule
+                            //             }`,
+                            //             to_district_id: districtID !== '' ? districtID : districtID,
+                            //             to_ward_code: wardID !== '' ? wardID : wardID,
+                            //             cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
+                            //             content: null,
+                            //             weight: handleCountWeight(sellerValue[j]),
+                            //             length: 19,
+                            //             width: 14,
+                            //             height: 10,
+                            //             pick_station_id: null,
+                            //             insurance_value: 0,
+                            //             service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
+                            //             service_type_id: null,
+                            //             coupon: null,
+                            //             pick_shift: [2],
+                            //             items: handleInfoProoduct(sellerValue[j]),
+                            //         },
+                            //         {
+                            //             headers: {
+                            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            //                 ShopId: res.data.data.shops[i]._id,
+                            //             },
+                            //         },
+                            //     )
+                            //     .then((res) => {
+                            //         console.log('DH', res.data.data);
+                            //         if (res.data.data.order_code !== undefined) {
+                            const dateValue = new Date();
+                            let day = dateValue.getDate();
+                            let month = dateValue.getMonth() + 1;
+                            let year = dateValue.getFullYear();
+                            let YMD;
+
+                            if (month < 10 && day >= 10) {
+                                YMD = year + '-0' + month + '-' + day;
+                            } else if (month < 10 && day < 10) {
+                                YMD = year + '-0' + month + '-0' + day;
+                            } else if (month >= 10 && day < 10) {
+                                YMD = year + '-' + month + '-0' + day;
+                            } else if (month >= 10 && day >= 10) {
+                                YMD = year + '-' + month + '-' + day;
+                            } else {
+                                YMD = year + '-' + month + '-' + day;
+                            }
                             axios
-                                .post(
-                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-                                    {
-                                        payment_type_id: 2,
-
-                                        required_note: 'KHONGCHOXEMHANG',
-                                        return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
-                                        return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
-                                        return_district_id: null,
-                                        return_ward_code: '',
-                                        client_order_code: '',
-                                        to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
-                                        to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
-                                        to_address: `${
-                                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                                                ? userVaule.ND_diachiGH
-                                                : ctyVaule
-                                        }`,
-                                        to_district_id: districtID !== '' ? districtID : districtID,
-                                        to_ward_code: wardID !== '' ? wardID : wardID,
-                                        cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
-                                        content: null,
-                                        weight: handleCountWeight(sellerValue[j]),
-                                        length: 19,
-                                        width: 14,
-                                        height: 10,
-                                        pick_station_id: null,
-                                        insurance_value: 0,
-                                        service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
-                                        service_type_id: null,
-                                        coupon: null,
-                                        pick_shift: [2],
-                                        items: handleInfoProoduct(sellerValue[j]),
-                                    },
-                                    {
-                                        headers: {
-                                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                                            ShopId: res.data.data.shops[i]._id,
-                                        },
-                                    },
-                                )
+                                .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                    DH_id: `stttt${j}`,
+                                    ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                    NB_id: sellerValue[j],
+                                    DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                                    DH_loaithanhtoan: 1,
+                                    DH_diachi:
+                                        ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                                            ? userVaule.ND_diachiGH
+                                            : ctyVaule,
+                                    DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                    DH_ngay: YMD,
+                                    DH_trangthaiTT: 1,
+                                    TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                                    TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                                    SP_id: handleTakeIdProduct(sellerValue[j]),
+                                })
                                 .then((res) => {
-                                    console.log('DH', res.data.data);
-                                    if (res.data.data.order_code !== undefined) {
-                                        const dateValue = new Date();
-                                        let day = dateValue.getDate();
-                                        let month = dateValue.getMonth() + 1;
-                                        let year = dateValue.getFullYear();
-                                        let YMD;
-
-                                        if (month < 10 && day >= 10) {
-                                            YMD = year + '-0' + month + '-' + day;
-                                        } else if (month < 10 && day < 10) {
-                                            YMD = year + '-0' + month + '-0' + day;
-                                        } else if (month >= 10 && day < 10) {
-                                            YMD = year + '-' + month + '-0' + day;
-                                        } else if (month >= 10 && day >= 10) {
-                                            YMD = year + '-' + month + '-' + day;
-                                        } else {
-                                            YMD = year + '-' + month + '-' + day;
-                                        }
-                                        axios
-                                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                                                DH_id: res.data.data.order_code,
-                                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                                                NB_id: sellerValue[j],
-                                                DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
-                                                DH_loaithanhtoan: 1,
-                                                DH_diachi:
-                                                    ctyVaule === '' &&
-                                                    userVaule !== '' &&
-                                                    userVaule.ND_diachiGH !== undefined
-                                                        ? userVaule.ND_diachiGH
-                                                        : ctyVaule,
-                                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
-                                                DH_ngay: YMD,
-                                                DH_trangthaiTT: 1,
-                                                TTDH_gia: handleTakePriceProduct(sellerValue[j]),
-                                                TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
-                                                SP_id: handleTakeIdProduct(sellerValue[j]),
-                                            })
-                                            .then((res) => {
-                                                console.log('insert order', res.data);
-                                                if (j === lenghtShop) {
-                                                    console.log('limit');
-                                                    toast.success('Đặt hàng thành công', {
-                                                        position: toast.POSITION.TOP_CENTER,
-                                                    });
-                                                    setTimeout(
-                                                        () =>
-                                                            window.open(
-                                                                `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
-                                                                '_self',
-                                                                1,
-                                                            ),
-                                                        3000,
-                                                    );
-                                                }
-                                            })
-                                            .catch((err) => {
-                                                console.log('loi add');
-                                            });
+                                    console.log('insert order', res.data);
+                                    if (j === lenghtShop) {
+                                        console.log('limit');
+                                        toast.success('Đặt hàng thành công', {
+                                            position: toast.POSITION.TOP_CENTER,
+                                        });
+                                        setTimeout(
+                                            () =>
+                                                window.open(
+                                                    `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                                    '_self',
+                                                    1,
+                                                ),
+                                            3000,
+                                        );
                                     }
                                 })
                                 .catch((err) => {
-                                    console.log('loi DH');
+                                    console.log('loi add');
                                 });
                         }
+                        //         })
+                        //         .catch((err) => {
+                        //             console.log('loi DH');
+                        //         });
+                        // }
                     }
                 }
             })
@@ -887,7 +885,7 @@ function Order() {
                                                     : ctyVaule,
                                             DH_phivanchuyen:
                                                 GetCookie('servicefee') !== undefined
-                                                    ? JSON.parse(GetCookie('servicefee'))
+                                                    ? JSON.parse(GetCookie('servicefee'))[index]
                                                     : '0',
                                             DH_ngay: YMD,
                                             DH_trangthaiTT: 2,
@@ -989,14 +987,11 @@ function Order() {
             for (let i = 0; i < orderValue.length; i++) {
                 if (orderValue[i].NB_id === prodValue) {
                     console.log('SP_trongluong', orderValue[i]);
-                    //console.log('weight', orderValue[i].product.SP_trongluong);
-                    //console.log('number', orderValue[i].TTDH_soluong);
+
                     weight += orderValue[i].product.SP_trongluong * orderValue[i].TTDH_soluong;
-                    //phone = orderValue[i].seller.ND_sdt;
                 }
             }
-            //console.log('weightt', weight);
-            //console.log('phone', phone);
+
             return weight;
         };
 
@@ -1023,7 +1018,16 @@ function Order() {
             //console.log('index', price);
         };
 
-        if (districtID !== '' && wardID !== '') {
+        const handleTestTransportFee = (transportFee) => {
+            for (let y = 0; y < transportFee.length; y++) {
+                if (transportFee[y] === undefined || transportFee[y] === null) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        if (districtID !== '' && wardID !== '' && serviceIdUser !== '') {
             axios
                 .post(
                     `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shop/all`,
@@ -1037,13 +1041,17 @@ function Order() {
                 )
                 .then((res) => {
                     console.log('sellerName', sellerName);
+                    console.log('res.data.data.shops', res.data.data);
                     //console.log('huyen xa', districtID, wardID);
-                    for (let i = 0; i < res.data.data.shops.length; i++) {
-                        for (let j = 0; j < sellerName.length; j++) {
-                            if (res.data.data.shops[i].name === sellerName[j]) {
-                                // console.log('district_id', res.data.data.shops[i]);
-                                // console.log('huyen xa', districtID, wardID);
-                                // console.log('weight', handleCountWeightt(sellerValue[j]));
+                    let transportFee = [];
+                    let locationId = [];
+
+                    for (let j = 0; j < sellerName.length; j++) {
+                        for (let i = 0; i < res.data.data.shops.length; i++) {
+                            if (res.data.data.shops[i].name.toString() === sellerName[j].toString()) {
+                                console.log('district_id', res.data.data.shops[i].district_id);
+                                console.log('huyen xa', districtID, wardID);
+                                console.log('res.data.data.shops[i]', res.data.data.shops[i].name.toString());
 
                                 axios
                                     .post(
@@ -1071,8 +1079,7 @@ function Order() {
                                     )
                                     .then((res) => {
                                         console.log('DV res.data.data', res.data.data);
-                                        RemoveCookie('servicefee');
-                                        SetCookie('servicefee', JSON.stringify(res.data.data.service_fee));
+
                                         // let arr = [];
                                         // arr.push(res.data.data.service_fee);
                                         //setServiceFee()
@@ -1082,10 +1089,22 @@ function Order() {
                                         //         return newSeller;
                                         //     });
                                         // } else {
-                                        setServiceFee((prev) => {
-                                            const newSeller = [...prev, res.data.data.service_fee];
-                                            return newSeller;
-                                        });
+                                        //transportFee.push(res.data.data.service_fee);
+                                        locationId[j] = j;
+
+                                        transportFee[j] = res.data.data.service_fee;
+                                        console.log(`transportFee ${j}`, transportFee[0]);
+                                        console.log(`locationId ${j}`, locationId);
+
+                                        if (
+                                            handleTestTransportFee(transportFee) &&
+                                            transportFee.length === sellerName.length
+                                        ) {
+                                            setServiceFee(transportFee);
+                                            RemoveCookie('servicefee');
+                                            SetCookie('servicefee', JSON.stringify(transportFee));
+                                        }
+
                                         // }
                                     })
                                     .catch((err) => {
@@ -1737,55 +1756,58 @@ function Order() {
                                       </div>
 
                                       <div className={cx(checkPaypal ? 'paypal-btn' : 'payment-btn-none')}>
-                                          {sellerClientId !== ''
-                                              ? sellerClientId.map((clientId, inde) =>
-                                                    sellerClientId[index] === clientId ? (
-                                                        <span key={inde}>
-                                                            <PayPalScriptProvider
-                                                                options={{
-                                                                    'client-id': clientId,
-                                                                }}
-                                                            >
-                                                                <PayPalButtons
-                                                                    createOrder={(data, actions) => {
-                                                                        const iddc = document.getElementById(
-                                                                            `_31ayp3${index}`,
-                                                                        );
-                                                                        const usd = (
-                                                                            iddc.innerHTML.replace('.', '') / 23865
-                                                                        ).toFixed(2);
-                                                                        //console.log('iddc', iddc.innerHTML.replace('.', ''));
-                                                                        return actions.order.create({
-                                                                            purchase_units: [
-                                                                                {
-                                                                                    amount: {
-                                                                                        value: usd,
-                                                                                    },
-                                                                                },
-                                                                            ],
-                                                                        });
-                                                                    }}
-                                                                    onApprove={async (data, actions) => {
-                                                                        const details = await actions.order.capture();
-                                                                        //const name = details.payer.name.given_name;
-                                                                        console.log('details', details);
-                                                                        if (details.status === 'COMPLETED') {
-                                                                            handleOrderCustomerPaypal(
-                                                                                inde,
-                                                                                districtID,
-                                                                                wardID,
-                                                                            );
-                                                                        }
-                                                                        //   alert('Transaction completed by ' + name);
-                                                                    }}
-                                                                />
-                                                            </PayPalScriptProvider>
-                                                        </span>
-                                                    ) : (
-                                                        ''
-                                                    ),
-                                                )
-                                              : ''}
+                                          {/* {sellerClientId !== '' ? ( */}
+                                          <span>
+                                              <PayPalScriptProvider
+                                                  options={{
+                                                      'client-id': sellerClientId[index],
+                                                  }}
+                                              >
+                                                  <PayPalButtons
+                                                      createOrder={(data, actions) => {
+                                                          const iddc = document.getElementById(`_31ayp3${index}`);
+                                                          console.log(
+                                                              'iddc.innerHTML.replace()',
+                                                              iddc.innerHTML.length,
+                                                          );
+                                                          let usd = 0;
+                                                          if (iddc.innerHTML.length > 7) {
+                                                              usd = (
+                                                                  iddc.innerHTML.replace('.', '').replace('.', '') /
+                                                                  23865
+                                                              ).toFixed(2);
+                                                          } else {
+                                                              usd = (iddc.innerHTML.replace('.', '') / 23865).toFixed(
+                                                                  2,
+                                                              );
+                                                          }
+
+                                                          //console.log('iddc', iddc.innerHTML.replace('.', ''));
+                                                          return actions.order.create({
+                                                              purchase_units: [
+                                                                  {
+                                                                      amount: {
+                                                                          value: usd,
+                                                                      },
+                                                                  },
+                                                              ],
+                                                          });
+                                                      }}
+                                                      onApprove={async (data, actions) => {
+                                                          const details = await actions.order.capture();
+                                                          //const name = details.payer.name.given_name;
+                                                          console.log('details', details);
+                                                          if (details.status === 'COMPLETED') {
+                                                              handleOrderCustomerPaypal(index, districtID, wardID);
+                                                          }
+                                                          //   alert('Transaction completed by ' + name);
+                                                      }}
+                                                  />
+                                              </PayPalScriptProvider>
+                                          </span>
+                                          {/* ) : (
+                                              ''
+                                          )} */}
                                       </div>
                                   </div>
                               </div>
