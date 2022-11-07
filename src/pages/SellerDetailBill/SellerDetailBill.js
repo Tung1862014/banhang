@@ -12,9 +12,14 @@ const cx = classNames.bind(styles);
 function SellerDetailBill() {
     const [information, setInformation] = useState('');
     const [tokenValue, setTokenValue] = useState('');
+    const [amountValue, setAmountValue] = useState('');
+    const [idProductValue, setIdProductValue] = useState('');
+    const [sellNumberValue, setSellNumberValue] = useState('');
 
     console.log('tokenValue', tokenValue);
-
+    console.log('amountValue', amountValue);
+    console.log('idProductValue', idProductValue);
+    console.log('sellNumberValue', sellNumberValue);
     function formatCash(str) {
         return str
             .toString()
@@ -37,6 +42,32 @@ function SellerDetailBill() {
 
             .then((res) => {
                 console.log('result', res.data.result);
+                let number = [];
+                let idProduct = [];
+                let sellNumber = [];
+                for (let i = 0; i < res.data.result[0].product.length; i++) {
+                    number.push(res.data.result[0].product[i].TTDH_soluong);
+                    idProduct.push(res.data.result[0].product[i].SP_id);
+                    sellNumber.push(res.data.result[0].product[i].SP_soluongban);
+
+                    if (i === res.data.result[0].product.length - 1) {
+                        setAmountValue((prev) => {
+                            const newSeller = [...prev, number];
+                            return newSeller[0];
+                        });
+                        setIdProductValue((prev) => {
+                            const newSeller = [...prev, idProduct];
+                            return newSeller[0];
+                        });
+                        setSellNumberValue((prev) => {
+                            const newSeller = [...prev, sellNumber];
+                            return newSeller[0];
+                        });
+                    }
+                }
+                console.log('number', number);
+                console.log('idProduct', idProduct);
+                console.log('sellNumber', sellNumber);
                 setInformation(res.data.result);
             })
             .catch(() => {
@@ -102,6 +133,9 @@ function SellerDetailBill() {
                 NB_id: JSON.parse(GetCookie('seller')).ND_id,
                 DH_id: resultId || '',
                 DH_trangthai: '2',
+                TTDH_soluong: amountValue,
+                SP_id: idProductValue,
+                SP_soluongban: sellNumberValue,
             })
 
             .then((res) => {

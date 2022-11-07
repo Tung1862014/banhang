@@ -29,7 +29,12 @@ function IntroduceAdvertise() {
                     <h1> {advertiseValue !== '' ? advertiseValue.QB_tieude : ''}</h1>
                 </div>
                 <div className={cx('title-image')}>
-                    <img src={advertiseValue !== '' ? advertiseValue.QB_image : ''} alt="" />
+                    <img
+                        className={cx('title-image-img')}
+                        src={advertiseValue !== '' ? advertiseValue.QB_image : ''}
+                        alt=""
+                        with="500"
+                    />
                 </div>
                 <div
                     className={cx('title-body')}

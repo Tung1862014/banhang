@@ -28,10 +28,11 @@ function SellerBill() {
 
     useEffect(() => {
         axios
-            .post(`${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all`, {
-                NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                DH_trangthai: checkStatus || '',
-            })
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}`,
+            )
 
             .then((res) => {
                 console.log('result bill', res.data.result);
@@ -116,7 +117,7 @@ function SellerBill() {
         badge3.style.color = '#999';
         badge4.style.color = '#999';
         badge5.style.color = '#999';
-        setCheckStatus('');
+        setCheckStatus('all');
         setCheckProduct('add_product');
     };
     const handlerClickAllConfirm = () => {

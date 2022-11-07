@@ -496,7 +496,7 @@ function Header() {
                         </div>
                         {GetCookie('seller') !== undefined ? (
                             <Link to="/seller" className={cx('link-seller')}>
-                                Kênh người bán
+                                Gian hàng
                             </Link>
                         ) : (
                             ''

@@ -115,6 +115,8 @@ function Cart() {
             let test = handleTestDate(promotion);
             if (price.toString().length > 6 && promotion !== 0 && test) {
                 prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
+            } else if (price.toString().length > 6 && promotion !== 0 && !test) {
+                prices = formatCash(Number(price) * Number(inpurId.value));
             } else if (price.toString().length > 6 && promotion === 0) {
                 prices = formatCash(Number(price) * Number(inpurId.value));
             } else if (promotion !== 0 && test) {
@@ -156,6 +158,8 @@ function Cart() {
             let test = handleTestDate(promotion);
             if (price.toString().length > 6 && promotion !== 0 && test) {
                 prices = formatCash(Number(price * ((100 - promotion.KM_phantram) / 100)) * Number(inpurId.value));
+            } else if (price.toString().length > 6 && promotion !== 0 && !test) {
+                prices = formatCash(Number(price) * Number(inpurId.value));
             } else if (price.toString().length > 6 && promotion === 0) {
                 prices = formatCash(Number(price) * Number(inpurId.value));
             } else if (promotion !== 0 && test) {

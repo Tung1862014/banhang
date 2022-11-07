@@ -207,6 +207,8 @@ function Detail({ currentItems, clickPageCheck }) {
                         position: toast.POSITION.TOP_CENTER,
                         className: `${cx('toast-message')}`,
                     });
+                    const pathId = window.location.pathname.toString();
+                    setTimeout(window.open(pathId, '_self', 1), 3000);
                 } else {
                     toast.error('Thất bại', {
                         position: toast.POSITION.TOP_CENTER,
@@ -254,7 +256,7 @@ function Detail({ currentItems, clickPageCheck }) {
                     <div className={cx('delete-modal__content')}>
                         <div className={cx('delete-modal__header')}>
                             <div className={cx('delete-modal__header-inner-confirm')}>
-                                <div className={cx('delete-modal__title')}>Xác nhận</div>
+                                <div className={cx('delete-modal__title')}>Ghi chú</div>
                             </div>
                             <div className={cx('note-modal__header-inner-title')}>
                                 <textarea

@@ -434,12 +434,20 @@ function Home() {
                                                                                               ),
                                                                                           ).toFixed(3)
                                                                                         : prod.promotion === 0 &&
-                                                                                          formatCash(
+                                                                                          !handleTestDate(
+                                                                                              prod.promotion,
+                                                                                          )
+                                                                                        ? formatCash(
                                                                                               prod.SP_gia *
                                                                                                   ((100 -
                                                                                                       prod.promotion) /
                                                                                                       100),
-                                                                                          )}
+                                                                                          )
+                                                                                        : prod.promotion !== 0 &&
+                                                                                          !handleTestDate(
+                                                                                              prod.promotion,
+                                                                                          ) &&
+                                                                                          formatCash(prod.SP_gia)}
                                                                                 </span>
                                                                             </div>
                                                                         ) : (
