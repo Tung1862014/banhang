@@ -53,20 +53,23 @@ function SellerPrintBill() {
                 sum = sum + printBill[0].product[i].TTDH_soluong;
             }
             const dateValue = new Date(printBill[0].DH_ngay);
+
             let day = dateValue.getDate();
             let month = dateValue.getMonth() + 1;
             let year = dateValue.getFullYear();
+
             if (month < 10 && day >= 10) {
                 setDMY(day + '-0' + month + '-' + year);
             } else if (month < 10 && day < 10) {
                 setDMY('0' + day + '-0' + month + year);
-            } else if (month > 10 && day < 10) {
-                setDMY('0' + day + '-' + month + year);
-            } else if (month > 10 && day >= 10) {
-                setDMY(day + '-' + month + year);
+            } else if (month >= 10 && day < 10) {
+                setDMY('0' + day + '-' + month + '-' + year);
+            } else if (month >= 10 && day >= 10) {
+                setDMY(day + '-' + month + '-' + year);
             } else {
                 setDMY(day + '-' + month + '-' + year);
             }
+
             setSumProduct(sum.toString());
             console.log('load');
             setTimeout(() => {
@@ -82,7 +85,13 @@ function SellerPrintBill() {
                         <div key={index} className={cx('inner')}>
                             <div className={cx('bill-print-detail')}>
                                 <div className={cx('header-print')}>
-                                    <div className={cx('logo-print')}></div>
+                                    <div className={cx('logo-print')}>
+                                        <img
+                                            className={cx('image-logo')}
+                                            src={`http://localhost:5000/logo/logo-1.png`}
+                                            alt=""
+                                        />
+                                    </div>
                                     <div className={cx('id-bill-print')}>
                                         Mã đơn hàng:
                                         <span>{print.DH_id}</span>
@@ -93,9 +102,12 @@ function SellerPrintBill() {
                                         <div className={cx('to-print')}>Từ:</div>
                                         <div className={cx('address')}>
                                             <div className={cx('name-shop')}>{print.shop[0].MTS_ten}</div>
-                                            <div className={cx('address-shop')}>{print.shop[0].MTS_diachi}</div>
+                                            <div className={cx('address-shop')}>
+                                                {print.shop[0].MTS_chitiet}
+                                                {print.shop[0].MTS_diachi}
+                                            </div>
                                             <div className={cx('sdt-shop')}>
-                                                SĐT: <span>{JSON.parse(GetCookie('seller')).ND_sdt}</span>
+                                                SĐT: <span>{'0' + print.shop[0].ND_sdt.toString()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -103,9 +115,7 @@ function SellerPrintBill() {
                                         <div className={cx('from-print')}>Đến:</div>
                                         <div className={cx('address')}>
                                             <div className={cx('name-user')}>{print.product[0].ND_hoten}</div>
-                                            <div className={cx('address-user')}>
-                                                {print.DH_diachi}, Quận {print.DH_quan}, TP. {print.DH_thanhpho}
-                                            </div>
+                                            <div className={cx('address-user')}>{print.DH_diachi}</div>
                                             <div className={cx('sdt-user')}>
                                                 SĐT: <span>{print.product[0].ND_sdt}</span>
                                             </div>
@@ -137,7 +147,7 @@ function SellerPrintBill() {
                                     <div className={cx('money-user-details')}>
                                         <div className={cx('money-title')}>Tiền thu người nhận</div>
                                         <div className={cx('money-content')}>
-                                            {formatCash(print.DH_tongtien + print.DH_tongtien)} VND
+                                            {formatCash(print.DH_tongtien + print.DH_phivanchuyen)} VND
                                         </div>
                                     </div>
                                     <div className={cx('signature-user')}>

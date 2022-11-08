@@ -37,12 +37,31 @@ function Order() {
     const [serviceFee, setServiceFee] = useState(''); //phivan chuyen
     //const [namePaypal, setNamePaypal] = useState(''); //Tên Paypal
     const [checkPaypal, setCheckPaypal] = useState(false);
+    const [takeIdSimulation, setTakeIdSimulation] = useState('');
 
+    console.log('res.data.result[0]', takeIdSimulation);
     console.log('serviceIdValue', serviceIdValue);
     console.log('serviceIdUser', serviceIdUser);
     console.log('serviceFee tt', serviceFee);
     console.log('sellerClientId ClientId', sellerClientId);
     console.log('GetCookie', JSON.parse(GetCookie('servicefee')));
+
+    //takeid order
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/order/show/id/order/simulation`)
+            .then((res) => {
+                console.log('/show/id/order/simulation', res.data);
+                if (res.data.result.length > 0) {
+                    let id = res.data.result[0].DH_id.toString().slice(6);
+
+                    setTakeIdSimulation(Number(id));
+                }
+            })
+            .catch((err) => {
+                console.log('loi');
+            });
+    }, []);
 
     //show user
     useEffect(() => {
@@ -593,137 +612,184 @@ function Order() {
                 // console.log('res', res.data.data.shops);
                 // console.log('huyen xa', districtID, wardID);
                 let lenghtShop = sellerName.length - 1;
+                // if (!checkBuy) {
                 for (let i = 0; i < res.data.data.shops.length; i++) {
                     for (let j = 0; j < sellerName.length; j++) {
-                        // if (res.data.data.shops[i].name === sellerName[j]) {
-                        //     console.log(handleInfoProoduct(sellerValue[j]));
-                        //     //console.log('arr', arr);
-                        //     // console.log(handleCountWeight(sellerValue[j]));
-                        //     // console.log(handleTakePhone(sellerValue[j]));
-                        // }
-
+                        //console.log(' sellerName', sellerName[j]);
                         if (res.data.data.shops[i].name === sellerName[j]) {
-                            // console.log('res', res.data.data.shops[i]._id);
-                            // console.log([handleInfoProoduct(sellerValue[j])]);
-                            // console.log('sellerValue[k]', sellerValue[j]);
-                            // console.log('districtID, wardID', districtID, wardID);
-                            // console.log('res', res.data.data.shops[i]._id);
-                            // console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[j]));
-                            // console.log('sellerValue[k]', sellerValue[j], sellerName[j]);
-                            // console.log('handleTakePhone', handleTakePhone(sellerValue[j]).toString());
-                            console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[j]).toString());
-                            // console.log('submitserviceIdUser', serviceIdUser);
-                            // console.log(
-                            //     'handlePriceSellerNoTransport(sellerValue[j], j)',
-                            //     handlePriceSellerNoTransport(sellerValue[j], j),
-                            // );
-                            // axios
-                            //     .post(
-                            //         `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-                            //         {
-                            //             payment_type_id: 2,
-
-                            //             required_note: 'KHONGCHOXEMHANG',
-                            //             return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
-                            //             return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
-                            //             return_district_id: null,
-                            //             return_ward_code: '',
-                            //             client_order_code: '',
-                            //             to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
-                            //             to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
-                            //             to_address: `${
-                            //                 ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                            //                     ? userVaule.ND_diachiGH
-                            //                     : ctyVaule
-                            //             }`,
-                            //             to_district_id: districtID !== '' ? districtID : districtID,
-                            //             to_ward_code: wardID !== '' ? wardID : wardID,
-                            //             cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
-                            //             content: null,
-                            //             weight: handleCountWeight(sellerValue[j]),
-                            //             length: 19,
-                            //             width: 14,
-                            //             height: 10,
-                            //             pick_station_id: null,
-                            //             insurance_value: 0,
-                            //             service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
-                            //             service_type_id: null,
-                            //             coupon: null,
-                            //             pick_shift: [2],
-                            //             items: handleInfoProoduct(sellerValue[j]),
-                            //         },
-                            //         {
-                            //             headers: {
-                            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                            //                 ShopId: res.data.data.shops[i]._id,
-                            //             },
-                            //         },
-                            //     )
-                            //     .then((res) => {
-                            //         console.log('DH', res.data.data);
-                            //         if (res.data.data.order_code !== undefined) {
-                            const dateValue = new Date();
-                            let day = dateValue.getDate();
-                            let month = dateValue.getMonth() + 1;
-                            let year = dateValue.getFullYear();
-                            let YMD;
-
-                            if (month < 10 && day >= 10) {
-                                YMD = year + '-0' + month + '-' + day;
-                            } else if (month < 10 && day < 10) {
-                                YMD = year + '-0' + month + '-0' + day;
-                            } else if (month >= 10 && day < 10) {
-                                YMD = year + '-' + month + '-0' + day;
-                            } else if (month >= 10 && day >= 10) {
-                                YMD = year + '-' + month + '-' + day;
-                            } else {
-                                YMD = year + '-' + month + '-' + day;
-                            }
                             axios
-                                .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                                    DH_id: `stttt${j}`,
-                                    ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                                    NB_id: sellerValue[j],
-                                    DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
-                                    DH_loaithanhtoan: 1,
-                                    DH_diachi:
-                                        ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                                            ? userVaule.ND_diachiGH
-                                            : ctyVaule,
-                                    DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
-                                    DH_ngay: YMD,
-                                    DH_trangthaiTT: 1,
-                                    TTDH_gia: handleTakePriceProduct(sellerValue[j]),
-                                    TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
-                                    SP_id: handleTakeIdProduct(sellerValue[j]),
-                                })
+                                .post(
+                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
+                                    {
+                                        payment_type_id: 2,
+
+                                        required_note: 'KHONGCHOXEMHANG',
+                                        return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
+                                        return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
+                                        return_district_id: null,
+                                        return_ward_code: '',
+                                        client_order_code: '',
+                                        to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
+                                        to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                                        to_address: `${
+                                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
+                                                ? userVaule.ND_diachiGH
+                                                : ctyVaule
+                                        }`,
+                                        to_district_id: districtID !== '' ? districtID : districtID,
+                                        to_ward_code: wardID !== '' ? wardID : wardID,
+                                        cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
+                                        content: null,
+                                        weight: handleCountWeight(sellerValue[j]),
+                                        length: 19,
+                                        width: 14,
+                                        height: 10,
+                                        pick_station_id: null,
+                                        insurance_value: 0,
+                                        service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
+                                        service_type_id: null,
+                                        coupon: null,
+                                        pick_shift: [2],
+                                        items: handleInfoProoduct(sellerValue[j]),
+                                    },
+                                    {
+                                        headers: {
+                                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                                            ShopId: res.data.data.shops[i]._id,
+                                        },
+                                    },
+                                )
                                 .then((res) => {
-                                    console.log('insert order', res.data);
-                                    if (j === lenghtShop) {
-                                        console.log('limit');
-                                        toast.success('Đặt hàng thành công', {
-                                            position: toast.POSITION.TOP_CENTER,
-                                        });
-                                        setTimeout(
-                                            () =>
-                                                window.open(
-                                                    `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
-                                                    '_self',
-                                                    1,
-                                                ),
-                                            3000,
-                                        );
+                                    //console.log('DH', res.data.data);
+                                    if (res.data.data.order_code !== undefined) {
+                                        const dateValue = new Date();
+                                        let day = dateValue.getDate();
+                                        let month = dateValue.getMonth() + 1;
+                                        let year = dateValue.getFullYear();
+                                        let YMD;
+
+                                        if (month < 10 && day >= 10) {
+                                            YMD = year + '-0' + month + '-' + day;
+                                        } else if (month < 10 && day < 10) {
+                                            YMD = year + '-0' + month + '-0' + day;
+                                        } else if (month >= 10 && day < 10) {
+                                            YMD = year + '-' + month + '-0' + day;
+                                        } else if (month >= 10 && day >= 10) {
+                                            YMD = year + '-' + month + '-' + day;
+                                        } else {
+                                            YMD = year + '-' + month + '-' + day;
+                                        }
+                                        axios
+                                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                                DH_id: res.data.data.order_code,
+                                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                                NB_id: sellerValue[j],
+                                                DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                                                DH_loaithanhtoan: 1,
+                                                DH_diachi:
+                                                    ctyVaule === '' &&
+                                                    userVaule !== '' &&
+                                                    userVaule.ND_diachiGH !== undefined
+                                                        ? userVaule.ND_diachiGH
+                                                        : ctyVaule,
+                                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                                DH_ngay: YMD,
+                                                DH_trangthaiTT: 1,
+                                                TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                                                TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                                                SP_id: handleTakeIdProduct(sellerValue[j]),
+                                            })
+                                            .then((res) => {
+                                                //console.log('insert order', res.data);
+                                                if (j === lenghtShop) {
+                                                    //console.log('limit');
+                                                    toast.success('Đặt hàng thành công', {
+                                                        position: toast.POSITION.TOP_CENTER,
+                                                    });
+                                                    setTimeout(
+                                                        () =>
+                                                            window.open(
+                                                                `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                                                '_self',
+                                                                1,
+                                                            ),
+                                                        3000,
+                                                    );
+                                                }
+                                            })
+                                            .catch((err) => {
+                                                console.log('loi add');
+                                            });
                                     }
                                 })
                                 .catch((err) => {
-                                    console.log('loi add');
+                                    console.log(`Không mua được lần ${j}`);
+
+                                    const dateValue = new Date();
+                                    let day = dateValue.getDate();
+                                    let month = dateValue.getMonth() + 1;
+                                    let year = dateValue.getFullYear();
+                                    let YMD;
+
+                                    if (month < 10 && day >= 10) {
+                                        YMD = year + '-0' + month + '-' + day;
+                                    } else if (month < 10 && day < 10) {
+                                        YMD = year + '-0' + month + '-0' + day;
+                                    } else if (month >= 10 && day < 10) {
+                                        YMD = year + '-' + month + '-0' + day;
+                                    } else if (month >= 10 && day >= 10) {
+                                        YMD = year + '-' + month + '-' + day;
+                                    } else {
+                                        YMD = year + '-' + month + '-' + day;
+                                    }
+                                    axios
+                                        .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                            DH_id:
+                                                takeIdSimulation !== ''
+                                                    ? `DHSPMP${takeIdSimulation + j + 1}`
+                                                    : `DHSPMP${takeIdSimulation + j + 1}`,
+                                            ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                            NB_id: sellerValue[j],
+                                            DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                                            DH_loaithanhtoan: 1,
+                                            DH_diachi:
+                                                ctyVaule === '' &&
+                                                userVaule !== '' &&
+                                                userVaule.ND_diachiGH !== undefined
+                                                    ? userVaule.ND_diachiGH
+                                                    : ctyVaule,
+                                            DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                            DH_ngay: YMD,
+                                            DH_trangthaiTT: 1,
+                                            TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                                            TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                                            SP_id: handleTakeIdProduct(sellerValue[j]),
+                                        })
+                                        .then((res) => {
+                                            //console.log('insert order', res.data);
+                                            if (j === lenghtShop) {
+                                                //console.log('limit');
+                                                toast.success('Đặt hàng thành công', {
+                                                    position: toast.POSITION.TOP_CENTER,
+                                                });
+                                                setTimeout(
+                                                    () =>
+                                                        window.open(
+                                                            `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                                            '_self',
+                                                            1,
+                                                        ),
+                                                    2000,
+                                                );
+                                            }
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi add');
+                                        });
+
+                                    console.log('loi DH');
                                 });
                         }
-                        //         })
-                        //         .catch((err) => {
-                        //             console.log('loi DH');
-                        //         });
-                        // }
                     }
                 }
             })
@@ -776,25 +842,7 @@ function Order() {
                 // console.log('res', res.data.data.shops);
                 // console.log('huyen xa', districtID, wardID);
                 for (let i = 0; i < res.data.data.shops.length; i++) {
-                    //for (let j = 0; j < sellerName.length; j++) {
-                    // if (res.data.data.shops[i].name === sellerName[j]) {
-                    //     console.log(handleInfoProoduct(sellerValue[j]));
-                    //     //console.log('arr', arr);
-                    //     // console.log(handleCountWeight(sellerValue[j]));
-                    //     // console.log(handleTakePhone(sellerValue[j]));
-                    // }
-
                     if (res.data.data.shops[i].name === sellerName[index]) {
-                        // console.log('res', res.data.data.shops[i]._id);
-                        // console.log('handleInfoProoduct', handleInfoProoduct(sellerValue[index]));
-                        // console.log('sellerValue[k]', sellerValue[index], sellerName[index]);
-                        // console.log('handleTakePhone', handleTakePhone(sellerValue[index]).toString());
-                        // console.log('handleTakeAddressSeller', handleTakeAddressSeller(sellerValue[index]).toString());
-                        // console.log(
-                        //     'handlePriceSellerNoTransport',
-                        //     handlePriceSellerNoTransport(sellerValue[index], index),
-                        // );
-                        // console.log('handleCountWeight', handleCountWeight(sellerValue[index]));
                         console.log('districtID', JSON.parse(GetCookie('district')));
                         console.log('wardID', JSON.parse(GetCookie('ward')));
 

@@ -20,24 +20,24 @@ function Detail({ bill }) {
             });
     }
 
-    // function takeDate(date) {
-    //     const datevalue = new Date(date);
-    //     let day = datevalue.getDate();
-    //     let month = datevalue.getMonth() + 1;
-    //     let year = datevalue.getFullYear();
+    function takeDate(date) {
+        const datevalue = new Date(date);
+        let day = datevalue.getDate();
+        let month = datevalue.getMonth() + 1;
+        let year = datevalue.getFullYear();
 
-    //     if (month < 10 && day >= 10) {
-    //         return day + '-0' + month + '-' + year;
-    //     } else if (month < 10 && day < 10) {
-    //         return '0' + day + '-0' + month + year;
-    //     } else if (month >= 10 && day < 10) {
-    //         return '0' + day + '-' + month + '-' + year;
-    //     } else if (month >= 10 && day >= 10) {
-    //         return day + '-' + month + '-' + year;
-    //     } else {
-    //         return day + '-' + month + '-' + year;
-    //     }
-    // }
+        if (month < 10 && day >= 10) {
+            return day + '-0' + month + '-' + year;
+        } else if (month < 10 && day < 10) {
+            return '0' + day + '-0' + month + year;
+        } else if (month >= 10 && day < 10) {
+            return '0' + day + '-' + month + '-' + year;
+        } else if (month >= 10 && day >= 10) {
+            return day + '-' + month + '-' + year;
+        } else {
+            return day + '-' + month + '-' + year;
+        }
+    }
 
     return (
         <div className={cx('order-list-body')}>
@@ -54,10 +54,12 @@ function Detail({ bill }) {
                                           <div className={cx('content')}>
                                               <div className={cx('username-text-overflow')}>{use.ND_hoten}</div>{' '}
                                           </div>
+
+                                          <span className={cx('orderid')}>
+                                              Ngày đặt hàng: &nbsp;{takeDate(bill.DH_ngay)}
+                                          </span>
                                       </div>
-                                      {/* <div className={cx('id-btn')}>
-                                          <span className={cx('orderid')}>Ngày: &nbsp;{takeDate(bill.DH_ngay)}</span>
-                                      </div> */}
+
                                       <div className={cx('id-btn')}>
                                           <span className={cx('orderid')}>ID Đơn hàng&nbsp;{bill.DH_id}</span>
                                       </div>

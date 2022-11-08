@@ -15,6 +15,7 @@ function SellerDetailBill() {
     const [amountValue, setAmountValue] = useState('');
     const [idProductValue, setIdProductValue] = useState('');
     const [sellNumberValue, setSellNumberValue] = useState('');
+    const [idOrderValue, setIdOrderValue] = useState('');
 
     console.log('tokenValue', tokenValue);
     console.log('amountValue', amountValue);
@@ -33,6 +34,7 @@ function SellerDetailBill() {
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(21);
+        setIdOrderValue(resultId);
         console.log(resultId);
         axios
             .post(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/show/all`, {
@@ -203,6 +205,9 @@ function SellerDetailBill() {
                             NB_id: JSON.parse(GetCookie('seller')).ND_id,
                             DH_id: resultId || '',
                             DH_trangthai: '5',
+                            TTDH_soluong: 0,
+                            SP_id: 0,
+                            SP_soluongban: 0,
                         })
 
                         .then((res) => {
@@ -221,6 +226,29 @@ function SellerDetailBill() {
                         });
                 })
                 .catch((err) => {
+                    axios
+                        .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
+                            NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                            DH_id: resultId || '',
+                            DH_trangthai: '5',
+                            TTDH_soluong: 0,
+                            SP_id: 0,
+                            SP_soluongban: 0,
+                        })
+
+                        .then((res) => {
+                            if (res.data.update) {
+                                toast.success('Hủy thành công đơn hàng', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                    className: `${cx('toast-message')}`,
+                                });
+                                const pathId = window.location.pathname.toString();
+                                setTimeout(window.open(pathId, '_self', 1), 3000);
+                            }
+                        })
+                        .catch(() => {
+                            console.log('loi khong the show bill');
+                        });
                     console.log('loi cancel');
                 });
         }
@@ -443,7 +471,7 @@ function SellerDetailBill() {
                                       <div className={cx('body-detail')}>
                                           <div>
                                               {info.DH_trangthaiTT === 1
-                                                  ? 'Chưa thah toán'
+                                                  ? 'Chưa thanh toán'
                                                   : info.DH_trangthaiTT === 2
                                                   ? 'Đã thanh toán'
                                                   : '...'}
@@ -686,7 +714,8 @@ function SellerDetailBill() {
                           ) : info.DH_trangthai === 2 ? (
                               <div className={cx('grid-right-print')}>
                                   <a
-                                      href={`https://dev-online-gateway.ghn.vn/a5/public-api/printA5?token=${tokenValue}`}
+                                      //`https://dev-online-gateway.ghn.vn/a5/public-api/printA5?token=${tokenValue}` ||
+                                      href={`${process.env.REACT_APP_URL_FRONTEND}/seller/bill/detail/print/@${idOrderValue}`}
                                       target={'_blank'}
                                       rel="noreferrer"
                                       className={cx('add-action')}

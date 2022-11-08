@@ -4,6 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './HistoryBill.module.scss';
 
@@ -21,6 +22,7 @@ function HistoryBill() {
     const [billId, setBillId] = useState('');
     const [billEvaluate, setBillEvaluate] = useState('');
     const [idProductEvaluate, setIdProductEvaluate] = useState('');
+    const [billDate, setBillDate] = useState('');
 
     ///////////////////////////////////////////////
     const [IdValue, setIdValue] = useState('');
@@ -117,6 +119,7 @@ function HistoryBill() {
         let transportFees = [];
         let statusBills = [];
         let billIdValue = [];
+        let billDateValue = [];
         //let sumnumber = 0;
         //let price = 0;
 
@@ -127,6 +130,7 @@ function HistoryBill() {
                 transportFees.push(orderValue[i].DH_phivanchuyen);
                 statusBills.push(orderValue[i].DH_trangthai);
                 billIdValue.push(orderValue[i].DH_id);
+                billDateValue.push(orderValue[i].DH_ngay);
             }
 
             //sumnumber += 1;
@@ -143,6 +147,7 @@ function HistoryBill() {
             setStatusBill(statusBills);
 
             setBillId(billIdValue);
+            setBillDate(billDateValue);
         }
 
         //setSumNumber(sumnumber);
@@ -596,6 +601,21 @@ function HistoryBill() {
                     });
             })
             .catch((err) => {
+                axios
+                    .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
+                        DH_id: cancelIdBill,
+                    })
+                    .then((res) => {
+                        console.log('DH', res.data);
+                        toast.success('Hủy thành công', {
+                            position: toast.POSITION.TOP_CENTER,
+                        });
+                        const pathId = window.location.pathname.toString();
+                        setTimeout(window.open(pathId, '_self', 1), 2000);
+                    })
+                    .catch((err) => {
+                        console.log('loi update bill');
+                    });
                 console.log('loi cancel');
             });
     }
@@ -618,6 +638,7 @@ function HistoryBill() {
             showItem.style.display = 'none';
         }
     };
+
     return (
         <>
             {GetCookie('usrin') !== undefined ? (
@@ -770,6 +791,9 @@ function HistoryBill() {
                                                           </Link>
                                                           <div className={cx('mzsqa67')}>
                                                               ID đơn hàng: {billId[index]}
+                                                          </div>
+                                                          <div className={cx('mzsqa67')}>
+                                                              Ngày đặt hàng: {takeDate(billDate[index])}
                                                           </div>
                                                       </div>
                                                       <div className={cx('WPNwG4')}>
@@ -1389,6 +1413,7 @@ function HistoryBill() {
             ) : (
                 <div className={cx('order-no-login')}>Bạn cần đăng nhập để xem đơn hàng của mình</div>
             )}
+            <ToastContainer />
         </>
     );
 }
