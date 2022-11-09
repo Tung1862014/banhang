@@ -68,11 +68,16 @@ function Order() {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/order/user/show?ND_id=${JSON.parse(GetCookie('usrin')).ND_id}`)
             .then((res) => {
-                //console.log('data', res.data);
+                // console.log('data results ttttttttttttttttttttttttttttttttttttttttttttt');
+                // console.log('data results', res.data);
                 setUserVaule(res.data.results);
-                if (res.data.results.ND_diachiGH !== undefined && res.data.results.ND_chitiet !== undefined) {
-                    setAddressVaule(res.data.results.ND_chitiet);
-                    setCtyVaule(res.data.results.ND_diachiGH);
+                if (res.data.results.DC_diachiGH !== undefined && res.data.results.DC_chitiet !== undefined) {
+                    setAddressVaule(res.data.results.DC_chitiet);
+                    setCtyVaule(res.data.results.DC_diachiGH);
+                }
+
+                if (res.data.results === '') {
+                    handleShowFormAddress();
                 }
             })
             .catch((err) => {
@@ -260,8 +265,10 @@ function Order() {
             });
     }
     function ChangeAddress(addrValue) {
-        const newAddress = addrValue.split(',');
-        return newAddress.reverse().join();
+        if (addrValue !== undefined) {
+            const newAddress = addrValue.split(',');
+            return newAddress.reverse().join();
+        }
     }
 
     const handleSumProduct = (sell) => {
@@ -400,8 +407,8 @@ function Order() {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/order/update/address`, {
                     ND_id: JSON.parse(GetCookie('usrin')).ND_id,
-                    ND_diachiGH: ctyVaule,
-                    ND_chitiet: addressVaule,
+                    DC_diachiGH: ctyVaule,
+                    DC_chitiet: addressVaule,
                 })
                 .then((res) => {
                     console.log(res.data);
@@ -632,9 +639,9 @@ function Order() {
                                         to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
                                         to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
                                         to_address: `${
-                                            ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                                                ? userVaule.ND_diachiGH
-                                                : ctyVaule
+                                            ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                                ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                                : addressVaule + ',' + ChangeAddress(ctyVaule)
                                         }`,
                                         to_district_id: districtID !== '' ? districtID : districtID,
                                         to_ward_code: wardID !== '' ? wardID : wardID,
@@ -689,9 +696,12 @@ function Order() {
                                                 DH_diachi:
                                                     ctyVaule === '' &&
                                                     userVaule !== '' &&
-                                                    userVaule.ND_diachiGH !== undefined
-                                                        ? userVaule.ND_diachiGH
-                                                        : ctyVaule,
+                                                    userVaule.DC_diachiGH !== undefined
+                                                        ? userVaule.DC_chitiet +
+                                                          ',' +
+                                                          ChangeAddress(userVaule.DC_diachiGH)
+                                                        : addressVaule + ',' + ChangeAddress(ctyVaule),
+
                                                 DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
                                                 DH_ngay: YMD,
                                                 DH_trangthaiTT: 1,
@@ -755,9 +765,10 @@ function Order() {
                                             DH_diachi:
                                                 ctyVaule === '' &&
                                                 userVaule !== '' &&
-                                                userVaule.ND_diachiGH !== undefined
-                                                    ? userVaule.ND_diachiGH
-                                                    : ctyVaule,
+                                                userVaule.DC_diachiGH !== undefined
+                                                    ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                                    : addressVaule + ',' + ChangeAddress(ctyVaule),
+
                                             DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
                                             DH_ngay: YMD,
                                             DH_trangthaiTT: 1,
@@ -865,11 +876,9 @@ function Order() {
                                     to_name: `${userVaule !== '' ? userVaule.ND_hoten.toString() : 'TinTest124'}`,
                                     to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
                                     to_address: `${
-                                        ctyVaule === '' &&
-                                        userVaule !== '' &&
-                                        userVaule.ND_diachiGH.toString() !== undefined
-                                            ? userVaule.ND_diachiGH
-                                            : ctyVaule
+                                        ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                            ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                            : addressVaule + ',' + ChangeAddress(ctyVaule)
                                     }`,
                                     to_district_id:
                                         GetCookie('ward') !== undefined
@@ -928,9 +937,9 @@ function Order() {
                                             DH_diachi:
                                                 ctyVaule === '' &&
                                                 userVaule !== '' &&
-                                                userVaule.ND_diachiGH !== undefined
-                                                    ? userVaule.ND_diachiGH
-                                                    : ctyVaule,
+                                                userVaule.DC_diachiGH !== undefined
+                                                    ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                                    : addressVaule + ',' + ChangeAddress(ctyVaule),
                                             DH_phivanchuyen:
                                                 GetCookie('servicefee') !== undefined
                                                     ? JSON.parse(GetCookie('servicefee'))[index]
@@ -952,6 +961,54 @@ function Order() {
                             })
                             .catch((err) => {
                                 console.log('loi DH');
+                                const dateValue = new Date();
+                                let day = dateValue.getDate();
+                                let month = dateValue.getMonth() + 1;
+                                let year = dateValue.getFullYear();
+                                let YMD;
+
+                                if (month < 10 && day >= 10) {
+                                    YMD = year + '-0' + month + '-' + day;
+                                } else if (month < 10 && day < 10) {
+                                    YMD = year + '-0' + month + '-0' + day;
+                                } else if (month >= 10 && day < 10) {
+                                    YMD = year + '-' + month + '-0' + day;
+                                } else if (month >= 10 && day >= 10) {
+                                    YMD = year + '-' + month + '-' + day;
+                                } else {
+                                    YMD = year + '-' + month + '-' + day;
+                                }
+                                axios
+                                    .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                        DH_id:
+                                            takeIdSimulation !== ''
+                                                ? `DHSPMP${takeIdSimulation + index + 1}`
+                                                : `DHSPMP${takeIdSimulation + index + 1}`,
+                                        ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                        NB_id: sellerValue[index],
+                                        DH_tongtien: handlePriceSellerNoTransport(sellerValue[index], index),
+                                        DH_loaithanhtoan: 2,
+                                        DH_diachi:
+                                            ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                                ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                                : addressVaule + ',' + ChangeAddress(ctyVaule),
+                                        DH_phivanchuyen:
+                                            GetCookie('servicefee') !== undefined
+                                                ? JSON.parse(GetCookie('servicefee'))[index]
+                                                : '0',
+                                        DH_ngay: YMD,
+                                        DH_trangthaiTT: 2,
+                                        TTDH_gia: handleTakePriceProduct(sellerValue[index]),
+                                        TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
+                                        SP_id: handleTakeIdProduct(sellerValue[index]),
+                                    })
+                                    .then((res) => {
+                                        console.log('', res.data);
+                                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                                    })
+                                    .catch((err) => {
+                                        console.log('loi add');
+                                    });
                             });
                     }
                 }
@@ -1189,8 +1246,8 @@ function Order() {
             .then((res) => {
                 //console.log('res', res.data.data);
                 setCityValue(res.data.data);
-                if (userVaule !== '' && userVaule.ND_diachiGH !== undefined) {
-                    let arrValue = userVaule.ND_diachiGH.split(',');
+                if (userVaule !== '' && userVaule.DC_diachiGH !== undefined) {
+                    let arrValue = userVaule.DC_diachiGH.split(',');
                     //console.log('arrValue', arrValue);
 
                     for (let i = 0; i < res.data.data.length; i++) {
@@ -1222,7 +1279,7 @@ function Order() {
                 .then((res) => {
                     //console.log('huyen', res.data.data);
                     setDistrictValue(res.data.data);
-                    let arrValue = userVaule.ND_diachiGH.split(',');
+                    let arrValue = userVaule.DC_diachiGH.split(',');
                     console.log('arrValue', arrValue);
 
                     for (let i = 0; i < res.data.data.length; i++) {
@@ -1253,7 +1310,7 @@ function Order() {
                 .then((res) => {
                     //console.log('xa', res.data.data);
                     setWardValue(res.data.data);
-                    let arrValue = userVaule.ND_diachiGH.split(',');
+                    let arrValue = userVaule.DC_diachiGH.split(',');
                     //console.log('arrValue', arrValue);
 
                     for (let i = 0; i < res.data.data.length; i++) {
@@ -1281,7 +1338,7 @@ function Order() {
         iconDown.style.display = 'none';
         iconUp.style.display = 'flex';
         formAddress.style.display = 'flex';
-        if (userVaule !== undefined && userVaule.ND_diachiGH !== undefined) {
+        if (userVaule !== undefined && userVaule.DC_diachiGH !== undefined) {
             const inputValue = document.getElementById('ChI2Nx_92k3pl');
 
             inputValue.defaultValue = ctyVaule;
@@ -1313,12 +1370,12 @@ function Order() {
             iconUp.style.display = 'none';
             formAddress.style.display = 'none';
 
-            if (ctyVaule === '' && userVaule.ND_diachiGH !== undefined) {
+            if (ctyVaule === '' && userVaule.DC_diachiGH !== undefined) {
                 const inputValue = document.getElementById('ChI2Nx_92k3pl');
 
                 inputValue.defaultValue =
-                    ctyVaule === '' && userVaule !== '' && userVaule.ND_diachiGH !== undefined
-                        ? userVaule.ND_diachiGH
+                    ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                        ? userVaule.DC_diachiGH
                         : ctyVaule;
             }
         }
@@ -1517,8 +1574,8 @@ function Order() {
                                                         defaultValue={
                                                             ctyVaule === '' &&
                                                             userVaule !== '' &&
-                                                            userVaule.ND_diachiGH !== undefined
-                                                                ? userVaule.ND_diachiGH
+                                                            userVaule !== undefined
+                                                                ? userVaule.DC_diachiGH
                                                                 : ctyVaule
                                                         }
                                                         onChange={(e) => setCtyVaule(e.target.value)}
@@ -1628,8 +1685,10 @@ function Order() {
                                                         className={cx('gRsrLD')}
                                                         placeholder="Địa chỉ cụ thể"
                                                         defaultValue={
-                                                            userVaule !== '' && userVaule.ND_chitiet !== ''
-                                                                ? userVaule.ND_chitiet
+                                                            userVaule !== '' &&
+                                                            userVaule !== '' &&
+                                                            userVaule !== undefined
+                                                                ? userVaule.DC_chitiet
                                                                 : ''
                                                         }
                                                         onChange={(e) => setAddressVaule(e.target.value)}
@@ -1900,20 +1959,18 @@ function Order() {
                             <div>
                                 <div className={cx('Y3QA5S')}>
                                     <div className={cx('_3yvPt8')}>
-                                        {userVaule !== '' ? userVaule.ND_hoten : ''} (+84){' '}
-                                        {userVaule !== '' ? userVaule.ND_sdt : ''}
+                                        {userVaule !== '' && userVaule !== undefined ? userVaule.ND_hoten : ''} (+84){' '}
+                                        {userVaule !== '' && userVaule !== undefined ? userVaule.ND_sdt : ''}
                                     </div>
                                     <div className={cx('iXqine')}>
-                                        {userVaule !== ''
-                                            ? userVaule.ND_diachiGH !== ''
-                                                ? userVaule.ND_chitiet + ',' + ChangeAddress(userVaule.ND_diachiGH)
-                                                : handleShowFormAddress()
+                                        {userVaule !== '' && userVaule !== undefined
+                                            ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
                                             : ''}
                                     </div>
                                 </div>
                             </div>
                             <div className={cx('g3BSHI')} onClick={handleShowFormAddress}>
-                                {userVaule !== '' && userVaule.ND_diachigiaohang !== '' ? 'Thay đổi' : 'Xác định'}
+                                {userVaule !== '' && userVaule.DC_diachiGH !== '' ? 'Thay đổi' : 'Xác định'}
                             </div>
                         </div>
                     </div>

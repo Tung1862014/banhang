@@ -17,6 +17,7 @@ import {
 //import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Legend, Title, Tooltip } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 //import { useDebounce } from '~/hooks';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 //ChartJS.register(BarElement, CategoryScale, LinearScale, Legend, Title, Tooltip);
@@ -181,12 +182,40 @@ function Seller() {
         });
     }, [chartListData, chartListNumber, chartListTurnover]);
 
-    const handleStatistic = () => {
-        setActiveTurnover(
-            `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
-                JSON.parse(GetCookie('seller')).ND_id
-            }`,
-        );
+    function handleTestDate(fromValue, toValue) {
+        let datefrom = new Date(fromValue);
+        let dateto = new Date(toValue);
+        if (datefrom <= dateto) {
+            return true;
+        } else {
+            return false;
+        }
+        // console.log('date1', date1);
+    }
+
+    const handleStatistic = (dateValue1, dateValue2) => {
+        if (dateValue1 === '' && dateValue2 !== '') {
+            toast.warning('Ngày bắt đầu không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateValue1 !== '' && dateValue2 === '') {
+            toast.warning('Ngày kết thúc không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateValue1 !== '' && dateValue2 !== '' && !handleTestDate(dateValue1, dateValue2)) {
+            toast.warning('Ngày bắt đầu và ngày kết thúc chưa hợp lệ!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else {
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        }
     };
 
     function takeDateNow(date) {
@@ -216,6 +245,11 @@ function Seller() {
             date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
             // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
             console.log('value e', typeof e);
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = takeDateNow(date);
+            toDate.value = takeDateNow(dayValue);
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
 
@@ -225,46 +259,70 @@ function Seller() {
                 )}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}`,
             );
         } else if (Number(e) === 1) {
-            let dateTo = `${year.toString()}-01-01`;
-            let dateFrom = `${year.toString()}-03-31`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-01-01`;
+            let dateTo = `${year.toString()}-03-31`;
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
 
             setActiveTurnover(
-                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateFrom}&ngde=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 2) {
-            let dateTo = `${year.toString()}-04-01`;
-            let dateFrom = `${year.toString()}-06-30`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-04-01`;
+            let dateTo = `${year.toString()}-06-30`;
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
 
             setActiveTurnover(
-                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateFrom}&ngde=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 3) {
-            let dateTo = `${year.toString()}-07-01`;
-            let dateFrom = `${year.toString()}-09-30`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-07-01`;
+            let dateTo = `${year.toString()}-09-30`;
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
 
             setActiveTurnover(
-                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateFrom}&ngde=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 4) {
-            let dateTo = `${year.toString()}-10-01`;
-            let dateFrom = `${year.toString()}-12-31`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-10-01`;
+            let dateTo = `${year.toString()}-12-31`;
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
 
             setActiveTurnover(
-                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateTo}&ngde=${dateFrom}&NB_id=${
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${dateFrom}&ngde=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
@@ -273,6 +331,11 @@ function Seller() {
             date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
             // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
             console.log('value e', typeof e);
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = takeDateNow(date);
+            toDate.value = takeDateNow(dayValue);
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
 
@@ -280,6 +343,20 @@ function Seller() {
                 `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${takeDateNow(date)}&ngde=${takeDateNow(
                     dayValue,
                 )}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}`,
+            );
+        } else if (e === '') {
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = '';
+            toDate.value = '';
+            setDateValue2('');
+            setDateValue1('');
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart?ngdi=${''}&ngde=${''}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
             );
         }
     };
@@ -335,6 +412,7 @@ function Seller() {
                     <div className={cx('chart-date-input')}>
                         <input
                             type="date"
+                            id="chart-date1"
                             className={cx('chart-date1')}
                             defaultValue={takeDate()}
                             onChange={(e) => setDateValue1(e.target.value)}
@@ -342,12 +420,13 @@ function Seller() {
                         <span className={cx('chart-')}>-</span>
                         <input
                             type="date"
+                            id="chart-date2"
                             className={cx('chart-date2')}
                             defaultValue={takeDate()}
                             onChange={(e) => setDateValue2(e.target.value)}
                         />
                     </div>
-                    <button className={cx('chart-btn')} onClick={handleStatistic}>
+                    <button className={cx('chart-btn')} onClick={() => handleStatistic(dateValue1, dateValue2)}>
                         Thống kê
                     </button>
                     <div className={cx('chart-quarter')}>
@@ -364,6 +443,7 @@ function Seller() {
                 </div>
                 <Line className={cx('chart-demo')} option={chartOptions} data={chartData} />
             </div>
+            <ToastContainer />
         </div>
     );
 }

@@ -34,6 +34,8 @@ function SellerBill() {
         }`,
     );
 
+    const [checkStatistical, setCheckStatistical] = useState('');
+
     const SidebarReducer = useSelector((state) => state.sidebarSeller.list);
     const dispatchSignIn = useDispatch();
 
@@ -51,7 +53,13 @@ function SellerBill() {
     }, [checkStatus, activeTurnover]);
 
     useEffect(() => {
-        if (checkStatus !== '' && dateValue1 !== '' && dateValue2 !== '') {
+        if (
+            checkStatus !== '' &&
+            dateValue1 !== '' &&
+            dateValue2 !== '' &&
+            handleTestDate(dateValue1, dateValue2) &&
+            checkStatistical !== ''
+        ) {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
@@ -68,10 +76,15 @@ function SellerBill() {
                 }`,
             );
         }
-    }, [checkStatus, dateValue1, dateValue2]);
+    }, [checkStatus, dateValue1, dateValue2, checkStatistical]);
 
     useEffect(() => {
-        if (dateValue1 !== '' && dateValue2 !== '') {
+        if (
+            dateValue1 !== '' &&
+            dateValue2 !== '' &&
+            handleTestDate(dateValue1, dateValue2) &&
+            checkStatistical !== ''
+        ) {
             axios
                 .get(
                     `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/number?NB_id=${
@@ -106,10 +119,10 @@ function SellerBill() {
                     setNumber(res.data.number[0].number);
                 })
                 .catch(() => {
-                    console.log('loi khong the show bill');
+                    console.log('loi khong the show bill rong');
                 });
         }
-    }, []);
+    }, [dateValue1, dateValue2, checkStatistical]);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -342,9 +355,14 @@ function SellerBill() {
             date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
             // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
             console.log('value e', typeof e);
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = takeDateNow(date);
+            toDate.value = takeDateNow(dayValue);
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
-
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
@@ -353,54 +371,78 @@ function SellerBill() {
                 }`,
             );
         } else if (Number(e) === 1) {
-            let dateTo = `${year.toString()}-01-01`;
-            let dateFrom = `${year.toString()}-03-31`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-01-01`;
+            let dateTo = `${year.toString()}-03-31`;
 
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 2) {
-            let dateTo = `${year.toString()}-04-01`;
-            let dateFrom = `${year.toString()}-06-30`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-04-01`;
+            let dateTo = `${year.toString()}-06-30`;
 
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 3) {
-            let dateTo = `${year.toString()}-07-01`;
-            let dateFrom = `${year.toString()}-09-30`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-07-01`;
+            let dateTo = `${year.toString()}-09-30`;
 
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
         } else if (Number(e) === 4) {
-            let dateTo = `${year.toString()}-10-01`;
-            let dateFrom = `${year.toString()}-12-31`;
-            setDateValue1(dateTo);
-            setDateValue2(dateFrom);
+            let dateFrom = `${year.toString()}-10-01`;
+            let dateTo = `${year.toString()}-12-31`;
 
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = dateFrom;
+            toDate.value = dateTo;
+            setDateValue1(dateFrom);
+            setDateValue2(dateTo);
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
@@ -409,13 +451,35 @@ function SellerBill() {
             date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
             // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
             console.log('value e', typeof e);
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = takeDateNow(date);
+            toDate.value = takeDateNow(dayValue);
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
-
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (e === '') {
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+
+            formDate.value = '';
+            toDate.value = '';
+            setDateValue2('');
+            setDateValue1('');
+            setCheckStatistical('');
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${''}&denngay=${''}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
             );
@@ -488,6 +552,7 @@ function SellerBill() {
                 className: `${cx('toast-message')}`,
             });
         } else {
+            setCheckStatistical('statistical');
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
@@ -496,6 +561,15 @@ function SellerBill() {
                 }`,
             );
         }
+    };
+
+    const handleDateValue1 = (e) => {
+        setCheckStatistical('');
+        setDateValue1(e);
+    };
+    const handleDateValue2 = (e) => {
+        setCheckStatistical('');
+        setDateValue2(e);
     };
     return (
         <div className={cx('wrapper')}>
@@ -649,16 +723,18 @@ function SellerBill() {
                     <div className={cx('chart-date-input')}>
                         <input
                             type="date"
+                            id="chart-date1"
                             className={cx('chart-date1')}
-                            defaultValue={''}
-                            onChange={(e) => setDateValue1(e.target.value)}
+                            defaultValue={dateValue1}
+                            onChange={(e) => handleDateValue1(e.target.value)}
                         />
                         <span className={cx('chart-')}>-</span>
                         <input
                             type="date"
+                            id="chart-date2"
                             className={cx('chart-date2')}
-                            defaultValue={''}
-                            onChange={(e) => setDateValue2(e.target.value)}
+                            defaultValue={dateValue2}
+                            onChange={(e) => handleDateValue2(e.target.value)}
                         />
                     </div>
                     <button className={cx('chart-btn')} onClick={() => handleStatistic(dateValue1, dateValue2)}>
