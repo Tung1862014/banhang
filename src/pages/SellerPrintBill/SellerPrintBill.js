@@ -77,6 +77,13 @@ function SellerPrintBill() {
             }, 800);
         }
     }
+
+    // function ChangeAddress(addrValue) {
+    //     if (addrValue !== undefined) {
+    //         const newAddress = addrValue.split(',');
+    //         return newAddress.reverse().join();
+    //     }
+    // }
     return (
         <>
             {printBill !== '' && (
@@ -103,8 +110,7 @@ function SellerPrintBill() {
                                         <div className={cx('address')}>
                                             <div className={cx('name-shop')}>{print.shop[0].MTS_ten}</div>
                                             <div className={cx('address-shop')}>
-                                                {print.shop[0].MTS_chitiet}
-                                                {print.shop[0].MTS_diachi}
+                                                {print.shop[0].MTS_chitiet + ',' + print.shop[0].MTS_diachi}
                                             </div>
                                             <div className={cx('sdt-shop')}>
                                                 SĐT: <span>{'0' + print.shop[0].ND_sdt.toString()}</span>

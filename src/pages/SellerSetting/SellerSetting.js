@@ -240,6 +240,56 @@ function SellerSetting() {
                                 })
                                 .catch((err) => {
                                     console.log('loi Dv nha');
+                                    const formData = new FormData();
+                                    formData.append('image', image[0]);
+                                    formData.append(
+                                        'MTS_id',
+                                        '112244' + JSON.parse(GetCookie('seller')).ND_id.toString(),
+                                    );
+                                    formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                                    formData.append('MTS_ten', title);
+                                    formData.append('MTS_diachi', ctyVaule);
+                                    formData.append('MTS_chitiet', address);
+                                    formData.append('MTS_clientId', idPay);
+                                    axios({
+                                        method: 'POST',
+                                        url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/save/insert`,
+                                        data: formData,
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
+                                    })
+                                        .then((res) => {
+                                            console.log(res.data);
+                                            const formDataLogo = new FormData();
+                                            formDataLogo.append('image', imageLogo[0]);
+                                            formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                                            axios({
+                                                method: 'POST',
+                                                url: `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/logo`,
+                                                data: formDataLogo,
+                                                headers: {
+                                                    'Content-Type': 'multipart/form-data',
+                                                },
+                                            })
+                                                .then((res) => {
+                                                    console.log(res.data);
+                                                    toast.success('Dữ liệu lưu thành công', {
+                                                        position: toast.POSITION.TOP_CENTER,
+                                                    });
+                                                    window.open(
+                                                        `${process.env.REACT_APP_URL_FRONTEND}/seller/setting`,
+                                                        '_self',
+                                                        1,
+                                                    );
+                                                })
+                                                .catch((err) => {
+                                                    console.log('loi nha');
+                                                });
+                                        })
+                                        .catch((err) => {
+                                            console.log('loi');
+                                        });
                                 });
                         } else {
                             toast.warning('Tên gian hàng đã tồn tại. Bạn hãy lấy tên khác.', {
@@ -255,6 +305,7 @@ function SellerSetting() {
             const formData = new FormData();
             formData.append('image', image[0]);
             formData.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formData.append('MTS_diachi', ctyVaule);
             formData.append('MTS_chitiet', address);
             formData.append('MTS_clientId', idPay);
             axios({
@@ -271,6 +322,7 @@ function SellerSetting() {
                         const formDataLogo = new FormData();
                         formDataLogo.append('image', imageLogo[0]);
                         formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+                        formDataLogo.append('MTS_diachi', '');
                         formDataLogo.append('MTS_chitiet', '');
                         formDataLogo.append('MTS_clientId', '');
                         axios({
@@ -305,6 +357,7 @@ function SellerSetting() {
             const formDataLogo = new FormData();
             formDataLogo.append('image', imageLogo[0]);
             formDataLogo.append('NB_id', JSON.parse(GetCookie('seller')).ND_id);
+            formDataLogo.append('MTS_diachi', ctyVaule);
             formDataLogo.append('MTS_chitiet', address);
             formDataLogo.append('MTS_clientId', idPay);
             axios({
@@ -325,10 +378,11 @@ function SellerSetting() {
                 .catch((err) => {
                     console.log('loi nha');
                 });
-        } else if (address !== '' || idPay !== '') {
+        } else {
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/update/address`, {
                     NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                    MTS_diachi: ctyVaule,
                     MTS_chitiet: address,
                     MTS_clientId: idPay,
                 })
@@ -498,11 +552,11 @@ function SellerSetting() {
             iconDown.style.display = 'flex';
             iconUp.style.display = 'none';
             formAddress.style.display = 'none';
-            if (ctyVaule.split(',')[1] === undefined) {
-                setCtyVaule(ctyVaule + ',' + pxValue);
+            if (ctyVaule.split(',')[2] === undefined) {
+                setCtyVaule(pxValue + ',' + ctyVaule);
             } else {
                 let arr = ctyVaule.split(',');
-                arr[2] = pxValue;
+                arr[0] = pxValue;
                 setCtyVaule(arr.join(','));
             }
             setWardID(WardID);
@@ -611,7 +665,7 @@ function SellerSetting() {
             setDistrictID(DistrictID);
 
             if (ctyVaule !== '' && ctyVaule.split(',')[1] === undefined) {
-                setCtyVaule(ctyVaule + ',' + qhValue);
+                setCtyVaule(qhValue + ',' + ctyVaule);
             } else if (ctyVaule !== '') {
                 let arr = ctyVaule.split(',');
                 arr[1] = qhValue;

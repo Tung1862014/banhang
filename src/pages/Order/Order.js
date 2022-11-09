@@ -1575,8 +1575,8 @@ function Order() {
                                                             ctyVaule === '' &&
                                                             userVaule !== '' &&
                                                             userVaule !== undefined
-                                                                ? userVaule.DC_diachiGH
-                                                                : ctyVaule
+                                                                ? ChangeAddress(userVaule.DC_diachiGH)
+                                                                : ChangeAddress(ctyVaule)
                                                         }
                                                         onChange={(e) => setCtyVaule(e.target.value)}
                                                         onFocus={() => handleOpenFormIcon()}
