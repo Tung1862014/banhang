@@ -210,7 +210,7 @@ function Header() {
 
     //console.log('cookie: ' + JSON.parse(GetCookie('usergoogle')).photos[0].value);
 
-    function handleSubmitLogin(pass, user, seller) {
+    function handleSubmitLogin(pass, user) {
         //setLoading(true);
 
         //  if (seller) {
@@ -262,97 +262,53 @@ function Header() {
             .post(`${process.env.REACT_APP_URL_NODEJS}/customer/login`, {
                 ND_password: pass,
                 ND_username: user,
-                seller: seller,
             })
             .then((res) => {
                 //console.log('data: ' + JSON.stringify(res.data.result.image));
                 // handle success
                 console.log('data', res.data);
-                if (seller) {
-                    if (res.data.account && res.data.pass && res.data.status !== 0) {
-                        RemoveCookie('seller');
-                        SetCookie('seller', JSON.stringify(res.data.result));
-                        //alert('Đăng nhập thành công');
-                        setLoginResult([...loginResult, res.data.result]);
-                        //setLoading(false);
-                        // const action = addNumberProduct(res.data.result);
-                        // dispatchSignIn(action);
-                        toast.success('Đăng nhập thành công người bán', {
-                            position: toast.POSITION.TOP_RIGHT,
-                        });
-                        window.open('http://localhost:3000/seller', '_self', 1);
-                    } else if (!res.data.account) {
-                        //alert('Tài khoản không tồn tại');
-                        //const lastname = `${cx('toast-message')}`;
-                        //setLoading(false);
-                        // console.log('account', res.data.account);
-                        toast.error('Tài khoản không tồn tại', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-toastify-message')}`,
-                        });
-                    } else if (!res.data.pass) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        // console.log('pass', res.data.pass);
-                        toast.error('Mật khẩu không đúng', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    } else if (res.data.status === 0) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        // console.log('pass', res.data.pass);
 
-                        toast.error(`Tài khoản của bạn đã bị khóa. ${res.data.note}!`, {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                        const pathId = window.location.pathname.toString();
-                        setTimeout(window.open(pathId, '_self', 1), 2000);
-                    }
-                } else {
-                    if (res.data.account && res.data.pass && res.data.status !== 0) {
-                        RemoveCookie('usrin');
-                        SetCookie('usrin', JSON.stringify(res.data.result));
-                        //alert('Đăng nhập thành công');
-                        setLoginResult([...loginResult, res.data.result]);
-                        //setLoading(false);
-                        // console.log('loginResult', res.data.result);
-                        // const action = addNumberProduct(res.data.result);
-                        // dispatchSignIn(action);
+                if (res.data.account && res.data.pass && res.data.status !== 0 && res.data.permission === 1) {
+                    // RemoveCookie('usrin');
+                    // SetCookie('usrin', JSON.stringify(res.data.result));
+                    RemoveCookie('seller');
+                    SetCookie('seller', JSON.stringify(res.data.result));
 
-                        toast.success('Đăng nhập thành công', {
-                            position: toast.POSITION.TOP_RIGHT,
-                        });
-                        const pathId = window.location.pathname.toString();
-                        setTimeout(window.open(pathId, '_self', 1), 2000);
-                        //window.open(`${process.env.REACT_APP_URL_FRONTEND}`, '_self', 1);
-                    } else if (!res.data.account) {
-                        //alert('Tài khoản không tồn tại');
-                        //const lastname = `${cx('toast-message')}`;
-                        //setLoading(false);
-                        // console.log('account', res.data.account);
-                        toast.error('Tài khoản không tồn tại!', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-toastify-message')}`,
-                        });
-                    } else if (!res.data.pass) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        // console.log('pass', res.data.pass);
-                        toast.error('Mật khẩu không đúng', {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    } else if (res.data.status === 0) {
-                        //alert('Mật khẩu không đúng');
-                        //setLoading(false);
-                        // console.log('pass', res.data.pass);
-                        toast.error(`Tài khoản của bạn đã bị khóa. Lý do: ${res.data.note}!`, {
-                            position: toast.POSITION.TOP_RIGHT,
-                            className: `${cx('toast-message')}`,
-                        });
-                    }
+                    setLoginResult([...loginResult, res.data.result]);
+
+                    toast.success('Đăng nhập thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                    window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller`, '_self', 1);
+                    const pathId = window.location.pathname.toString();
+                    setTimeout(window.open(pathId, '_self', 1), 2000);
+                }
+                if (res.data.account && res.data.pass && res.data.status !== 0 && res.data.permission === 2) {
+                    RemoveCookie('usrin');
+                    SetCookie('usrin', JSON.stringify(res.data.result));
+                    //alert('Đăng nhập thành công');
+                    setLoginResult([...loginResult, res.data.result]);
+
+                    toast.success('Đăng nhập thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                    const pathId = window.location.pathname.toString();
+                    setTimeout(window.open(pathId, '_self', 1), 2000);
+                } else if (!res.data.account) {
+                    toast.error('Tài khoản không tồn tại!', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-toastify-message')}`,
+                    });
+                } else if (!res.data.pass) {
+                    toast.error('Mật khẩu không đúng', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-message')}`,
+                    });
+                } else if (res.data.status === 0) {
+                    toast.error(`Tài khoản của bạn đã bị khóa. Lý do: ${res.data.note}!`, {
+                        position: toast.POSITION.TOP_RIGHT,
+                        className: `${cx('toast-message')}`,
+                    });
                 }
             })
             .catch(() => {

@@ -348,7 +348,7 @@ function Seller() {
                         />
                     </div>
                     <button className={cx('chart-btn')} onClick={handleStatistic}>
-                        Liệt kê
+                        Thống kê
                     </button>
                     <div className={cx('chart-quarter')}>
                         <select className={cx('chart-btn-select')} onChange={(e) => handleDateNow(e.target.value)}>

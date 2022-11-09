@@ -368,6 +368,14 @@ function SellerCategory() {
         setIdCategory(id);
     };
 
+    const handleTestColor = (color) => {
+        if (color % 2 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -479,7 +487,14 @@ function SellerCategory() {
 
                             {takeCategory !== ''
                                 ? takeCategory.map((pro, index) => (
-                                      <tr key={index} className={cx('table__header-conten')}>
+                                      <tr
+                                          key={index}
+                                          className={cx(
+                                              handleTestColor(index)
+                                                  ? 'table__header-conten-color'
+                                                  : 'table__header-conten',
+                                          )}
+                                      >
                                           <td className={cx('td_table-name')}>{pro.DM_id}</td>
                                           <td className={cx('td_table-name')}>{pro.DM_danhmuc}</td>
                                           <td className={cx('td_table-name')}>{pro.product}</td>

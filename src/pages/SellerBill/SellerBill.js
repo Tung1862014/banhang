@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { SidberSeller } from '~/actions/SidberSeller';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './SellerBill.module.scss';
@@ -23,48 +24,91 @@ function SellerBill() {
 
     const [checkProduct, setCheckProduct] = useState('');
 
+    const [dateValue1, setDateValue1] = useState('');
+    const [dateValue2, setDateValue2] = useState('');
+    const [activeTurnover, setActiveTurnover] = useState(
+        `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+            JSON.parse(GetCookie('seller')).ND_id
+        }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
+            JSON.parse(GetCookie('seller')).ND_id
+        }`,
+    );
+
     const SidebarReducer = useSelector((state) => state.sidebarSeller.list);
     const dispatchSignIn = useDispatch();
 
     useEffect(() => {
         axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}`,
-            )
+            .get(`${activeTurnover}`)
 
             .then((res) => {
                 console.log('result bill', res.data.result);
                 setBill(res.data.result);
-                // setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
-                // setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
-                // setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
-                // setNumber(res.data.number[0].number);
             })
             .catch(() => {
                 console.log('loi khong the show bill');
             });
-    }, [checkStatus]);
+    }, [checkStatus, activeTurnover]);
 
     useEffect(() => {
-        axios
-            .get(
-                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/number?NB_id=${
+        if (checkStatus !== '' && dateValue1 !== '' && dateValue2 !== '') {
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
                 }`,
-            )
-            .then((res) => {
-                setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
-                setStatusConfirmed(res.data.statusconfirmed[0].statusconfirmed);
-                setStatusTransport(res.data.statustransport[0].statustransport);
-                setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
-                setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
-                setNumber(res.data.number[0].number);
-            })
-            .catch(() => {
-                console.log('loi khong the show bill');
-            });
+            );
+        } else if (checkStatus !== '' && dateValue1 === '' && dateValue2 === '') {
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        }
+    }, [checkStatus, dateValue1, dateValue2]);
+
+    useEffect(() => {
+        if (dateValue1 !== '' && dateValue2 !== '') {
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/number?NB_id=${
+                        JSON.parse(GetCookie('seller')).ND_id
+                    }&tungay=${dateValue1}&denngay=${dateValue2}`,
+                )
+                .then((res) => {
+                    setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
+                    setStatusConfirmed(res.data.statusconfirmed[0].statusconfirmed);
+                    setStatusTransport(res.data.statustransport[0].statustransport);
+                    setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
+                    setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
+                    setNumber(res.data.number[0].number);
+                })
+                .catch(() => {
+                    console.log('loi khong the show bill');
+                });
+        } else if (dateValue1 === '' && dateValue2 === '') {
+            console.log('ggggggggggggggggggg');
+            axios
+                .get(
+                    `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/number?NB_id=${
+                        JSON.parse(GetCookie('seller')).ND_id
+                    }&tungay=${dateValue1}&denngay=${dateValue2}`,
+                )
+                .then((res) => {
+                    setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
+                    setStatusConfirmed(res.data.statusconfirmed[0].statusconfirmed);
+                    setStatusTransport(res.data.statustransport[0].statustransport);
+                    setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
+                    setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
+                    setNumber(res.data.number[0].number);
+                })
+                .catch(() => {
+                    console.log('loi khong the show bill');
+                });
+        }
     }, []);
 
     useEffect(() => {
@@ -288,6 +332,171 @@ function SellerBill() {
                 console.log('loi khong the show bill');
             });
     };
+
+    const handleDateNow = (e) => {
+        const date = new Date();
+        const dayValue = new Date();
+        const year = date.getFullYear();
+        if (Number(e) === 7) {
+            const additionOfDays = 7;
+            date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            setDateValue2(takeDateNow(dayValue));
+            setDateValue1(takeDateNow(date));
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 1) {
+            let dateTo = `${year.toString()}-01-01`;
+            let dateFrom = `${year.toString()}-03-31`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 2) {
+            let dateTo = `${year.toString()}-04-01`;
+            let dateFrom = `${year.toString()}-06-30`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 3) {
+            let dateTo = `${year.toString()}-07-01`;
+            let dateFrom = `${year.toString()}-09-30`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 4) {
+            let dateTo = `${year.toString()}-10-01`;
+            let dateFrom = `${year.toString()}-12-31`;
+            setDateValue1(dateTo);
+            setDateValue2(dateFrom);
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        } else if (Number(e) === 365) {
+            const additionOfDays = 365;
+            date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            setDateValue2(takeDateNow(dayValue));
+            setDateValue1(takeDateNow(date));
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        }
+    };
+
+    // function takeDate() {
+    //     const dateValue = new Date();
+    //     let day = dateValue.getDate();
+    //     let month = dateValue.getMonth() + 1;
+    //     let year = dateValue.getFullYear();
+
+    //     if (month < 10 && day >= 10) {
+    //         return year + '-0' + month + '-' + day;
+    //     } else if (month < 10 && day < 10) {
+    //         return year + '-0' + month + '-0' + day;
+    //     } else if (month >= 10 && day < 10) {
+    //         return year + '-' + month + '-0' + day;
+    //     } else if (month >= 10 && day >= 10) {
+    //         return year + '-' + month + '-' + day;
+    //     } else {
+    //         return year + '-' + month + '-' + day;
+    //     }
+    // }
+
+    function takeDateNow(date) {
+        const dateValue = new Date(date);
+        let day = dateValue.getDate();
+        let month = dateValue.getMonth() + 1;
+        let year = dateValue.getFullYear();
+
+        if (month < 10 && day >= 10) {
+            return year + '-0' + month + '-' + day;
+        } else if (month < 10 && day < 10) {
+            return year + '-0' + month + '-0' + day;
+        } else if (month >= 10 && day < 10) {
+            return year + '-' + month + '-0' + day;
+        } else if (month >= 10 && day >= 10) {
+            return year + '-' + month + '-' + day;
+        } else {
+            return year + '-' + month + '-' + day;
+        }
+    }
+
+    function handleTestDate(fromValue, toValue) {
+        let datefrom = new Date(fromValue);
+        let dateto = new Date(toValue);
+        if (datefrom <= dateto) {
+            return true;
+        } else {
+            return false;
+        }
+        // console.log('date1', date1);
+    }
+
+    const handleStatistic = (dateValue1, dateValue2) => {
+        if (dateValue1 === '' && dateValue2 !== '') {
+            toast.warning('Ngày bắt đầu không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateValue1 !== '' && dateValue2 === '') {
+            toast.warning('Ngày kết thúc không được bỏ trống!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else if (dateValue1 !== '' && dateValue2 !== '' && !handleTestDate(dateValue1, dateValue2)) {
+            toast.warning('Ngày bắt đầu và ngày kết thúc chưa hợp lệ!', {
+                position: toast.POSITION.TOP_CENTER,
+                className: `${cx('toast-message')}`,
+            });
+        } else {
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${takeDateNow(dateValue2)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            );
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('shopee-tabs')}>
@@ -435,6 +644,54 @@ function SellerBill() {
                 </div>
             </div>
             {/* <ProductSeller data={product} /> */}
+            <div className={cx('chart-demo')}>
+                <div className={cx('chart-date')}>
+                    <div className={cx('chart-date-input')}>
+                        <input
+                            type="date"
+                            className={cx('chart-date1')}
+                            defaultValue={''}
+                            onChange={(e) => setDateValue1(e.target.value)}
+                        />
+                        <span className={cx('chart-')}>-</span>
+                        <input
+                            type="date"
+                            className={cx('chart-date2')}
+                            defaultValue={''}
+                            onChange={(e) => setDateValue2(e.target.value)}
+                        />
+                    </div>
+                    <button className={cx('chart-btn')} onClick={() => handleStatistic(dateValue1, dateValue2)}>
+                        Thống kê
+                    </button>
+                    <div className={cx('chart-quarter')}>
+                        <select className={cx('chart-btn-select')} onChange={(e) => handleDateNow(e.target.value)}>
+                            <option className={cx('order-btn-option')} value="">
+                                ...
+                            </option>
+                            <option className={cx('order-btn-option')} value="7">
+                                Tuần
+                            </option>
+                            <option className={cx('order-btn-option')} value="1">
+                                Quý 1 (1-3)
+                            </option>
+                            <option className={cx('order-btn-option')} value="2">
+                                Quý 2 (4-6)
+                            </option>
+                            <option className={cx('order-btn-option')} value="3">
+                                Quý 3 (7-9)
+                            </option>
+                            <option className={cx('order-btn-option')} value="4">
+                                Quý 4 (10-12)
+                            </option>
+                            <option className={cx('order-btn-option')} value="365">
+                                Năm
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                {/* <Line className={cx('chart-demo')} option={chartOptions} data={chartData} /> */}
+            </div>
             <div className={cx('order-list-pannel')}>
                 <div className={cx('order-list-section')}>
                     <div className={cx('shopee-fixed-top-card')}>
@@ -452,6 +709,7 @@ function SellerBill() {
                     <SellerBillPage data={bill} />
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

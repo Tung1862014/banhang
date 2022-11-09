@@ -19,6 +19,13 @@ function Detail({ product }) {
                 return (index % 3 ? next : next + '.') + prev;
             });
     }
+    const handleTestColor = (color) => {
+        if (color % 2 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     return (
         <>
@@ -37,7 +44,14 @@ function Detail({ product }) {
                                     {product !== '' &&
                                         product !== undefined &&
                                         product.map((pro, index) => (
-                                            <tr key={index} className={cx('table__header-conten')}>
+                                            <tr
+                                                key={index}
+                                                className={cx(
+                                                    handleTestColor(index)
+                                                        ? 'table__header-conten-color'
+                                                        : 'table__header-conten',
+                                                )}
+                                            >
                                                 <td className={cx('td_table-name-sp')}>
                                                     <img src={pro.SP_image} alt="" width="40" height="40" />
                                                     <span className={cx('name-product-sp')}>{pro.SP_ten}</span>

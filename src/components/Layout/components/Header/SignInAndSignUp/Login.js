@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
     const [userName, setUserName] = useState('');
     const [passValue, setPassValue] = useState('');
-    const [checkSeller, setCheckSeller] = useState(false);
+    // const [checkSeller, setCheckSeller] = useState(false);
     //const userObjectCookie = GetCookie('userGoogle') || {};
 
     //const [userGoogle, setUserGoogle] = useState(userObjectCookie);
@@ -52,7 +52,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
 
     const user = useDebounce(userName, 500);
     const pass = useDebounce(passValue, 500);
-    const seller = useDebounce(checkSeller, 100);
+    //const seller = useDebounce(checkSeller, 100);
 
     const handleUserName = (e) => {
         setUserName(e.target.value);
@@ -104,7 +104,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                         <button className={cx('btn-icon-close')} onClick={onClickLogin}>
                             <CloseIcon className={cx('icon-close')} />
                         </button>
-                        <h3 className={cx('heading')}>{checkSeller ? 'Đăng nhập người bán' : 'Đăng nhập'}</h3>
+                        {/* <h3 className={cx('heading')}>{checkSeller ? 'Đăng nhập người bán' : 'Đăng nhập'}</h3> */}
 
                         <div className={cx('spacer')}></div>
 
@@ -169,7 +169,7 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             Tiếp tục với Google
                         </div> */}
 
-                        <div className={cx('check-seller')}>
+                        {/* <div className={cx('check-seller')}>
                             <input
                                 type="checkbox"
                                 id="seller"
@@ -179,9 +179,9 @@ function Login({ onClickLogin, onClick, onClickSeller, onResult, Loading }) {
                             <label htmlFor="seller" className={cx('seller')}>
                                 Đăng nhập với tư cách chủ gian hàng
                             </label>
-                        </div>
+                        </div> */}
 
-                        <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user, seller)}>
+                        <Button className={cx('form_submit')} to="" onClick={() => onResult(pass, user)}>
                             {'Đăng nhập'}
                         </Button>
                         <div className={cx('sign-header')}>
