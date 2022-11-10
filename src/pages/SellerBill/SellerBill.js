@@ -19,7 +19,7 @@ function SellerBill() {
     const [statusDelivered, setStatusDelivered] = useState('');
     const [statusCancelOrder, setStatusCancelOrder] = useState('');
     const [number, setNumber] = useState('');
-    const [checkStatus, setCheckStatus] = useState();
+    const [checkStatus, setCheckStatus] = useState('');
     const [searchValue, setSearchValue] = useState('');
 
     const [checkProduct, setCheckProduct] = useState('');
@@ -29,15 +29,39 @@ function SellerBill() {
     const [activeTurnover, setActiveTurnover] = useState(
         `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
             JSON.parse(GetCookie('seller')).ND_id
-        }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
-            JSON.parse(GetCookie('seller')).ND_id
-        }`,
+        }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}`,
     );
 
     const [checkStatistical, setCheckStatistical] = useState('');
 
     const SidebarReducer = useSelector((state) => state.sidebarSeller.list);
     const dispatchSignIn = useDispatch();
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(14);
+        if (resultId === 'all') {
+            handlerClickAll();
+        } else if (resultId === 'confirm') {
+            handlerClickAllConfirm();
+        } else if (resultId === 'confirmed') {
+            handlerClickAllConfirmed();
+        } else if (resultId === 'transport') {
+            handlerClickAllTransport();
+        } else if (resultId === 'delivered') {
+            handlerClickAllDelivered();
+        } else {
+            handlerClickAllCancelOrder();
+        }
+    }, [SidebarReducer]);
+
+    useEffect(() => {
+        setActiveTurnover(
+            `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
+                JSON.parse(GetCookie('seller')).ND_id
+            }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}`,
+        );
+    }, [checkStatus]);
 
     useEffect(() => {
         axios
@@ -50,7 +74,7 @@ function SellerBill() {
             .catch(() => {
                 console.log('loi khong the show bill');
             });
-    }, [checkStatus, activeTurnover]);
+    }, [activeTurnover]);
 
     useEffect(() => {
         if (
@@ -63,17 +87,13 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}`,
             );
         } else if (checkStatus !== '' && dateValue1 === '' && dateValue2 === '') {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}`,
             );
         }
     }, [checkStatus, dateValue1, dateValue2, checkStatistical]);
@@ -125,24 +145,6 @@ function SellerBill() {
     }, [dateValue1, dateValue2, checkStatistical]);
 
     useEffect(() => {
-        const pathId = window.location.pathname.toString();
-        const resultId = pathId.slice(14);
-        if (resultId === 'all') {
-            handlerClickAll();
-        } else if (resultId === 'confirm') {
-            handlerClickAllConfirm();
-        } else if (resultId === 'confirmed') {
-            handlerClickAllConfirmed();
-        } else if (resultId === 'transport') {
-            handlerClickAllTransport();
-        } else if (resultId === 'delivered') {
-            handlerClickAllDelivered();
-        } else {
-            handlerClickAllCancelOrder();
-        }
-    }, [SidebarReducer]);
-
-    useEffect(() => {
         const action = SidberSeller(checkProduct);
         dispatchSignIn(action);
     }, [checkProduct, dispatchSignIn]);
@@ -174,8 +176,8 @@ function SellerBill() {
         badge3.style.color = '#999';
         badge4.style.color = '#999';
         badge5.style.color = '#999';
+        //setCheckProduct('add_product');
         setCheckStatus('all');
-        setCheckProduct('add_product');
     };
     const handlerClickAllConfirm = () => {
         const tab1 = document.getElementById('tabs__tab1');
@@ -366,9 +368,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}`,
             );
         } else if (Number(e) === 1) {
             let dateFrom = `${year.toString()}-01-01`;
@@ -385,9 +385,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}`,
             );
         } else if (Number(e) === 2) {
             let dateFrom = `${year.toString()}-04-01`;
@@ -404,9 +402,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}`,
             );
         } else if (Number(e) === 3) {
             let dateFrom = `${year.toString()}-07-01`;
@@ -423,9 +419,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}`,
             );
         } else if (Number(e) === 4) {
             let dateFrom = `${year.toString()}-10-01`;
@@ -442,9 +436,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateFrom}&denngay=${dateTo}`,
             );
         } else if (Number(e) === 365) {
             const additionOfDays = 365;
@@ -463,9 +455,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${takeDateNow(date)}&denngay=${takeDateNow(dayValue)}`,
             );
         } else if (e === '') {
             const formDate = document.getElementById('chart-date1');
@@ -479,9 +469,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${''}&denngay=${''}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${''}&denngay=${''}`,
             );
         }
     };
@@ -556,9 +544,7 @@ function SellerBill() {
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/sellerbill/bill/show/all?NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${takeDateNow(dateValue2)}&NB_id=${
-                    JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${takeDateNow(dateValue2)}`,
             );
         }
     };

@@ -41,7 +41,7 @@ function Detail({ bill }) {
 
     return (
         <div className={cx('order-list-body')}>
-            {bill[0] !== undefined
+            {bill[0] !== undefined && bill !== ''
                 ? bill.map((bill, index) => (
                       <div key={index} className={cx('order-item')}>
                           <div className={cx('order-title')}>

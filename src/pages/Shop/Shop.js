@@ -316,7 +316,7 @@ const Shop = () => {
                                     </h1>
                                     <div className={cx('section-seller-overview-horizontal__portrait-status')}>
                                         <div className={cx('section-seller-overview-horizontal__active-time')}>
-                                            Tham gia: {shopValue !== '' ? takeDate(shopValue.ND_ngay) : ''}
+                                            Tham gia: {shopValue !== '' ? takeDate(shopValue.ND_ngayDK) : ''}
                                         </div>
                                     </div>
                                 </div>
