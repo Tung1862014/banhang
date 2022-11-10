@@ -190,4 +190,14 @@
     &:hover {
         opacity: 0.9;
     }
+
+    .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+        border-color: none !important;
+    }
+
+    .cke_chrome {
+        display: block;
+        border: 1px solid #d1d1d1;
+        padding: 0;
+    }
 }

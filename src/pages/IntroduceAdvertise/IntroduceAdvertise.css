@@ -1,0 +1,3 @@
+div[contenteditable] {
+    border-color: transparent !important;
+}

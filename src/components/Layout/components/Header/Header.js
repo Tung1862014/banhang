@@ -280,8 +280,8 @@ function Header() {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                     window.open(`${process.env.REACT_APP_URL_FRONTEND}/seller`, '_self', 1);
-                    const pathId = window.location.pathname.toString();
-                    setTimeout(window.open(pathId, '_self', 1), 2000);
+                    // const pathId = window.location.pathname.toString();
+                    // setTimeout(window.open(pathId, '_self', 1), 2000);
                 }
                 if (res.data.account && res.data.pass && res.data.status !== 0 && res.data.permission === 2) {
                     RemoveCookie('usrin');

@@ -1,7 +1,10 @@
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import styles from './IntroduceAdvertise.module.scss';
+import './IntroduceAdvertise.css';
 
 const cx = classNames.bind(styles);
 
@@ -36,12 +39,19 @@ function IntroduceAdvertise() {
                         with="500"
                     />
                 </div>
-                <div
-                    className={cx('title-body')}
-                    dangerouslySetInnerHTML={{
-                        __html: advertiseValue !== '' ? `${advertiseValue.QB_mota}` : '',
-                    }}
-                ></div>
+                <div className={cx('title-')}>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        data={`${advertiseValue !== '' ? advertiseValue.QB_mota : ''}`}
+                        disabled
+                        config={{
+                            toolbar: [''],
+                        }}
+                        onChange={(event, editor) => {
+                            // const data = editor.getData();
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );

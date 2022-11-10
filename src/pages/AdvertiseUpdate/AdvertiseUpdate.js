@@ -186,6 +186,28 @@ function AdvertiseUpdate() {
                         <CKEditor
                             editor={ClassicEditor}
                             data={`${describeAdverties !== '' ? describeAdverties : ''}`}
+                            // config={{
+                            //     ckfinder: {
+                            //         // Upload the images to the server using the CKFinder QuickUpload command.
+                            //         uploadUrl: 'http://localhost:5000/uploads/image',
+                            //     },
+                            // }}
+                            config={{
+                                // plugins: [ Essentials ],
+                                ckfinder: {
+                                    // The URL that the images are uploaded to.
+                                    uploadUrl: 'http://localhost:5000/uploads',
+
+                                    // Enable the XMLHttpRequest.withCredentials property.
+                                    withCredentials: true,
+
+                                    // Headers sent along with the XMLHttpRequest to the upload server.
+                                    headers: {
+                                        'X-CSRF-TOKEN': 'CSFR-Token',
+                                        Authorization: 'Bearer <JSON Web Token>',
+                                    },
+                                },
+                            }}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
                                 setDescribeAdvertise(data);
