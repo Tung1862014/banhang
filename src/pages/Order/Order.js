@@ -44,7 +44,7 @@ function Order() {
     console.log('serviceIdUser', serviceIdUser);
     console.log('serviceFee tt', serviceFee);
     console.log('sellerClientId ClientId', sellerClientId);
-    console.log('GetCookie', JSON.parse(GetCookie('servicefee')));
+    //console.log('GetCookie', JSON.parse(GetCookie('servicefee')));
 
     //takeid order
     useEffect(() => {

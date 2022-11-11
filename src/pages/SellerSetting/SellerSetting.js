@@ -730,7 +730,7 @@ function SellerSetting() {
                                 {establish !== undefined ? establish.MTS_ten : ''}
                             </div>{' '}
                             <div data-v-455a73b3="" className={cx('join-time')}>
-                                Đã tham gia {takeDate(dateValue !== '' ? dateValue.ND_ngay : '')}
+                                Đã tham gia {takeDate(dateValue !== '' ? dateValue.ND_ngayDK : '')}
                             </div>{' '}
                         </div>
                     </div>

@@ -330,7 +330,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                               </td>
                                               <td className={cx('td_table-name-number')}>{pro.ND_email}</td>
                                               <td className={cx('td_table-name-address')}>{pro.ND_diachi}</td>
-                                              <td className={cx('td_table-name-date')}>{takeDate(pro.ND_ngay)}</td>
+                                              <td className={cx('td_table-name-date')}>{takeDate(pro.ND_ngayDK)}</td>
                                               <td className={cx('td_table-name-status')}>
                                                   <a href={`update/@${pro.ND_id}`} className={cx('btn-update')}>
                                                       {pro.ND_trangthai === 1 ? '...' : 'Khóa'}

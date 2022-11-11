@@ -120,6 +120,13 @@
     .action {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .account {
+        display: flex;
+        align-items: center;
     }
 
     .account-avatar {

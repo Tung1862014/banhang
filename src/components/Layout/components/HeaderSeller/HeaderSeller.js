@@ -65,34 +65,36 @@ function HeaderSeller() {
                         <Link to={'/'} className={cx('logo')}>
                             <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
                         </Link>
-                        {establish !== '' && establish !== undefined ? (
-                            <img src={establish.ND_image} className={cx('account-avatar')} alt="" />
-                        ) : (
-                            <img
-                                src={
-                                    JSON.parse(GetCookie('seller')).ND_image !== undefined
-                                        ? JSON.parse(GetCookie('seller')).ND_image
-                                        : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
-                                }
-                                className={cx('account-avatar')}
-                                alt=""
-                            />
-                        )}
-                        {GetCookie('seller') && (
-                            <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
-                                {GetCookie('seller') && (
-                                    <div>
-                                        <h3>
-                                            {' '}
-                                            {establish !== '' && establish !== undefined
-                                                ? establish.ND_hoten
-                                                : 'Xin chào ' + JSON.parse(GetCookie('seller')).ND_hoten}
-                                            <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
-                                        </h3>
-                                    </div>
-                                )}
-                            </Menu>
-                        )}
+                        <div className={cx('account')}>
+                            {establish !== '' && establish !== undefined ? (
+                                <img src={establish.ND_image} className={cx('account-avatar')} alt="" />
+                            ) : (
+                                <img
+                                    src={
+                                        JSON.parse(GetCookie('seller')).ND_image !== undefined
+                                            ? JSON.parse(GetCookie('seller')).ND_image
+                                            : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
+                                    }
+                                    className={cx('account-avatar')}
+                                    alt=""
+                                />
+                            )}
+                            {GetCookie('seller') && (
+                                <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
+                                    {GetCookie('seller') && (
+                                        <div>
+                                            <h3>
+                                                {' '}
+                                                {establish !== '' && establish !== undefined
+                                                    ? establish.ND_hoten
+                                                    : 'Xin chào ' + JSON.parse(GetCookie('seller')).ND_hoten}
+                                                <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
+                                            </h3>
+                                        </div>
+                                    )}
+                                </Menu>
+                            )}
+                        </div>
                     </div>
                 </div>
             </header>

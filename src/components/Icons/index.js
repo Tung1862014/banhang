@@ -1,4 +1,4 @@
-export const CartIcon = ({ width = '2.8rem', height = '2.8rem', className }) => (
+export const CartIcon = ({ width = '3.2rem', height = '3.2rem', className }) => (
     <svg
         className={className}
         width={width}
@@ -26,7 +26,7 @@ export const CartIcon = ({ width = '2.8rem', height = '2.8rem', className }) => 
     </svg>
 );
 
-export const InboxIcon = ({ width = '3.2rem', height = '3.2rem', className }) => (
+export const InboxIcon = ({ width = '3.9rem', height = '3.9rem', className }) => (
     <svg
         className={className}
         width={width}

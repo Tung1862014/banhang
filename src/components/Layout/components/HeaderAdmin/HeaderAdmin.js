@@ -81,29 +81,31 @@ function HeaderAdmin() {
                         <Link to={'/'} className={cx('logo')}>
                             <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
                         </Link>
-                        <img
-                            src={
-                                userVaule !== ''
-                                    ? userVaule.ND_image
-                                    : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
-                            }
-                            className={cx('account-avatar')}
-                            alt=""
-                        />
+                        <div className={cx('account')}>
+                            <img
+                                src={
+                                    userVaule !== ''
+                                        ? userVaule.ND_image
+                                        : 'https://cf.shopee.vn/file/fe9caaa8038750bd54a597e145ae3207'
+                                }
+                                className={cx('account-avatar')}
+                                alt=""
+                            />
 
-                        {GetCookie('admin') && (
-                            <Menu items={GetCookie('admin') !== undefined ? userMenuSeller : MENU_ITEMS}>
-                                {GetCookie('admin') && (
-                                    <div>
-                                        <h3>
-                                            {' '}
-                                            {'Xin chào ' + userVaule.ND_hoten}
-                                            <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
-                                        </h3>
-                                    </div>
-                                )}
-                            </Menu>
-                        )}
+                            {GetCookie('admin') && (
+                                <Menu items={GetCookie('admin') !== undefined ? userMenuSeller : MENU_ITEMS}>
+                                    {GetCookie('admin') && (
+                                        <div>
+                                            <h3>
+                                                {' '}
+                                                {'Xin chào ' + userVaule.ND_hoten}
+                                                <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
+                                            </h3>
+                                        </div>
+                                    )}
+                                </Menu>
+                            )}
+                        </div>
                     </div>
                 </div>
             </header>
