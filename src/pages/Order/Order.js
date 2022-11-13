@@ -68,7 +68,7 @@ function Order() {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/order/user/show?ND_id=${JSON.parse(GetCookie('usrin')).ND_id}`)
             .then((res) => {
-                // console.log('data results ttttttttttttttttttttttttttttttttttttttttttttt');
+                console.log('data results ttttttttttttttttttttttttttttttttttttttttttttt');
                 // console.log('data results', res.data);
                 setUserVaule(res.data.results);
                 if (res.data.results.DC_diachiGH !== undefined && res.data.results.DC_chitiet !== undefined) {
@@ -398,12 +398,13 @@ function Order() {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
-        } else if (addressVaule === '') {
+        } else if (addressVaule === '' && addressVaule !== undefined) {
             toast.warning('Địa chỉ cụ thể không được bỏ trống!', {
                 position: toast.POSITION.TOP_CENTER,
                 className: `${cx('toast-message')}`,
             });
         } else {
+            console.log('adddddddddddddddddddđ: ', addressVaule);
             axios
                 .put(`${process.env.REACT_APP_URL_NODEJS}/order/update/address`, {
                     ND_id: JSON.parse(GetCookie('usrin')).ND_id,
@@ -1685,9 +1686,7 @@ function Order() {
                                                         className={cx('gRsrLD')}
                                                         placeholder="Địa chỉ cụ thể"
                                                         defaultValue={
-                                                            userVaule !== '' &&
-                                                            userVaule !== '' &&
-                                                            userVaule !== undefined
+                                                            userVaule !== '' && userVaule !== undefined
                                                                 ? userVaule.DC_chitiet
                                                                 : ''
                                                         }
