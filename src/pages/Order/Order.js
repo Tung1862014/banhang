@@ -1074,6 +1074,10 @@ function Order() {
                                     })
                                     .catch((err) => {
                                         console.log('loi goi dv');
+                                        setServiceIdValue([
+                                            { service_id: 53321, service_type_id: 2, short_name: 'Đi bộ' },
+                                        ]);
+                                        setServiceIdUser(53321);
                                     });
                             }
                         }
@@ -1081,7 +1085,12 @@ function Order() {
                 })
                 .catch((err) => {
                     console.log('loi');
+                    setServiceIdValue([{ service_id: 53321, service_type_id: 2, short_name: 'Đi bộ' }]);
+                    setServiceIdUser(53321);
                 });
+        } else {
+            setServiceIdValue([{ service_id: 53321, service_type_id: 2, short_name: 'Đi bộ' }]);
+            setServiceIdUser(53321);
         }
     }, [sellerName, districtID, wardID]);
 
@@ -1165,7 +1174,7 @@ function Order() {
 
                                         {
                                             from_district_id: res.data.data.shops[i].district_id,
-                                            service_id: serviceIdUser !== '' ? Number(serviceIdUser) : '',
+                                            service_id: serviceIdUser !== '' ? Number(serviceIdUser) : Number('53321'),
                                             service_type_id: null,
                                             to_district_id: districtID !== '' ? districtID : districtID,
                                             to_ward_code: wardID !== '' ? wardID : wardID,
@@ -1215,6 +1224,21 @@ function Order() {
                                     })
                                     .catch((err) => {
                                         console.log('loi Dv nha');
+                                        let transportFee = [];
+                                        for (let j = 0; j < sellerName.length; j++) {
+                                            transportFee[j] = 50000;
+                                            // console.log(`transportFee ${j}`, transportFee[0]);
+                                            // console.log(`locationId ${j}`, locationId);
+
+                                            if (
+                                                handleTestTransportFee(transportFee) &&
+                                                transportFee.length === sellerName.length
+                                            ) {
+                                                setServiceFee(transportFee);
+                                                RemoveCookie('servicefee');
+                                                SetCookie('servicefee', JSON.stringify(transportFee));
+                                            }
+                                        }
                                     });
                             }
                         }
@@ -1222,7 +1246,32 @@ function Order() {
                 })
                 .catch((err) => {
                     console.log('loi');
+                    let transportFee = [];
+                    for (let j = 0; j < sellerName.length; j++) {
+                        transportFee[j] = 50000;
+                        // console.log(`transportFee ${j}`, transportFee[0]);
+                        // console.log(`locationId ${j}`, locationId);
+
+                        if (handleTestTransportFee(transportFee) && transportFee.length === sellerName.length) {
+                            setServiceFee(transportFee);
+                            RemoveCookie('servicefee');
+                            SetCookie('servicefee', JSON.stringify(transportFee));
+                        }
+                    }
                 });
+        } else {
+            let transportFee = [];
+            for (let j = 0; j < sellerName.length; j++) {
+                transportFee[j] = 50000;
+                // console.log(`transportFee ${j}`, transportFee[0]);
+                // console.log(`locationId ${j}`, locationId);
+
+                if (handleTestTransportFee(transportFee) && transportFee.length === sellerName.length) {
+                    setServiceFee(transportFee);
+                    RemoveCookie('servicefee');
+                    SetCookie('servicefee', JSON.stringify(transportFee));
+                }
+            }
         }
     }, [sellerName, districtID, wardID, sellerValue, orderValue, serviceIdUser]);
 
