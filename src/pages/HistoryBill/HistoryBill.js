@@ -37,6 +37,9 @@ function HistoryBill() {
     const [searchTextValue, setSearchTextValue] = useState('');
     const [visible, setVisible] = useState(3);
 
+    const [noteCancleBill, setNoteCancleBill] = useState('');
+    const [noteValue, setNoteValue] = useState('');
+
     console.log('setBillEvaluate : ', billEvaluate);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -120,6 +123,7 @@ function HistoryBill() {
         let statusBills = [];
         let billIdValue = [];
         let billDateValue = [];
+        let noteCancleBillValue = [];
         //let sumnumber = 0;
         //let price = 0;
 
@@ -131,6 +135,7 @@ function HistoryBill() {
                 statusBills.push(orderValue[i].DH_trangthai);
                 billIdValue.push(orderValue[i].DH_id);
                 billDateValue.push(orderValue[i].DH_ngay);
+                noteCancleBillValue.push(orderValue[i].DH_ghichuhuy);
             }
 
             //sumnumber += 1;
@@ -148,6 +153,7 @@ function HistoryBill() {
 
             setBillId(billIdValue);
             setBillDate(billDateValue);
+            setNoteCancleBill(noteCancleBillValue);
         }
 
         //setSumNumber(sumnumber);
@@ -579,7 +585,7 @@ function HistoryBill() {
     function handleCancelBill() {
         axios
             .get(
-                `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/switch-status/cancel?order_codes=${cancelIdBill}`,
+                `https://dev-online-gateway.ghn.vggggggggn/shiip/public-api/v2/switch-status/cancel?order_codes=${cancelIdBill}`,
                 {
                     headers: {
                         Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
@@ -592,6 +598,8 @@ function HistoryBill() {
                 axios
                     .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
                         DH_id: cancelIdBill,
+                        DH_ghichuhuy:
+                            noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
                     })
                     .then((res) => {
                         console.log('DH', res.data);
@@ -604,6 +612,8 @@ function HistoryBill() {
                 axios
                     .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
                         DH_id: cancelIdBill,
+                        DH_ghichuhuy:
+                            noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
                     })
                     .then((res) => {
                         console.log('DH', res.data);
@@ -652,6 +662,11 @@ function HistoryBill() {
                                     </div>
                                     <div className={cx('delete-modal__header-inner-title')}>
                                         <div className={cx('delete-modal__title')}>Bạn có muốn Hủy đơn hàng này?</div>
+                                        <div className={cx('delete-modal__title')}>Hãy cho biết lý do (nếu có):</div>
+                                        <textarea
+                                            className={cx('delete-modal__note')}
+                                            onChange={(e) => setNoteValue(e.target.value)}
+                                        ></textarea>
                                     </div>
                                 </div>
                                 <div className={cx('delete-modal__footer')}>
@@ -798,10 +813,7 @@ function HistoryBill() {
                                                       </div>
                                                       <div className={cx('WPNwG4')}>
                                                           <div className={cx('RcKSvW')}>
-                                                              <a
-                                                                  className={cx('_2GgWAA')}
-                                                                  href="/user/purchase/order/116358025246170?type=6"
-                                                              >
+                                                              <div className={cx('_2GgWAA')}>
                                                                   <span className={cx('_0vCgDb')}>
                                                                       {statusBill[index] === 1
                                                                           ? 'Chờ xác nhận'
@@ -813,8 +825,9 @@ function HistoryBill() {
                                                                           ? 'Giao hàng thành công'
                                                                           : 'Đã hủy'}
                                                                   </span>
-                                                              </a>
+                                                              </div>
                                                           </div>
+
                                                           <div className={cx('l4WFo0')}>
                                                               {handleStatusEvaluate(billId[index])
                                                                   ? 'Đã đánh giá'
@@ -973,6 +986,15 @@ function HistoryBill() {
                                                   </div>
                                               </div>
                                           </div>
+                                          {statusBill[index] === 5 ? (
+                                              <div className={cx('RcKSvW')}>
+                                                  <div className={cx('_2GgWAA')}>
+                                                      <span className={cx('_0vCgDb')}>{noteCancleBill[index]}</span>
+                                                  </div>
+                                              </div>
+                                          ) : (
+                                              ''
+                                          )}
                                           <div className={cx('_1ERzqw')}>
                                               <div className={cx('NIZAp8')}>
                                                   {statusBill[index] === 1 ? (

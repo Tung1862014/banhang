@@ -914,7 +914,7 @@
     .delete-modal__box {
         display: flex;
         width: 400px;
-        height: 184px;
+        height: 280px;
         padding: 0 24px;
         position: relative;
         z-index: 11;
@@ -931,7 +931,7 @@
     }
 
     .delete-modal__header {
-        height: 104px;
+        height: 210px;
         width: 100%;
     }
 
@@ -952,13 +952,20 @@
     }
 
     .delete-modal__header-inner-title {
-        height: 32px;
+        height: 135px;
         flex-grow: 1;
         min-height: 32px;
         padding: 0 24px;
         overflow: auto;
         font-size: 14px;
         font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    }
+
+    .delete-modal__note {
+        margin-top: 3px;
+        padding: 8px;
+        width: 352px;
+        height: 95px;
     }
 
     .delete-modal__footer {

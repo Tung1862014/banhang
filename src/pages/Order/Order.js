@@ -38,6 +38,7 @@ function Order() {
     //const [namePaypal, setNamePaypal] = useState(''); //Tên Paypal
     const [checkPaypal, setCheckPaypal] = useState(false);
     const [takeIdSimulation, setTakeIdSimulation] = useState('');
+    const [noteValue, setNoteValue] = useState('');
 
     console.log('res.data.result[0]', takeIdSimulation);
     console.log('serviceIdValue', serviceIdValue);
@@ -709,6 +710,7 @@ function Order() {
                                                 TTDH_gia: handleTakePriceProduct(sellerValue[j]),
                                                 TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
                                                 SP_id: handleTakeIdProduct(sellerValue[j]),
+                                                DH_ghichu: noteValue !== '' ? noteValue : '',
                                             })
                                             .then((res) => {
                                                 //console.log('insert order', res.data);
@@ -776,6 +778,7 @@ function Order() {
                                             TTDH_gia: handleTakePriceProduct(sellerValue[j]),
                                             TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
                                             SP_id: handleTakeIdProduct(sellerValue[j]),
+                                            DH_ghichu: noteValue !== '' ? noteValue : '',
                                         })
                                         .then((res) => {
                                             //console.log('insert order', res.data);
@@ -807,6 +810,69 @@ function Order() {
             })
             .catch((err) => {
                 console.log('loi');
+                for (let j = 0; j < sellerName.length; j++) {
+                    const dateValue = new Date();
+                    let day = dateValue.getDate();
+                    let month = dateValue.getMonth() + 1;
+                    let year = dateValue.getFullYear();
+                    let YMD;
+
+                    if (month < 10 && day >= 10) {
+                        YMD = year + '-0' + month + '-' + day;
+                    } else if (month < 10 && day < 10) {
+                        YMD = year + '-0' + month + '-0' + day;
+                    } else if (month >= 10 && day < 10) {
+                        YMD = year + '-' + month + '-0' + day;
+                    } else if (month >= 10 && day >= 10) {
+                        YMD = year + '-' + month + '-' + day;
+                    } else {
+                        YMD = year + '-' + month + '-' + day;
+                    }
+                    axios
+                        .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                            DH_id:
+                                takeIdSimulation !== ''
+                                    ? `DHSPMP${takeIdSimulation + j + 1}`
+                                    : `DHSPMP${takeIdSimulation + j + 1}`,
+                            ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                            NB_id: sellerValue[j],
+                            DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                            DH_loaithanhtoan: 1,
+                            DH_diachi:
+                                ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                    ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                    : addressVaule + ',' + ChangeAddress(ctyVaule),
+
+                            DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                            DH_ngay: YMD,
+                            DH_trangthaiTT: 1,
+                            TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                            TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                            SP_id: handleTakeIdProduct(sellerValue[j]),
+                            DH_ghichu: noteValue !== '' ? noteValue : '',
+                        })
+                        .then((res) => {
+                            //console.log('insert order', res.data);
+                            if (j === sellerName.length - 1) {
+                                //console.log('limit');
+                                toast.success('Đặt hàng thành công', {
+                                    position: toast.POSITION.TOP_CENTER,
+                                });
+                                setTimeout(
+                                    () =>
+                                        window.open(
+                                            `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                            '_self',
+                                            1,
+                                        ),
+                                    2000,
+                                );
+                            }
+                        })
+                        .catch((err) => {
+                            console.log('loi add');
+                        });
+                }
             });
 
         // if (sellerValue !== undefined && sellerValue !== '') {
@@ -950,6 +1016,7 @@ function Order() {
                                             TTDH_gia: handleTakePriceProduct(sellerValue[index]),
                                             TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
                                             SP_id: handleTakeIdProduct(sellerValue[index]),
+                                            DH_ghichu: noteValue !== '' ? noteValue : '',
                                         })
                                         .then((res) => {
                                             console.log('', res.data);
@@ -1002,6 +1069,7 @@ function Order() {
                                         TTDH_gia: handleTakePriceProduct(sellerValue[index]),
                                         TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
                                         SP_id: handleTakeIdProduct(sellerValue[index]),
+                                        DH_ghichu: noteValue !== '' ? noteValue : '',
                                     })
                                     .then((res) => {
                                         console.log('', res.data);
@@ -1016,6 +1084,53 @@ function Order() {
             })
             .catch((err) => {
                 console.log('loi');
+                const dateValue = new Date();
+                let day = dateValue.getDate();
+                let month = dateValue.getMonth() + 1;
+                let year = dateValue.getFullYear();
+                let YMD;
+
+                if (month < 10 && day >= 10) {
+                    YMD = year + '-0' + month + '-' + day;
+                } else if (month < 10 && day < 10) {
+                    YMD = year + '-0' + month + '-0' + day;
+                } else if (month >= 10 && day < 10) {
+                    YMD = year + '-' + month + '-0' + day;
+                } else if (month >= 10 && day >= 10) {
+                    YMD = year + '-' + month + '-' + day;
+                } else {
+                    YMD = year + '-' + month + '-' + day;
+                }
+                axios
+                    .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                        DH_id:
+                            takeIdSimulation !== ''
+                                ? `DHSPMP${takeIdSimulation + index + 1}`
+                                : `DHSPMP${takeIdSimulation + index + 1}`,
+                        ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                        NB_id: sellerValue[index],
+                        DH_tongtien: handlePriceSellerNoTransport(sellerValue[index], index),
+                        DH_loaithanhtoan: 2,
+                        DH_diachi:
+                            ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                : addressVaule + ',' + ChangeAddress(ctyVaule),
+                        DH_phivanchuyen:
+                            GetCookie('servicefee') !== undefined ? JSON.parse(GetCookie('servicefee'))[index] : '0',
+                        DH_ngay: YMD,
+                        DH_trangthaiTT: 2,
+                        TTDH_gia: handleTakePriceProduct(sellerValue[index]),
+                        TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
+                        SP_id: handleTakeIdProduct(sellerValue[index]),
+                        DH_ghichu: noteValue !== '' ? noteValue : '',
+                    })
+                    .then((res) => {
+                        console.log('', res.data);
+                        window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                    })
+                    .catch((err) => {
+                        console.log('loi add');
+                    });
             });
     }
 
@@ -1970,6 +2085,24 @@ function Order() {
                         : ''}
                 </div>
                 <div className={cx('kfKL6K')}>
+                    <div className={cx('wWp9Rn_7-SGSz')}>
+                        <div className={cx('bFs2Q')}>
+                            <span>Lời nhắn:</span>
+                            <div className={cx('jSc1M9')}>
+                                <div className={cx('l7vuWW_XfjvIa')}>
+                                    <div className={cx('bue9pr_XtXldU')}>
+                                        <input
+                                            className={cx('_6E2RgG')}
+                                            type="text"
+                                            placeholder="Lưu ý cho Người bán..."
+                                            onChange={(e) => setNoteValue(e.target.value)}
+                                        />
+                                    </div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className={cx('wWp9Rn_GoSC7d')}>
                         <div className={cx('sYTSo9')}>Đơn vị vận chuyển</div>
                         <div className={cx('TrbqGd')}>

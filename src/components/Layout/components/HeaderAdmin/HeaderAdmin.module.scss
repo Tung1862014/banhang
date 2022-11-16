@@ -97,14 +97,13 @@
         --search-top-spacer: 9px;
         --search-button-width: 52px;
 
-        width: 100%;
+        width: var(--default-layout-width);
         height: var(--default-layout-header-height, 60px);
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
         position: fixed;
         z-index: 1;
-        background-color: #fff;
     }
 
     .inner {
@@ -113,6 +112,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background: linear-gradient(45deg, #b9f377, #90eaf6);
+        padding: 30px;
     }
 
     //Actions

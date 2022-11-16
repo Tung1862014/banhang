@@ -414,6 +414,7 @@ function Seller() {
                             type="date"
                             id="chart-date1"
                             className={cx('chart-date1')}
+                            placeholder="dd-mm-yyyy"
                             defaultValue={takeDate()}
                             onChange={(e) => setDateValue1(e.target.value)}
                         />
@@ -422,6 +423,7 @@ function Seller() {
                             type="date"
                             id="chart-date2"
                             className={cx('chart-date2')}
+                            placeholder="dd-mm-yyyy"
                             defaultValue={takeDate()}
                             onChange={(e) => setDateValue2(e.target.value)}
                         />

@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import HeaderSeller from '~/components/Layout/components/HeaderSeller';
 import styles from './DefaultLayoutSeller.module.scss';
 import SidebarSeller from '../components/SidebarSeller';
+import Footer from '../components/Footer';
 // import Navbar from '~/components/Layout/components/HeaderNav';
 //import Footer from '~/components/Layout/components/Footer';
 
@@ -17,9 +18,9 @@ function DefaultLayoutSeller({ children }) {
                 </div>
                 <div className={cx('content')}>{children}</div>
             </div>
-            {/* <div className={cx('footer')}>
+            <div className={cx('footer')}>
                 <Footer />
-            </div> */}
+            </div>
         </div>
     );
 }

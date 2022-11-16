@@ -17,6 +17,8 @@ function SellerDetailBill() {
     const [sellNumberValue, setSellNumberValue] = useState('');
     const [idOrderValue, setIdOrderValue] = useState('');
 
+    const [noteValue, setNoteValue] = useState('');
+
     console.log('tokenValue', tokenValue);
     console.log('amountValue', amountValue);
     console.log('idProductValue', idProductValue);
@@ -188,69 +190,73 @@ function SellerDetailBill() {
         const resultId = pathId.slice(21);
         //console.log('information Cancel', information[0].MTS_id);
         if (information[0].MTS_id !== undefined) {
+            // axios
+            //     .get(
+            //         `https://dev-online-gateway.ghn.vgggn/shiip/public-api/v2/switch-status/cancel?order_codes=${resultId}`,
+            //         {
+            //             headers: {
+            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+            //                 ShopId: information[0].MTS_id,
+            //             },
+            //         },
+            //     )
+            //     .then((res) => {
+            //         console.log('cancel', res.data);
+            //         axios
+            //             .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
+            //                 NB_id: JSON.parse(GetCookie('seller')).ND_id,
+            //                 DH_id: resultId || '',
+            //                 DH_trangthai: '5',
+            //                 TTDH_soluong: 0,
+            //                 SP_id: 0,
+            //                 SP_soluongban: 0,
+            //                 DH_ghichuhuy:
+            //                     noteValue !== '' ? 'Chủ gian hàng hủy đơn (lý do): ' + noteValue : 'Chủ gian hàng hủy.',
+            //             })
+
+            //             .then((res) => {
+            //                 if (res.data.update) {
+            //                     toast.success('Hủy thành công đơn hàng', {
+            //                         position: toast.POSITION.TOP_CENTER,
+            //                         className: `${cx('toast-message')}`,
+            //                     });
+            //                     setTimeout(() => {
+            //                         window.open(`/seller/bill/@all`, '_self', 1);
+            //                     }, 3000);
+            //                 }
+            //             })
+            //             .catch(() => {
+            //                 console.log('loi khong the show bill');
+            //             });
+            //     })
+            //     .catch((err) => {
             axios
-                .get(
-                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/switch-status/cancel?order_codes=${resultId}`,
-                    {
-                        headers: {
-                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                            ShopId: information[0].MTS_id,
-                        },
-                    },
-                )
-                .then((res) => {
-                    console.log('cancel', res.data);
-                    axios
-                        .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
-                            NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                            DH_id: resultId || '',
-                            DH_trangthai: '5',
-                            TTDH_soluong: 0,
-                            SP_id: 0,
-                            SP_soluongban: 0,
-                        })
-
-                        .then((res) => {
-                            if (res.data.update) {
-                                toast.success('Hủy thành công đơn hàng', {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    className: `${cx('toast-message')}`,
-                                });
-                                setTimeout(() => {
-                                    window.open(`/seller/bill/@all`, '_self', 1);
-                                }, 3000);
-                            }
-                        })
-                        .catch(() => {
-                            console.log('loi khong the show bill');
-                        });
+                .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
+                    NB_id: JSON.parse(GetCookie('seller')).ND_id,
+                    DH_id: resultId || '',
+                    DH_trangthai: '5',
+                    TTDH_soluong: 0,
+                    SP_id: 0,
+                    SP_soluongban: 0,
+                    DH_ghichuhuy:
+                        noteValue !== '' ? 'Chủ gian hàng hủy đơn (lý do): ' + noteValue : 'Chủ gian hàng hủy.',
                 })
-                .catch((err) => {
-                    axios
-                        .put(`${process.env.REACT_APP_URL_NODEJS}/sellerdetailbill/bill/update/prepare`, {
-                            NB_id: JSON.parse(GetCookie('seller')).ND_id,
-                            DH_id: resultId || '',
-                            DH_trangthai: '5',
-                            TTDH_soluong: 0,
-                            SP_id: 0,
-                            SP_soluongban: 0,
-                        })
 
-                        .then((res) => {
-                            if (res.data.update) {
-                                toast.success('Hủy thành công đơn hàng', {
-                                    position: toast.POSITION.TOP_CENTER,
-                                    className: `${cx('toast-message')}`,
-                                });
-                                const pathId = window.location.pathname.toString();
-                                setTimeout(window.open(pathId, '_self', 1), 3000);
-                            }
-                        })
-                        .catch(() => {
-                            console.log('loi khong the show bill');
+                .then((res) => {
+                    if (res.data.update) {
+                        toast.success('Hủy thành công đơn hàng', {
+                            position: toast.POSITION.TOP_CENTER,
+                            className: `${cx('toast-message')}`,
                         });
-                    console.log('loi cancel');
+                        const pathId = window.location.pathname.toString();
+                        setTimeout(window.open(pathId, '_self', 1), 3000);
+                    }
+                })
+                .catch(() => {
+                    console.log('loi khong the show bill');
                 });
+            console.log('loi cancel');
+            // });
         }
     }
 
@@ -317,6 +323,11 @@ function SellerDetailBill() {
                             </div>
                             <div className={cx('delete-modal__header-inner-title')}>
                                 <div className={cx('delete-modal__title')}>Bạn có muốn hủy đơn hàng?</div>
+                                <div className={cx('delete-modal__title')}>Hãy cho biết lý do (nếu có):</div>
+                                <textarea
+                                    className={cx('delete-modal__note')}
+                                    onChange={(e) => setNoteValue(e.target.value)}
+                                ></textarea>
                             </div>
                         </div>
                         <div className={cx('delete-modal__footer')}>
@@ -449,7 +460,31 @@ function SellerDetailBill() {
                                                   : info.DH_trangthai === 4
                                                   ? 'Đã giao'
                                                   : info.DH_trangthai === 5
-                                                  ? 'Đã hủy'
+                                                  ? 'Đã hủy' + ', ' + info.DH_ghichuhuy
+                                                  : '...'}
+                                          </div>{' '}
+                                      </div>
+                                  </div>
+                                  <div className={cx('section')}>
+                                      <div className={cx('header-detail')}>
+                                          <div className={cx('icon-detail')}>
+                                              <i className={cx('order-detail-title-icon')}>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                                      <path
+                                                          fillRule="evenodd"
+                                                          d="M5,2 L5,3 L3,3 L3,14 L13,14 L13,3 L11,3 L11,2 L13,2 C13.5522847,2 14,2.44771525 14,3 L14,14 C14,14.5522847 13.5522847,15 13,15 L3,15 C2.44771525,15 2,14.5522847 2,14 L2,3 C2,2.44771525 2.44771525,2 3,2 L5,2 Z M6,2 L6,3 L10,3 L10,2 L6,2 Z M6,1 L10,1 C10.5522847,1 11,1.44771525 11,2 L11,3 C11,3.55228475 10.5522847,4 10,4 L6,4 C5.44771525,4 5,3.55228475 5,3 L5,2 C5,1.44771525 5.44771525,1 6,1 Z M5.5,6 L10.5,6 C10.7761424,6 11,6.22385763 11,6.5 C11,6.77614237 10.7761424,7 10.5,7 L5.5,7 C5.22385763,7 5,6.77614237 5,6.5 C5,6.22385763 5.22385763,6 5.5,6 Z M5.5,9 L10.5,9 C10.7761424,9 11,9.22385763 11,9.5 C11,9.77614237 10.7761424,10 10.5,10 L5.5,10 C5.22385763,10 5,9.77614237 5,9.5 C5,9.22385763 5.22385763,9 5.5,9 Z"
+                                                      ></path>
+                                                  </svg>
+                                              </i>
+                                          </div>{' '}
+                                          <div className={cx('name-detail')}>Hình thức thanh toán</div>{' '}
+                                      </div>{' '}
+                                      <div className={cx('body-detail')}>
+                                          <div>
+                                              {info.DH_loaithanhtoan === 1
+                                                  ? 'Thanh toán khi nhận hàng'
+                                                  : info.DH_loaithanhtoan === 2
+                                                  ? 'Thanh toán qua Paypal'
                                                   : '...'}
                                           </div>{' '}
                                       </div>
@@ -478,6 +513,7 @@ function SellerDetailBill() {
                                           </div>{' '}
                                       </div>
                                   </div>
+
                                   <div className={cx('section')}>
                                       <div className={cx('header-detail')}>
                                           <div className={cx('icon-detail')}>
