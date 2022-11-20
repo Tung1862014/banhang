@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { useState, useEffect } from 'react';
 import GetCookie from '~/components/Hook/GetCookies';
 import styles from './Seller.module.scss';
+import './Seller.css';
 import {
     Chart as ChartJS,
     CategoryScale,

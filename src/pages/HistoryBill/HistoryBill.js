@@ -583,51 +583,50 @@ function HistoryBill() {
     };
     //huy don hang
     function handleCancelBill() {
+        // axios
+        //     .get(
+        //         `https://dev-online-gateway.ghn.vggggggggn/shiip/public-api/v2/switch-status/cancel?order_codes=${cancelIdBill}`,
+        //         {
+        //             headers: {
+        //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+        //                 ShopId: idMTSValue,
+        //             },
+        //         },
+        //     )
+        //     .then((res) => {
+        //         console.log('cancel', res.data);
+        //         axios
+        //             .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
+        //                 DH_id: cancelIdBill,
+        //                 DH_ghichuhuy:
+        //                     noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
+        //             })
+        //             .then((res) => {
+        //                 console.log('DH', res.data);
+        //             })
+        //             .catch((err) => {
+        //                 console.log('loi update bill');
+        //             });
+        //     })
+        //     .catch((err) => {
         axios
-            .get(
-                `https://dev-online-gateway.ghn.vggggggggn/shiip/public-api/v2/switch-status/cancel?order_codes=${cancelIdBill}`,
-                {
-                    headers: {
-                        Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                        ShopId: idMTSValue,
-                    },
-                },
-            )
+            .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
+                DH_id: cancelIdBill,
+                DH_ghichuhuy: noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
+            })
             .then((res) => {
-                console.log('cancel', res.data);
-                axios
-                    .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
-                        DH_id: cancelIdBill,
-                        DH_ghichuhuy:
-                            noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
-                    })
-                    .then((res) => {
-                        console.log('DH', res.data);
-                    })
-                    .catch((err) => {
-                        console.log('loi update bill');
-                    });
+                console.log('DH', res.data);
+                toast.success('Hủy thành công', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                const pathId = window.location.pathname.toString();
+                setTimeout(window.open(pathId, '_self', 1), 2000);
             })
             .catch((err) => {
-                axios
-                    .put(`${process.env.REACT_APP_URL_NODEJS}/historybill/update/status/bill`, {
-                        DH_id: cancelIdBill,
-                        DH_ghichuhuy:
-                            noteValue !== '' ? 'Khách hàng hủy đơn (lý do): ' + noteValue : 'Khách hàng hủy đơn.',
-                    })
-                    .then((res) => {
-                        console.log('DH', res.data);
-                        toast.success('Hủy thành công', {
-                            position: toast.POSITION.TOP_CENTER,
-                        });
-                        const pathId = window.location.pathname.toString();
-                        setTimeout(window.open(pathId, '_self', 1), 2000);
-                    })
-                    .catch((err) => {
-                        console.log('loi update bill');
-                    });
-                console.log('loi cancel');
+                console.log('loi update bill');
             });
+        console.log('loi cancel');
+        // });
     }
 
     ///seach bill following id bill

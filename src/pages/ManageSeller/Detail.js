@@ -387,7 +387,7 @@ function Detail({ currentItems, clickPageCheck }) {
                 </div>
             )}
             {currentItems[0] === undefined ? (
-                <div className={cx('bill-title-no-product')}>Không có người dùng nào.</div>
+                <div className={cx('bill-title-no-product')}>Không có chủ gian hàng dùng nào.</div>
             ) : (
                 ''
             )}
