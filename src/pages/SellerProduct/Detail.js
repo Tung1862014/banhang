@@ -139,6 +139,7 @@ function Detail({ currentItems, clickPageCheck }) {
                 idcheck = '';
                 // console.log(checkAll.checked);
             }
+            //console.log('console: ', idcheck);
             setCheckBox(idcheck);
         }
         console.log(checkAll.checked);
@@ -232,15 +233,15 @@ function Detail({ currentItems, clickPageCheck }) {
                         <div className={cx('selected-text')}>
                             {checkBox.length === 0
                                 ? 0
-                                : checkBox.length === 1
+                                : checkBox.split(',').length === 1
                                 ? 1
-                                : checkBox.length === 3
+                                : checkBox.split(',').length === 2
                                 ? 2
-                                : checkBox.length === 5
+                                : checkBox.split(',').length === 3
                                 ? 3
-                                : checkBox.length === 7
+                                : checkBox.split(',').length === 4
                                 ? 4
-                                : checkBox.length === 9
+                                : checkBox.split(',').length === 5
                                 ? 5
                                 : 6}
                             <span> sản phẩm đã được chọn</span>
