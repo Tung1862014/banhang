@@ -13,8 +13,9 @@ function DefaultLayoutAdmin({ children }) {
         <div className={cx('wrapper')}>
             <HeaderAdmin />
             <div className={cx('container1')}>
-                <SidebarAdmin />
-
+                <div className={cx('container2')}>
+                    <SidebarAdmin />
+                </div>
                 <div className={cx('content')}>{children}</div>
             </div>
             <div className={cx('footer')}>

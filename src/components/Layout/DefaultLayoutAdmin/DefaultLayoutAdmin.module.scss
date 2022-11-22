@@ -30,15 +30,18 @@
     .content {
         flex: 1;
         position: relative;
-        z-index: 0;
+        z-index: 1;
     }
     .container1 {
         display: flex;
         width: var(--default-layout-width);
         max-width: 100%;
         position: relative;
-        top: 61px;
+        top: 0px;
         margin-top: 3px;
+    }
+    .container2 {
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     }
     .container {
         display: none;
@@ -48,6 +51,6 @@
 
     .footer {
         position: relative;
-        top: 150px;
+        top: 70px;
     }
 }

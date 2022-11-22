@@ -282,13 +282,13 @@ function SellerDetailBill() {
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
-                <div className={cx('delete-modal__box')}>
+                <div className={cx('delete-modal__box-xx')}>
                     <div className={cx('delete-modal__content')}>
-                        <div className={cx('delete-modal__header')}>
+                        <div className={cx('delete-modal__header-xx')}>
                             <div className={cx('delete-modal__header-inner-confirm')}>
                                 <div className={cx('delete-modal__title')}>Xác nhận</div>
                             </div>
-                            <div className={cx('delete-modal__header-inner-title')}>
+                            <div className={cx('delete-modal__header-inner-title-xx')}>
                                 <div className={cx('delete-modal__title')}>Bạn có muốn xác nhận đơn hàng?</div>
                             </div>
                         </div>
@@ -460,7 +460,7 @@ function SellerDetailBill() {
                                                   : info.DH_trangthai === 4
                                                   ? 'Đã giao'
                                                   : info.DH_trangthai === 5
-                                                  ? 'Đã hủy' + ', ' + info.DH_ghichuhuy
+                                                  ? 'Đã hủy, ' + info.DH_ghichuhuy.toString()
                                                   : '...'}
                                           </div>{' '}
                                       </div>

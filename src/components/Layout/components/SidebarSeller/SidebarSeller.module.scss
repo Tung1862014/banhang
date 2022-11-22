@@ -609,7 +609,7 @@
         min-height: 700px;
         max-height: 100%;
         background-color: #fff;
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        //box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
         position: relative;
         z-index: 0;
     }
@@ -628,11 +628,10 @@
     }
 
     .sidebar-container {
-        position: fixed;
+        position: relative;
         z-index: 14;
         width: 225px;
         height: calc(100% - 56px);
-        overflow-y: auto;
         background: #fff;
     }
 

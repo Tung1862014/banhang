@@ -920,6 +920,15 @@
         z-index: 11;
     }
 
+    .delete-modal__box-xx {
+        display: flex;
+        width: 400px;
+        height: 180px;
+        padding: 0 24px;
+        position: relative;
+        z-index: 11;
+    }
+
     .delete-modal__content {
         position: absolute;
         width: 100%;
@@ -932,6 +941,11 @@
 
     .delete-modal__header {
         height: 210px;
+        width: 100%;
+    }
+
+    .delete-modal__header-xx {
+        height: 100px;
         width: 100%;
     }
 
@@ -953,6 +967,15 @@
 
     .delete-modal__header-inner-title {
         height: 135px;
+        flex-grow: 1;
+        min-height: 32px;
+        padding: 0 24px;
+        overflow: auto;
+        font-size: 14px;
+        font-family: Helvetica Neue, Helvetica, RobotoRegular, Droid Sans, Arial, sans-serif;
+    }
+    .delete-modal__header-inner-title-xx {
+        height: 60px;
         flex-grow: 1;
         min-height: 32px;
         padding: 0 24px;
