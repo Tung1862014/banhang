@@ -101,7 +101,7 @@ function SellerPrintBill() {
                                     </div>
                                     <div className={cx('id-bill-print')}>
                                         Mã đơn hàng:
-                                        <span>{print.DH_id}</span>
+                                        <span>{' ' + print.DH_id}</span>
                                     </div>
                                 </div>
                                 <div className={cx('shop-print-infomation')}>
@@ -123,7 +123,7 @@ function SellerPrintBill() {
                                             <div className={cx('name-user')}>{print.product[0].ND_hoten}</div>
                                             <div className={cx('address-user')}>{print.DH_diachi}</div>
                                             <div className={cx('sdt-user')}>
-                                                SĐT: <span>{print.product[0].ND_sdt}</span>
+                                                SĐT: <span>{'0' + print.product[0].ND_sdt}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -134,15 +134,21 @@ function SellerPrintBill() {
                                     </div>
                                     {print.product.map((pro, index) => (
                                         <div key={index} className={cx('content-product-detail')}>
-                                            <span className={cx('stt-product')}>{index + 1}.</span>
-                                            <div className={cx('name-product')}>{pro.SP_ten}</div>
-                                            <span className={cx('number-product')}>,,SL: {pro.TTDH_soluong}</span>
+                                            <span className={cx('content-name-product')}>
+                                                <span className={cx('stt-product')}>{index + 1}.</span>
+                                                <div className={cx('name-product')}>{pro.SP_ten}</div>
+                                                <span className={cx('number-product')}></span>
+                                            </span>
+                                            <span className={cx('')}>,SL: x {pro.TTDH_soluong}</span>
                                         </div>
                                     ))}
                                 </div>
                                 <div className={cx('regulations-shop')}>
                                     <div className={cx('content-regulations-shop')}>
                                         Kiểm tra tên sản phẩm và đối chiếu mã đơn hàng trước khi nhận hàng
+                                        <div className={cx('content-regulations-note')}>
+                                            <i>Lưu ý: {print.DH_ghichu}</i>
+                                        </div>
                                     </div>
                                     <div className={cx('date-order')}>
                                         <div className={cx('date')}>Ngày đặt hàng:</div>
@@ -153,7 +159,10 @@ function SellerPrintBill() {
                                     <div className={cx('money-user-details')}>
                                         <div className={cx('money-title')}>Tiền thu người nhận</div>
                                         <div className={cx('money-content')}>
-                                            {formatCash(print.DH_tongtien + print.DH_phivanchuyen)} VND
+                                            {print.DH_loaithanhtoan === 2
+                                                ? '0'
+                                                : formatCash(print.DH_tongtien + print.DH_phivanchuyen)}{' '}
+                                            VND
                                         </div>
                                     </div>
                                     <div className={cx('signature-user')}>

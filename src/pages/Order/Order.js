@@ -47,6 +47,11 @@ function Order() {
     console.log('sellerClientId ClientId', sellerClientId);
     //console.log('GetCookie', JSON.parse(GetCookie('servicefee')));
 
+    useEffect(() => {
+        RemoveCookie('note');
+        SetCookie('note', JSON.stringify(noteValue));
+    }, [noteValue]);
+
     //takeid order
     useEffect(() => {
         axios
@@ -903,7 +908,7 @@ function Order() {
     };
 
     //paypal
-    function handleOrderCustomerPaypal(index, districtID, wardID) {
+    function handleOrderCustomerPaypal(index, districtID, wardID, noteValue) {
         //console.log('handleOrderCustomerPaypal', status, sellerName[index]);
         axios
             .post(
@@ -994,6 +999,7 @@ function Order() {
                                     } else {
                                         YMD = year + '-' + month + '-' + day;
                                     }
+                                    console.log('noteValue tttttttttt; ', noteValue);
                                     axios
                                         .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                                             DH_id: res.data.data.order_code,
@@ -1016,11 +1022,12 @@ function Order() {
                                             TTDH_gia: handleTakePriceProduct(sellerValue[index]),
                                             TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
                                             SP_id: handleTakeIdProduct(sellerValue[index]),
-                                            DH_ghichu: noteValue !== '' ? noteValue : '',
+                                            DH_ghichu:
+                                                GetCookie('note') !== undefined ? JSON.parse(GetCookie('note')) : '',
                                         })
                                         .then((res) => {
                                             console.log('', res.data);
-                                            window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
+                                            //window.open(`${process.env.REACT_APP_URL_FRONTEND}/cart/order`, '_self', 1);
                                         })
                                         .catch((err) => {
                                             console.log('loi add');
@@ -1046,6 +1053,7 @@ function Order() {
                                 } else {
                                     YMD = year + '-' + month + '-' + day;
                                 }
+                                console.log('noteValue tttttttttt; ', noteValue);
                                 axios
                                     .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
                                         DH_id:
@@ -1069,7 +1077,7 @@ function Order() {
                                         TTDH_gia: handleTakePriceProduct(sellerValue[index]),
                                         TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
                                         SP_id: handleTakeIdProduct(sellerValue[index]),
-                                        DH_ghichu: noteValue !== '' ? noteValue : '',
+                                        DH_ghichu: GetCookie('note') !== undefined ? JSON.parse(GetCookie('note')) : '',
                                     })
                                     .then((res) => {
                                         console.log('', res.data);
@@ -1122,7 +1130,7 @@ function Order() {
                         TTDH_gia: handleTakePriceProduct(sellerValue[index]),
                         TTDH_phantram: handleTakePromotionProduct(sellerValue[index]),
                         SP_id: handleTakeIdProduct(sellerValue[index]),
-                        DH_ghichu: noteValue !== '' ? noteValue : '',
+                        DH_ghichu: GetCookie('note') !== undefined ? JSON.parse(GetCookie('note')) : '',
                     })
                     .then((res) => {
                         console.log('', res.data);
@@ -2068,7 +2076,12 @@ function Order() {
                                                           //const name = details.payer.name.given_name;
                                                           console.log('details', details);
                                                           if (details.status === 'COMPLETED') {
-                                                              handleOrderCustomerPaypal(index, districtID, wardID);
+                                                              handleOrderCustomerPaypal(
+                                                                  index,
+                                                                  districtID,
+                                                                  wardID,
+                                                                  noteValue,
+                                                              );
                                                           }
                                                           //   alert('Transaction completed by ' + name);
                                                       }}

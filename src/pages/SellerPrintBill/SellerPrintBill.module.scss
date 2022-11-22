@@ -36,6 +36,11 @@
     align-items: center;
 }
 
+.id-bill-print {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
 .shop-print-infomation {
     max-height: 400px;
     height: 150px;
@@ -66,8 +71,8 @@
 }
 
 .conten-product {
-    max-height: 400px;
-    height: 250px;
+    max-height: 900px;
+    min-height: 250px;
     width: 100%;
     padding: 10px 10px;
     border-left: 2px solid #333;
@@ -182,9 +187,22 @@
     justify-content: center;
 }
 
+.logo-print {
+    background-color: #333;
+}
+
 .image-logo {
     background-color: #333;
     width: 150px;
-    height: 50px;
+    height: 60px;
     color: black;
+}
+
+.content-regulations-note {
+    color: rgb(246, 50, 50);
+}
+
+.content-name-product {
+    width: 490px;
+    display: flex;
 }
