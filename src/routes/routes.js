@@ -30,6 +30,7 @@ import ManageCustomer from '~/pages/ManageCustomer';
 import ManageSeller from '~/pages/ManageSeller';
 import Advertise from '~/pages/Advertise';
 import AdvertiseAdd from '~/pages/AdvertiseAdd';
+import AdvertiseLink from '~/pages/AdvertiseLink';
 import AdvertiseUpdate from '~/pages/AdvertiseUpdate';
 import SettingAdmin from '~/pages/SettingAdmin';
 import SettingSeller from '~/pages/SettingSeller';
@@ -54,6 +55,7 @@ const publicRoutes = [
     { path: '/admin/manage/customer=:id', component: ManageCustomer, layout: DefaultLayoutAdmin },
     { path: '/admin/manage/seller=:id', component: ManageSeller, layout: DefaultLayoutAdmin },
     { path: '/admin/advertise=:id', component: Advertise, layout: DefaultLayoutAdmin },
+    { path: '/admin/link/advertise=:id', component: AdvertiseLink, layout: DefaultLayoutAdmin },
     { path: '/admin/add/advertise', component: AdvertiseAdd, layout: DefaultLayoutAdmin },
     { path: '/admin/update/advertise=:id', component: AdvertiseUpdate, layout: DefaultLayoutAdmin },
     { path: '/setting/admin', component: SettingAdmin, layout: DefaultLayoutAdmin },

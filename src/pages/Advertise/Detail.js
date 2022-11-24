@@ -188,6 +188,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                     <td className={cx('td_table-name')}>Làng nghề</td>
                                     <td className={cx('td_table-name')}>Mô tả</td>
                                     <td className={cx('td_table-name-note')}>Hoạt động</td>
+                                    <td className={cx('td_table-name-note')}>Link</td>
                                 </tr>
                                 {currentItems !== ''
                                     ? currentItems.map((info, index) => (
@@ -222,6 +223,15 @@ function Detail({ currentItems, clickPageCheck }) {
                                                       //   onClick={() => handleNote(pro.ND_id, pro.ND_ghichu)}
                                                   >
                                                       Cập nhật
+                                                  </Link>
+                                              </td>
+                                              <td className={cx('td_table-name-note')}>
+                                                  <Link
+                                                      to={`/admin/link/advertise=${info.QB_id}`}
+                                                      className={cx('td_table-name-note-button')}
+                                                      //   onClick={() => handleNote(pro.ND_id, pro.ND_ghichu)}
+                                                  >
+                                                      Xem
                                                   </Link>
                                               </td>
                                           </tr>

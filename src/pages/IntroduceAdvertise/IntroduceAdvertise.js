@@ -38,6 +38,98 @@ function IntroduceAdvertise() {
                         alt=""
                         with="500"
                     />
+                    <div className={cx('widget_recent_entries')}>
+                        <h4 className={cx('mh-widget-title')}>
+                            <span className={cx('mh-widget-title-inner')}>Bài viết liên quan</span>
+                        </h4>
+                        <ul className={cx('mh-widget-ul')}>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
+                                </a>
+                            </li>
+                            <li className={cx('mh-widget-li')}>
+                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
+                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div className={cx('title-')}>
                     <CKEditor
