@@ -74,6 +74,9 @@ function SellerTableStatistical() {
     const [chartListTurnover, setChartListTurnover] = useState([]);
     const [quartersValue, setQuarterValue] = useState([]);
 
+    const [yearValue, setYearValue] = useState('');
+    const [monthValue, setMonthValue] = useState('');
+
     //const listChart = useDebounce(chartListData, 500);
     const handleChart = (listDate, listNumber, listTurnover) => {
         setChartListData(() => [...listDate]);
@@ -100,7 +103,7 @@ function SellerTableStatistical() {
                     if (month < 10 && day >= 10) {
                         DMY = day + '-0' + month + '-' + year;
                     } else if (month < 10 && day < 10) {
-                        DMY = '0' + day + '-0' + month + year;
+                        DMY = '0' + day + '-0' + month + '-' + year;
                     } else if (month >= 10 && day < 10) {
                         DMY = '0' + day + '-' + month + '-' + year;
                     } else if (month >= 10 && day >= 10) {
@@ -159,12 +162,13 @@ function SellerTableStatistical() {
                 className: `${cx('toast-message')}`,
             });
         } else {
+            setQuarterValue('statistical');
             setActiveTurnover(
                 `${
                     process.env.REACT_APP_URL_NODEJS
                 }/chart/table/statistical?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&type=${'statistical'}`,
             );
         }
     };
@@ -187,7 +191,7 @@ function SellerTableStatistical() {
             return year + '-' + month + '-' + day;
         }
     }
-    const handleDateNow = (e) => {
+    const handleDateNow = (e, yearvalue, monthvalue, yearvl) => {
         const date = new Date();
         const dayValue = new Date();
         const year = date.getFullYear();
@@ -198,9 +202,16 @@ function SellerTableStatistical() {
             console.log('value e', typeof e);
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = takeDateNow(date);
             toDate.value = takeDateNow(dayValue);
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
             setQuarterValue('tuan');
@@ -216,9 +227,16 @@ function SellerTableStatistical() {
 
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
             setQuarterValue('quy1');
@@ -234,9 +252,16 @@ function SellerTableStatistical() {
 
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
             setQuarterValue('quy2');
@@ -252,9 +277,16 @@ function SellerTableStatistical() {
 
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
             setQuarterValue('quy3');
@@ -270,9 +302,16 @@ function SellerTableStatistical() {
 
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
             setQuarterValue('quy4');
@@ -289,17 +328,108 @@ function SellerTableStatistical() {
             console.log('value e', typeof e);
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
 
             formDate.value = takeDateNow(dateFrom);
             toDate.value = takeDateNow(dateTo);
+            chartDate.style.display = 'none';
+            chartYear.style.display = 'flex';
+            chartMonth.style.display = 'flex';
+
             setDateValue2(takeDateNow(dateTo));
             setDateValue1(takeDateNow(dateFrom));
+            setYearValue(year.toString());
             setQuarterValue('nam');
 
             setActiveTurnover(
                 `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${takeDateNow(
                     dateFrom,
-                )}&ngde=${takeDateNow(dateTo)}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}&type=${'nam'}`,
+                )}&ngde=${takeDateNow(dateTo)}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&type=${'nam'}&nam=${year.toString()}`,
+            );
+        } else if (yearvalue === 'year' && monthvalue !== 'month') {
+            console.log('year yyy: ', e);
+            let dateFrom = `${e.toString()}-01-01`;
+            let dateTo = `${e.toString()}-12-31`;
+
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
+            const chartSelect = document.getElementById('chart-quarter-select');
+
+            formDate.value = takeDateNow(dateFrom);
+            toDate.value = takeDateNow(dateTo);
+            chartDate.style.display = 'none';
+            chartYear.style.display = 'flex';
+            chartMonth.style.display = 'flex';
+            chartSelect.value = '';
+
+            setDateValue2(takeDateNow(dateTo));
+            setDateValue1(takeDateNow(dateFrom));
+            setYearValue(e);
+            setQuarterValue('nam');
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${takeDateNow(
+                    dateFrom,
+                )}&ngde=${takeDateNow(dateTo)}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}&type=${'nam'}&nam=${e}`,
+            );
+        }
+        if (yearvalue === 'year' && monthvalue === 'month') {
+            console.log('yearvl yyy: ', yearvl);
+            console.log('month mmm:', e);
+            let dateFrom = '';
+            let dateTo = '';
+            if (
+                e === '01' ||
+                e === '03' ||
+                e === '05' ||
+                e === '07' ||
+                e === '07' ||
+                e === '08' ||
+                e === '10' ||
+                e === '12'
+            ) {
+                dateFrom = `${yearvl.toString()}-${e.toString()}-01`;
+                dateTo = `${yearvl.toString()}-${e.toString()}-31`;
+            } else if (e === '02') {
+                dateFrom = `${yearvl.toString()}-${e.toString()}-01`;
+                dateTo = `${yearvl.toString()}-${e.toString()}-28`;
+            } else {
+                dateFrom = `${yearvl.toString()}-${e.toString()}-01`;
+                dateTo = `${yearvl.toString()}-${e.toString()}-30`;
+            }
+
+            // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+            console.log('value e', typeof e);
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
+
+            formDate.value = takeDateNow(dateFrom);
+            toDate.value = takeDateNow(dateTo);
+            chartDate.style.display = 'none';
+            chartYear.style.display = 'flex';
+            chartMonth.style.display = 'flex';
+
+            setDateValue2(takeDateNow(dateTo));
+            setDateValue1(takeDateNow(dateFrom));
+            setMonthValue(e);
+            setQuarterValue('month');
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${takeDateNow(
+                    dateFrom,
+                )}&ngde=${takeDateNow(dateTo)}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}&type=${'tuan'}`,
             );
         } else if (e === '') {
             const formDate = document.getElementById('chart-date1');
@@ -349,7 +479,7 @@ function SellerTableStatistical() {
         <div className={cx('wrapper')}>
             <div className={cx('chart-demo')}>
                 <div className={cx('chart-date')}>
-                    <div className={cx('chart-date-input')}>
+                    <div id="chart-date-date" className={cx('chart-date-input')}>
                         <input
                             type="date"
                             id="chart-date1"
@@ -368,9 +498,54 @@ function SellerTableStatistical() {
                             onChange={(e) => setDateValue2(e.target.value)}
                         />
                     </div>
-                    <button className={cx('chart-btn')} onClick={() => handleStatistic(dateValue1, dateValue2)}>
+                    <button
+                        id="chart-button-tk"
+                        className={cx('chart-btn')}
+                        onClick={() => handleStatistic(dateValue1, dateValue2)}
+                    >
                         Thống kê
                     </button>
+                    <div id="chart-quarter-year" className={cx('chart-quarter-year')}>
+                        <div>Năm</div>
+                        <select
+                            className={cx('chart-btn-select')}
+                            onChange={(e) => handleDateNow(e.target.value, 'year', 'months', monthValue)}
+                        >
+                            <option value="2022">Năm 2022</option>
+                            <option value="2021">Năm 2021</option>
+                            <option value="2020">Năm 2020</option>
+                            <option value="2019">Năm 2019</option>
+                            <option value="2018">Năm 2018</option>
+                            <option value="2017">Năm 2017</option>
+                            <option value="2016">Năm 2016</option>
+                            <option value="2015">Năm 2015</option>
+                            <option value="2014">Năm 2014</option>
+                            <option value="2013">Năm 2013</option>
+                            <option value="2012">Năm 2012</option>
+                            <option value="2012">Năm 2012</option>
+                        </select>
+                    </div>
+                    <div id="chart-quarter-month" className={cx('chart-quarter-month')}>
+                        <select
+                            id="chart-quarter-select"
+                            className={cx('chart-btn-select')}
+                            onChange={(e) => handleDateNow(e.target.value, 'year', 'month', yearValue)}
+                        >
+                            <option value="">...</option>
+                            <option value="01">Tháng 1</option>
+                            <option value="02">Tháng 2</option>
+                            <option value="03">Tháng 3</option>
+                            <option value="04">Tháng 4</option>
+                            <option value="05">Tháng 5</option>
+                            <option value="06">Tháng 6</option>
+                            <option value="07">Tháng 7</option>
+                            <option value="08">Tháng 8</option>
+                            <option value="09">Tháng 9</option>
+                            <option value="10">Tháng 10</option>
+                            <option value="11">Tháng 11</option>
+                            <option value="12">Tháng 12</option>
+                        </select>
+                    </div>
                     <div className={cx('chart-quarter')}>
                         <select className={cx('chart-btn-select')} onChange={(e) => handleDateNow(e.target.value)}>
                             <option value="">...</option>
@@ -388,7 +563,15 @@ function SellerTableStatistical() {
             <table className={cx('table__header')}>
                 <thead>
                     <tr className={cx('table__header-tr')}>
-                        <td className={cx('td_table-name_link')}>{quartersValue === 'tuan' ? 'Ngày' : 'Tháng'}</td>
+                        <td className={cx('td_table-name_link')}>
+                            {quartersValue === 'tuan'
+                                ? 'Ngày'
+                                : quartersValue === 'statistical'
+                                ? 'Ngày'
+                                : quartersValue === 'month'
+                                ? 'Ngày'
+                                : 'Tháng'}
+                        </td>
                         <td className={cx('td_table-name_link')}>Tổng doanh thu</td>
                         <td className={cx('td_table-name_link')}>Tổng đơn hàng</td>
                     </tr>
@@ -463,6 +646,32 @@ function SellerTableStatistical() {
                         ))
                     ) : quartersValue === 'nam' ? (
                         statisticsByYear.map((pro, index) => (
+                            <tr
+                                key={index}
+                                className={cx(
+                                    handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
+                                )}
+                            >
+                                <td className={cx('td_table-name_link')}>{pro}</td>
+                                <td className={cx('td_table-name_link')}>{chartListTurnover[index]}</td>
+                                <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                            </tr>
+                        ))
+                    ) : quartersValue === 'statistical' ? (
+                        chartListData.map((pro, index) => (
+                            <tr
+                                key={index}
+                                className={cx(
+                                    handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
+                                )}
+                            >
+                                <td className={cx('td_table-name_link')}>{pro}</td>
+                                <td className={cx('td_table-name_link')}>{chartListTurnover[index]}</td>
+                                <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                            </tr>
+                        ))
+                    ) : quartersValue === 'month' ? (
+                        chartListData.map((pro, index) => (
                             <tr
                                 key={index}
                                 className={cx(
