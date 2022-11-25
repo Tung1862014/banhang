@@ -5,11 +5,14 @@ import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import styles from './IntroduceAdvertise.module.scss';
 import './IntroduceAdvertise.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function IntroduceAdvertise() {
     const [advertiseValue, setAdvertiseValue] = useState('');
+    const [takeLink, setTakeLink] = useState('');
 
     console.log('advertiseValue', advertiseValue);
 
@@ -22,6 +25,21 @@ function IntroduceAdvertise() {
                 setAdvertiseValue(res.data.advertise[0]);
             })
             .catch(() => {
+                console.log('loi');
+            });
+    }, []);
+
+    useEffect(() => {
+        // setCheckWeight(false);
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(21);
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/show/link/advertise?QB_id=${resultId}`)
+            .then((res) => {
+                console.log('data', res.data.result);
+                setTakeLink(res.data.result);
+            })
+            .catch((err) => {
                 console.log('loi');
             });
     }, []);
@@ -43,91 +61,16 @@ function IntroduceAdvertise() {
                             <span className={cx('mh-widget-title-inner')}>Bài viết liên quan</span>
                         </h4>
                         <ul className={cx('mh-widget-ul')}>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên tvxc ffsdf sddf f s fsd fsd f sdf
-                                </a>
-                            </li>
-                            <li className={cx('mh-widget-li')}>
-                                <a className={cx('mh-widget-a')} href="https://angiangquetoi.com/?p=47516">
-                                    TPHCM phát hiện ca bệnh đậu mùa khỉ đầu tiên
-                                </a>
-                            </li>
+                            {takeLink !== ''
+                                ? takeLink.map((takelink, index) => (
+                                      <li key={index} className={cx('mh-widget-li')}>
+                                          <a className={cx('mh-widget-a')} href={takelink.LI_link}>
+                                              <FontAwesomeIcon className={cx('mh-widget_icon')} icon={faChevronRight} />
+                                              <span>{takelink.LI_tieude}</span>
+                                          </a>
+                                      </li>
+                                  ))
+                                : ''}
                         </ul>
                     </div>
                 </div>

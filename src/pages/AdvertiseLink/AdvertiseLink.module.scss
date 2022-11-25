@@ -525,9 +525,10 @@
     .td_table-name {
         width: 380px;
         display: flex;
-        text-align: center;
+        text-align: flex-start;
         align-items: center;
-        justify-content: center;
+        text-transform: uppercase;
+        padding: 0px 10px;
     }
     .td_table-name_link {
         width: 420px;
@@ -557,6 +558,16 @@
             cursor: pointer;
             color: #ee4d2d;
         }
+    }
+
+    .td_table-name_no_link {
+        color: #ee4d2d;
+        font-size: 1.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin-top: 20px;
     }
 
     //add

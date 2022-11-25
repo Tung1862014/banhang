@@ -70,13 +70,32 @@
 }
 
 .mh-widget-li {
-    display: block;
-    padding: 5px 0;
+    display: flex;
+    padding: 13px 3px;
     border-bottom: 1px dotted #e5e5e5;
+}
+
+.mh-widget_icon {
+    position: relative;
 }
 
 .mh-widget-a {
     line-height: 23px;
+    text-transform: uppercase;
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: normal;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 22px;
+    font-size: 1.5rem;
+    position: relative;
+
+    span {
+        margin-left: 10px;
+    }
 
     &:hover {
         color: #e64946;

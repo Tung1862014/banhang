@@ -2,8 +2,8 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import GetCookie from '~/components/Hook/GetCookies';
 import styles from './AdvertiseLink.module.scss';
+import AdvertiseLinkPage from './AdvertiseLinkPage';
 
 const cx = classNames.bind(styles);
 
@@ -182,18 +182,6 @@ function AdvertiseLink() {
             });
     }
 
-    // const handleLookCategory = (id) => {
-    //     console.log('id: ', id);
-    //     setIdCategory(id);
-    // };
-
-    const handleTestColor = (color) => {
-        if (color % 2 === 0) {
-            return true;
-        } else {
-            return false;
-        }
-    };
     return (
         <div className={cx('wrapper')}>
             <div id="delete-modal__container" className={cx('delete-modal__container')}>
@@ -353,30 +341,7 @@ function AdvertiseLink() {
                         </div>
                     </div>
 
-                    <table className={cx('table__header')}>
-                        <thead>
-                            <tr className={cx('table__header-tr')}>
-                                <td className={cx('td_table-name')}>Tiêu đề</td>
-                                <td className={cx('td_table-name_link')}>Link</td>
-                            </tr>
-
-                            {takeCategory !== ''
-                                ? takeCategory.map((pro, index) => (
-                                      <tr
-                                          key={index}
-                                          className={cx(
-                                              handleTestColor(3)
-                                                  ? 'table__header-conten-color'
-                                                  : 'table__header-conten',
-                                          )}
-                                      >
-                                          <td className={cx('td_table-name')}>{pro.LI_tieude}</td>
-                                          <td className={cx('td_table-name_link')}>{pro.LI_link}</td>
-                                      </tr>
-                                  ))
-                                : ''}
-                        </thead>
-                    </table>
+                    <AdvertiseLinkPage data={takeCategory} />
                 </div>
             </div>
             <ToastContainer />
