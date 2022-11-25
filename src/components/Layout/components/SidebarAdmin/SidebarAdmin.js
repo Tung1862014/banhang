@@ -364,7 +364,9 @@ function SidebarAdmin() {
                                             className={cx('sidebar-menu-item-icon')}
                                         /> */}
                                         <FontAwesomeIcon className={cx('sidebar-menu-item-icon')} icon={faUsers} />
-                                        <span className={cx('sidebar-menu-item-text')}>Quản lý thông tin</span>
+                                        <span className={cx('sidebar-menu-item-text')}>
+                                            Quản lý thông tin làng nghề
+                                        </span>
                                         <span className={cx('sidebar-menu-item-space')}></span>
                                         <FontAwesomeIcon
                                             id="sidebar-menu-item-collapse-down-quangba"
@@ -385,7 +387,7 @@ function SidebarAdmin() {
                                                 className={cx('sidebar-submenu-item-link1-shop')}
                                                 onClick={handleClickAdvertise}
                                             >
-                                                <span>Thông tin</span>
+                                                <span>Thông tin làng nghề</span>
                                             </Link>
                                         </li>
                                     </ul>

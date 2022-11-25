@@ -2104,12 +2104,11 @@ function Order() {
                             <div className={cx('jSc1M9')}>
                                 <div className={cx('l7vuWW_XfjvIa')}>
                                     <div className={cx('bue9pr_XtXldU')}>
-                                        <input
+                                        <textarea
                                             className={cx('_6E2RgG')}
-                                            type="text"
-                                            placeholder="Lưu ý cho Người bán..."
+                                            placeholder="Lưu ý cho Chủ gian hàng..."
                                             onChange={(e) => setNoteValue(e.target.value)}
-                                        />
+                                        ></textarea>
                                     </div>
                                     <div></div>
                                 </div>

@@ -34,6 +34,7 @@ import AdvertiseLink from '~/pages/AdvertiseLink';
 import AdvertiseUpdate from '~/pages/AdvertiseUpdate';
 import SettingAdmin from '~/pages/SettingAdmin';
 import SettingSeller from '~/pages/SettingSeller';
+import SellerTableStatistical from '~/pages/SellerTableStatistical';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -60,6 +61,7 @@ const publicRoutes = [
     { path: '/admin/update/advertise=:id', component: AdvertiseUpdate, layout: DefaultLayoutAdmin },
     { path: '/setting/admin', component: SettingAdmin, layout: DefaultLayoutAdmin },
     { path: '/seller', component: Seller, layout: DefaultLayoutSeller },
+    { path: '/seller/table/statistical', component: SellerTableStatistical, layout: DefaultLayoutSeller },
     { path: '/seller/setting', component: SellerSetting, layout: DefaultLayoutSeller },
     { path: '/seller/product/@:id', component: SellerProduct, layout: DefaultLayoutSeller },
     { path: '/seller/product/insert', component: SellerAddProduct, layout: DefaultLayoutSeller },

@@ -104,6 +104,7 @@ function Sidebar() {
 
     function handleClickCategory1(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -113,6 +114,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1.style.color = 'red';
         itemLink2.style.color = 'var(--text-color)';
@@ -130,6 +132,7 @@ function Sidebar() {
 
     function handleClickCategory2(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -139,6 +142,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1.style.color = 'var(--text-color)';
         itemLink2.style.color = 'red';
@@ -156,6 +160,7 @@ function Sidebar() {
 
     function handleClickCategoryOrder1(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -165,6 +170,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Order.style.color = 'red';
         itemLink2Order.style.color = 'var(--text-color)';
@@ -183,6 +189,7 @@ function Sidebar() {
 
     function handleClickCategoryOrder2(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -192,6 +199,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Order.style.color = 'var(--text-color)';
         itemLink2Order.style.color = 'red';
@@ -210,6 +218,7 @@ function Sidebar() {
 
     function handleClickCategory1Shop(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -219,6 +228,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'red';
         itemLink1Order.style.color = 'var(--text-color)';
         itemLink2Order.style.color = 'var(--text-color)';
@@ -236,6 +246,7 @@ function Sidebar() {
 
     function handleClickCategory1Statistical(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -245,6 +256,35 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'red';
+        itemLink2Statistical.style.color = 'var(--text-color)';
+        itemLink1Shop.style.color = 'var(--text-color)';
+        itemLink1Order.style.color = 'var(--text-color)';
+        itemLink2Order.style.color = 'var(--text-color)';
+        itemLink1.style.color = 'var(--text-color)';
+        itemLink2.style.color = 'var(--text-color)';
+        itemLink1Weight.style.color = 'var(--text-color)';
+        itemLink1evaluate.style.color = 'var(--text-color)';
+
+        if (checkCategory === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    }
+
+    function handleClickCategory2Statistical(checkCategory) {
+        const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
+        const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
+        const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
+        const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
+        const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
+        const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
+        const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
+        const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+
+        itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'red';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Order.style.color = 'var(--text-color)';
         itemLink2Order.style.color = 'var(--text-color)';
@@ -262,6 +302,7 @@ function Sidebar() {
 
     function handleClickCategory1Weight(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -271,6 +312,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Order.style.color = 'var(--text-color)';
         itemLink2Order.style.color = 'var(--text-color)';
@@ -288,6 +330,7 @@ function Sidebar() {
 
     function handleClickCategory1Evaluate(checkCategory) {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
+        const itemLink2Statistical = document.getElementById('sidebar-submenu-item-link2-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
         const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
@@ -297,6 +340,7 @@ function Sidebar() {
         const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
+        itemLink2Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Order.style.color = 'var(--text-color)';
         itemLink2Order.style.color = 'var(--text-color)';
@@ -394,7 +438,17 @@ function Sidebar() {
                                                 className={cx('sidebar-submenu-item-link1-statistical')}
                                                 onClick={() => handleClickCategory1Statistical(checkCategory)}
                                             >
-                                                <span>Dữ Liệu</span>
+                                                <span>Thống kê danh thu và số lượng đơn hàng</span>
+                                            </Link>
+                                        </li>
+                                        <li className={cx('sidebar-submenu-item')}>
+                                            <Link
+                                                to="/seller/table/statistical"
+                                                id="sidebar-submenu-item-link2-statistical"
+                                                className={cx('sidebar-submenu-item-link2-statistical')}
+                                                onClick={() => handleClickCategory2Statistical(checkCategory)}
+                                            >
+                                                <span>Thống kê danh thu và số lượng đơn hàng (biểu bảng)</span>
                                             </Link>
                                         </li>
                                     </ul>
