@@ -55,7 +55,17 @@
     justify-content: center;
     overflow: hidden;
     border-right: 1px solid #333;
-    height: 70px;
+    height: 50px;
+}
+
+.td_table-name-right {
+    width: 200px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 50px;
 }
 .td_table-name_link {
     width: 250px;
@@ -66,7 +76,42 @@
     overflow: hidden;
 
     border-right: 1px solid #333;
-    height: 70px;
+    height: 50px;
+}
+
+.td_table-name-title {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: bold;
+    border-right: 1px solid #333;
+}
+
+.td_table-name-title-right {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+.td_table-name_link-title {
+    width: 250px;
+    height: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: bold;
+    border-right: 1px solid #333;
 }
 
 .td_table-name_detail {
@@ -95,9 +140,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 100%;
-    height: 70px;
+    height: 50px;
     border-top: 1px solid #333;
 }
 
@@ -105,9 +149,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 100%;
-    height: 70px;
+    height: 50px;
     background-color: #f7f3f3;
     border-top: 1px solid #333;
 }

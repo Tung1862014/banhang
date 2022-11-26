@@ -59,6 +59,8 @@ function Sidebar() {
             const resultId = pathId.slice(7);
             if (resultId === '') {
                 handleClickCategory1Statistical(checkCategory);
+            } else if (resultId === '/table/statistical') {
+                handleClickCategory2Statistical(checkCategory);
             } else if (resultId === '/setting') {
                 handleClickCategory1Shop(checkCategory);
             } else if (resultId === '/product/@all') {
@@ -438,7 +440,7 @@ function Sidebar() {
                                                 className={cx('sidebar-submenu-item-link1-statistical')}
                                                 onClick={() => handleClickCategory1Statistical(checkCategory)}
                                             >
-                                                <span>Thống kê danh thu và số lượng đơn hàng</span>
+                                                <span>Theo doanh thu và số lượng đơn hàng (biểu đồ)</span>
                                             </Link>
                                         </li>
                                         <li className={cx('sidebar-submenu-item')}>
@@ -448,7 +450,7 @@ function Sidebar() {
                                                 className={cx('sidebar-submenu-item-link2-statistical')}
                                                 onClick={() => handleClickCategory2Statistical(checkCategory)}
                                             >
-                                                <span>Thống kê danh thu và số lượng đơn hàng (biểu bảng)</span>
+                                                <span>Theo doanh thu và số lượng đơn hàng (biểu bảng)</span>
                                             </Link>
                                         </li>
                                     </ul>

@@ -52,24 +52,6 @@ function SellerPrintTableStatistical() {
     };
 
     useEffect(() => {
-        function takeDateNow(date) {
-            const dateValue = new Date(date);
-            let day = dateValue.getDate();
-            let month = dateValue.getMonth() + 1;
-            let year = dateValue.getFullYear();
-
-            if (month < 10 && day >= 10) {
-                return year + '-0' + month + '-' + day;
-            } else if (month < 10 && day < 10) {
-                return year + '-0' + month + '-0' + day;
-            } else if (month >= 10 && day < 10) {
-                return year + '-' + month + '-0' + day;
-            } else if (month >= 10 && day >= 10) {
-                return year + '-' + month + '-' + day;
-            } else {
-                return year + '-' + month + '-' + day;
-            }
-        }
         const pathId = window.location.pathname.toString();
         console.log('Ngày đi', pathId.slice(42, 52));
         console.log('Ngày đến', pathId.slice(58, 68));
@@ -203,7 +185,7 @@ function SellerPrintTableStatistical() {
                 <table className={cx('table__header')}>
                     <thead>
                         <tr className={cx('table__header-tr')}>
-                            <td className={cx('td_table-name_link')}>
+                            <td className={cx('td_table-name_link-title')}>
                                 {quartersValue === 'tuan'
                                     ? 'Ngày'
                                     : quartersValue === 'statistical'
@@ -212,8 +194,8 @@ function SellerPrintTableStatistical() {
                                     ? 'Ngày'
                                     : 'Tháng'}
                             </td>
-                            <td className={cx('td_table-name')}>Tổng doanh thu (₫)</td>
-                            <td className={cx('td_table-name')}>Tổng đơn hàng</td>
+                            <td className={cx('td_table-name-title')}>Tổng doanh thu (₫)</td>
+                            <td className={cx('td_table-name-title-right')}>Tổng đơn hàng</td>
                         </tr>
 
                         {quartersValue === 'tuan' &&
@@ -228,8 +210,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'quy1' ? (
@@ -241,8 +225,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'quy2' ? (
@@ -254,10 +240,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>
-                                        {formatCash(chartListTurnover[index])} ₫
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))} ₫
                                     </td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'quy3' ? (
@@ -269,10 +255,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>
-                                        {formatCash(chartListTurnover[index])} ₫
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))} ₫
                                     </td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'quy4' ? (
@@ -284,8 +270,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'nam' ? (
@@ -297,8 +285,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'statistical' ? (
@@ -310,8 +300,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : quartersValue === 'month' ? (
@@ -323,8 +315,10 @@ function SellerPrintTableStatistical() {
                                     )}
                                 >
                                     <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name_link')}>{formatCash(chartListTurnover[index])}</td>
-                                    <td className={cx('td_table-name_link')}>{chartListNumber[index]}</td>
+                                    <td className={cx('td_table-name')}>
+                                        {formatCash(Number(chartListTurnover[index]))}
+                                    </td>
+                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
                                 </tr>
                             ))
                         ) : (
@@ -335,7 +329,7 @@ function SellerPrintTableStatistical() {
                     </thead>
                 </table>
 
-                {/* <div onLoad={handlePrintShow()}></div> */}
+                <div onLoad={handlePrintShow()}></div>
             </div>
         </>
     );
