@@ -35,6 +35,7 @@ import AdvertiseUpdate from '~/pages/AdvertiseUpdate';
 import SettingAdmin from '~/pages/SettingAdmin';
 import SettingSeller from '~/pages/SettingSeller';
 import SellerTableStatistical from '~/pages/SellerTableStatistical';
+import SellerPrintTableStatistical from '~/pages/SellerPrintTableStatistical';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -70,6 +71,11 @@ const publicRoutes = [
     { path: '/seller/bill/@:id', component: SellerBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/@:id', component: SellerDetailBill, layout: DefaultLayoutSeller },
     { path: '/seller/bill/detail/print/@:id', component: SellerPrintBill, layout: null },
+    {
+        path: '/seller/bill/table/statistical/print/ngdi=:id/ngde=:id/nam=:id/name=:id/type=:id',
+        component: SellerPrintTableStatistical,
+        layout: null,
+    },
     { path: '/seller/shop/reviews/@:id', component: SellerShopReviews, layout: DefaultLayoutSeller },
     { path: '/seller/setting/account', component: SettingSeller, layout: DefaultLayoutSeller },
 ];

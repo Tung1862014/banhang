@@ -9,33 +9,6 @@ import { toast, ToastContainer } from 'react-toastify';
 const cx = classNames.bind(styles);
 
 function SellerTableStatistical() {
-    // const [statusConfirm, setStatusConfirm] = useState('');
-    // const [statusDelivered, setStatusDelivered] = useState('');
-    // const [statusCancelOrder, setStatusCancelOrder] = useState('');
-    // const [statusoutOfStock, setStatusoutOfStock] = useState('');
-
-    // useEffect(() => {
-    //     axios
-    //         .get(
-    //             `${process.env.REACT_APP_URL_NODEJS}/seller/statistical/show/all?NB_id=${
-    //                 JSON.parse(GetCookie('seller')).ND_id
-    //             }`,
-    //         )
-
-    //         .then((res) => {
-    //             console.log(res.data);
-    //             //setBill(res.data.result);
-    //             setStatusConfirm(res.data.statusconfirm[0].statusconfirm);
-    //             setStatusDelivered(res.data.statusdelivered[0].statusdelivered);
-    //             setStatusCancelOrder(res.data.statuscancelOrder[0].statuscancelOrder);
-    //             setStatusoutOfStock(res.data.statusoutOfStock[0].statusoutOfStock);
-    //             //setNumber(res.data.number[0].number);
-    //         })
-    //         .catch(() => {
-    //             console.log('loi khong the show bill');
-    //         });
-    // }, []);
-
     function takeDate() {
         const dateValue = new Date();
         let day = dateValue.getDate();
@@ -57,17 +30,12 @@ function SellerTableStatistical() {
 
     console.log('date', takeDate());
 
-    // const [chartData, setChartData] = useState({
-    //     datasets: [],
-    // });
-    // const [chartOptions, setChartOptions] = useState({});
-
     const [dateValue1, setDateValue1] = useState(takeDate());
     const [dateValue2, setDateValue2] = useState(takeDate());
     const [activeTurnover, setActiveTurnover] = useState(
         `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
             JSON.parse(GetCookie('seller')).ND_id
-        }`,
+        }&type=${'tuan'}`,
     );
     const [chartListData, setChartListData] = useState([]);
     const [chartListNumber, setChartListNumber] = useState([]);
@@ -75,17 +43,85 @@ function SellerTableStatistical() {
     const [quartersValue, setQuarterValue] = useState([]);
 
     const [yearValue, setYearValue] = useState('');
-    const [monthValue, setMonthValue] = useState('');
+    const [sumTurnoverValue, setSumTurnoverValue] = useState('');
+    const [sumNumberValue, setsumNumberValue] = useState('');
+    //const [monthValue, setMonthValue] = useState('');
 
     //const listChart = useDebounce(chartListData, 500);
     const handleChart = (listDate, listNumber, listTurnover) => {
         setChartListData(() => [...listDate]);
         setChartListNumber(() => [...listNumber]);
         setChartListTurnover(() => [...listTurnover]);
+
+        console.log('listNumber:  ', listNumber);
+        console.log('listTurnover:  ', listTurnover);
+        let sumTurnover = 0;
+        let sumNumber = 0;
+        for (let i = 0; i < listTurnover.length; i++) {
+            sumTurnover += listTurnover[i];
+            sumNumber += listNumber[i];
+
+            if (i === listTurnover.length - 1) {
+                setSumTurnoverValue(sumTurnover);
+                setsumNumberValue(sumNumber);
+            }
+        }
     };
 
     console.log('dateValue1', dateValue1);
     console.log('dateValue2', dateValue2);
+
+    useEffect(() => {
+        const pathId = window.location.pathname.toString();
+        const resultId = pathId.slice(7);
+
+        const handleDateNowSmall = (e) => {
+            const date = new Date();
+            const dayValue = new Date();
+            const yearNow = dayValue.getFullYear();
+            if (Number(e) === 7) {
+                const additionOfDays = 7;
+                date.setDate(date.getDate() - additionOfDays); // For subtract use minus (-)
+                // console.log('New Date:', dayValue, date.getDate(), takeDateNow(date));
+                console.log('value e', typeof e);
+                const formDate = document.getElementById('chart-date1');
+                const toDate = document.getElementById('chart-date2');
+                const chartDate = document.getElementById('chart-date-date');
+                const chartYear = document.getElementById('chart-quarter-year');
+                const chartMonth = document.getElementById('chart-quarter-month');
+                const btnstatistic = document.getElementById('chart-button-tk');
+                const print = document.getElementById('chart-chart-quarter-print');
+
+                formDate.value = takeDateNow(date);
+                toDate.value = takeDateNow(dayValue);
+                chartDate.style.display = 'flex';
+                chartYear.style.display = 'none';
+                chartMonth.style.display = 'none';
+                btnstatistic.style.display = 'none';
+                print.href = `${
+                    process.env.REACT_APP_URL_FRONTEND
+                }/seller/bill/table/statistical/print/ngdi=${takeDateNow(date)}/ngde=${takeDateNow(
+                    dayValue,
+                )}/nam=${yearNow}/name=2/type=tuan`;
+
+                setDateValue2(takeDateNow(dayValue));
+                setDateValue1(takeDateNow(date));
+                setQuarterValue('tuan');
+
+                setActiveTurnover(
+                    `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${takeDateNow(
+                        date,
+                    )}&ngde=${takeDateNow(dayValue)}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}&type=${'tuan'}`,
+                );
+            }
+        };
+        console.log('resultId: ', resultId);
+        if (resultId === '/table/statistical') {
+            const chartQuarter = document.getElementById('chart-quarter-select-op');
+            chartQuarter.value = '7';
+            handleDateNowSmall(7);
+        }
+    }, []);
 
     useEffect(() => {
         axios
@@ -162,13 +198,17 @@ function SellerTableStatistical() {
                 className: `${cx('toast-message')}`,
             });
         } else {
+            const dayValue = new Date();
+            const yearNow = dayValue.getFullYear();
+            const print = document.getElementById('chart-chart-quarter-print');
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${dateValue1}/ngde=${dateValue2}/nam=${yearNow}/name=1/type=tuan`;
             setQuarterValue('statistical');
             setActiveTurnover(
                 `${
                     process.env.REACT_APP_URL_NODEJS
                 }/chart/table/statistical?ngdi=${dateValue1}&ngde=${dateValue2}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }&type=${'statistical'}`,
+                }&type=${'tuan'}`,
             );
         }
     };
@@ -205,12 +245,19 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = takeDateNow(date);
             toDate.value = takeDateNow(dayValue);
             chartDate.style.display = 'flex';
             chartYear.style.display = 'none';
             chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${takeDateNow(
+                date,
+            )}/ngde=${takeDateNow(dayValue)}/nam=${year}/name=2/type=tuan`;
 
             setDateValue2(takeDateNow(dayValue));
             setDateValue1(takeDateNow(date));
@@ -230,12 +277,17 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
             chartDate.style.display = 'flex';
             chartYear.style.display = 'none';
             chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${dateFrom}/ngde=${dateTo}/nam=${year}/name=4/type=quy1`;
 
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
@@ -255,12 +307,17 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
             chartDate.style.display = 'flex';
             chartYear.style.display = 'none';
             chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${dateFrom}/ngde=${dateTo}/nam=${year}/name=5/type=quy2`;
 
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
@@ -280,12 +337,17 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
             chartDate.style.display = 'flex';
             chartYear.style.display = 'none';
             chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${dateFrom}/ngde=${dateTo}/nam=${year}/name=6/type=quy3`;
 
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
@@ -305,12 +367,17 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = dateFrom;
             toDate.value = dateTo;
             chartDate.style.display = 'flex';
             chartYear.style.display = 'none';
             chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${dateFrom}/ngde=${dateTo}/nam=${year}/name=7/type=quy4`;
 
             setDateValue1(dateFrom);
             setDateValue2(dateTo);
@@ -331,12 +398,21 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const chartSelect = document.getElementById('chart-quarter-select');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = takeDateNow(dateFrom);
             toDate.value = takeDateNow(dateTo);
             chartDate.style.display = 'none';
             chartYear.style.display = 'flex';
             chartMonth.style.display = 'flex';
+            chartSelect.value = '';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${takeDateNow(
+                dateFrom,
+            )}/ngde=${takeDateNow(dateTo)}/nam=${year.toString()}/name=8/type=nam`;
 
             setDateValue2(takeDateNow(dateTo));
             setDateValue1(takeDateNow(dateFrom));
@@ -363,6 +439,8 @@ function SellerTableStatistical() {
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
             const chartSelect = document.getElementById('chart-quarter-select');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = takeDateNow(dateFrom);
             toDate.value = takeDateNow(dateTo);
@@ -370,6 +448,11 @@ function SellerTableStatistical() {
             chartYear.style.display = 'flex';
             chartMonth.style.display = 'flex';
             chartSelect.value = '';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${takeDateNow(
+                dateFrom,
+            )}/ngde=${takeDateNow(dateTo)}/nam=${e}/name=8/type=nam`;
 
             setDateValue2(takeDateNow(dateTo));
             setDateValue1(takeDateNow(dateFrom));
@@ -414,16 +497,22 @@ function SellerTableStatistical() {
             const chartDate = document.getElementById('chart-date-date');
             const chartYear = document.getElementById('chart-quarter-year');
             const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
 
             formDate.value = takeDateNow(dateFrom);
             toDate.value = takeDateNow(dateTo);
             chartDate.style.display = 'none';
             chartYear.style.display = 'flex';
             chartMonth.style.display = 'flex';
+            btnstatistic.style.display = 'none';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${takeDateNow(
+                dateFrom,
+            )}/ngde=${takeDateNow(dateTo)}/nam=${year}/name=3/type=tuan`;
 
             setDateValue2(takeDateNow(dateTo));
             setDateValue1(takeDateNow(dateFrom));
-            setMonthValue(e);
             setQuarterValue('month');
 
             setActiveTurnover(
@@ -431,7 +520,37 @@ function SellerTableStatistical() {
                     dateFrom,
                 )}&ngde=${takeDateNow(dateTo)}&NB_id=${JSON.parse(GetCookie('seller')).ND_id}&type=${'tuan'}`,
             );
+        } else if (e === 'day') {
+            const date = takeDate();
+
+            const formDate = document.getElementById('chart-date1');
+            const toDate = document.getElementById('chart-date2');
+            const chartDate = document.getElementById('chart-date-date');
+            const chartYear = document.getElementById('chart-quarter-year');
+            const chartMonth = document.getElementById('chart-quarter-month');
+            const btnstatistic = document.getElementById('chart-button-tk');
+            const print = document.getElementById('chart-chart-quarter-print');
+
+            formDate.value = takeDateNow(date);
+            toDate.value = takeDateNow(date);
+            chartDate.style.display = 'flex';
+            chartYear.style.display = 'none';
+            chartMonth.style.display = 'none';
+            btnstatistic.style.display = 'flex';
+
+            print.href = `${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=${date}/ngde=${date}/nam=${year}/name=1/type=tuan`;
+
+            setDateValue2(takeDateNow(dayValue));
+            setDateValue1(takeDateNow(date));
+            setQuarterValue('tuan');
+
+            setActiveTurnover(
+                `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${date}&ngde=${date}&NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }&type=${'tuan'}`,
+            );
         } else if (e === '') {
+            const date = takeDate();
             const formDate = document.getElementById('chart-date1');
             const toDate = document.getElementById('chart-date2');
 
@@ -441,9 +560,9 @@ function SellerTableStatistical() {
             setDateValue1('');
 
             setActiveTurnover(
-                `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${''}&ngde=${''}&NB_id=${
+                `${process.env.REACT_APP_URL_NODEJS}/chart/table/statistical?ngdi=${date}&ngde=${date}&NB_id=${
                     JSON.parse(GetCookie('seller')).ND_id
-                }`,
+                }&type=${'tuan'}`,
             );
         }
     };
@@ -477,6 +596,10 @@ function SellerTableStatistical() {
 
     return (
         <div className={cx('wrapper')}>
+            <div>
+                <div className={cx('')}>Tổng doanh thu: {sumTurnoverValue}</div>
+                <div className={cx('')}>Tổng đơn: {sumNumberValue}</div>
+            </div>
             <div className={cx('chart-demo')}>
                 <div className={cx('chart-date')}>
                     <div id="chart-date-date" className={cx('chart-date-input')}>
@@ -509,7 +632,7 @@ function SellerTableStatistical() {
                         <div>Năm</div>
                         <select
                             className={cx('chart-btn-select')}
-                            onChange={(e) => handleDateNow(e.target.value, 'year', 'months', monthValue)}
+                            onChange={(e) => handleDateNow(e.target.value, 'year')}
                         >
                             <option value="2022">Năm 2022</option>
                             <option value="2021">Năm 2021</option>
@@ -547,8 +670,25 @@ function SellerTableStatistical() {
                         </select>
                     </div>
                     <div className={cx('chart-quarter')}>
-                        <select className={cx('chart-btn-select')} onChange={(e) => handleDateNow(e.target.value)}>
+                        <a
+                            id="chart-chart-quarter-print"
+                            href={`${process.env.REACT_APP_URL_FRONTEND}/seller/bill/table/statistical/print/ngdi=2022-11-20/ngde=2022-11-27/nam=null/name=2/type=tuan`}
+                            target={'_blank'}
+                            rel="noreferrer"
+                            className={cx('chart-quarter-print')}
+                        >
+                            {' '}
+                            In Thống kê
+                        </a>
+                    </div>
+                    <div className={cx('chart-quarter')}>
+                        <select
+                            id="chart-quarter-select-op"
+                            className={cx('chart-btn-select')}
+                            onChange={(e) => handleDateNow(e.target.value)}
+                        >
                             <option value="">...</option>
+                            <option value="day">Ngày</option>
                             <option value="7">Tuần</option>
                             <option value="1">Quý 1 (1-3)</option>
                             <option value="2">Quý 2 (4-6)</option>
@@ -690,6 +830,7 @@ function SellerTableStatistical() {
                     )}
                 </thead>
             </table>
+
             <ToastContainer />
         </div>
     );
