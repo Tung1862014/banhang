@@ -36,6 +36,7 @@ import SettingAdmin from '~/pages/SettingAdmin';
 import SettingSeller from '~/pages/SettingSeller';
 import SellerTableStatistical from '~/pages/SellerTableStatistical';
 import SellerPrintTableStatistical from '~/pages/SellerPrintTableStatistical';
+import Backup from '~/pages/Backup';
 
 const publicRoutes = [
     { path: '/', component: Home, layout: HeaderOnly },
@@ -78,6 +79,7 @@ const publicRoutes = [
     },
     { path: '/seller/shop/reviews/@:id', component: SellerShopReviews, layout: DefaultLayoutSeller },
     { path: '/seller/setting/account', component: SettingSeller, layout: DefaultLayoutSeller },
+    { path: '/backup/data', component: Backup, layout: null },
 ];
 
 const privateRoutes = [];
