@@ -12,6 +12,7 @@ function SellerPrintTableStatistical() {
     const [quartersValue, setQuarterValue] = useState('');
     const [sumTurnoverValue, setSumTurnoverValue] = useState('');
     const [sumNumberValue, setsumNumberValue] = useState('');
+    const [userVaule, setUserVaule] = useState('');
 
     function formatCash(str) {
         return str
@@ -28,6 +29,22 @@ function SellerPrintTableStatistical() {
             return window.print();
         }, 800);
     }
+
+    useEffect(() => {
+        axios
+            .get(
+                `${process.env.REACT_APP_URL_NODEJS}/sellersettingshop/establish/show/all/shop?NB_id=${
+                    JSON.parse(GetCookie('seller')).ND_id
+                }`,
+            )
+            .then((res) => {
+                console.log('data', res.data.results);
+                setUserVaule(res.data.results);
+            })
+            .catch((err) => {
+                console.log('loi nha');
+            });
+    }, []);
 
     /////////////////////////////////////////////////////
 
@@ -170,9 +187,45 @@ function SellerPrintTableStatistical() {
         return 'theo ngày';
     };
 
+    function handleTakeDay() {
+        const datevalue = new Date();
+        let day = datevalue.getDate();
+        return day;
+    }
+
+    function handleTakeMonth() {
+        const datevalue = new Date();
+        let month = datevalue.getMonth() + 1;
+        return month;
+    }
+
+    function handleTakeYear() {
+        const datevalue = new Date();
+        let year = datevalue.getFullYear();
+        return year.toString();
+    }
+
     return (
         <>
             <div className={cx('wrapper')}>
+                <div className={cx('print-header')}>
+                    <div className={cx('print-name')}>
+                        <div className={cx('name-stall-title')}>Tên Gian hàng</div>
+
+                        <div className={cx('name-stall')}>
+                            <img src={userVaule.MTS_logo} alt={''} className={cx('name-stall-image')} />
+
+                            {userVaule.MTS_ten}
+                        </div>
+                    </div>
+                    <div className={cx('print-header-chxh')}>
+                        <div className={cx('print-ch')}>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                        <div className={cx('print-dl')}>Độc lập - Tự do - Hạnh phúc</div>
+                        <div className={cx('print-date')}>
+                            Ngày {handleTakeDay()} tháng {handleTakeMonth()} năm {handleTakeYear()}
+                        </div>
+                    </div>
+                </div>
                 <div className={cx('print-title')}>
                     <h3 className={cx('name-title')}>Bảng hống kê doanh thu và đơn hàng {handleTakeNameDate()}</h3>
                     <div>

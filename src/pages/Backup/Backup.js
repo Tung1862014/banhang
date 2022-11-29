@@ -6,8 +6,10 @@ import { saveAs } from 'file-saver';
 const cx = classNames.bind(styles);
 
 const handleSaveAS = () => {
-    var blob = new Blob(['Hello, world!'], { type: 'text/plain;charset=utf-8' });
-    saveAs.saveAs(blob, 'backup.doc');
+    var result = ['Item 1', 'Item 3'];
+    const myJsonString = JSON.stringify(result);
+    var blob = new Blob([myJsonString], { type: 'text/plain;charset=utf-8' });
+    saveAs.saveAs(blob, 'backup.xlsx');
 };
 
 function Backup() {

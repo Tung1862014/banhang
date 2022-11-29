@@ -9,27 +9,28 @@
 
 .name-title {
     text-transform: uppercase;
+    font-weight: 700;
 }
 
 .sum_turnover_value {
     font-weight: 700;
     position: relative;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 
 .sum_number_value {
     font-weight: 700;
     position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 //table
 .table__header {
     display: flex;
     flex-direction: column;
     width: 700px;
-    margin-top: 20px;
+    margin-top: 5px;
     border: 1px solid #333;
 }
 
@@ -74,14 +75,13 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-
     border-right: 1px solid #333;
     height: 50px;
 }
 
 .td_table-name-title {
     width: 200px;
-    height: 50px;
+    height: 40px;
     display: flex;
     text-align: center;
     align-items: center;
@@ -93,7 +93,7 @@
 
 .td_table-name-title-right {
     width: 200px;
-    height: 50px;
+    height: 40px;
     display: flex;
     text-align: center;
     align-items: center;
@@ -153,4 +153,57 @@
     height: 50px;
     background-color: #f7f3f3;
     border-top: 1px solid #333;
+}
+
+//header
+.print-header {
+    width: 700px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.print-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.name-stall-title {
+    font-weight: 700;
+}
+
+.name-stall {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.name-stall-image {
+    height: 50px;
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.print-header-chxh {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.print-ch {
+    font-weight: 800;
+}
+
+.print-dl {
+    padding: 7px;
+    font-weight: 700;
+}
+
+.print-date {
+    font-style: italic;
+    position: relative;
 }
