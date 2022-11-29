@@ -1,6 +1,8 @@
 @media only screen and (max-width: 46.1875em) {
     .wrapper {
-        width: 390px;
+        width: 395px;
+        position: relative;
+        margin-top: 3px;
         font-family: Helvetica Neue, Helvetica, Arial, 文泉驛正黑, WenQuanYi Zen Hei, Hiragino Sans GB, 儷黑 Pro,
             LiHei Pro, Heiti TC, 微軟正黑體, Microsoft JhengHei UI, Microsoft JhengHei, sans-serif;
     }
@@ -278,6 +280,8 @@
         font-weight: 600;
         line-height: 1;
         white-space: nowrap;
+        display: flex;
+        flex-direction: column;
     }
 
     //

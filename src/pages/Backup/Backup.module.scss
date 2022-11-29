@@ -1,3 +1,13 @@
 .table1 {
     display: none;
 }
+
+.button-82-pushable {
+    height: 40px;
+    background-color: #2cbc63;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

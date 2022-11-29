@@ -1,9 +1,12 @@
 import classNames from 'classnames/bind';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import styles from './Backup.module.scss';
 //import { saveAs } from 'file-saver';
 import { useCallback } from 'react';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 var XLSX = require('xlsx');
@@ -47,21 +50,59 @@ const headers = [
     'QUANGBA',
     'LINK',
 ];
+
+var wscols = [
+    { wch: 15 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 15 },
+    { wch: 15 },
+];
+
 function Backup() {
-    useEffect(() => {}, []);
-    var wscols = [
-        { wch: 15 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 15 },
-        { wch: 15 },
-    ];
+    const [users, setUsers] = useState('');
+    const [products, setProducts] = useState('');
+    const [images, setImages] = useState('');
+    const [promotions, setPromotions] = useState('');
+    const [shops, setShops] = useState('');
+    const [carts, setCarts] = useState('');
+    const [orders, setOrders] = useState('');
+    const [infoorders, setInfoorders] = useState('');
+    const [customers, setCustomers] = useState('');
+    const [deliveryAddress, setDeliveryAddress] = useState('');
+    const [sellers, setSellers] = useState('');
+    const [advertises, setAdvertises] = useState('');
+    const [links, setLinks] = useState('');
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.REACT_APP_URL_NODEJS}/admin/backup/show/user`)
+            .then((res) => {
+                console.log('data  :', res.data);
+                setUsers(res.data.users);
+                setProducts(res.data.products);
+                setImages(res.data.images);
+                setPromotions(res.data.promotions);
+                setShops(res.data.shops);
+                setCarts(res.data.carts);
+                setOrders(res.data.orders);
+                setInfoorders(res.data.infoorders);
+                setCustomers(res.data.customers);
+                setDeliveryAddress(res.data.delivery);
+                setSellers(res.data.sellers);
+                setAdvertises(res.data.advertises);
+                setLinks(res.data.links);
+            })
+            .catch((err) => {
+                console.log('error :');
+            });
+    }, []);
 
     const xport = useCallback(async () => {
         /* This function creates gap rows */
@@ -100,63 +141,63 @@ function Backup() {
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* five table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[4]]], { origin: -1 });
 
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table5'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* six table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[5]]], { origin: -1 });
 
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table6'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* seven table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[6]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table7'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* eight table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[7]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table8'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* nine table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[8]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table9'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* ten table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[9]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table10'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* eleven table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[10]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table11'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* twelve table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[11]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table12'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* thirteen table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[12]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table13'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
 
         /* fourteen table */
-        XLSX.utils.sheet_add_aoa(ws, [[headers[3]]], { origin: -1 });
+        XLSX.utils.sheet_add_aoa(ws, [[headers[13]]], { origin: -1 });
         create_gap_rows(ws, 1);
         XLSX.utils.sheet_add_dom(ws, document.getElementById('table14'), { origin: -1 });
         create_gap_rows(ws, 3); // two rows gap after second table
@@ -175,9 +216,10 @@ function Backup() {
         //     </button>
         // </div>
         <>
-            <button onClick={xport}>
-                <b>Export XLSX!</b>
+            <button className={cx('button-82-pushable')} onClick={xport}>
+                Xuất file EXcel <FontAwesomeIcon icon={faFileExcel} />
             </button>
+
             <table className={cx('table1')} id="table1">
                 <tr>
                     <td>ND_id</td>
@@ -192,28 +234,32 @@ function Backup() {
                     <td>ND_trangthai</td>
                     <td>ND_ghichu</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Thanh tung</td>
-                    <td>thanh123</td>
-                    <td>http://localhost:5000/customers/1665906167736-Admin.png</td>
-                    <td>tunha1234@gmail.com</td>
-                    <td>Can tho</td>
-                    <td>2022-09-17</td>
-                    <td>918814027</td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td></td>
-                </tr>
+                {users !== '' && users !== undefined
+                    ? users.map((user, index) => (
+                          <tr key={index}>
+                              <td>{user.ND_id}</td>
+                              <td>{user.ND_hoten}</td>
+                              <td>{user.ND_username}</td>
+                              <td>{user.ND_image}</td>
+                              <td>{user.ND_email}</td>
+                              <td>{user.ND_diachi}</td>
+                              <td>{user.ND_ngayDK}</td>
+                              <td>{user.ND_sdt}</td>
+                              <td>{user.ND_quyen}</td>
+                              <td>{user.ND_trangthai}</td>
+                              <td>{user.ND_ghichu}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
-
+            {/* table 2 */}
             <table className={cx('table1')} id="table2">
                 <tr>
                     <td>SP_id</td>
                     <td>NB_id</td>
                     <td>SP_ten</td>
                     <td>SP_soluong</td>
-                    <td>SP_soluonban</td>
+                    <td>SP_soluongban</td>
                     <td>SP_gia</td>
                     <td>SP_image</td>
                     <td>SP_trongluong</td>
@@ -221,35 +267,24 @@ function Backup() {
                     <td>SP_trangthai</td>
                     <td>DM_id</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>1kg Khô cá lóc loại lớn 2 nắng [Đặc sản An Giang]</td>
-                    <td>16</td>
-                    <td>16</td>
-                    <td>190000</td>
-                    <td>http://localhost:5000/product/1664955059541-c1bdc019c8ed46883f548360a7da5f0c.jfif</td>
-                    <td>1000</td>
-                    <td>
-                        <p>
-                            Khô cá lóc là một trong những loại đặc sản nổi tiếng thơm ngon, mạng đậm hương vị quê hương
-                            của miền Tây nói chung và An Giang nói riêng. Khô được chế biến từ cá lóc sống, phơi thủ
-                            công, ướp vị mặn vừa ăn.&nbsp;
-                        </p>
-                        <p>Sản phẩm thích hợp làm quà biếu, tiếp đãi khách hoặc dùng trong bữa cơm hằng ngày.</p>
-                        <p>* Các món được chế biến từ khô cá lóc:&nbsp;</p>
-                        <p>- Khô cá lóc trộn gỏi xoài</p>
-                        <p>- Khô cá lóc chiên bơ tỏi&nbsp;</p>
-                        <p>- Khô cá lóc chiên giấm đường&nbsp;</p>
-                        <p>- Khô cá lóc nướng&nbsp;</p>
-                        <p>
-                            - Khô cá lóc chiên truyền thống Kết hợp chấm khô với nước mắm me, nước mắm tỏi ớt,…thêm chén
-                            cơm trắng hít hà vị quê.
-                        </p>
-                    </td>
-                    <td>0</td>
-                    <td>1</td>
-                </tr>
+
+                {products !== '' && products !== undefined
+                    ? products.map((pro, index) => (
+                          <tr key={index}>
+                              <td>{pro.SP_id}</td>
+                              <td>{pro.NB_id}</td>
+                              <td>{pro.SP_ten}</td>
+                              <td>{pro.SP_soluong}</td>
+                              <td>{pro.SP_soluongban}</td>
+                              <td>{pro.SP_gia}</td>
+                              <td>{pro.SP_image}</td>
+                              <td>{pro.SP_trongluong}</td>
+                              <td>{pro.SP_mota}</td>
+                              <td>{pro.SP_trangthai}</td>
+                              <td>{pro.DM_id}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             <table className={cx('table1')} id="table3">
@@ -258,11 +293,15 @@ function Backup() {
                     <td>SP_id</td>
                     <td>HA_image</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>http://localhost:5000/product/1664955059550-bc5c814e9587d312ccfa4488e81bfb93.jfif</td>
-                </tr>
+                {images !== '' && images !== undefined
+                    ? images.map((img, index) => (
+                          <tr key={index}>
+                              <td>{img.HA_id}</td>
+                              <td>{img.SP_id}</td>
+                              <td>{img.HA_image}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             <table className={cx('table1')} id="table4">
@@ -273,13 +312,18 @@ function Backup() {
                     <td>KM_denngay</td>
                     <td>KM_phantram</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>2022-10-28</td>
-                    <td>2022-11-06</td>
-                    <td>10</td>
-                </tr>
+
+                {promotions !== '' && promotions !== undefined
+                    ? promotions.map((promo, index) => (
+                          <tr key={index}>
+                              <td>{promo.KM_id}</td>
+                              <td>{promo.SP_id}</td>
+                              <td>{promo.KM_tungay}</td>
+                              <td>{promo.KM_denngay}</td>
+                              <td>{promo.KM_phantram}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
             {/* table 5 */}
             <table className={cx('table1')} id="table5">
@@ -293,16 +337,21 @@ function Backup() {
                     <td>MTS_chitiet</td>
                     <td>MTS_clientId</td>
                 </tr>
-                <tr>
-                    <td>119227</td>
-                    <td>2</td>
-                    <td>http://localhost:5000/shop/1668134741787-KhoChuBay.png</td>
-                    <td>KhoChuBay</td>
-                    <td>http://localhost:5000/shop/1668934066032-8e22b4c4237459be829b8f315a3efa44.jfif</td>
-                    <td>Xã Long Kiến,Huyện Chợ Mới,An Giang</td>
-                    <td>234. Ấp Long Thạnh 2</td>
-                    <td>Ae9pDuj562DAY1aNt0PoQo2QKPqOaImPizoS8zwmvkEcjhUmtMUulchzjwnKVv5kxvnKGM-9VK2Xwom4</td>
-                </tr>
+
+                {shops !== '' && shops !== undefined
+                    ? shops.map((shop, index) => (
+                          <tr key={index}>
+                              <td>{shop.MTS_id}</td>
+                              <td>{shop.NB_id}</td>
+                              <td>{shop.MTS_logo}</td>
+                              <td>{shop.MTS_ten}</td>
+                              <td>{shop.MTS_image}</td>
+                              <td>{shop.MTS_diachi}</td>
+                              <td>{shop.MTS_chitiet}</td>
+                              <td>{shop.MTS_clientId}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 6 */}
@@ -312,11 +361,15 @@ function Backup() {
                     <td>ND_id</td>
                     <td>TTGH_soluong</td>
                 </tr>
-                <tr>
-                    <td>64</td>
-                    <td>7</td>
-                    <td>1</td>
-                </tr>
+                {carts !== undefined && carts !== ''
+                    ? carts.map((cart, index) => (
+                          <tr key={index}>
+                              <td>{cart.SP_id}</td>
+                              <td>{cart.ND_id}</td>
+                              <td>{cart.TTGH_soluong}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 7 */}
@@ -335,19 +388,23 @@ function Backup() {
                     <td>DH_ghichu</td>
                     <td>DH_ghichuhuy</td>
                 </tr>
-                <tr>
-                    <td>DHSPMP0</td>
-                    <td>7</td>
-                    <td>6</td>
-                    <td>140000</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>Hồ Chí Minh,Quận 10,Phường 13</td>
-                    <td>40000</td>
-                    <td>2022-11-08</td>
-                    <td>Giao nhớ gợi trước 15 phút.</td>
-                    <td></td>
-                </tr>
+                {orders !== undefined && orders !== ''
+                    ? orders.map((order, index) => (
+                          <tr key={index}>
+                              <td>{order.DH_id}</td>
+                              <td>{order.ND_id}</td>
+                              <td>{order.NB_id}</td>
+                              <td>{order.DH_tongtien}</td>
+                              <td>{order.DH_trangthai}</td>
+                              <td>{order.DH_loaithanhtoan}</td>
+                              <td>{order.DH_diachi}</td>
+                              <td>{order.DH_phivanchuyen}</td>
+                              <td>{order.DH_ngay}</td>
+                              <td>{order.DH_ghichu}</td>
+                              <td>{order.DH_ghichuhuy}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 8 */}
@@ -360,14 +417,18 @@ function Backup() {
                     <td>TTDH_gia</td>
                     <td>TTDH_phantram</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>7</td>
-                    <td>LLG799</td>
-                    <td>2</td>
-                    <td>100000</td>
-                    <td>0</td>
-                </tr>
+                {infoorders !== undefined && infoorders !== ''
+                    ? infoorders.map((info, index) => (
+                          <tr key={index}>
+                              <td>{info.TTDH_id}</td>
+                              <td>{info.SP_id}</td>
+                              <td>{info.DH_id}</td>
+                              <td>{info.TTDH_soluong}</td>
+                              <td>{info.TTDH_gia}</td>
+                              <td>{info.TTDH_phantram}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 9 */}
@@ -376,10 +437,14 @@ function Backup() {
                     <td>ND_id</td>
                     <td>ND_NG_id</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>7</td>
-                </tr>
+                {customers !== '' && customers !== undefined
+                    ? customers.map((customer, index) => (
+                          <tr key={index}>
+                              <td>{customer.ND_id}</td>
+                              <td>{customer.ND_NG_id}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 10 */}
@@ -390,12 +455,16 @@ function Backup() {
                     <td>DC_diachiGH</td>
                     <td>DC_chitiet</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>7</td>
-                    <td>Hồ Chí Minh,Quận 11,Phường 14</td>
-                    <td>123/234 hẻm 3456</td>
-                </tr>
+                {deliveryAddress !== '' && deliveryAddress !== undefined
+                    ? deliveryAddress.map((deliveryaddress, index) => (
+                          <tr key={index}>
+                              <td>{deliveryaddress.DC_id}</td>
+                              <td>{deliveryaddress.ND_id}</td>
+                              <td>{deliveryaddress.DC_diachiGH}</td>
+                              <td>{deliveryaddress.DC_chitiet}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 11 */}
@@ -404,10 +473,14 @@ function Backup() {
                     <td>NB_id</td>
                     <td>ND_id</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
+                {sellers !== '' && sellers !== undefined
+                    ? sellers.map((seller, index) => (
+                          <tr key={index}>
+                              <td>{seller.NB_id}</td>
+                              <td>{seller.ND_id}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 12 */}
@@ -430,12 +503,16 @@ function Backup() {
                     <td>QB_mota</td>
                     <td>QB_image</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
+                {advertises !== undefined && advertises !== ''
+                    ? advertises.map((advert, index) => (
+                          <tr key={index}>
+                              <td>{advert.QB_id}</td>
+                              <td>{advert.QB_tieude}</td>
+                              <td>{advert.QB_mota}</td>
+                              <td>{advert.QB_image}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
 
             {/* table 14 */}
@@ -446,12 +523,16 @@ function Backup() {
                     <td>LI_tieude</td>
                     <td>LI_link</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
+                {links !== undefined && links !== ''
+                    ? links.map((link, index) => (
+                          <tr key={index}>
+                              <td>{link.LI_id}</td>
+                              <td>{link.QB_id}</td>
+                              <td>{link.LI_tieude}</td>
+                              <td>{link.LI_link}</td>
+                          </tr>
+                      ))
+                    : ''}
             </table>
         </>
     );

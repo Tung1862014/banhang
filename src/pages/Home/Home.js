@@ -169,6 +169,18 @@ function Home() {
         pauseOnHover: true,
     };
 
+    var setting = {
+        className: centers,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        pauseOnHover: true,
+    };
+
     useEffect(() => {
         let url;
         if (GetCookie('usrin') !== undefined && clickSuggestions === '') {
@@ -297,6 +309,37 @@ function Home() {
                 <div className={cx('image-carousel__item-list-wrapper')}>
                     <ul className={cx('image-carousel__item-lists')}>
                         <Slider {...settings}>
+                            {advertiseValue !== '' &&
+                                advertiseValue.map((advertise, index) => (
+                                    <li key={index} className={cx('image-carousel__item')}>
+                                        <div className={cx('product-recommend-items__item-wrapper')}>
+                                            <Link
+                                                to={`/introduce/advartise=${advertise.QB_id}`}
+                                                className={cx('product-recommend-image')}
+                                            >
+                                                <img
+                                                    className={cx('product-recommend-advertise-image')}
+                                                    src={advertise.QB_image}
+                                                    alt=""
+                                                />
+                                            </Link>
+                                            <Link
+                                                to={`/introduce/advartise=${advertise.QB_id}`}
+                                                className={cx('advertise-title')}
+                                            >
+                                                {advertise.QB_tieude}
+                                            </Link>
+                                        </div>
+                                    </li>
+                                ))}
+                        </Slider>
+                    </ul>
+                </div>
+            </div>
+            <div className={cx('image-carousel_DBnDYq-setting')}>
+                <div className={cx('image-carousel__item-list-wrapper')}>
+                    <ul className={cx('image-carousel__item-lists')}>
+                        <Slider {...setting}>
                             {advertiseValue !== '' &&
                                 advertiseValue.map((advertise, index) => (
                                     <li key={index} className={cx('image-carousel__item')}>

@@ -423,11 +423,10 @@ function Header() {
     return (
         <>
             <header className={cx('wrapper')}>
-                <div>
-                    <div className={cx('inner')}>
-                        <Link to={'/'} className={cx('logo')}>
-                            <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
-                            {/* <iframe
+                <div className={cx('inner')}>
+                    <Link to={'/'} className={cx('logo')}>
+                        <img src={`${process.env.REACT_APP_URL_NODEJS}/logo/SanPhamChoMoi.png`} alt="" />
+                        {/* <iframe
                                 className={cx('video-logo')}
                                 src="https://www.youtube.com/embed/S7ElVoYZN0g?wmode=opaque&autohide=1&autoplay=1&enablejsapi=1"
                                 title="YouTube video player"
@@ -438,70 +437,70 @@ function Header() {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe> */}
+                    </Link>
+
+                    <div className={cx('home-page-zytl')}>
+                        <Link to="/" className={cx('home-page-zytlt1')}>
+                            Trang chủ
                         </Link>
+                    </div>
+                    <div className={cx('introduce-page-zytl')}>
+                        <Link to="/introduce" className={cx('introduce-page-zytlt1')}>
+                            Giới thiệu
+                        </Link>
+                    </div>
+                    {GetCookie('seller') !== undefined ? (
+                        <Link to="/seller" className={cx('link-seller')}>
+                            Gian hàng
+                        </Link>
+                    ) : (
+                        ''
+                    )}
+                    {<Search />}
+                    <div className={cx('action')}>
+                        {
+                            <>
+                                <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
+                                    <Link to="/cart" className={cx('action-btn-cart')}>
+                                        <CartIcon className={cx('cart-icon')} />
+                                        <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
+                                    </Link>
+                                </Tippy>
 
-                        <div className={cx('home-page-zytl')}>
-                            <Link to="/" className={cx('home-page-zytlt1')}>
-                                Trang chủ
-                            </Link>
-                        </div>
-                        <div className={cx('introduce-page-zytl')}>
-                            <Link to="/introduce" className={cx('introduce-page-zytlt1')}>
-                                Giới thiệu
-                            </Link>
-                        </div>
-                        {GetCookie('seller') !== undefined ? (
-                            <Link to="/seller" className={cx('link-seller')}>
-                                Gian hàng
-                            </Link>
+                                <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
+                                    <Link to="/history/purchase/type=all" className={cx('action-btn')}>
+                                        <InboxIcon className={cx('inbox-icon')} />
+                                    </Link>
+                                </Tippy>
+                            </>
+                        }
+                        {GetCookie('usrin') !== undefined ? (
+                            <></>
                         ) : (
-                            ''
+                            <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
+                                Đăng Nhập
+                            </Button>
                         )}
-                        {<Search />}
-                        <div className={cx('action')}>
-                            {
-                                <>
-                                    <Tippy delay={[0, 50]} content="Giỏ hàng" placement="bottom">
-                                        <Link to="/cart" className={cx('action-btn-cart')}>
-                                            <CartIcon className={cx('cart-icon')} />
-                                            <span className={cx('badge')}>{sumNumber !== '' ? sumNumber : '0'}</span>
-                                        </Link>
-                                    </Tippy>
 
-                                    <Tippy delay={[0, 50]} content="Đơn hàng" placement="bottom">
-                                        <Link to="/history/purchase/type=all" className={cx('action-btn')}>
-                                            <InboxIcon className={cx('inbox-icon')} />
-                                        </Link>
-                                    </Tippy>
-                                </>
-                            }
-                            {GetCookie('usrin') !== undefined ? (
-                                <></>
-                            ) : (
-                                <Button className={cx('login-btn')} primary onClick={handleCloseLogin}>
-                                    Đăng Nhập
-                                </Button>
-                            )}
-
-                            {GetCookie('usrin') && (
-                                <Menu items={GetCookie('usrin') !== undefined ? userMenu : ''}>
-                                    {GetCookie('usrin') && (
-                                        <div>
-                                            <Image
-                                                className={cx('user-avatar')}
-                                                src={
-                                                    userValue !== ''
-                                                        ? userValue.ND_image
-                                                        : process.env.REACT_APP_URL_IMAGE_AVATAR
-                                                }
-                                                alt=""
-                                                fallback={process.env.REACT_APP_URL_IMAGE_AVATAR}
-                                            />
-                                        </div>
-                                    )}
-                                </Menu>
-                            )}
-                            {/* {GetCookie('seller') && (
+                        {GetCookie('usrin') && (
+                            <Menu items={GetCookie('usrin') !== undefined ? userMenu : ''}>
+                                {GetCookie('usrin') && (
+                                    <div>
+                                        <Image
+                                            className={cx('user-avatar')}
+                                            src={
+                                                userValue !== ''
+                                                    ? userValue.ND_image
+                                                    : process.env.REACT_APP_URL_IMAGE_AVATAR
+                                            }
+                                            alt=""
+                                            fallback={process.env.REACT_APP_URL_IMAGE_AVATAR}
+                                        />
+                                    </div>
+                                )}
+                            </Menu>
+                        )}
+                        {/* {GetCookie('seller') && (
                                 <Menu items={GetCookie('seller') !== undefined ? userMenuSeller : ''}>
                                     {GetCookie('seller') && (
                                         <div>
@@ -513,7 +512,7 @@ function Header() {
                                     )}
                                 </Menu>
                             )} */}
-                            {/* {GetCookie('logout') && userGoogle && (
+                        {/* {GetCookie('logout') && userGoogle && (
                                 <Menu items={GetCookie('logout') ? userMenuLogout : ''}>
                                     <div>
                                         <Image
@@ -529,7 +528,6 @@ function Header() {
                                     </div>
                                 </Menu>
                             )} */}
-                        </div>
                     </div>
                 </div>
             </header>

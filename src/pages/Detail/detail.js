@@ -481,9 +481,9 @@ function Detail() {
 
                                                 {testDatePromotion && promotion !== undefined ? (
                                                     <div className={cx('_3PlIlX')}>
-                                                        {promotion.KM_phantram}% giảm Từ ngày:{' '}
-                                                        {takeDate(promotion.KM_tungay)} - đến ngày:{' '}
-                                                        {takeDate(promotion.KM_denngay)}
+                                                        <span>{promotion.KM_phantram}% giảm Từ ngày: </span>
+                                                        <span> {takeDate(promotion.KM_tungay)} - đến ngày: </span>
+                                                        <span>{takeDate(promotion.KM_denngay)}</span>
                                                     </div>
                                                 ) : (
                                                     ''

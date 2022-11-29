@@ -1,3 +1,71 @@
+@media only screen and (max-width: 740px) {
+    .wrapper {
+        min-height: 200px;
+        width: 395px;
+        margin-top: 20px;
+        background-color: rgb(186, 247, 247);
+    }
+
+    .name-project {
+        min-width: 395px;
+        border-top: 4px solid #ee4d2d;
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.54);
+        height: 150px;
+    }
+
+    ._2ypCMv {
+        position: relative;
+        bottom: 0;
+        padding-bottom: 30px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+    }
+
+    .shopee-footer-section {
+        width: 395px;
+        min-height: 200px;
+        background-color: #eeb9ae;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .elementor-column-gap-default {
+        width: 395px;
+        background-color: #beeeae;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .elementor-element-14420b8 {
+        font-size: 2.5rem;
+        padding: 10px;
+    }
+
+    .elementor-element-14420b8-list {
+        font-size: 2rem;
+        padding: 5px 20px;
+        display: flex;
+        justify-self: start;
+    }
+
+    .elementor-element-14420b8-image {
+        width: 395px;
+        height: 140px;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 250px;
+            height: 100px;
+            border-radius: 3px;
+        }
+    }
+}
+
 @media only screen and (min-width: 740px) {
     .wrapper {
         height: 200px;

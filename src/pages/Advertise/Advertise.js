@@ -2,7 +2,6 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Backup from '../Backup';
 import styles from './Advertise.module.scss';
 import AdvertisePage from './AdvertisePage';
 
@@ -69,7 +68,7 @@ function Advertise() {
                     </div>{' '}
                 </div>{' '}
             </div>
-            <Backup />
+
             <div className={cx('product-grid')}>
                 <div className={cx('grid')}>
                     <div data-v-3cbfdb84="" className={cx('grid-left')}>
