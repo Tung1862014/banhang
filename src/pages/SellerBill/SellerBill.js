@@ -61,7 +61,7 @@ function SellerBill() {
                 JSON.parse(GetCookie('seller')).ND_id
             }&DH_trangthai=${checkStatus}&tungay=${dateValue1}&denngay=${dateValue2}`,
         );
-    }, [checkStatus]);
+    }, [checkStatus, dateValue1, dateValue2]);
 
     useEffect(() => {
         axios

@@ -31,7 +31,7 @@ function HistoryBill() {
     const [textValue, setTextValue] = useState('');
     ////////////////////////////////////////////////
     const [cancelIdBill, setCancelIdBill] = useState('');
-    const [idMTSValue, setIdMTSValue] = useState('');
+    //const [idMTSValue, setIdMTSValue] = useState('');
     ///////////////////////////////////////////////////search
     const [searchValue, setSearchValue] = useState('');
     const [searchTextValue, setSearchTextValue] = useState('');
@@ -559,7 +559,7 @@ function HistoryBill() {
         // deleteModalContainer.style.position = 'fixed';
         // deleteModalBox.style.display = 'flex';
         // }
-        setIdMTSValue(Number(orderValue[index].seller.MTS_id));
+        //setIdMTSValue(Number(orderValue[index].seller.MTS_id));
         console.log('index', typeof Number(orderValue[index].seller.MTS_id));
         setCancelIdBill(billValue);
     }
