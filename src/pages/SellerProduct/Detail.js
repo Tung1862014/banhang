@@ -191,7 +191,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                         />
                                     </td>
                                     <td className={cx('td_table-name')}>Tên sản phẩm</td>
-                                    <td className={cx('td_table-name-number')}>Số lượng</td>
+                                    <td className={cx('td_table-name-number-pr')}>Số lượng</td>
                                     <td className={cx('td_table-name')}>Giá</td>
                                     <td className={cx('td_table-name-number')}>Số lượng bán</td>
                                     <td>Hoạt động</td>
@@ -212,7 +212,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                             <img src={pro.SP_image} alt="" width="40" height="40" />
                                             <span className={cx('name-product-sp')}>{pro.SP_ten}</span>
                                         </td>
-                                        <td className={cx('td_table-name-number')}>{pro.SP_soluong}</td>
+                                        <td className={cx('td_table-name-number-pr')}>{pro.SP_soluong}</td>
                                         <td className={cx('td_table-name')}>{formatCash(pro.SP_gia)}₫</td>
                                         <td className={cx('td_table-name-number')}>{pro.SP_soluongban}</td>
                                         <td>

@@ -5,8 +5,8 @@
         --search-top-spacer: 3px;
         --search-button-width: 30px;
 
-        width: 100%;
-        height: var(--default-layout-header-height, 50px);
+        width: 395px;
+        height: 70px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
@@ -14,10 +14,12 @@
 
     .inner {
         height: 100%;
-        width: 95%;
+        width: 395px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background: linear-gradient(45deg, #b9f377, #90eaf6);
+        padding: 0px 3px;
     }
     .video-logo {
         display: none;
@@ -27,9 +29,30 @@
 
     //Actions
 
+    //Actions
+
     .action {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .account {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+    .account-avatar {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+        border-radius: 50%;
+    }
+
+    .icon-seller {
+        margin-left: 5px;
     }
 
     .more-btn {

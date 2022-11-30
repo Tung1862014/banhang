@@ -9,14 +9,17 @@
         flex: 1;
     }
     .container1 {
-        display: none;
-        width: var(--default-layout-width);
-        max-width: 100%;
+        display: flex;
+        width: 395px;
     }
     .container {
         display: flex;
-        width: var(--default-layout-width);
-        max-width: 100%;
+        width: 395px;
+    }
+
+    .footer {
+        position: relative;
+        top: 700px;
     }
 }
 

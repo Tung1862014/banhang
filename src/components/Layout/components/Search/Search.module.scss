@@ -1,11 +1,15 @@
-@media only screen and (max-width: 739px) {
+@media only screen and (max-width: 740px) {
+    .search-wp {
+        position: absolute;
+        top: 63px;
+    }
     .search-result {
         width: 240px;
     }
     .search {
         position: relative;
-        width: 240px;
-        height: 35px;
+        width: 379px;
+        height: 40px;
         padding-left: 9px;
         display: flex;
         background-color: rgba(22, 24, 35, 0.06);
@@ -17,7 +21,7 @@
             height: 100%;
             padding-right: 13px;
             color: var(--black);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             caret-color: var(--primary);
             background-color: transparent;
         }

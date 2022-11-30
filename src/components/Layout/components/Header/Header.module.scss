@@ -6,10 +6,11 @@
         --search-button-width: 30px;
 
         width: 395px;
-        height: 70px;
+        height: 110px;
         box-shadow: 0px 1px 1px rgba(22, 24, 35, 0.12);
         display: flex;
         justify-content: center;
+        align-items: flex-end;
     }
 
     .inner {
@@ -18,19 +19,22 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
+        flex-direction: column;
         background: linear-gradient(45deg, #b9f377, #90eaf6);
     }
 
     .logo {
-        display: none;
+        display: flex;
+        position: absolute;
+        left: 10px;
+        top: 2px;
     }
 
     .home-page-zytl {
         display: none;
         position: absolute;
-        top: 1px;
-        margin-left: 100px;
+        top: 5px;
+        left: 15px;
     }
 
     .home-page-zytlt1 {
@@ -69,7 +73,10 @@
     //Actions
 
     .action {
-        width: 130px;
+        position: absolute;
+        top: 10px;
+        right: 0px;
+        width: 180px;
         padding: 0px 10px;
         display: flex;
         align-items: center;
@@ -87,8 +94,8 @@
         display: flex;
         position: relative;
         .inbox-icon {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 3.4rem;
+            height: 3.4rem;
         }
     }
 
@@ -101,8 +108,8 @@
         background: transparent;
         cursor: pointer;
         .cart-icon {
-            width: 2.3rem;
-            height: 2.3rem;
+            width: 3rem;
+            height: 3rem;
         }
     }
 

@@ -160,7 +160,7 @@ function Search() {
     };
 
     return (
-        <div>
+        <div className={cx('search-wp')}>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchResult.length > 0}

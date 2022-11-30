@@ -1,18 +1,8 @@
 import classNames from 'classnames/bind';
-// import {
-//     HomeIcon,
-//     HomeActiveIcon,
-//     UserGroupIcon,
-//     UserGroupActiveIcon,
-//     LiveIcon,
-//     LiveActiveIcon,
-//     CloseIcon,
-// } from '~/components/Icons';
-// import Menu from './Menu';
-// import MenuItem from './Menu/MenuItem';
+
 import styles from './SidebarAdmin.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faBars, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Backup from '~/pages/Backup';
@@ -32,31 +22,21 @@ function SidebarAdmin() {
     // };
 
     const [checkDownUp, setCheckDownUp] = useState(false);
+    const [checkCategory, setCheckCategory] = useState(true);
 
     useEffect(() => {
         const pathId = window.location.pathname.toString();
         const resultId = pathId.slice(14);
-        if (resultId === 'customer=all') {
-            handleClickCategory1Statistical();
-        } else if (resultId === 'seller=all') {
-            handleClickCategory1Shop();
-        } else if (resultId === 'se/seller=all') {
-            handleClickAdvertise();
+        if (checkCategory === true) {
+            if (resultId === 'customer=all') {
+                handleClickCategory1Statistical(checkCategory);
+            } else if (resultId === 'seller=all') {
+                handleClickCategory1Shop(checkCategory);
+            } else if (resultId === 'se/seller=all') {
+                handleClickAdvertise(checkCategory);
+            }
         }
-        // } else if (resultId === '/product/@all') {
-        //     handleClickCategory1();
-        // } else if (resultId === '/product/insert') {
-        //     handleClickCategory2();
-        // } else if (resultId === '/bill/@all') {
-        //     handleClickCategoryOrder1();
-        // } else if (resultId === '/bill/@canceloder') {
-        //     handleClickCategoryOrder2();
-        // } else if (resultId === '/categoryandweight') {
-        //     handleClickCategory1Weight();
-        // } else if (resultId === '/shop/reviews/@all') {
-        //     handleClickCategory1Evaluate();
-        // }
-    }, []);
+    }, [checkCategory]);
 
     const handleClickDownUpIcon = (idIcon1, idIcon2, sidebarIcon) => {
         const downIcon = document.getElementById(idIcon1);
@@ -78,133 +58,39 @@ function SidebarAdmin() {
         handleClickDownUpIcon(idIcon1, idIcon2, sidebarIcon);
     };
 
-    // const handleClickCategory1 = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1.style.color = 'red';
-    //     itemLink2.style.color = 'var(--text-color)';
-    //     itemLink1Order.style.color = 'var(--text-color)';
-    //     itemLink2Order.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'var(--text-color)';
-    //     itemLink1evaluate.style.color = 'var(--text-color)';
-    // };
-
-    // const handleClickCategory2 = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1.style.color = 'var(--text-color)';
-    //     itemLink2.style.color = 'red';
-    //     itemLink1Order.style.color = 'var(--text-color)';
-    //     itemLink2Order.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'var(--text-color)';
-    //     itemLink1evaluate.style.color = 'var(--text-color)';
-    // };
-
-    // const handleClickCategoryOrder1 = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1Order.style.color = 'red';
-    //     itemLink2Order.style.color = 'var(--text-color)';
-    //     itemLink1.style.color = 'var(--text-color)';
-    //     itemLink2.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'var(--text-color)';
-    //     itemLink1evaluate.style.color = 'var(--text-color)';
-    // };
-
-    // const handleClickCategoryOrder2 = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1Order.style.color = 'var(--text-color)';
-    //     itemLink2Order.style.color = 'red';
-    //     itemLink1.style.color = 'var(--text-color)';
-    //     itemLink2.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'var(--text-color)';
-    //     itemLink1evaluate.style.color = 'var(--text-color)';
-    // };
-
-    const handleClickCategory1Shop = () => {
+    const handleClickCategory1Shop = (checkCategory) => {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
-
-        // const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-        // const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-        // const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-        // const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-        // const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-        // const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
 
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'red';
         itemLink1Infmation.style.color = 'var(--text-color)';
-        // itemLink1Order.style.color = 'var(--text-color)';
-        // itemLink2Order.style.color = 'var(--text-color)';
-        // itemLink1.style.color = 'var(--text-color)';
-        // itemLink2.style.color = 'var(--text-color)';
-        // itemLink1Weight.style.color = 'var(--text-color)';
-        // itemLink1evaluate.style.color = 'var(--text-color)';
+
+        if (checkCategory === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
     };
 
-    const handleClickCategory1Statistical = () => {
+    const handleClickCategory1Statistical = (checkCategory) => {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
 
-        // const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-        // const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-        // const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-        // const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-        // const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-        // const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
         itemLink1Statistical.style.color = 'red';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Infmation.style.color = 'var(--text-color)';
-        // itemLink1Order.style.color = 'var(--text-color)';
-        // itemLink2Order.style.color = 'var(--text-color)';
-        // itemLink1.style.color = 'var(--text-color)';
-        // itemLink2.style.color = 'var(--text-color)';
-        // itemLink1Weight.style.color = 'var(--text-color)';
-        // itemLink1evaluate.style.color = 'var(--text-color)';
+
+        if (checkCategory === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
     };
 
-    const handleClickAdvertise = () => {
+    const handleClickAdvertise = (checkCategory) => {
         const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
         const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
         const itemLink1Infmation = document.getElementById('sidebar-submenu-item-link1-quangba');
@@ -212,54 +98,48 @@ function SidebarAdmin() {
         itemLink1Statistical.style.color = 'var(--text-color)';
         itemLink1Shop.style.color = 'var(--text-color)';
         itemLink1Infmation.style.color = 'red';
+
+        if (checkCategory === false) {
+            const clickCategory = document.getElementById('sidebar-container');
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
     };
 
-    // const handleClickCategory1Weight = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
+    const handleClickCategory = () => {
+        const clickCategory = document.getElementById('sidebar-container');
+        //console.log('clickCategory', clickCategory);
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        } else {
+            clickCategory.style.display = 'flex';
+            setCheckCategory(false);
+        }
+    };
 
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1Order.style.color = 'var(--text-color)';
-    //     itemLink2Order.style.color = 'var(--text-color)';
-    //     itemLink1.style.color = 'var(--text-color)';
-    //     itemLink2.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'red';
-    //     itemLink1evaluate.style.color = 'var(--text-color)';
-    // };
-
-    // const handleClickCategory1Evaluate = () => {
-    //     const itemLink1Statistical = document.getElementById('sidebar-submenu-item-link1-statistical');
-    //     const itemLink1Shop = document.getElementById('sidebar-submenu-item-link1-shop');
-    //     const itemLink1 = document.getElementById('sidebar-submenu-item-link1');
-    //     const itemLink2 = document.getElementById('sidebar-submenu-item-link2');
-    //     const itemLink1Order = document.getElementById('sidebar-submenu-item-link1-order');
-    //     const itemLink2Order = document.getElementById('sidebar-submenu-item-link2-order');
-    //     const itemLink1Weight = document.getElementById('sidebar-submenu-item-link1-weight');
-    //     const itemLink1evaluate = document.getElementById('sidebar-submenu-item-link1-evaluate');
-
-    //     itemLink1Statistical.style.color = 'var(--text-color)';
-    //     itemLink1Shop.style.color = 'var(--text-color)';
-    //     itemLink1Order.style.color = 'var(--text-color)';
-    //     itemLink2Order.style.color = 'var(--text-color)';
-    //     itemLink1.style.color = 'var(--text-color)';
-    //     itemLink2.style.color = 'var(--text-color)';
-    //     itemLink1Weight.style.color = 'var(--text-color)';
-    //     itemLink1evaluate.style.color = 'red';
-    // };
+    const handleClickCloseCategory = () => {
+        const clickCategory = document.getElementById('sidebar-container');
+        if (checkCategory === false) {
+            clickCategory.style.display = 'none';
+            setCheckCategory(true);
+        }
+    };
 
     return (
         <aside className={cx('wrapper')}>
             <div className={cx('app-container')}>
-                <div className={cx('sidebar-container')}>
-                    <div className={cx('sidebar-container')}>
+                <div className={cx('sidebar-containerx')}>
+                    <FontAwesomeIcon
+                        className={cx('sidebar-svg-icon_3e8zgq')}
+                        icon={faBars}
+                        onClick={() => handleClickCategory()}
+                    />
+                    <div id="sidebar-container" className={cx('sidebar-container')}>
                         <div className={cx('sidebar')}>
+                            <div className={cx('sidebar-icon_close')}>
+                                <FontAwesomeIcon icon={faXmark} onClick={() => handleClickCloseCategory()} />
+                            </div>
                             <ul className={cx('sidebar-menu')}>
                                 <li id="statistical" className={cx('sidebar-menu-box')}>
                                     <div
@@ -298,7 +178,7 @@ function SidebarAdmin() {
                                                 to={'/admin/manage/customer=all'}
                                                 id="sidebar-submenu-item-link1-statistical"
                                                 className={cx('sidebar-submenu-item-link1-statistical')}
-                                                onClick={handleClickCategory1Statistical}
+                                                onClick={() => handleClickCategory1Statistical(checkCategory)}
                                             >
                                                 Người dùng
                                             </Link>
@@ -341,7 +221,7 @@ function SidebarAdmin() {
                                                 to="/admin/manage/seller=all"
                                                 id="sidebar-submenu-item-link1-shop"
                                                 className={cx('sidebar-submenu-item-link1-shop')}
-                                                onClick={handleClickCategory1Shop}
+                                                onClick={() => handleClickCategory1Shop(checkCategory)}
                                             >
                                                 <span>Chủ gian hàng</span>
                                             </Link>
@@ -386,7 +266,7 @@ function SidebarAdmin() {
                                                 to="/admin/advertise=all"
                                                 id="sidebar-submenu-item-link1-quangba"
                                                 className={cx('sidebar-submenu-item-link1-shop')}
-                                                onClick={handleClickAdvertise}
+                                                onClick={() => handleClickAdvertise(checkCategory)}
                                             >
                                                 <span>Thông tin làng nghề</span>
                                             </Link>

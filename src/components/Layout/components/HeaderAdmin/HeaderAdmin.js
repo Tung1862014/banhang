@@ -98,7 +98,7 @@ function HeaderAdmin() {
                                         <div>
                                             <h3>
                                                 {' '}
-                                                {'Xin chào ' + userVaule.ND_hoten}
+                                                {userVaule.ND_hoten}
                                                 <FontAwesomeIcon className={cx('icon-seller')} icon={faCaretDown} />
                                             </h3>
                                         </div>

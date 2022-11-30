@@ -1,9 +1,9 @@
 @media only screen and (max-width: 46.1875em) {
     .wrapper {
-        width: var(--default-layout-width-mobile);
+        width: 395px;
     }
     .product-edit__section {
-        padding: 32px 40px;
+        padding: 32px 15px;
         box-shadow: 0 0.2rem 0.4rem rgba(45, 44, 44, 0.09);
         z-index: 0;
     }
@@ -65,11 +65,11 @@
     .table__header {
         display: flex;
         flex-direction: column;
-        width: 302px;
+        width: 360px;
     }
 
     .table__header-tr {
-        width: 302px;
+        width: 360px;
         height: 50px;
         border-radius: 4px;
         border: 1px solid #e5e5e5;
@@ -81,7 +81,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0px 5px;
+        //padding: 0px 5px;
     }
 
     .table__header-conten {
@@ -91,6 +91,16 @@
         padding: 0px 5px;
         width: 100%;
         height: 50px;
+    }
+
+    .table__header-conten-color {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 5px;
+        width: 100%;
+        height: 70px;
+        background-color: #f7f3f3;
     }
 
     .td_table-name {
@@ -168,7 +178,7 @@
         text-align: right;
         color: #666;
         position: relative;
-        margin-left: 20px;
+        //margin-left: 20px;
     }
 
     .edit-input-detail {
@@ -436,6 +446,107 @@
         .active {
             background-color: #5ab1bb;
         }
+    }
+
+    //table product
+    .product-list-table {
+        position: relative;
+        background: #fff;
+        transition: opacity 0.5s ease;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        margin: 1px;
+    }
+
+    // .shopee-table__header-container {
+    //     margin: -1px;
+    //     border-radius: 4px;
+    //     margin-bottom: 0;
+    //     border-bottom-right-radius: 0;
+    //     border-bottom-left-radius: 0;
+    //     position: relative;
+    //     z-index: 1;
+    //     flex-shrink: 0;
+    //     //background-color: #f6f6f6;
+    // }
+
+    .shopee-table__header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .table__header-product {
+        width: 100%;
+        height: 50px;
+        border-radius: 4px;
+        border: 1px solid #e5e5e5;
+        margin-bottom: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        position: relative;
+        background-color: #f6f6f6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 5px;
+    }
+
+    .table__header-conten {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 5px;
+        width: 100%;
+        height: 70px;
+    }
+
+    .table__header-conten-color {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 5px;
+        width: 100%;
+        height: 70px;
+        background-color: #f7f3f3;
+    }
+
+    .td_table-name-product {
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .td_table-name-number {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .td_table-name-sp {
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+        margin-left: 10px;
+    }
+
+    .name-product-sp {
+        height: 35px;
+        word-wrap: break-word;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        position: relative;
+        margin-left: 5px;
     }
 }
 @media only screen and (min-width: 46.1875em) {

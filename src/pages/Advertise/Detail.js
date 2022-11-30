@@ -186,7 +186,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                         />
                                     </td>
                                     <td className={cx('td_table-name')}>Làng nghề</td>
-                                    <td className={cx('td_table-name')}>Mô tả</td>
+                                    <td className={cx('td_table-name-detail')}>Mô tả</td>
                                     <td className={cx('td_table-name-note')}>Hoạt động</td>
                                     <td className={cx('td_table-name-note')}>Link</td>
                                 </tr>
@@ -207,7 +207,7 @@ function Detail({ currentItems, clickPageCheck }) {
                                                   <img src={info.QB_image} alt="" width="90" height="60" />
                                                   <span className={cx('name-product-sp')}>{info.QB_tieude}</span>
                                               </td>
-                                              <td className={cx('td_table-name-sp')}>
+                                              <td className={cx('td_table-name-sp-detal')}>
                                                   <span
                                                       className={cx('name-product-sp')}
                                                       dangerouslySetInnerHTML={{

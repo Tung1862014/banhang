@@ -254,6 +254,13 @@
         justify-content: center;
     }
 
+    .td_table-name-number-pr {
+        width: 100px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
     .td_table-name-sp {
         width: 200px;
         display: flex;
@@ -922,6 +929,13 @@
     }
 
     .td_table-name-number {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .td_table-name-number-pr {
         width: 100px;
         display: flex;
         align-items: center;

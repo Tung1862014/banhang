@@ -304,11 +304,11 @@
         width: 100%;
         padding: 0px 10px;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
         -ms-flex-direction: row;
-        flex-direction: row;
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
@@ -715,6 +715,89 @@
         width: 100%;
         display: flex;
         justify-content: center;
+    }
+
+    //chart
+    .chart-demo {
+        background-color: #fff;
+        -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        width: var(--default-layout-width-mobile);
+    }
+
+    .chart-date {
+        position: relative;
+        left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: var(--default-layout-width-mobile);
+        padding: 5px;
+    }
+
+    .chart-date-input {
+        width: 360px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chart- {
+        position: relative;
+        margin: 0px 10px;
+    }
+
+    .chart-date1 {
+        background-color: rgba(53, 162, 235, 0.5);
+        border-radius: 5px;
+        padding: 7px 10px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .chart-date2 {
+        background-color: rgba(53, 162, 235, 0.5);
+        border-radius: 5px;
+        padding: 7px 10px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .chart-btn {
+        background-color: rgba(53, 162, 235, 0.5);
+        border-radius: 5px;
+        padding: 6px 10px;
+        margin-left: 10px;
+        width: 340px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .chart-quarter {
+        position: relative;
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .chart-btn-select {
+        background-color: rgba(165, 235, 53, 0.5);
+        border-radius: 5px;
+        padding: 5px 10px;
+        position: relative;
+        right: 0px;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
     }
 }
 
