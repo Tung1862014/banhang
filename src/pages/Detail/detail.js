@@ -136,7 +136,7 @@ function Detail() {
         infinite: true,
         speed: 500,
         slidesToShow: 2,
-        slidesToScroll: 3,
+        slidesToScroll: 2,
     };
 
     const handlePlusNumber = () => {
@@ -481,9 +481,9 @@ function Detail() {
 
                                                 {testDatePromotion && promotion !== undefined ? (
                                                     <div className={cx('_3PlIlX')}>
-                                                        <span>{promotion.KM_phantram}% giảm Từ ngày: </span>
-                                                        <span> {takeDate(promotion.KM_tungay)} - đến ngày: </span>
-                                                        <span>{takeDate(promotion.KM_denngay)}</span>
+                                                        <span>{promotion.KM_phantram}% giảm </span>
+                                                        <span> Từ ngày: {takeDate(promotion.KM_tungay)} -</span>
+                                                        <span>đến ngày: {takeDate(promotion.KM_denngay)}</span>
                                                     </div>
                                                 ) : (
                                                     ''

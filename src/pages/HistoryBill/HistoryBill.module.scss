@@ -2,7 +2,7 @@
     .wrapper {
         font-family: Helvetica Neue, Helvetica, Arial, 文泉驛正黑, WenQuanYi Zen Hei, Hiragino Sans GB, 儷黑 Pro,
             LiHei Pro, Heiti TC, 微軟正黑體, Microsoft JhengHei UI, Microsoft JhengHei, sans-serif;
-        width: 390px;
+        width: 395px;
         margin-top: 3px;
     }
 
@@ -66,7 +66,34 @@
     }
 
     ._0obGFe {
-        width: 100%;
+        width: 390px;
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background: #fff;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    ._0obGFe-1 {
+        width: 390px;
+        margin-bottom: 12px;
+        display: flex;
+        overflow: hidden;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background: #fff;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    ._0obGFe-2 {
+        width: 390px;
         margin-bottom: 12px;
         display: flex;
         overflow: hidden;
@@ -241,7 +268,7 @@
     }
 
     ._6nAGBW {
-        padding: 12px 24px;
+        padding: 12px 4px;
         background: #fff;
 
         &:first-child {
@@ -260,7 +287,7 @@
     ._9bLyA {
         display: flex;
         align-items: center;
-        white-space: nowrap;
+        white-space: wrap;
     }
 
     .mzsqa6 {
@@ -286,6 +313,7 @@
 
     .aYsWZ {
         margin: 0 0 0 8px;
+        display: none;
     }
 
     .stardust-button {
@@ -953,6 +981,7 @@
     .delete-modal__container {
         background-color: rgba(0, 0, 0, 0.5);
         display: none;
+        width: 395px;
         justify-content: center;
         align-items: center;
         position: fixed;
@@ -964,9 +993,9 @@
     }
     .delete-modal__box {
         display: flex;
-        width: 400px;
-        height: 184px;
-        padding: 0 24px;
+        width: 370px;
+        height: 284px;
+        padding: 0 5px;
         position: relative;
         z-index: 11;
     }
@@ -982,7 +1011,7 @@
     }
 
     .delete-modal__header {
-        height: 104px;
+        height: 203px;
         width: 100%;
     }
 
@@ -1018,6 +1047,15 @@
         flex-shrink: 0;
         padding: 24px;
         overflow: hidden;
+    }
+
+    .delete-modal__note {
+        margin-top: 3px;
+        padding: 8px;
+        width: 200px;
+        border: 1px solid #000;
+        height: 95px;
+        display: flex;
     }
 
     .delete-modal__footer-buttons {
@@ -1085,6 +1123,40 @@
         width: var(--default-layout-width);
         color: #ee4d2d;
         text-align: center;
+    }
+
+    .btn_btn-solid-primary {
+        display: none;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .btn_btn-solid-primary-suggestions {
+        color: #fff;
+        position: relative;
+        overflow: visible;
+        outline: 0;
+        background: #ee4d2d;
+        min-width: 80px;
+        max-width: 250px;
+        font-size: 16px;
+        height: 39px;
+        padding: 0 20px;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        flex-direction: column;
+        box-sizing: border-box;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.09);
+        border-radius: 2px;
+        border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: capitalize;
+
+        &:hover {
+            background: #f05d40;
+        }
     }
 }
 
@@ -1158,6 +1230,31 @@
     ._0obGFe {
         width: 100%;
         margin-bottom: 12px;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background: #fff;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    ._0obGFe-1 {
+        width: 600px;
+        display: flex;
+        overflow: hidden;
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        background: #fff;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    ._0obGFe-2 {
+        width: 600px;
         display: flex;
         overflow: hidden;
         position: sticky;

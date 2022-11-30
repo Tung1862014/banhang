@@ -1,15 +1,23 @@
 @media only screen and (max-width: 740px) {
+    .wrapper {
+        width: 395px;
+    }
     .ReDGyJ {
         display: none;
         justify-content: center;
         align-items: center;
         z-index: 1000;
-        position: fixed;
+        position: absolute !important;
+        top: 70px;
+        bottom: 0px;
+        left: 0;
+        right: 0;
         // top: 0;
         // bottom: 0;
         // left: 0;
         // right: 0;
-        height: 100%;
+        min-height: 1176px;
+        max-width: 1500px;
         background: rgba(0, 0, 0, 0.5);
     }
 
@@ -52,13 +60,19 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        overflow-y: scroll;
-        padding-bottom: 66px;
+        //overflow-y: scroll;
+        //padding-bottom: 66px;
     }
 
     ._0fHnjY {
         width: 100%;
         display: flex;
+    }
+
+    ._0fHnjY-t {
+        width: 100%;
+        display: flex;
+        height: 150px;
     }
 
     .XjHkd3 {
@@ -80,7 +94,7 @@
         box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.02);
         border-radius: 2px;
         min-height: 40px;
-        min-width: 444px;
+        width: 334px;
         box-sizing: border-box;
         border: 1px solid rgba(0, 0, 0, 0.14);
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -127,7 +141,7 @@
         border: 1px solid rgba(0, 0, 0, 0.14);
         border-radius: 2px;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.14);
-        background-color: rgb(239, 199, 199);
+        background-color: #fafdff;
         display: none;
         flex-direction: column;
         align-items: stretch;
@@ -269,6 +283,7 @@
     .gRsrLD {
         box-sizing: border-box;
         width: 100%;
+        height: 150px;
         padding: 10px;
         background-color: transparent;
         flex: 1;
@@ -283,7 +298,7 @@
     //
 
     .GixP1t {
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 0;
         right: 0;
@@ -485,8 +500,18 @@
     }
 
     //Đơn vị vận chyển
+    .kfKL6K-p {
+        display: flex;
+        background-color: #fafdff;
+        min-width: 0;
+        min-height: 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.09);
+    }
+
     .kfKL6K {
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         background-color: #fafdff;
         min-width: 0;
         min-height: 0;
@@ -534,7 +559,7 @@
     }
 
     .uneQgd {
-        padding-right: 30px;
+        padding-right: 40px;
         flex: 1;
         text-align: right;
         font-size: 14px;
@@ -964,6 +989,66 @@
             opacity: 0.9;
         }
     }
+
+    .wWp9Rn_7-SGSz {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+        font-size: 1.6rem;
+    }
+
+    .bFs2Q {
+        display: flex;
+        align-items: center;
+        border-top: 0;
+        min-width: 0;
+        min-height: 0;
+        padding: 16px 30px;
+    }
+
+    .jSc1M9 {
+        flex: 1;
+        display: flex;
+        height: 80px;
+    }
+
+    .l7vuWW_XfjvIa {
+        margin-left: 15px;
+        margin-bottom: 0;
+        flex: 1;
+        font-size: 1.6rem;
+        font-weight: 300;
+        position: relative;
+        height: 100%;
+    }
+
+    .bue9pr_XtXldU {
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.02);
+        border-radius: 2px;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.14);
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        height: 100%;
+    }
+
+    ._6E2RgG {
+        padding: 10px 12px;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        flex: 1;
+        outline: none;
+        font-size: 1.6rem;
+        min-width: 0;
+        color: #222;
+        border: 0;
+        box-sizing: border-box;
+    }
 }
 
 @media only screen and (min-width: 740px) {
@@ -1023,6 +1108,12 @@
     ._0fHnjY {
         width: 100%;
         display: flex;
+    }
+
+    ._0fHnjY-t {
+        width: 100%;
+        display: flex;
+        height: 200px;
     }
 
     .XjHkd3 {
@@ -1445,6 +1536,14 @@
     }
 
     //Đơn vị vận chyển
+    .kfKL6K-p {
+        display: flex;
+        background-color: #fafdff;
+        min-width: 0;
+        min-height: 0;
+        border-bottom: 1px dashed rgba(0, 0, 0, 0.09);
+    }
+
     .kfKL6K {
         display: flex;
         background-color: #fafdff;

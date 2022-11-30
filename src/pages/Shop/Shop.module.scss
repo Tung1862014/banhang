@@ -1,6 +1,7 @@
 @media only screen and (max-width: 46.1875em) {
     .wrapper {
-        width: var(--default-layout-width-mobile);
+        width: 395px;
+        position: relative;
     }
     .shop-page__info {
         background: #fff;
@@ -260,6 +261,8 @@
     //list bar
     .shop-page__all-products-section {
         display: flex;
+        flex-direction: column;
+
         margin: 30px 0px 80px;
     }
 
@@ -796,8 +799,8 @@
     .shop-page_product-list {
         margin-top: 15px;
         min-width: 0;
-        width: var(--default-layout-width-mobile);
-        position: absolute;
+        width: 395px;
+        position: relative;
     }
 
     .shop-all-product-view {

@@ -282,6 +282,10 @@
         white-space: nowrap;
         display: flex;
         flex-direction: column;
+
+        span {
+            padding: 3px 0px;
+        }
     }
 
     //
@@ -454,7 +458,7 @@
         position: relative;
         margin-top: 50px;
         padding-left: 20px;
-        width: 440px;
+        width: 390px;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         border-right: 1px solid rgba(0, 0, 0, 0.05);
@@ -780,7 +784,7 @@
     }
 
     .image-carousel__item-list {
-        padding: 0px 25px;
+        padding: 0px 2px;
     }
 
     .image-carousel__item-lists {
@@ -983,6 +987,7 @@
 
     .center-slider {
         button {
+            display: none;
             &::before {
                 color: var(--primary) !important;
             }
@@ -998,7 +1003,7 @@
         position: relative;
         top: 8px;
         margin-bottom: 19px;
-        margin-right: 12px;
+        margin-right: 21px;
         font-size: 1.3rem;
         gap: 5px;
 

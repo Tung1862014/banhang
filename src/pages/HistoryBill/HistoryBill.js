@@ -40,6 +40,8 @@ function HistoryBill() {
     const [noteCancleBill, setNoteCancleBill] = useState('');
     const [noteValue, setNoteValue] = useState('');
 
+    const [idOrderStar, setIdOrderStar] = useState('');
+
     console.log('setBillEvaluate : ', billEvaluate);
     useEffect(() => {
         const pathId = window.location.pathname.toString();
@@ -467,7 +469,7 @@ function HistoryBill() {
     };
 
     //take id product
-    const handleTakeIdProduct = (idproduct) => {
+    const handleTakeIdProduct = (idproduct, idorder) => {
         console.log('idproduct: ', idproduct);
         const nostar = document.getElementById('shop-popup-form__main-container');
         const star = document.getElementById('shop-popup-form__main-container-star');
@@ -477,6 +479,7 @@ function HistoryBill() {
         star.style.display = 'inline-block';
         btnFinish.style.display = 'inline-block';
         setIdProduct(idproduct);
+        setIdOrderStar(idorder);
     };
 
     //take star evaluate
@@ -708,54 +711,58 @@ function HistoryBill() {
                             ></input>
                         </div>
                         <div className={cx('_0obGFe')}>
-                            <Link
-                                id="vAkdD0all"
-                                className={cx('vAkdD0all')}
-                                to="/history/purchase/type=all"
-                                onClick={() => handlerClickAll('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Tất cả</span>
-                            </Link>
-                            <Link
-                                id="vAkdD01"
-                                className={cx('vAkdD01')}
-                                to="/history/purchase/type=1"
-                                onClick={() => handlerClickType1('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Chờ xác nhận</span>
-                            </Link>
-                            <Link
-                                id="vAkdD02"
-                                className={cx('vAkdD02')}
-                                to="/history/purchase/type=2"
-                                onClick={() => handlerClickType2('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Chờ lấy hàng</span>
-                            </Link>
-                            <Link
-                                id="vAkdD03"
-                                className={cx('vAkdD03')}
-                                to="/history/purchase/type=3"
-                                onClick={() => handlerClickType3('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Đang giao</span>
-                            </Link>
-                            <Link
-                                id="vAkdD04"
-                                className={cx('vAkdD04')}
-                                to="/history/purchase/type=4"
-                                onClick={() => handlerClickType4('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Đã giao</span>
-                            </Link>
-                            <Link
-                                id="vAkdD05"
-                                className={cx('vAkdD05')}
-                                to="/history/purchase/type=5"
-                                onClick={() => handlerClickType5('search')}
-                            >
-                                <span className={cx('_0rjE9m')}>Đã Hủy</span>
-                            </Link>
+                            <div className={cx('_0obGFe-1')}>
+                                <Link
+                                    id="vAkdD0all"
+                                    className={cx('vAkdD0all')}
+                                    to="/history/purchase/type=all"
+                                    onClick={() => handlerClickAll('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Tất cả</span>
+                                </Link>
+                                <Link
+                                    id="vAkdD01"
+                                    className={cx('vAkdD01')}
+                                    to="/history/purchase/type=1"
+                                    onClick={() => handlerClickType1('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Chờ xác nhận</span>
+                                </Link>
+                                <Link
+                                    id="vAkdD02"
+                                    className={cx('vAkdD02')}
+                                    to="/history/purchase/type=2"
+                                    onClick={() => handlerClickType2('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Chờ lấy hàng</span>
+                                </Link>
+                            </div>
+                            <div className={cx('_0obGFe-2')}>
+                                <Link
+                                    id="vAkdD03"
+                                    className={cx('vAkdD03')}
+                                    to="/history/purchase/type=3"
+                                    onClick={() => handlerClickType3('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Đang giao</span>
+                                </Link>
+                                <Link
+                                    id="vAkdD04"
+                                    className={cx('vAkdD04')}
+                                    to="/history/purchase/type=4"
+                                    onClick={() => handlerClickType4('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Đã giao</span>
+                                </Link>
+                                <Link
+                                    id="vAkdD05"
+                                    className={cx('vAkdD05')}
+                                    to="/history/purchase/type=5"
+                                    onClick={() => handlerClickType5('search')}
+                                >
+                                    <span className={cx('_0rjE9m')}>Đã Hủy</span>
+                                </Link>
+                            </div>
                         </div>
                         {/* / */}
                         {/* <div className={cx('LHWdmn')}>
@@ -1099,7 +1106,10 @@ function HistoryBill() {
                                                                       <button
                                                                           className={cx('shop-button-outline')}
                                                                           onClick={() =>
-                                                                              handleTakeIdProduct(order.product.SP_id)
+                                                                              handleTakeIdProduct(
+                                                                                  order.product.SP_id,
+                                                                                  order.DH_id,
+                                                                              )
                                                                           }
                                                                       >
                                                                           <span>
@@ -1265,6 +1275,7 @@ function HistoryBill() {
                                                 <div className={cx('rating-modal-handler__container--last')}>
                                                     {orderValue !== ''
                                                         ? orderValue.map((order, index) =>
+                                                              order.DH_id === idOrderStar &&
                                                               idProduct === order.product.SP_id ? (
                                                                   <a
                                                                       key={index}

@@ -1849,7 +1849,7 @@ function Order() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={cx('_0fHnjY')}>
+                                    <div className={cx('_0fHnjY-t')}>
                                         <div className={cx('SnzDoF')}>
                                             <div className={cx('QbqEj_tyikTg_RYXN7V')}>
                                                 <div className={cx('M9JCAS')}>
@@ -2008,7 +2008,7 @@ function Order() {
                                           </div>
                                       </div>
                                       {/* / */}
-                                      <div className={cx('kfKL6K')}>
+                                      <div className={cx('kfKL6K-p')}>
                                           <div className={cx('wWp9Rn_GoSC7d')}>
                                               <span className={cx('TrbqGd')}>Phí vận chuyển</span>
                                               <div className={cx('uneQgd')}>
