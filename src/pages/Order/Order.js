@@ -57,11 +57,18 @@ function Order() {
         axios
             .get(`${process.env.REACT_APP_URL_NODEJS}/order/show/id/order/simulation`)
             .then((res) => {
-                console.log('/show/id/order/simulation', res.data);
+                console.log('/show/id/order/simulation ttttttttttttttttttttttttttt', res.data);
                 if (res.data.result.length > 0) {
-                    let id = res.data.result[0].DH_id.toString().slice(6);
+                    let MaxId = 0;
+                    for (let i = 0; i < res.data.result.length; i++) {
+                        let id = res.data.result[i].DH_id.toString().slice(6);
 
-                    setTakeIdSimulation(Number(id));
+                        if (Number(id) > MaxId) {
+                            MaxId = id;
+                        }
+                    }
+
+                    setTakeIdSimulation(Number(MaxId));
                 }
             })
             .catch((err) => {
@@ -631,184 +638,182 @@ function Order() {
                     for (let j = 0; j < sellerName.length; j++) {
                         //console.log(' sellerName', sellerName[j]);
                         if (res.data.data.shops[i].name === sellerName[j]) {
+                            // axios
+                            //     .post(
+                            //         `https://dev-online-gateway.ghn.vgn/shiip/public-api/v2/shipping-order/create`,
+                            //         {
+                            //             payment_type_id: 2,
+
+                            //             required_note: 'KHONGCHOXEMHANG',
+                            //             return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
+                            //             return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
+                            //             return_district_id: null,
+                            //             return_ward_code: '',
+                            //             client_order_code: '',
+                            //             to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
+                            //             to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
+                            //             to_address: `${
+                            //                 ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                            //                     ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                            //                     : addressVaule + ',' + ChangeAddress(ctyVaule)
+                            //             }`,
+                            //             to_district_id: districtID !== '' ? districtID : districtID,
+                            //             to_ward_code: wardID !== '' ? wardID : wardID,
+                            //             cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
+                            //             content: null,
+                            //             weight: handleCountWeight(sellerValue[j]),
+                            //             length: 19,
+                            //             width: 14,
+                            //             height: 10,
+                            //             pick_station_id: null,
+                            //             insurance_value: 0,
+                            //             service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
+                            //             service_type_id: null,
+                            //             coupon: null,
+                            //             pick_shift: [2],
+                            //             items: handleInfoProoduct(sellerValue[j]),
+                            //         },
+                            //         {
+                            //             headers: {
+                            //                 Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
+                            //                 ShopId: res.data.data.shops[i]._id,
+                            //             },
+                            //         },
+                            //     )
+                            //     .then((res) => {
+                            //         //console.log('DH', res.data.data);
+                            //         if (res.data.data.order_code !== undefined) {
+                            //             const dateValue = new Date();
+                            //             let day = dateValue.getDate();
+                            //             let month = dateValue.getMonth() + 1;
+                            //             let year = dateValue.getFullYear();
+                            //             let YMD;
+
+                            //             if (month < 10 && day >= 10) {
+                            //                 YMD = year + '-0' + month + '-' + day;
+                            //             } else if (month < 10 && day < 10) {
+                            //                 YMD = year + '-0' + month + '-0' + day;
+                            //             } else if (month >= 10 && day < 10) {
+                            //                 YMD = year + '-' + month + '-0' + day;
+                            //             } else if (month >= 10 && day >= 10) {
+                            //                 YMD = year + '-' + month + '-' + day;
+                            //             } else {
+                            //                 YMD = year + '-' + month + '-' + day;
+                            //             }
+                            //             axios
+                            //                 .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                            //                     DH_id: res.data.data.order_code,
+                            //                     ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                            //                     NB_id: sellerValue[j],
+                            //                     DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                            //                     DH_loaithanhtoan: 1,
+                            //                     DH_diachi:
+                            //                         ctyVaule === '' &&
+                            //                         userVaule !== '' &&
+                            //                         userVaule.DC_diachiGH !== undefined
+                            //                             ? userVaule.DC_chitiet +
+                            //                               ',' +
+                            //                               ChangeAddress(userVaule.DC_diachiGH)
+                            //                             : addressVaule + ',' + ChangeAddress(ctyVaule),
+
+                            //                     DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                            //                     DH_ngay: YMD,
+                            //                     DH_trangthaiTT: 1,
+                            //                     TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                            //                     TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                            //                     SP_id: handleTakeIdProduct(sellerValue[j]),
+                            //                     DH_ghichu: noteValue !== '' ? noteValue : '',
+                            //                 })
+                            //                 .then((res) => {
+                            //                     //console.log('insert order', res.data);
+                            //                     if (j === lenghtShop) {
+                            //                         //console.log('limit');
+                            //                         toast.success('Đặt hàng thành công', {
+                            //                             position: toast.POSITION.TOP_CENTER,
+                            //                         });
+                            //                         setTimeout(
+                            //                             () =>
+                            //                                 window.open(
+                            //                                     `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                            //                                     '_self',
+                            //                                     1,
+                            //                                 ),
+                            //                             3000,
+                            //                         );
+                            //                     }
+                            //                 })
+                            //                 .catch((err) => {
+                            //                     console.log('loi add');
+                            //                 });
+                            //         }
+                            //     })
+                            //     .catch((err) => {
+                            console.log(`Không mua được lần ${j}`);
+
+                            const dateValue = new Date();
+                            let day = dateValue.getDate();
+                            let month = dateValue.getMonth() + 1;
+                            let year = dateValue.getFullYear();
+                            let YMD;
+
+                            if (month < 10 && day >= 10) {
+                                YMD = year + '-0' + month + '-' + day;
+                            } else if (month < 10 && day < 10) {
+                                YMD = year + '-0' + month + '-0' + day;
+                            } else if (month >= 10 && day < 10) {
+                                YMD = year + '-' + month + '-0' + day;
+                            } else if (month >= 10 && day >= 10) {
+                                YMD = year + '-' + month + '-' + day;
+                            } else {
+                                YMD = year + '-' + month + '-' + day;
+                            }
                             axios
-                                .post(
-                                    `https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create`,
-                                    {
-                                        payment_type_id: 2,
+                                .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
+                                    DH_id:
+                                        takeIdSimulation !== ''
+                                            ? `DHSPMP${takeIdSimulation + j + 1}`
+                                            : `DHSPMP${takeIdSimulation + j + 1}`,
+                                    ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
+                                    NB_id: sellerValue[j],
+                                    DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
+                                    DH_loaithanhtoan: 1,
+                                    DH_diachi:
+                                        ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
+                                            ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
+                                            : addressVaule + ',' + ChangeAddress(ctyVaule),
 
-                                        required_note: 'KHONGCHOXEMHANG',
-                                        return_phone: `${handleTakePhone(sellerValue[j]).toString()}`,
-                                        return_address: `${handleTakeAddressSeller(sellerValue[j]).toString()}`,
-                                        return_district_id: null,
-                                        return_ward_code: '',
-                                        client_order_code: '',
-                                        to_name: `${userVaule !== '' ? userVaule.ND_hoten : 'TinTest124'}`,
-                                        to_phone: `${userVaule !== '' ? userVaule.ND_sdt.toString() : '0987654321'}`,
-                                        to_address: `${
-                                            ctyVaule === '' && userVaule !== '' && userVaule.DC_diachiGH !== undefined
-                                                ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
-                                                : addressVaule + ',' + ChangeAddress(ctyVaule)
-                                        }`,
-                                        to_district_id: districtID !== '' ? districtID : districtID,
-                                        to_ward_code: wardID !== '' ? wardID : wardID,
-                                        cod_amount: handlePriceSellerNoTransport(sellerValue[j], j),
-                                        content: null,
-                                        weight: handleCountWeight(sellerValue[j]),
-                                        length: 19,
-                                        width: 14,
-                                        height: 10,
-                                        pick_station_id: null,
-                                        insurance_value: 0,
-                                        service_id: serviceIdUser !== '' ? Number(serviceIdUser) : 53321,
-                                        service_type_id: null,
-                                        coupon: null,
-                                        pick_shift: [2],
-                                        items: handleInfoProoduct(sellerValue[j]),
-                                    },
-                                    {
-                                        headers: {
-                                            Token: '9c10964d-37ca-11ed-b608-8a2909007fb0',
-                                            ShopId: res.data.data.shops[i]._id,
-                                        },
-                                    },
-                                )
+                                    DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
+                                    DH_ngay: YMD,
+                                    DH_trangthaiTT: 1,
+                                    TTDH_gia: handleTakePriceProduct(sellerValue[j]),
+                                    TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
+                                    SP_id: handleTakeIdProduct(sellerValue[j]),
+                                    DH_ghichu: noteValue !== '' ? noteValue : '',
+                                })
                                 .then((res) => {
-                                    //console.log('DH', res.data.data);
-                                    if (res.data.data.order_code !== undefined) {
-                                        const dateValue = new Date();
-                                        let day = dateValue.getDate();
-                                        let month = dateValue.getMonth() + 1;
-                                        let year = dateValue.getFullYear();
-                                        let YMD;
-
-                                        if (month < 10 && day >= 10) {
-                                            YMD = year + '-0' + month + '-' + day;
-                                        } else if (month < 10 && day < 10) {
-                                            YMD = year + '-0' + month + '-0' + day;
-                                        } else if (month >= 10 && day < 10) {
-                                            YMD = year + '-' + month + '-0' + day;
-                                        } else if (month >= 10 && day >= 10) {
-                                            YMD = year + '-' + month + '-' + day;
-                                        } else {
-                                            YMD = year + '-' + month + '-' + day;
-                                        }
-                                        axios
-                                            .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                                                DH_id: res.data.data.order_code,
-                                                ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                                                NB_id: sellerValue[j],
-                                                DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
-                                                DH_loaithanhtoan: 1,
-                                                DH_diachi:
-                                                    ctyVaule === '' &&
-                                                    userVaule !== '' &&
-                                                    userVaule.DC_diachiGH !== undefined
-                                                        ? userVaule.DC_chitiet +
-                                                          ',' +
-                                                          ChangeAddress(userVaule.DC_diachiGH)
-                                                        : addressVaule + ',' + ChangeAddress(ctyVaule),
-
-                                                DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
-                                                DH_ngay: YMD,
-                                                DH_trangthaiTT: 1,
-                                                TTDH_gia: handleTakePriceProduct(sellerValue[j]),
-                                                TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
-                                                SP_id: handleTakeIdProduct(sellerValue[j]),
-                                                DH_ghichu: noteValue !== '' ? noteValue : '',
-                                            })
-                                            .then((res) => {
-                                                //console.log('insert order', res.data);
-                                                if (j === lenghtShop) {
-                                                    //console.log('limit');
-                                                    toast.success('Đặt hàng thành công', {
-                                                        position: toast.POSITION.TOP_CENTER,
-                                                    });
-                                                    setTimeout(
-                                                        () =>
-                                                            window.open(
-                                                                `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
-                                                                '_self',
-                                                                1,
-                                                            ),
-                                                        3000,
-                                                    );
-                                                }
-                                            })
-                                            .catch((err) => {
-                                                console.log('loi add');
-                                            });
+                                    console.log('insert order gia');
+                                    if (j === lenghtShop) {
+                                        //console.log('limit');
+                                        toast.success('Đặt hàng thành công', {
+                                            position: toast.POSITION.TOP_CENTER,
+                                        });
+                                        setTimeout(
+                                            () =>
+                                                window.open(
+                                                    `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
+                                                    '_self',
+                                                    1,
+                                                ),
+                                            2000,
+                                        );
                                     }
                                 })
                                 .catch((err) => {
-                                    console.log(`Không mua được lần ${j}`);
-
-                                    const dateValue = new Date();
-                                    let day = dateValue.getDate();
-                                    let month = dateValue.getMonth() + 1;
-                                    let year = dateValue.getFullYear();
-                                    let YMD;
-
-                                    if (month < 10 && day >= 10) {
-                                        YMD = year + '-0' + month + '-' + day;
-                                    } else if (month < 10 && day < 10) {
-                                        YMD = year + '-0' + month + '-0' + day;
-                                    } else if (month >= 10 && day < 10) {
-                                        YMD = year + '-' + month + '-0' + day;
-                                    } else if (month >= 10 && day >= 10) {
-                                        YMD = year + '-' + month + '-' + day;
-                                    } else {
-                                        YMD = year + '-' + month + '-' + day;
-                                    }
-                                    axios
-                                        .post(`${process.env.REACT_APP_URL_NODEJS}/order/add/orderproduct`, {
-                                            DH_id:
-                                                takeIdSimulation !== ''
-                                                    ? `DHSPMP${takeIdSimulation + j + 1}`
-                                                    : `DHSPMP${takeIdSimulation + j + 1}`,
-                                            ND_id: `${JSON.parse(GetCookie('usrin')).ND_id}`,
-                                            NB_id: sellerValue[j],
-                                            DH_tongtien: handlePriceSellerNoTransport(sellerValue[j], j),
-                                            DH_loaithanhtoan: 1,
-                                            DH_diachi:
-                                                ctyVaule === '' &&
-                                                userVaule !== '' &&
-                                                userVaule.DC_diachiGH !== undefined
-                                                    ? userVaule.DC_chitiet + ',' + ChangeAddress(userVaule.DC_diachiGH)
-                                                    : addressVaule + ',' + ChangeAddress(ctyVaule),
-
-                                            DH_phivanchuyen: serviceFee !== '' ? serviceFee[j] : '0',
-                                            DH_ngay: YMD,
-                                            DH_trangthaiTT: 1,
-                                            TTDH_gia: handleTakePriceProduct(sellerValue[j]),
-                                            TTDH_phantram: handleTakePromotionProduct(sellerValue[j]),
-                                            SP_id: handleTakeIdProduct(sellerValue[j]),
-                                            DH_ghichu: noteValue !== '' ? noteValue : '',
-                                        })
-                                        .then((res) => {
-                                            //console.log('insert order', res.data);
-                                            if (j === lenghtShop) {
-                                                //console.log('limit');
-                                                toast.success('Đặt hàng thành công', {
-                                                    position: toast.POSITION.TOP_CENTER,
-                                                });
-                                                setTimeout(
-                                                    () =>
-                                                        window.open(
-                                                            `${process.env.REACT_APP_URL_FRONTEND}/history/purchase/type=1`,
-                                                            '_self',
-                                                            1,
-                                                        ),
-                                                    2000,
-                                                );
-                                            }
-                                        })
-                                        .catch((err) => {
-                                            console.log('loi add');
-                                        });
-
-                                    console.log('loi DH');
+                                    console.log('loi add');
                                 });
+
+                            //     console.log('loi DH nha');
+                            // });
                         }
                     }
                 }

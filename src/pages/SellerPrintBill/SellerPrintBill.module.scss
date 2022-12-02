@@ -1,3 +1,53 @@
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    font: 12pt 'Tahoma';
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.page {
+    width: 210mm;
+    min-height: 280mm;
+    padding: 20mm;
+    margin: 10mm auto;
+    border: 1px #d3d3d3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.subpage {
+    //padding: 1cm;
+    //border: 5px red solid;
+    height: 192mm;
+    //outline: 2cm #ffeaea solid;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+@media print {
+    html,
+    body {
+        width: 210mm;
+        height: 297mm;
+    }
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+    }
+}
+
 @page {
     size: auto;
     margin: 0mm;
@@ -9,28 +59,34 @@
 }
 
 .inner {
-    width: 650px;
-    padding: 20px;
+    //width: 650px;
+    //padding: 20px;
     // background-color: #fff;
-    // -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
-    // box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+    // -webkit-box-shadow: 0 0.2rem 0.4rem #333;
+    // box-shadow: 0 0.2rem 0.4rem #333;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .bill-print-detail {
-    width: 100%;
+    width: 167mm;
+    height: 240mm;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
 .header-print {
-    height: 80px;
+    height: 130px;
     width: 100%;
     max-width: 650px;
     padding: 0px 10px;
     border-top: 2px solid #333;
     border-left: 2px solid #333;
     border-right: 2px solid #333;
-    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px solid #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,19 +99,20 @@
 
 .shop-print-infomation {
     max-height: 400px;
-    height: 150px;
+    height: 230px;
     width: 100%;
     padding: 0px 10px;
     border-left: 2px solid #333;
     border-right: 2px solid #333;
-    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px solid #333;
     display: flex;
 }
 
 .from-seller {
+    font-style: italic;
     flex: inherit;
     padding: 10px 10px 10px 0px;
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px solid #333;
 }
 
 .to-print,
@@ -66,6 +123,7 @@
 }
 
 .from-user {
+    font-style: italic;
     flex: inherit;
     padding: 10px 0px 10px 10px;
 }
@@ -77,7 +135,7 @@
     padding: 10px 10px;
     border-left: 2px solid #333;
     border-right: 2px solid #333;
-    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px solid #333;
 }
 
 .content-title {
@@ -103,25 +161,29 @@
 
 .regulations-shop {
     max-height: 400px;
-    height: 90px;
+    height: 209px;
     width: 100%;
-    padding: 10px 10px;
+    padding: 0px 10px;
     border-left: 2px solid #333;
     border-right: 2px solid #333;
-    border-bottom: 2px dashed rgba(0, 0, 0, 0.09);
+    border-bottom: 2px solid #333;
     display: flex;
 }
 
 .content-regulations-shop {
-    font-weight: 600;
+    font-style: italic;
+    font-weight: 500;
     padding-right: 10px;
-    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px solid #333;
+    padding-top: 20px;
+    height: 199px;
 }
 
 .date-order {
     flex: 1 1 1;
     width: 200px;
     padding-left: 10px;
+    padding-top: 20px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -130,6 +192,7 @@
 .date {
     display: flex;
     justify-content: center;
+    font-weight: 600;
 }
 
 .date-content {
@@ -137,12 +200,12 @@
     justify-content: center;
     position: relative;
     margin-top: 5px;
-    font-weight: 600;
+    font-style: italic;
 }
 
 .money-user {
     max-height: 400px;
-    height: 150px;
+    height: 165px;
     width: 100%;
     padding: 10px 10px;
     border-left: 2px solid #333;
@@ -155,6 +218,11 @@
     display: flex;
     padding-right: 10px;
     flex-direction: column;
+}
+
+.money-title {
+    padding: 10px 0px 10px;
+    font-weight: 700;
 }
 
 .money-content {
@@ -199,10 +267,34 @@
 }
 
 .content-regulations-note {
+    padding: 10px 0px;
     color: rgb(246, 50, 50);
 }
 
 .content-name-product {
     width: 490px;
     display: flex;
+}
+
+.address {
+    display: flex;
+    flex-direction: column;
+}
+
+.name-shop {
+    padding: 10px 0px;
+}
+
+.address-shop {
+    line-height: 25px;
+    padding: 0px 0px 10px 0px;
+}
+
+.name-user {
+    padding: 10px 0px;
+}
+
+.address-user {
+    line-height: 25px;
+    padding: 0px 0px 10px 0px;
 }

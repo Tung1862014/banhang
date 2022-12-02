@@ -190,7 +190,11 @@ function SellerPrintTableStatistical() {
     function handleTakeDay() {
         const datevalue = new Date();
         let day = datevalue.getDate();
-        return day;
+        if (Number(day) > 9) {
+            return day;
+        } else {
+            return '0' + day;
+        }
     }
 
     function handleTakeMonth() {
@@ -207,182 +211,257 @@ function SellerPrintTableStatistical() {
 
     return (
         <>
-            <div className={cx('wrapper')}>
-                <div className={cx('print-header')}>
-                    <div className={cx('print-name')}>
-                        <div className={cx('name-stall-title')}>Tên Gian hàng</div>
+            <div className={cx('book')}>
+                <div className={cx('page')}>
+                    <div className={cx('subpage')}>
+                        <div className={cx('print-header')}>
+                            <div className={cx('print-name')}>
+                                <div className={cx('name-stall-title')}>Tên Gian hàng</div>
 
-                        <div className={cx('name-stall')}>
-                            <img src={userVaule.MTS_logo} alt={''} className={cx('name-stall-image')} />
+                                <div className={cx('name-stall')}>
+                                    <img src={userVaule.MTS_logo} alt={''} className={cx('name-stall-image')} />
 
-                            {userVaule.MTS_ten}
+                                    {userVaule.MTS_ten}
+                                </div>
+                            </div>
+                            <div className={cx('print-header-chxh')}>
+                                <div className={cx('print-ch')}>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                                <div className={cx('print-dl')}>Độc lập - Tự do - Hạnh phúc</div>
+                                <div className={cx('print-dl')}>-----------------------</div>
+                            </div>
                         </div>
-                    </div>
-                    <div className={cx('print-header-chxh')}>
-                        <div className={cx('print-ch')}>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
-                        <div className={cx('print-dl')}>Độc lập - Tự do - Hạnh phúc</div>
-                        <div className={cx('print-date')}>
-                            Ngày {handleTakeDay()} tháng {handleTakeMonth()} năm {handleTakeYear()}
+                        <div className={cx('print-title')}>
+                            <div className={cx('name-title')}>Bảng Thống kê doanh thu và đơn hàng</div>
+                            <div className={cx('name-title-date')}>{handleTakeNameDate()}</div>
                         </div>
-                    </div>
-                </div>
-                <div className={cx('print-title')}>
-                    <h3 className={cx('name-title')}>Bảng hống kê doanh thu và đơn hàng {handleTakeNameDate()}</h3>
-                    <div>
-                        <div className={cx('sum_turnover_value')}>
-                            Tổng doanh thu: {formatCash(Number(sumTurnoverValue))} ₫
-                        </div>
-                        <div className={cx('sum_number_value')}>Tổng đơn: {sumNumberValue}</div>
-                    </div>
-                </div>
-                <table className={cx('table__header')}>
-                    <thead>
-                        <tr className={cx('table__header-tr')}>
-                            <td className={cx('td_table-name_link-title')}>
-                                {quartersValue === 'tuan'
-                                    ? 'Ngày'
-                                    : quartersValue === 'statistical'
-                                    ? 'Ngày'
-                                    : quartersValue === 'month'
-                                    ? 'Ngày'
-                                    : 'Tháng'}
-                            </td>
-                            <td className={cx('td_table-name-title')}>Tổng doanh thu (₫)</td>
-                            <td className={cx('td_table-name-title-right')}>Tổng đơn hàng</td>
-                        </tr>
+                        <div></div>
+                        <table className={cx('table__header')}>
+                            <thead>
+                                <tr className={cx('table__header-tr')}>
+                                    <td className={cx('td_table-name_link-title')}>
+                                        {quartersValue === 'tuan'
+                                            ? 'Ngày'
+                                            : quartersValue === 'statistical'
+                                            ? 'Ngày'
+                                            : quartersValue === 'month'
+                                            ? 'Ngày'
+                                            : 'Tháng'}
+                                        <span></span>
+                                    </td>
+                                    <td className={cx('td_table-name-title')}>
+                                        Tổng doanh thu (₫) <span></span>
+                                    </td>
+                                    <td className={cx('td_table-name-title-right')}>Tổng đơn hàng</td>
+                                </tr>
+                            </thead>
 
-                        {quartersValue === 'tuan' &&
-                        chartListData !== '' &&
-                        chartListData !== undefined &&
-                        chartListData.length > 0 ? (
-                            chartListData.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'quy1' ? (
-                            quarters1.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'quy2' ? (
-                            quarters2.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))} ₫
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'quy3' ? (
-                            quarters3.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))} ₫
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'quy4' ? (
-                            quarters4.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'nam' ? (
-                            statisticsByYear.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'statistical' ? (
-                            chartListData.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : quartersValue === 'month' ? (
-                            chartListData.map((pro, index) => (
-                                <tr
-                                    key={index}
-                                    className={cx(
-                                        handleTestColor(index) ? 'table__header-conten-color' : 'table__header-conten',
-                                    )}
-                                >
-                                    <td className={cx('td_table-name_link')}>{pro}</td>
-                                    <td className={cx('td_table-name')}>
-                                        {formatCash(Number(chartListTurnover[index]))}
-                                    </td>
-                                    <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr className={cx('td_table-name_no_link')}>
-                                <td>Không có link nào.</td>
+                            <tbody>
+                                {quartersValue === 'tuan' &&
+                                chartListData !== '' &&
+                                chartListData !== undefined &&
+                                chartListData.length > 0 ? (
+                                    chartListData.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'quy1' ? (
+                                    quarters1.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'quy2' ? (
+                                    quarters2.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span> ₫
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'quy3' ? (
+                                    quarters3.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span> ₫
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'quy4' ? (
+                                    quarters4.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'nam' ? (
+                                    statisticsByYear.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'statistical' ? (
+                                    chartListData.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : quartersValue === 'month' ? (
+                                    chartListData.map((pro, index) => (
+                                        <tr
+                                            key={index}
+                                            className={cx(
+                                                handleTestColor(index)
+                                                    ? 'table__header-conten-color'
+                                                    : 'table__header-conten',
+                                            )}
+                                        >
+                                            <td className={cx('td_table-name_link-t')}>
+                                                {pro}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name')}>
+                                                {formatCash(Number(chartListTurnover[index]))}
+                                                <span></span>
+                                            </td>
+                                            <td className={cx('td_table-name-right')}>{chartListNumber[index]}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr className={cx('td_table-name_no_link')}>
+                                        <td>Không có link nào.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+
+                            <tr className={cx('table__header-conten-color')}>
+                                <td className={cx('td_table-name_link-title-t')}>
+                                    Tổng cộng <span></span>
+                                </td>
+                                <td className={cx('td_table-name-title-t')}>
+                                    {formatCash(Number(sumTurnoverValue))}
+                                    <span></span>
+                                </td>
+                                <td className={cx('td_table-name-title-right-t')}>{sumNumberValue}</td>
                             </tr>
-                        )}
-                    </thead>
-                </table>
-
-                <div onLoad={handlePrintShow()}></div>
+                        </table>
+                        <div className={cx('footer-statistical')}>
+                            <div className={cx('name-info')}>
+                                <div className={cx('name-title_')}></div>
+                                <div className={cx('name-seller')}></div>
+                            </div>
+                            <div className={cx('name-info')}>
+                                <div className={cx('name-title_')}>
+                                    <i>
+                                        Ngày {handleTakeDay()} tháng {handleTakeMonth()} năm {handleTakeYear()}
+                                    </i>
+                                    <span>NGƯỜI LẬP ĐƠN</span> <i>(Họ và tên)</i>
+                                </div>
+                                <div className={cx('name-seller')}>{userVaule.ND_hoten}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );

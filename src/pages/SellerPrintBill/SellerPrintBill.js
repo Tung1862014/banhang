@@ -86,97 +86,113 @@ function SellerPrintBill() {
     // }
     return (
         <>
-            {printBill !== '' && (
-                <div className={cx('wrapper')}>
-                    {printBill.map((print, index) => (
-                        <div key={index} className={cx('inner')}>
-                            <div className={cx('bill-print-detail')}>
-                                <div className={cx('header-print')}>
-                                    <div className={cx('logo-print')}>
-                                        <img
-                                            className={cx('image-logo')}
-                                            src={`http://localhost:5000/logo/logo-1.png`}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className={cx('id-bill-print')}>
-                                        Mã đơn hàng:
-                                        <span>{' ' + print.DH_id}</span>
-                                    </div>
-                                </div>
-                                <div className={cx('shop-print-infomation')}>
-                                    <div className={cx('from-seller')}>
-                                        <div className={cx('to-print')}>Từ:</div>
-                                        <div className={cx('address')}>
-                                            <div className={cx('name-shop')}>{print.shop[0].MTS_ten}</div>
-                                            <div className={cx('address-shop')}>
-                                                {print.shop[0].MTS_chitiet + ',' + print.shop[0].MTS_diachi}
+            <div className={cx('book')}>
+                <div className={cx('page')}>
+                    <div className={cx('subpage')}>
+                        {printBill !== '' && (
+                            <div className={cx('wrapper')}>
+                                {printBill.map((print, index) => (
+                                    <div key={index} className={cx('inner')}>
+                                        <div className={cx('bill-print-detail')}>
+                                            <div className={cx('header-print')}>
+                                                <div className={cx('logo-print')}>
+                                                    <img
+                                                        className={cx('image-logo')}
+                                                        src={`http://localhost:5000/logo/logo-1.png`}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className={cx('id-bill-print')}>
+                                                    Mã đơn hàng:
+                                                    <span>{' ' + print.DH_id}</span>
+                                                </div>
                                             </div>
-                                            <div className={cx('sdt-shop')}>
-                                                SĐT: <span>{'0' + print.shop[0].ND_sdt.toString()}</span>
+                                            <div className={cx('shop-print-infomation')}>
+                                                <div className={cx('from-seller')}>
+                                                    <div className={cx('to-print')}>Từ:</div>
+                                                    <div className={cx('address')}>
+                                                        <div className={cx('name-shop')}>{print.shop[0].MTS_ten}</div>
+                                                        <div className={cx('address-shop')}>
+                                                            Địa chỉ:{' '}
+                                                            {print.shop[0].MTS_chitiet + ',' + print.shop[0].MTS_diachi}
+                                                        </div>
+                                                        <div className={cx('sdt-shop')}>
+                                                            SĐT: <span>{'0' + print.shop[0].ND_sdt.toString()}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className={cx('from-user')}>
+                                                    <div className={cx('from-print')}>Đến:</div>
+                                                    <div className={cx('address')}>
+                                                        <div className={cx('name-user')}>
+                                                            {print.product[0].ND_hoten}
+                                                        </div>
+                                                        <div className={cx('address-user')}>
+                                                            {' '}
+                                                            Địa chỉ: {print.DH_diachi}
+                                                        </div>
+                                                        <div className={cx('sdt-user')}>
+                                                            SĐT: <span>{'0' + print.product[0].ND_sdt}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('conten-product')}>
+                                                <div className={cx('content-title')}>
+                                                    Nội dung hàng(Tổng số lượng sản phẩm: {sumProduct})
+                                                </div>
+                                                {print.product.map((pro, index) => (
+                                                    <div key={index} className={cx('content-product-detail')}>
+                                                        <span className={cx('content-name-product')}>
+                                                            <span className={cx('stt-product')}>{index + 1}.</span>
+                                                            <div className={cx('name-product')}>{pro.SP_ten}</div>
+                                                            <span className={cx('number-product')}></span>
+                                                        </span>
+                                                        <span className={cx('')}>,SL: x {pro.TTDH_soluong}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <div className={cx('regulations-shop')}>
+                                                <div className={cx('content-regulations-shop')}>
+                                                    Kiểm tra tên sản phẩm và đối chiếu mã đơn hàng trước khi nhận hàng
+                                                    <div className={cx('content-regulations-note')}>
+                                                        <i>Lưu ý: {print.DH_ghichu}</i>
+                                                    </div>
+                                                </div>
+                                                <div className={cx('date-order')}>
+                                                    <div className={cx('date')}>Ngày đặt hàng:</div>
+                                                    <div className={cx('date-content')}>{DMY || ''}</div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('money-user')}>
+                                                <div className={cx('money-user-details')}>
+                                                    <div className={cx('money-title')}>Tiền thu người nhận</div>
+                                                    <div className={cx('money-content')}>
+                                                        {print.DH_loaithanhtoan === 2
+                                                            ? '0'
+                                                            : formatCash(
+                                                                  print.DH_tongtien + print.DH_phivanchuyen,
+                                                              )}{' '}
+                                                        VND
+                                                    </div>
+                                                </div>
+                                                <div className={cx('signature-user')}>
+                                                    <div className={cx('signature-title')}>Chữ ký người nhận</div>
+                                                    <div className={cx('signature-content')}>
+                                                        Xác nhận hàng nguyên vẹn,
+                                                    </div>
+                                                    <div className={cx('signature-content')}>không móp/méo, bể/vở</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={cx('from-user')}>
-                                        <div className={cx('from-print')}>Đến:</div>
-                                        <div className={cx('address')}>
-                                            <div className={cx('name-user')}>{print.product[0].ND_hoten}</div>
-                                            <div className={cx('address-user')}>{print.DH_diachi}</div>
-                                            <div className={cx('sdt-user')}>
-                                                SĐT: <span>{'0' + print.product[0].ND_sdt}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={cx('conten-product')}>
-                                    <div className={cx('content-title')}>
-                                        Nội dung hàng(Tổng số lượng sản phẩm: {sumProduct})
-                                    </div>
-                                    {print.product.map((pro, index) => (
-                                        <div key={index} className={cx('content-product-detail')}>
-                                            <span className={cx('content-name-product')}>
-                                                <span className={cx('stt-product')}>{index + 1}.</span>
-                                                <div className={cx('name-product')}>{pro.SP_ten}</div>
-                                                <span className={cx('number-product')}></span>
-                                            </span>
-                                            <span className={cx('')}>,SL: x {pro.TTDH_soluong}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className={cx('regulations-shop')}>
-                                    <div className={cx('content-regulations-shop')}>
-                                        Kiểm tra tên sản phẩm và đối chiếu mã đơn hàng trước khi nhận hàng
-                                        <div className={cx('content-regulations-note')}>
-                                            <i>Lưu ý: {print.DH_ghichu}</i>
-                                        </div>
-                                    </div>
-                                    <div className={cx('date-order')}>
-                                        <div className={cx('date')}>Ngày đặt hàng:</div>
-                                        <div className={cx('date-content')}>{DMY || ''}</div>
-                                    </div>
-                                </div>
-                                <div className={cx('money-user')}>
-                                    <div className={cx('money-user-details')}>
-                                        <div className={cx('money-title')}>Tiền thu người nhận</div>
-                                        <div className={cx('money-content')}>
-                                            {print.DH_loaithanhtoan === 2
-                                                ? '0'
-                                                : formatCash(print.DH_tongtien + print.DH_phivanchuyen)}{' '}
-                                            VND
-                                        </div>
-                                    </div>
-                                    <div className={cx('signature-user')}>
-                                        <div className={cx('signature-title')}>Chữ ký người nhận</div>
-                                        <div className={cx('signature-content')}>Xác nhận hàng nguyên vẹn,</div>
-                                        <div className={cx('signature-content')}>không móp/méo, bể/vở</div>
-                                    </div>
-                                </div>
+                                ))}
+                                <div onLoad={handlePrintShow()}></div>
                             </div>
-                        </div>
-                    ))}
-                    <div onLoad={handlePrintShow()}></div>
+                        )}
+                    </div>
                 </div>
-            )}
+            </div>
         </>
     );
 }
