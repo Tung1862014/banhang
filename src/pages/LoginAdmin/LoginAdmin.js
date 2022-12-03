@@ -66,13 +66,38 @@ function LoginAdmin() {
                 </div>
                 <div style={{ backgroundColor: 'rgb(177 234 240)' }}>
                     <div className={cx('_3M9lzn-PeA8Gc')}>
-                        <img
-                            src={
-                                'https://preview.colorlib.com/theme/bootstrap/login-form-07/images/undraw_remotely_2j6y.svg'
-                            }
-                            alt=""
-                            className={cx('_3M9lzn-PeA8Gc-image')}
-                        />
+                        <div className={cx('_3M9lzn-PeA8Gc-img')}>
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/shop/cmoiphuy.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/adverties/1667635486187-Non-la-Hoa-Binh-1536x1044.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/adverties/1667635913947-22.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/adverties/1667636248389-t7.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/adverties/1667636600266-94ngC320V83nC320vA0E1A3C320sBA20phBA20lB2E1A5uE1A7a2091ACnh.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                            <img
+                                src={` ${process.env.REACT_APP_URL_NODEJS}/adverties/1669345865339-a1.jpg`}
+                                alt=""
+                                className={cx('_3M9lzn-PeA8Gc-image')}
+                            />
+                        </div>
                         {/* <form > */}
                         <div className={cx('Gxi65y-J1i6cp-B-fiUo')}>
                             <div className={cx('gZNAGg')}>

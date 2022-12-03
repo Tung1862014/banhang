@@ -32,11 +32,6 @@ body {
     margin: 0;
 }
 @media print {
-    html,
-    body {
-        width: 210mm;
-        height: 297mm;
-    }
     .page {
         margin: 0;
         border: initial;
@@ -46,11 +41,6 @@ body {
         box-shadow: initial;
         background: initial;
     }
-}
-
-@page {
-    size: auto;
-    margin: 0mm;
 }
 
 .wrapper {
@@ -71,7 +61,7 @@ body {
 
 .bill-print-detail {
     width: 167mm;
-    height: 240mm;
+    height: 250mm;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +151,7 @@ body {
 
 .regulations-shop {
     max-height: 400px;
-    height: 209px;
+    height: 155px;
     width: 100%;
     padding: 0px 10px;
     border-left: 2px solid #333;
@@ -176,7 +166,7 @@ body {
     padding-right: 10px;
     border-right: 2px solid #333;
     padding-top: 20px;
-    height: 199px;
+    height: 155px;
 }
 
 .date-order {
@@ -205,7 +195,7 @@ body {
 
 .money-user {
     max-height: 400px;
-    height: 165px;
+    height: 219px;
     width: 100%;
     padding: 10px 10px;
     border-left: 2px solid #333;
@@ -236,6 +226,7 @@ body {
 }
 
 .signature-user {
+    padding: 10px 0px;
     width: 250px;
     display: flex;
     margin: 0 auto;

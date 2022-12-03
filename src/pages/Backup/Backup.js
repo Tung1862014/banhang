@@ -6,7 +6,7 @@ import styles from './Backup.module.scss';
 //import { useCallback } from 'react';
 //import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
+import { faFile } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 //var XLSX = require('xlsx');
@@ -194,12 +194,12 @@ function Backup() {
     //     XLSX.writeFile(wb, 'SheetJSMultiTablexport.xlsx');
     // }, []);
     function handleOpen() {
-        window.open(`${process.env.REACT_APP_URL_NODEJS}/dump.sql`);
+        window.open(`${process.env.REACT_APP_URL_NODEJS}/backup.sql`);
     }
     return (
         <>
-            <button className={cx('button-82-pushable')} onClick={handleOpen}>
-                Sao Lưu Dữ Liệu <FontAwesomeIcon icon={faFileExcel} />
+            <button className={cx('button-33')} onClick={handleOpen}>
+                Sao Lưu Dữ Liệu <FontAwesomeIcon icon={faFile} />
             </button>
         </>
     );
